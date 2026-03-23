@@ -19,8 +19,32 @@
         body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
         h1,h2,h3,h4{font-family:'Outfit',sans-serif;}
         @keyframes fadeIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
-        .ani{opacity:0;transform:translateY(20px);transition:all .7s ease;}
+        @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+        @keyframes glow{0%,100%{box-shadow:0 0 20px rgba(201,168,76,.1);}50%{box-shadow:0 0 40px rgba(201,168,76,.2);}}
+        @keyframes shimmer{0%{background-position:-200% 0;}100%{background-position:200% 0;}}
+        @keyframes pulse-gold{0%,100%{box-shadow:0 0 0 0 rgba(201,168,76,.3);}70%{box-shadow:0 0 0 14px rgba(201,168,76,0);}}
+        @keyframes rotate-slow{from{transform:rotate(0);}to{transform:rotate(360deg);}}
+        @keyframes slide-in-left{from{opacity:0;transform:translateX(-30px);}to{opacity:1;transform:translateX(0);}}
+        @keyframes slide-in-right{from{opacity:0;transform:translateX(30px);}to{opacity:1;transform:translateX(0);}}
+        @keyframes count-up{from{opacity:0;transform:scale(.5);}to{opacity:1;transform:scale(1);}}
+        .ani{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(.16,1,.3,1);}
         .ani.v{opacity:1;transform:translateY(0);}
+        .ani-delay-1{transition-delay:.1s;}
+        .ani-delay-2{transition-delay:.2s;}
+        .ani-delay-3{transition-delay:.3s;}
+        /* Particles background */
+        .particles{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+        .particle{position:absolute;width:2px;height:2px;border-radius:50%;background:var(--gold);opacity:.15;animation:float 6s ease-in-out infinite;}
+        /* Glow orbs */
+        .glow-orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0;}
+        /* Gradient border effect */
+        .gradient-border{position:relative;}
+        .gradient-border::before{content:'';position:absolute;inset:-1px;border-radius:inherit;background:linear-gradient(135deg,rgba(201,168,76,.3),transparent,rgba(201,168,76,.1));z-index:-1;opacity:0;transition:opacity .3s;}
+        .gradient-border:hover::before{opacity:1;}
+        /* Shine sweep effect */
+        .shine{position:relative;overflow:hidden;}
+        .shine::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(201,168,76,.06),transparent);transition:none;}
+        .shine:hover::after{left:150%;transition:left .8s ease;}
 
         /* NAV */
         nav{position:fixed;top:0;left:0;right:0;z-index:200;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;transition:all .3s;}
@@ -33,14 +57,17 @@
         .nav-links{display:flex;align-items:center;gap:28px;}
         .nav-links a{color:var(--t2);text-decoration:none;font-size:13px;font-weight:600;transition:color .2s;letter-spacing:.3px;}
         .nav-links a:hover{color:var(--gold);}
-        .nav-cta{padding:10px 24px;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0e17;font-size:13px;font-weight:800;text-decoration:none;transition:all .2s;font-family:Inter;}
-        .nav-cta:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(201,168,76,.25);}
+        .nav-cta{padding:10px 24px;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0e17;font-size:13px;font-weight:800;text-decoration:none;transition:all .2s;font-family:Inter;animation:pulse-gold 2.5s infinite;}
+        .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(201,168,76,.35);}
         @media(max-width:900px){.nav-links{display:none;}nav{padding:0 20px;}}
 
         /* HERO */
         .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:100px 20px 80px;}
-        .hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1548041347-390744c58da2?w=1600&h=900&fit=crop') center/cover no-repeat;filter:brightness(.3);}
-        .hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,14,23,.4) 0%,rgba(10,14,23,.8) 70%,var(--bg) 100%);}
+        .hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1548041347-390744c58da2?w=1600&h=900&fit=crop') center/cover no-repeat;filter:brightness(.3);transition:transform 20s ease;animation:hero-zoom 25s ease infinite alternate;}
+        @keyframes hero-zoom{0%{transform:scale(1);}100%{transform:scale(1.08);}}
+        .hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,14,23,.3) 0%,rgba(10,14,23,.7) 60%,var(--bg) 100%);}
+        .hero-glow-1{position:absolute;top:-20%;right:-10%;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.06),transparent 70%);pointer-events:none;}
+        .hero-glow-2{position:absolute;bottom:-20%;left:-10%;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.04),transparent 70%);pointer-events:none;}
         .hero-content{position:relative;z-index:1;text-align:center;max-width:800px;}
         .hero-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 16px;border-radius:50px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);color:var(--gold);font-size:12px;font-weight:700;margin-bottom:24px;letter-spacing:1px;text-transform:uppercase;}
         .hero h1{font-size:62px;font-weight:900;letter-spacing:-2.5px;line-height:1.05;color:var(--w);margin-bottom:18px;}
@@ -53,7 +80,7 @@
         .btn-outline:hover{border-color:var(--gold);background:rgba(201,168,76,.05);}
         .hero-stats{display:flex;gap:40px;justify-content:center;margin-top:48px;}
         .hero-stat{text-align:center;}
-        .hero-stat .num{font-family:Outfit;font-size:32px;font-weight:900;color:var(--gold);}
+        .hero-stat .num{font-family:Outfit;font-size:32px;font-weight:900;color:var(--gold);text-shadow:0 0 30px rgba(201,168,76,.2);}
         .hero-stat .label{font-size:12px;color:var(--t3);margin-top:2px;text-transform:uppercase;letter-spacing:.5px;}
         @media(max-width:640px){.hero h1{font-size:36px;letter-spacing:-1.5px;}.hero p{font-size:15px;}.hero-stats{gap:24px;}.hero-stat .num{font-size:24px;}}
 
@@ -67,17 +94,22 @@
 
         /* SERVICES */
         .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-        .svc{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:32px 26px;text-align:center;transition:all .3s;}
-        .svc:hover{transform:translateY(-4px);border-color:rgba(201,168,76,.2);box-shadow:0 12px 40px rgba(0,0,0,.3);}
-        .svc-icon{width:56px;height:56px;border-radius:14px;background:rgba(201,168,76,.08);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:24px;color:var(--gold);}
+        .svc{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:32px 26px;text-align:center;transition:all .4s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden;}
+        .svc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity .3s;}
+        .svc:hover{transform:translateY(-6px);border-color:rgba(201,168,76,.25);box-shadow:0 16px 48px rgba(0,0,0,.4),0 0 40px rgba(201,168,76,.05);}
+        .svc:hover::before{opacity:1;}
+        .svc-icon{width:56px;height:56px;border-radius:14px;background:rgba(201,168,76,.08);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:24px;color:var(--gold);transition:all .3s;}
+        .svc:hover .svc-icon{transform:scale(1.1);background:rgba(201,168,76,.15);box-shadow:0 0 24px rgba(201,168,76,.15);}
         .svc h3{font-size:17px;font-weight:700;color:var(--w);margin-bottom:8px;}
         .svc p{font-size:13px;color:var(--t3);line-height:1.5;}
         @media(max-width:900px){.svc-grid{grid-template-columns:1fr;}}
 
         /* FLEET */
         .fleet-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
-        .fleet-card{background:var(--bg2);border:1px solid var(--border);border-radius:20px;overflow:hidden;transition:all .3s;position:relative;}
-        .fleet-card:hover{transform:translateY(-4px);border-color:rgba(201,168,76,.2);box-shadow:0 12px 40px rgba(0,0,0,.3);}
+        .fleet-card{background:var(--bg2);border:1px solid var(--border);border-radius:20px;overflow:hidden;transition:all .4s cubic-bezier(.16,1,.3,1);position:relative;}
+        .fleet-card::after{content:'';position:absolute;inset:0;border-radius:20px;background:linear-gradient(135deg,rgba(201,168,76,.05),transparent);opacity:0;transition:opacity .3s;pointer-events:none;}
+        .fleet-card:hover{transform:translateY(-6px);border-color:rgba(201,168,76,.25);box-shadow:0 20px 60px rgba(0,0,0,.4),0 0 40px rgba(201,168,76,.05);}
+        .fleet-card:hover::after{opacity:1;}
         .fleet-img{height:200px;background:var(--bg3);display:flex;align-items:center;justify-content:center;overflow:hidden;}
         .fleet-img img{width:100%;height:100%;object-fit:cover;}
         .fleet-img i{font-size:48px;color:rgba(201,168,76,.2);}
@@ -94,8 +126,10 @@
         .fleet-price .from{font-size:12px;color:var(--t3);}
         .fleet-price .amt{font-family:Outfit;font-size:32px;font-weight:900;color:var(--gold);}
         .fleet-price .trip{font-size:12px;color:var(--t3);}
-        .fleet-book{display:block;margin-top:14px;padding:12px;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0e17;font-size:13px;font-weight:800;text-align:center;text-decoration:none;transition:all .2s;font-family:Inter;}
-        .fleet-book:hover{box-shadow:0 4px 16px rgba(201,168,76,.3);}
+        .fleet-book{display:block;margin-top:14px;padding:12px;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0e17;font-size:13px;font-weight:800;text-align:center;text-decoration:none;transition:all .2s;font-family:Inter;position:relative;overflow:hidden;}
+        .fleet-book::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);}
+        .fleet-book:hover{box-shadow:0 6px 20px rgba(201,168,76,.35);transform:translateY(-1px);}
+        .fleet-book:hover::after{left:150%;transition:left .6s ease;}
         @media(max-width:900px){.fleet-grid{grid-template-columns:1fr;}}
 
         /* PRICING TABLE */
@@ -111,8 +145,9 @@
 
         /* REVIEWS */
         .rev-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
-        .rev{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:28px;transition:all .3s;}
-        .rev:hover{border-color:rgba(201,168,76,.15);}
+        .rev{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:28px;transition:all .4s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden;}
+        .rev::before{content:'"';position:absolute;top:-10px;right:16px;font-family:Outfit;font-size:120px;font-weight:900;color:rgba(201,168,76,.04);pointer-events:none;line-height:1;}
+        .rev:hover{border-color:rgba(201,168,76,.2);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.3);}
         .rev-stars{color:var(--gold);font-size:14px;letter-spacing:2px;margin-bottom:12px;}
         .rev-text{font-size:14px;color:var(--t2);line-height:1.6;margin-bottom:16px;font-style:italic;}
         .rev-author{display:flex;align-items:center;gap:12px;}
@@ -224,6 +259,8 @@
 <section class="hero">
     <div class="hero-bg"></div>
     <div class="hero-overlay"></div>
+    <div class="hero-glow-1"></div>
+    <div class="hero-glow-2"></div>
     <div class="hero-content ani">
         <div class="hero-badge"><i class="bi bi-shield-check"></i> Licensed & Insured in Utah</div>
         <h1>Luxury Transportation<br>in <b>Park City</b></h1>
@@ -233,9 +270,10 @@
             <a href="tel:+14352146939" class="btn-outline"><i class="bi bi-telephone-fill"></i> (435) 214-6939</a>
         </div>
         <div class="hero-stats">
-            <div class="hero-stat"><div class="num">9,000+</div><div class="label">Rides Completed</div></div>
-            <div class="hero-stat"><div class="num">4.6</div><div class="label">Star Rating</div></div>
-            <div class="hero-stat"><div class="num">24/7</div><div class="label">Availability</div></div>
+            <div class="hero-stat"><div class="num" data-count="9000+">0</div><div class="label">Rides Completed</div></div>
+            <div class="hero-stat"><div class="num" data-count="4.7">0</div><div class="label">Star Rating</div></div>
+            <div class="hero-stat"><div class="num" data-count="24/7">24/7</div><div class="label">Availability</div></div>
+            <div class="hero-stat"><div class="num" data-count="25">0</div><div class="label">5-Star Reviews</div></div>
         </div>
     </div>
 </section>
@@ -248,32 +286,32 @@
         <p>From airport transfers to special events, we cover all your transportation needs in Park City</p>
     </div>
     <div class="svc-grid">
-        <div class="svc">
+        <div class="svc shine gradient-border">
             <div class="svc-icon"><i class="bi bi-airplane-fill"></i></div>
             <h3>Airport Transfers</h3>
             <p>Private luxury SUV service between Salt Lake City International Airport and Park City. Driver texts before your flight lands.</p>
         </div>
-        <div class="svc">
+        <div class="svc shine gradient-border">
             <div class="svc-icon"><i class="bi bi-snow2"></i></div>
             <h3>Ski Resort Shuttles</h3>
             <p>Door-to-door service to Park City Mountain, Deer Valley, and all major ski resorts in the area.</p>
         </div>
-        <div class="svc">
+        <div class="svc shine gradient-border">
             <div class="svc-icon"><i class="bi bi-geo-alt-fill"></i></div>
             <h3>Local Transportation</h3>
             <p>Hourly service around Park City for dining, shopping on Main Street, or exploring the area.</p>
         </div>
-        <div class="svc">
+        <div class="svc shine gradient-border">
             <div class="svc-icon"><i class="bi bi-heart-fill"></i></div>
             <h3>Weddings & Events</h3>
             <p>Elegant transportation for your special day. Luxury SUVs for the wedding party and guests.</p>
         </div>
-        <div class="svc">
+        <div class="svc shine gradient-border">
             <div class="svc-icon"><i class="bi bi-building"></i></div>
             <h3>Corporate Groups</h3>
             <p>Professional transportation for corporate retreats, conferences, and team events in Park City.</p>
         </div>
-        <div class="svc">
+        <div class="svc shine gradient-border">
             <div class="svc-icon"><i class="bi bi-camera-fill"></i></div>
             <h3>Custom Tours</h3>
             <p>Scenic tours of Park City, Heber Valley, Mirror Lake, and the stunning Wasatch Mountains.</p>
@@ -511,14 +549,78 @@
 <!-- WA FLOAT -->
 <a href="https://wa.me/14352146939?text=Hi!%20I%20need%20transportation%20in%20Park%20City." target="_blank" class="wa-float"><i class="bi bi-whatsapp"></i> <span>Book a Ride</span></a>
 
+<!-- PARTICLES -->
+<div class="particles" id="particles"></div>
+
 <!-- SCRIPTS -->
 <script>
-// NAV SCROLL
-window.onscroll=()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>40);
+// NAV SCROLL + parallax
+window.addEventListener('scroll',()=>{
+    const s=scrollY;
+    document.getElementById('nav').classList.toggle('scrolled',s>40);
+    // Parallax hero bg
+    const bg=document.querySelector('.hero-bg');
+    if(bg&&s<window.innerHeight)bg.style.transform=`scale(${1+s*.0001}) translateY(${s*.3}px)`;
+});
 
-// SCROLL ANIMATIONS
-const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('v');}),{threshold:.1});
-document.querySelectorAll('.ani').forEach(e=>obs.observe(e));
+// SCROLL ANIMATIONS with stagger
+const obs=new IntersectionObserver(es=>{
+    es.forEach((e,i)=>{
+        if(e.isIntersecting){
+            setTimeout(()=>e.target.classList.add('v'),i*80);
+        }
+    });
+},{threshold:.1});
+document.querySelectorAll('.ani,.svc,.fleet-card,.rev,.ci-card').forEach(e=>obs.observe(e));
+
+// ANIMATED COUNTERS
+function animateCounters(){
+    document.querySelectorAll('[data-count]').forEach(el=>{
+        const target=el.dataset.count;
+        const isNum=!isNaN(parseFloat(target));
+        if(!isNum){el.textContent=target;return;}
+        const end=parseFloat(target);
+        const dur=1500;
+        const start=performance.now();
+        const step=(now)=>{
+            const prog=Math.min((now-start)/dur,1);
+            const eased=1-Math.pow(1-prog,4);
+            el.textContent=target.includes('.')?
+                (end*eased).toFixed(1):
+                Math.floor(end*eased).toLocaleString();
+            if(prog<1)requestAnimationFrame(step);
+            else el.textContent=target.includes('+')?Math.floor(end).toLocaleString()+'+':target.includes('.')?end.toFixed(1):Math.floor(end).toLocaleString();
+        };
+        requestAnimationFrame(step);
+    });
+}
+const counterObs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting){animateCounters();counterObs.disconnect();}
+},{threshold:.3});
+const statsEl=document.querySelector('.hero-stats');
+if(statsEl)counterObs.observe(statsEl);
+
+// PARTICLES
+(function(){
+    const c=document.getElementById('particles');
+    if(!c)return;
+    for(let i=0;i<30;i++){
+        const p=document.createElement('div');
+        p.className='particle';
+        p.style.left=Math.random()*100+'%';
+        p.style.top=Math.random()*100+'%';
+        p.style.width=p.style.height=(1+Math.random()*2)+'px';
+        p.style.opacity=.05+Math.random()*.12;
+        p.style.animationDuration=(4+Math.random()*6)+'s';
+        p.style.animationDelay=Math.random()*4+'s';
+        c.appendChild(p);
+    }
+})();
+
+// SMOOTH REVEAL for staggered cards
+document.querySelectorAll('.svc-grid .svc').forEach((c,i)=>c.style.transitionDelay=i*.08+'s');
+document.querySelectorAll('.fleet-grid .fleet-card').forEach((c,i)=>c.style.transitionDelay=i*.12+'s');
+document.querySelectorAll('.rev-grid .rev').forEach((c,i)=>c.style.transitionDelay=i*.1+'s');
 
 // CONTACT FORM
 function submitContact(e){
