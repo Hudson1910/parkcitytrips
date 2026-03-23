@@ -25,6 +25,86 @@ def blog_post(slug):
     return render_template('blog_post.html', post=post, config=config)
 
 
+# SEO Landing Pages
+SEO_PAGES = {
+    'slc-airport-to-park-city': {
+        'title': 'SLC Airport to Park City Shuttle | Private SUV from $129',
+        'h1': 'Salt Lake City Airport to Park City',
+        'desc': 'Private luxury SUV shuttle from Salt Lake City International Airport (SLC) to Park City, Utah. Door-to-door service, flight tracking, from $129. Book now!',
+        'keywords': 'SLC airport to Park City, Salt Lake City airport shuttle, SLC to Park City shuttle, airport transfer Park City',
+        'content': 'Looking for a reliable ride from Salt Lake City Airport to Park City? Rio Transportation offers private luxury SUV service with professional drivers who monitor your flight and text you before landing. The drive takes approximately 40-50 minutes along scenic I-80 through Parley\'s Canyon.',
+    },
+    'park-city-taxi': {
+        'title': 'Park City Taxi | 24/7 Private Car Service | (435) 214-6939',
+        'h1': 'Park City Taxi & Car Service',
+        'desc': 'Need a taxi in Park City, Utah? Rio Transportation offers 24/7 private luxury SUV service. Airport transfers, local rides, ski resorts. Call (435) 214-6939.',
+        'keywords': 'Park City taxi, taxi near me Park City, Park City cab, Park City car service, taxi Park City Utah',
+        'content': 'Skip the wait for a traditional taxi. Rio Transportation provides private luxury SUV service throughout Park City, Utah. Whether you need a ride to the airport, a restaurant on Main Street, or a ski resort, our professional drivers are available 24/7.',
+    },
+    'park-city-airport-shuttle': {
+        'title': 'Park City Airport Shuttle | Private SUV Transfer | From $129',
+        'h1': 'Park City Airport Shuttle Service',
+        'desc': 'Private airport shuttle between Park City and Salt Lake City Airport. Luxury SUVs, professional drivers, all-inclusive pricing from $129. No shared rides.',
+        'keywords': 'Park City airport shuttle, Park City shuttle, airport shuttle Park City Utah, private shuttle Park City',
+        'content': 'Unlike shared shuttle services that make multiple stops, Rio Transportation provides direct, private door-to-door service between Salt Lake City Airport and your Park City destination. Our fleet includes GMC Yukon, Nissan Pathfinder, and Cadillac Escalade vehicles.',
+    },
+    'deer-valley-transportation': {
+        'title': 'Deer Valley Transportation | Luxury Shuttle from SLC Airport',
+        'h1': 'Deer Valley Resort Transportation',
+        'desc': 'Luxury transportation to Deer Valley Resort from Salt Lake City Airport. Private SUVs, ski equipment welcome, from $129. Book your Deer Valley shuttle.',
+        'keywords': 'Deer Valley transportation, Deer Valley shuttle, Deer Valley airport shuttle, Deer Valley car service',
+        'content': 'Getting to Deer Valley Resort has never been easier. Rio Transportation offers premium private SUV service from Salt Lake City Airport directly to your Deer Valley hotel, condo, or lodge. Our vehicles accommodate ski and snowboard equipment with ease.',
+    },
+    'park-city-wedding-transportation': {
+        'title': 'Park City Wedding Transportation | Luxury SUV & Event Service',
+        'h1': 'Wedding Transportation in Park City',
+        'desc': 'Elegant luxury transportation for Park City weddings and events. Cadillac Escalade, GMC Yukon. Guest shuttles, bridal party transfers. Book now!',
+        'keywords': 'Park City wedding transportation, wedding shuttle Park City, event transportation Park City, luxury car wedding Utah',
+        'content': 'Make your special day perfect with elegant luxury transportation. Rio Transportation provides wedding party transfers, guest shuttles between venues, and airport pickups for out-of-town guests. Our Cadillac Escalade and GMC Yukon fleet adds sophistication to any celebration.',
+    },
+    'park-city-ski-shuttle': {
+        'title': 'Park City Ski Shuttle | Resort Transfers | From $129',
+        'h1': 'Park City Ski Resort Shuttle',
+        'desc': 'Private ski shuttle to Park City Mountain and Deer Valley resorts from SLC Airport. Luxury SUVs, ski equipment welcome, professional drivers.',
+        'keywords': 'Park City ski shuttle, ski resort shuttle Park City, Park City Mountain shuttle, ski taxi Park City',
+        'content': 'Hit the slopes faster with Rio Transportation\'s private ski shuttle service. We provide direct transfers from Salt Lake City Airport to Park City Mountain Resort, Deer Valley, and surrounding ski areas. Our luxury SUVs have plenty of room for skis, snowboards, and luggage.',
+    },
+    'park-city-corporate-transportation': {
+        'title': 'Park City Corporate Transportation | Group Shuttle Service',
+        'h1': 'Corporate Transportation in Park City',
+        'desc': 'Professional corporate transportation in Park City, Utah. Group shuttles, conference transfers, team events. Luxury SUVs. Book for your next retreat.',
+        'keywords': 'Park City corporate transportation, corporate shuttle Park City, group transportation Park City, conference shuttle Utah',
+        'content': 'Impress your team and clients with professional luxury transportation. Rio Transportation handles corporate retreats, conference shuttles, and team-building event transfers throughout Park City and the Wasatch Back region.',
+    },
+}
+
+
+@app.route('/s/<slug>')
+def seo_page(slug):
+    page = SEO_PAGES.get(slug)
+    if not page:
+        abort(404)
+    return render_template('seo_page.html', page=page, config=config, vehicles=config.VEHICLES)
+
+
+@app.route('/sitemap.xml')
+def sitemap():
+    from flask import Response
+    pages = ['/'] + [f'/s/{s}' for s in SEO_PAGES] + ['/blog'] + [f'/blog/{p["slug"]}' for p in POSTS]
+    xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    for p in pages:
+        xml += f'  <url><loc>https://www.parkcitytrips.com{p}</loc><changefreq>weekly</changefreq><priority>{"1.0" if p=="/" else "0.8"}</priority></url>\n'
+    xml += '</urlset>'
+    return Response(xml, mimetype='application/xml')
+
+
+@app.route('/robots.txt')
+def robots():
+    from flask import Response
+    txt = "User-agent: *\nAllow: /\nSitemap: https://www.parkcitytrips.com/sitemap.xml\n"
+    return Response(txt, mimetype='text/plain')
+
+
 @app.route('/api/quote', methods=['POST'])
 def api_quote():
     """Calculate price quote."""

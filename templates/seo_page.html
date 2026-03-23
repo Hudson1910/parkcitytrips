@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }}</title>
+    <meta name="description" content="{{ page.desc }}">
+    <meta name="keywords" content="{{ page.keywords }}">
+    <meta property="og:title" content="{{ page.title }}">
+    <meta property="og:description" content="{{ page.desc }}">
+    <meta property="og:type" content="website">
+    <link rel="canonical" href="https://www.parkcitytrips.com/s/{{ page.slug if page.slug is defined else '' }}">
+    <meta name="theme-color" content="#0a0e17">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"Service","serviceType":"{{ page.h1 }}","provider":{"@type":"LocalBusiness","name":"Rio Transportation LLC","telephone":"+14352146939","address":{"@type":"PostalAddress","addressLocality":"Park City","addressRegion":"UT","postalCode":"84060","addressCountry":"US"}},"areaServed":{"@type":"City","name":"Park City, Utah"},"description":"{{ page.desc }}"}
+    </script>
+    <style>
+        :root{--bg:#0a0e17;--bg2:#0f1420;--bg3:#151c2e;--gold:#c9a84c;--gold2:#e8c65a;--w:#fff;--t1:#e2e8f0;--t2:#94a3b8;--t3:#64748b;--t4:#475569;--border:rgba(201,168,76,.08);}
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);-webkit-font-smoothing:antialiased;}
+        h1,h2,h3{font-family:'Outfit',sans-serif;}
+        nav{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;background:rgba(10,14,23,.95);border-bottom:1px solid var(--border);}
+        .logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+        .logo img{height:42px;width:42px;border-radius:10px;}
+        .logo span{font-family:Outfit;font-weight:800;font-size:22px;color:var(--w);}
+        .logo .gold{color:var(--gold);}
+        .nav-r{display:flex;gap:16px;align-items:center;}
+        .nav-r a{color:var(--t2);text-decoration:none;font-size:13px;font-weight:600;}
+        .nav-r a:hover{color:var(--gold);}
+        .btn-gold{padding:10px 24px;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0e17;font-size:13px;font-weight:800;text-decoration:none;font-family:Inter;}
+        /* Hero */
+        .seo-hero{padding:100px 20px 60px;text-align:center;position:relative;overflow:hidden;}
+        .seo-hero::before{content:'';position:absolute;top:-30%;right:-15%;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.05),transparent 70%);}
+        .seo-hero h1{font-size:44px;font-weight:900;color:var(--w);letter-spacing:-2px;margin-bottom:16px;max-width:700px;margin-left:auto;margin-right:auto;}
+        .seo-hero h1 b{background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+        .seo-hero p{font-size:17px;color:var(--t3);max-width:600px;margin:0 auto 30px;line-height:1.7;}
+        .seo-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+        .seo-btns a{padding:14px 28px;border-radius:12px;font-size:14px;font-weight:800;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s;}
+        /* Content */
+        .seo-content{max-width:900px;margin:0 auto;padding:60px 20px 80px;}
+        .seo-content p{font-size:16px;color:var(--t2);line-height:1.8;margin-bottom:20px;}
+        .seo-content h2{font-size:28px;font-weight:800;color:var(--w);margin:36px 0 16px;letter-spacing:-.5px;}
+        /* Vehicles */
+        .seo-vehicles{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:40px 0;}
+        .seo-v{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:24px;text-align:center;transition:all .3s;}
+        .seo-v:hover{border-color:rgba(201,168,76,.2);transform:translateY(-3px);}
+        .seo-v h3{font-size:18px;font-weight:800;color:var(--w);margin-bottom:4px;}
+        .seo-v .model{font-size:12px;color:var(--t3);margin-bottom:12px;}
+        .seo-v .specs{display:flex;justify-content:center;gap:12px;margin-bottom:14px;}
+        .seo-v .spec{font-size:11px;color:var(--gold);display:flex;align-items:center;gap:4px;}
+        .seo-v .price{font-family:Outfit;font-size:32px;font-weight:900;color:var(--gold);}
+        .seo-v .trip{font-size:12px;color:var(--t3);}
+        /* CTA */
+        .seo-cta{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:40px;text-align:center;margin-top:40px;}
+        .seo-cta h2{font-size:28px;font-weight:800;color:var(--w);margin-bottom:10px;}
+        .seo-cta p{font-size:14px;color:var(--t3);margin-bottom:20px;}
+        /* Trust */
+        .trust{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin:30px 0;padding:20px;border-radius:14px;background:rgba(201,168,76,.03);border:1px solid rgba(201,168,76,.06);}
+        .trust-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--t2);}
+        .trust-item i{color:var(--gold);font-size:16px;}
+        /* Footer */
+        footer{padding:30px 20px;border-top:1px solid var(--border);text-align:center;font-size:11px;color:var(--t4);}
+        footer a{color:var(--gold);text-decoration:none;}
+        @media(max-width:640px){nav{padding:0 16px;}.seo-hero h1{font-size:28px;}.seo-vehicles{grid-template-columns:1fr;}}
+    </style>
+</head>
+<body>
+<nav>
+    <a href="/" class="logo"><img src="/static/icon.svg" alt="Rio"><span>Rio <span class="gold">Transportation</span></span></a>
+    <div class="nav-r">
+        <a href="tel:+14352146939"><i class="bi bi-telephone-fill"></i> (435) 214-6939</a>
+        <a href="/" class="btn-gold">Book Now</a>
+    </div>
+</nav>
+
+<section class="seo-hero">
+    <h1>{{ page.h1 | replace('Park City', '<b>Park City</b>') | safe }}</h1>
+    <p>{{ page.content }}</p>
+    <div class="trust">
+        <div class="trust-item"><i class="bi bi-star-fill"></i> 4.7 Star Rating</div>
+        <div class="trust-item"><i class="bi bi-car-front-fill"></i> 9,000+ Rides</div>
+        <div class="trust-item"><i class="bi bi-shield-check"></i> Licensed & Insured</div>
+        <div class="trust-item"><i class="bi bi-clock-fill"></i> 24/7 Available</div>
+        <div class="trust-item"><i class="bi bi-droplet-fill"></i> Bottled Water Included</div>
+    </div>
+    <div class="seo-btns">
+        <a href="https://wa.me/14352146939?text=Hi!%20I%20need%20transportation%20in%20Park%20City." target="_blank" style="background:#25d366;color:#fff;"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+        <a href="tel:+14352146939" style="background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0e17;"><i class="bi bi-telephone-fill"></i> Call (435) 214-6939</a>
+    </div>
+</section>
+
+<section class="seo-content">
+    <h2>Our Fleet — Choose Your Ride</h2>
+    <div class="seo-vehicles">
+        {% for v in vehicles %}
+        <div class="seo-v">
+            <h3>{{ v.name }}</h3>
+            <div class="model">{{ v.model }}</div>
+            <div class="specs">
+                <span class="spec"><i class="bi bi-people-fill"></i> {{ v.passengers }} pax</span>
+                <span class="spec"><i class="bi bi-luggage-fill"></i> {{ v.bags }} bags</span>
+            </div>
+            <div class="price">${{ v.price }}</div>
+            <div class="trip">per trip, all-inclusive</div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h2>Why Choose Rio Transportation?</h2>
+    <p><strong>Private, door-to-door service</strong> — Unlike shared shuttles that make multiple stops, your ride is direct from the airport to your exact destination in Park City. No waiting, no detours.</p>
+    <p><strong>Flight monitoring</strong> — Your driver tracks your flight in real-time and adjusts pickup accordingly. We text you before landing so you know exactly where to meet us.</p>
+    <p><strong>All-inclusive pricing</strong> — Our rates include everything: private luxury vehicle, professional driver, all taxes and fees, and complimentary bottled water. Gratuity is always at your discretion.</p>
+    <p><strong>Luxury vehicles</strong> — Travel in style in our GMC Yukon, Nissan Pathfinder, or Cadillac Escalade — all maintained to the highest standards with leather seats, climate control, and ample luggage space.</p>
+    <p><strong>9,000+ rides completed</strong> — With years of experience serving Park City visitors, we know every route, every resort, and every shortcut. Your safety and comfort are our top priority.</p>
+
+    <div class="seo-cta">
+        <h2>Ready to Book Your Ride?</h2>
+        <p>Private luxury SUV service starting from $129. Available 24/7.</p>
+        <div class="seo-btns">
+            <a href="/" style="background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0e17;"><i class="bi bi-calendar-check"></i> Book Online</a>
+            <a href="https://wa.me/14352146939" target="_blank" style="background:#25d366;color:#fff;"><i class="bi bi-whatsapp"></i> WhatsApp Us</a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2026 Rio Transportation LLC · Park City, Utah · <a href="tel:+14352146939">(435) 214-6939</a> · <a href="/">Home</a> · <a href="/blog">Blog</a></p>
+</footer>
+</body>
+</html>
