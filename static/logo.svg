@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 80">
+  <defs>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#c9a84c"/>
+      <stop offset="100%" style="stop-color:#e8c65a"/>
+    </linearGradient>
+  </defs>
+  <!-- Icon: Mountain + Road -->
+  <g transform="translate(10,8)">
+    <!-- Mountain -->
+    <path d="M0,55 L22,12 L32,28 L42,8 L64,55 Z" fill="url(#gold)" opacity="0.9"/>
+    <!-- Snow cap -->
+    <path d="M42,8 L48,20 L36,20 Z" fill="#ffffff" opacity="0.8"/>
+    <!-- Road lines -->
+    <path d="M24,55 L30,35 L34,55" fill="none" stroke="#0a0e17" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+  <!-- Text: RIO -->
+  <text x="82" y="38" font-family="sans-serif" font-weight="900" font-size="28" fill="#ffffff" letter-spacing="-1">RIO</text>
+  <!-- Text: TRANSPORTATION -->
+  <text x="82" y="56" font-family="sans-serif" font-weight="600" font-size="11" fill="#c9a84c" letter-spacing="3">TRANSPORTATION</text>
+  <!-- Divider -->
+  <line x1="210" y1="18" x2="210" y2="58" stroke="#c9a84c" stroke-width="1" opacity="0.3"/>
+  <!-- Text: Park City Trips -->
+  <text x="222" y="35" font-family="sans-serif" font-weight="700" font-size="13" fill="#94a3b8">Park City</text>
+  <text x="222" y="52" font-family="sans-serif" font-weight="800" font-size="15" fill="#c9a84c">Trips</text>
+</svg>

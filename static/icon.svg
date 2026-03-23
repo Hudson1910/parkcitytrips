@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#c9a84c"/>
+      <stop offset="100%" style="stop-color:#e8c65a"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#0a0e17"/>
+  <g transform="translate(8,10)">
+    <path d="M0,42 L18,8 L26,20 L34,4 L48,42 Z" fill="url(#g)" opacity="0.9"/>
+    <path d="M34,4 L39,14 L29,14 Z" fill="#ffffff" opacity="0.7"/>
+    <path d="M18,42 L23,26 L27,42" fill="none" stroke="#0a0e17" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+  <text x="32" y="58" font-family="sans-serif" font-weight="900" font-size="10" fill="#ffffff" text-anchor="middle" letter-spacing="1">RIO</text>
+</svg>
