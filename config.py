@@ -22,8 +22,9 @@ VEHICLES = [
         'price': 129,
         'passengers': 6,
         'bags': 6,
-        'features': ['Leather seats', 'Climate control', 'USB charging', 'Bottled water'],
+        'features': ['Leather seats', 'Climate control', 'USB charging', 'Bottled water', 'Free car seats', 'Flight tracking'],
         'image': 'mid-suv.jpg',
+        'tag': 'Best Value',
     },
     {
         'id': 'premier-suv',
@@ -32,8 +33,9 @@ VEHICLES = [
         'price': 189,
         'passengers': 7,
         'bags': 7,
-        'features': ['Leather seats', 'Captain chairs', 'WiFi', 'USB charging', 'Bottled water'],
+        'features': ['Leather seats', 'Captain chairs', 'WiFi', 'USB charging', 'Bottled water', 'Free car seats', 'Flight tracking'],
         'image': 'premier-suv.jpg',
+        'tag': 'Most Popular',
     },
     {
         'id': 'luxury-suv',
@@ -42,8 +44,9 @@ VEHICLES = [
         'price': 220,
         'passengers': 6,
         'bags': 6,
-        'features': ['Premium leather', 'Heated seats', 'WiFi', 'USB charging', 'Bottled water', 'Privacy glass'],
+        'features': ['Premium leather', 'Heated seats', 'WiFi', 'USB charging', 'Bottled water', 'Privacy glass', 'Free car seats', 'Flight tracking', 'Beverages & snacks'],
         'image': 'luxury-suv.jpg',
+        'tag': 'Premium',
     },
 ]
 

@@ -322,6 +322,7 @@
     <div class="nav-links">
         <a href="#services">Services</a>
         <a href="#fleet">Fleet</a>
+        <a href="#why">Why Us</a>
         <a href="#rates">Rates</a>
         <a href="#reviews">Reviews</a>
         <a href="#about">About</a>
@@ -352,12 +353,13 @@
     <div class="hero-glow-1"></div>
     <div class="hero-glow-2"></div>
     <div class="hero-content ani">
-        <div class="hero-badge"><i class="bi bi-shield-check"></i> Licensed & Insured in Utah</div>
-        <h1>Luxury Transportation<br>in <b>Park City</b></h1>
-        <p>Premium private SUV service between Salt Lake City Airport and Park City. Professional drivers, luxury vehicles, all-inclusive pricing.</p>
+        <div class="hero-badge"><i class="bi bi-shield-check"></i> Park City's Best Value — From $129</div>
+        <h1>Luxury Airport Transfers<br>to <b>Park City</b></h1>
+        <p>Private SUV service from Salt Lake City Airport to Park City from just $129 — up to 45% less than competitors. All-inclusive pricing: driver, taxes, fees, bottled water, and complimentary car seats.</p>
         <div class="hero-btns">
-            <a href="#book" class="btn-gold"><i class="bi bi-calendar-check"></i> Book Your Ride</a>
+            <a href="#book" class="btn-gold"><i class="bi bi-calendar-check"></i> Book Now — Save 10% Online</a>
             <a href="tel:+14352146939" class="btn-outline"><i class="bi bi-telephone-fill"></i> (435) 214-6939</a>
+            <a href="https://wa.me/14352146939?text=Hi!%20I%20need%20a%20ride%20to%20Park%20City." target="_blank" class="btn-outline" style="border-color:rgba(37,211,102,.4);color:#25d366;"><i class="bi bi-whatsapp"></i> WhatsApp</a>
         </div>
         <div class="hero-stats">
             <div class="hero-stat"><div class="num" data-count="9000+">0</div><div class="label">Rides Completed</div></div>
@@ -379,32 +381,32 @@
         <div class="svc shine gradient-border">
             <div class="svc-icon"><i class="bi bi-airplane-fill"></i></div>
             <h3>Airport Transfers</h3>
-            <p>Private luxury SUV service between Salt Lake City International Airport and Park City. Driver texts before your flight lands.</p>
+            <p>Private luxury SUV from SLC Airport to Park City. Real-time flight monitoring — driver tracks your arrival and texts before landing. No shared rides, no stops.</p>
         </div>
         <div class="svc shine gradient-border">
             <div class="svc-icon"><i class="bi bi-snow2"></i></div>
             <h3>Ski Resort Shuttles</h3>
-            <p>Door-to-door service to Park City Mountain, Deer Valley, and all major ski resorts in the area.</p>
+            <p>Direct door-to-door service to Park City Mountain, Deer Valley, Canyons Village, and all Wasatch resorts. Plenty of room for skis and boards.</p>
         </div>
         <div class="svc shine gradient-border">
             <div class="svc-icon"><i class="bi bi-geo-alt-fill"></i></div>
             <h3>Local Transportation</h3>
-            <p>Hourly service around Park City for dining, shopping on Main Street, or exploring the area.</p>
+            <p>Hourly as-directed service around Park City. Dining on Main Street, shopping, nightlife — your dedicated driver for the evening. Beverages included.</p>
         </div>
         <div class="svc shine gradient-border">
             <div class="svc-icon"><i class="bi bi-heart-fill"></i></div>
             <h3>Weddings & Events</h3>
-            <p>Elegant transportation for your special day. Luxury SUVs for the wedding party and guests.</p>
+            <p>Elegant luxury SUVs for your special day. Bridal party, guest shuttles, rehearsal dinners, airport pickups for out-of-town guests. 10% wedding discount.</p>
         </div>
         <div class="svc shine gradient-border">
             <div class="svc-icon"><i class="bi bi-building"></i></div>
             <h3>Corporate Groups</h3>
-            <p>Professional transportation for corporate retreats, conferences, and team events in Park City.</p>
+            <p>Professional transportation for corporate retreats, conferences, and team events. Consolidated billing, group coordination, and punctual service.</p>
         </div>
         <div class="svc shine gradient-border">
             <div class="svc-icon"><i class="bi bi-camera-fill"></i></div>
-            <h3>Custom Tours</h3>
-            <p>Scenic tours of Park City, Heber Valley, Mirror Lake, and the stunning Wasatch Mountains.</p>
+            <h3>Concierge Service</h3>
+            <p>Submit your trip itinerary and we plan all your rides. Dedicated driver for your entire stay. Scenic tours of Park City, Heber Valley, and the Wasatch Mountains.</p>
         </div>
     </div>
 </section>
@@ -419,6 +421,7 @@
     <div class="fleet-grid">
         {% for v in config.VEHICLES %}
         <div class="fleet-card">
+            {% if v.tag %}<div style="position:absolute;top:12px;right:12px;padding:4px 12px;border-radius:6px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;z-index:1;background:{% if v.tag == 'Most Popular' %}var(--gold){% elif v.tag == 'Premium' %}rgba(201,168,76,.15){% else %}rgba(6,214,160,.15){% endif %};color:{% if v.tag == 'Most Popular' %}#0a0e17{% elif v.tag == 'Premium' %}var(--gold){% else %}#06d6a0{% endif %};">{{ v.tag }}</div>{% endif %}
             <div class="fleet-img">
                 <i class="bi bi-car-front-fill"></i>
             </div>
@@ -443,6 +446,74 @@
             </div>
         </div>
         {% endfor %}
+    </div>
+</section>
+
+<!-- WHY CHOOSE US — Competitive Advantages -->
+<section class="section ani" id="why">
+    <div class="sec-head">
+        <div class="sec-tag"><i class="bi bi-trophy-fill"></i> Why Choose Rio</div>
+        <h2>Best Value in Park City</h2>
+        <p>See how we compare to other transportation services</p>
+    </div>
+    <div class="price-table" style="margin-bottom:30px;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th style="color:var(--gold);">Rio Transportation</th>
+                    <th>Competitor A</th>
+                    <th>Competitor B</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>SUV Price (SLC → Park City)</td><td class="price-cell" style="color:#06d6a0;">$129 - $220</td><td>$199 + gratuity</td><td>$232</td></tr>
+                <tr><td>Pricing</td><td style="color:var(--gold);font-weight:700;">All-inclusive</td><td>+ gratuity extra</td><td>All-inclusive</td></tr>
+                <tr><td>Flight Monitoring</td><td style="color:#06d6a0;"><i class="bi bi-check-circle-fill"></i> Yes</td><td><i class="bi bi-check-circle-fill" style="color:var(--t3);"></i></td><td><i class="bi bi-check-circle-fill" style="color:var(--t3);"></i></td></tr>
+                <tr><td>Bottled Water</td><td style="color:#06d6a0;"><i class="bi bi-check-circle-fill"></i> Complimentary</td><td><i class="bi bi-x-circle" style="color:var(--t4);"></i></td><td><i class="bi bi-check-circle-fill" style="color:var(--t3);"></i></td></tr>
+                <tr><td>Car Seats for Kids</td><td style="color:#06d6a0;"><i class="bi bi-check-circle-fill"></i> Free</td><td><i class="bi bi-x-circle" style="color:var(--t4);"></i></td><td><i class="bi bi-check-circle-fill" style="color:var(--t3);"></i></td></tr>
+                <tr><td>Online Booking Discount</td><td style="color:#06d6a0;font-weight:700;">10% Off</td><td>10-20% off</td><td><i class="bi bi-x-circle" style="color:var(--t4);"></i></td></tr>
+                <tr><td>No Shared Rides</td><td style="color:#06d6a0;"><i class="bi bi-check-circle-fill"></i> Private</td><td><i class="bi bi-check-circle-fill" style="color:var(--t3);"></i></td><td><i class="bi bi-check-circle-fill" style="color:var(--t3);"></i></td></tr>
+                <tr><td>Wedding Discount</td><td style="color:#06d6a0;font-weight:700;">10% Off</td><td><i class="bi bi-x-circle" style="color:var(--t4);"></i></td><td>10%</td></tr>
+                <tr><td>Concierge / Itinerary Service</td><td style="color:#06d6a0;"><i class="bi bi-check-circle-fill"></i> Yes</td><td><i class="bi bi-x-circle" style="color:var(--t4);"></i></td><td><i class="bi bi-check-circle-fill" style="color:var(--t3);"></i></td></tr>
+                <tr><td>WhatsApp Support</td><td style="color:#06d6a0;"><i class="bi bi-check-circle-fill"></i> 24/7</td><td><i class="bi bi-x-circle" style="color:var(--t4);"></i></td><td><i class="bi bi-x-circle" style="color:var(--t4);"></i></td></tr>
+                <tr><td>Multilingual (EN/ES/PT)</td><td style="color:#06d6a0;"><i class="bi bi-check-circle-fill"></i> Yes</td><td><i class="bi bi-x-circle" style="color:var(--t4);"></i></td><td><i class="bi bi-x-circle" style="color:var(--t4);"></i></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Included in every ride -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;max-width:900px;margin:0 auto;">
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center;">
+            <i class="bi bi-car-front-fill" style="font-size:24px;color:var(--gold);display:block;margin-bottom:8px;"></i>
+            <div style="font-size:13px;font-weight:700;color:var(--w);">Private SUV</div>
+            <div style="font-size:11px;color:var(--t3);margin-top:4px;">No shared rides</div>
+        </div>
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center;">
+            <i class="bi bi-person-badge" style="font-size:24px;color:var(--gold);display:block;margin-bottom:8px;"></i>
+            <div style="font-size:13px;font-weight:700;color:var(--w);">Pro Driver</div>
+            <div style="font-size:11px;color:var(--t3);margin-top:4px;">Local knowledge</div>
+        </div>
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center;">
+            <i class="bi bi-droplet-fill" style="font-size:24px;color:var(--gold);display:block;margin-bottom:8px;"></i>
+            <div style="font-size:13px;font-weight:700;color:var(--w);">Bottled Water</div>
+            <div style="font-size:11px;color:var(--t3);margin-top:4px;">Complimentary</div>
+        </div>
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center;">
+            <i class="bi bi-ev-front-fill" style="font-size:24px;color:var(--gold);display:block;margin-bottom:8px;"></i>
+            <div style="font-size:13px;font-weight:700;color:var(--w);">Car Seats</div>
+            <div style="font-size:11px;color:var(--t3);margin-top:4px;">Free for kids</div>
+        </div>
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center;">
+            <i class="bi bi-airplane-engines" style="font-size:24px;color:var(--gold);display:block;margin-bottom:8px;"></i>
+            <div style="font-size:13px;font-weight:700;color:var(--w);">Flight Tracking</div>
+            <div style="font-size:11px;color:var(--t3);margin-top:4px;">Real-time monitoring</div>
+        </div>
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center;">
+            <i class="bi bi-receipt" style="font-size:24px;color:var(--gold);display:block;margin-bottom:8px;"></i>
+            <div style="font-size:13px;font-weight:700;color:var(--w);">All Taxes & Fees</div>
+            <div style="font-size:11px;color:var(--t3);margin-top:4px;">No surprises</div>
+        </div>
     </div>
 </section>
 
@@ -492,7 +563,8 @@
         </table>
         <div class="price-note">
             <i class="bi bi-check-circle-fill" style="color:var(--gold);margin-right:4px;"></i>
-            Rates include: Private luxury vehicle, professional driver, all taxes & fees, bottled water. Gratuity at passenger discretion.
+            <strong>All-inclusive:</strong> Private luxury vehicle, professional driver, all taxes & fees, bottled water, complimentary car seats for children. Gratuity at passenger discretion.
+            <strong style="color:var(--gold);margin-left:8px;">Book online and save 10%!</strong>
         </div>
     </div>
 </section>
