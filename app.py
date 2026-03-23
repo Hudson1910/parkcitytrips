@@ -1,6 +1,7 @@
 """Park City Trips — Luxury Transportation in Park City, Utah."""
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, abort
 import config
+from blog_data import POSTS
 
 app = Flask(__name__)
 app.secret_key = config.SECRET_KEY
@@ -9,6 +10,19 @@ app.secret_key = config.SECRET_KEY
 @app.route('/')
 def home():
     return render_template('home.html', config=config)
+
+
+@app.route('/blog')
+def blog():
+    return render_template('blog.html', posts=POSTS, config=config)
+
+
+@app.route('/blog/<slug>')
+def blog_post(slug):
+    post = next((p for p in POSTS if p['slug'] == slug), None)
+    if not post:
+        abort(404)
+    return render_template('blog_post.html', post=post, config=config)
 
 
 @app.route('/api/quote', methods=['POST'])
