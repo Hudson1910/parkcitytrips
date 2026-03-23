@@ -217,18 +217,34 @@
         .price-note{padding:16px 20px;font-size:12px;color:var(--t3);border-top:1px solid var(--border);background:rgba(201,168,76,.02);}
         @media(max-width:640px){.price-table{overflow-x:auto;}.price-table table{min-width:500px;}}
 
-        /* REVIEWS */
-        .rev-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
-        .rev{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:28px;transition:all .4s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden;}
-        .rev::before{content:'"';position:absolute;top:-10px;right:16px;font-family:Outfit;font-size:120px;font-weight:900;color:rgba(201,168,76,.04);pointer-events:none;line-height:1;}
-        .rev:hover{border-color:rgba(201,168,76,.2);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.3);}
-        .rev-stars{color:var(--gold);font-size:14px;letter-spacing:2px;margin-bottom:12px;}
-        .rev-text{font-size:14px;color:var(--t2);line-height:1.6;margin-bottom:16px;font-style:italic;}
-        .rev-author{display:flex;align-items:center;gap:12px;}
-        .rev-avatar{width:42px;height:42px;border-radius:50%;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-family:Outfit;font-weight:800;font-size:16px;color:var(--gold);}
+        /* REVIEWS — Google style */
+        .rev-header{text-align:center;margin-bottom:32px;}
+        .rev-header .rating-big{font-family:Outfit;font-size:48px;font-weight:900;color:var(--w);margin-bottom:4px;}
+        .rev-header .stars-big{color:var(--gold);font-size:28px;letter-spacing:3px;margin-bottom:6px;}
+        .rev-header .rating-label{font-size:14px;font-weight:800;color:var(--w);text-transform:uppercase;letter-spacing:2px;margin-bottom:4px;}
+        .rev-header .rating-count{font-size:13px;color:var(--t3);}
+        .rev-header .google-badge{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-size:18px;font-weight:700;}
+        .rev-header .google-badge span{color:var(--t2);}
+        .rev-carousel{position:relative;overflow:hidden;padding:0 40px;}
+        .rev-track{display:flex;gap:16px;transition:transform .5s cubic-bezier(.16,1,.3,1);overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:10px 0;}
+        .rev-track::-webkit-scrollbar{display:none;}
+        .rev{background:var(--bg3);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:22px;min-width:320px;max-width:380px;flex-shrink:0;scroll-snap-align:start;transition:all .3s;}
+        .rev:hover{border-color:rgba(201,168,76,.15);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.3);}
+        .rev-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+        .rev-author{display:flex;align-items:center;gap:10px;}
+        .rev-avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:Outfit;font-weight:800;font-size:16px;color:#fff;flex-shrink:0;}
         .rev-name{font-size:14px;font-weight:700;color:var(--w);}
-        .rev-role{font-size:11px;color:var(--t3);}
-        @media(max-width:640px){.rev-grid{grid-template-columns:1fr;}}
+        .rev-date{font-size:11px;color:var(--t3);}
+        .rev-google{width:20px;height:20px;flex-shrink:0;}
+        .rev-stars{display:flex;align-items:center;gap:4px;margin-bottom:10px;}
+        .rev-stars i{color:var(--gold);font-size:14px;}
+        .rev-verified{width:14px;height:14px;color:#4285f4;}
+        .rev-text{font-size:13px;color:var(--t2);line-height:1.6;}
+        .rev-nav{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.15);color:var(--gold);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;z-index:2;}
+        .rev-nav:hover{background:var(--gold);color:#0a0e17;}
+        .rev-nav.prev{left:0;}
+        .rev-nav.next{right:0;}
+        @media(max-width:640px){.rev{min-width:280px;}.rev-carousel{padding:0 10px;}.rev-nav{display:none;}}
 
         /* ABOUT */
         .about-box{display:flex;gap:40px;align-items:center;background:var(--bg2);border:1px solid var(--border);border-radius:24px;padding:40px;overflow:hidden;}
@@ -300,7 +316,7 @@
 <!-- NAV -->
 <nav id="nav">
     <a href="/" class="logo">
-        <div class="logo-icon"><img src="/static/icon.svg" alt="Rio"></div>
+        <img src="/static/logo-sm.png" alt="Rio Transportation" style="height:44px;width:44px;border-radius:10px;object-fit:contain;">
         <span>Rio <span class="gold">Transportation</span></span>
     </a>
     <div class="nav-links">
@@ -485,41 +501,76 @@
 <section class="section ani" id="reviews">
     <div class="sec-head">
         <div class="sec-tag"><i class="bi bi-chat-quote-fill"></i> Client Reviews</div>
-        <h2>What Our Guests Say</h2>
+        <h2>Why Our Guests Choose Rio</h2>
     </div>
-    <div class="rev-grid">
-        <div class="rev">
-            <div class="rev-stars">★★★★★</div>
-            <div class="rev-text">"Rio is an excellent car service. We had Hudson as our driver in Park City and he did a fantastic job. I would recommend Rio to anyone who is looking for first class service at a fair price!"</div>
-            <div class="rev-author">
-                <div class="rev-avatar">BB</div>
-                <div><div class="rev-name">Bradley Bostic</div><div class="rev-role">Airport Transfer</div></div>
+    <div class="rev-header">
+        <div class="rating-label">Excellent</div>
+        <div class="stars-big">★★★★★</div>
+        <div class="rating-count">Based on <strong>25 reviews</strong></div>
+        <div class="google-badge">
+            <span style="color:#4285f4;">G</span><span style="color:#ea4335;">o</span><span style="color:#fbbc05;">o</span><span style="color:#4285f4;">g</span><span style="color:#34a853;">l</span><span style="color:#ea4335;">e</span>
+        </div>
+    </div>
+    <div class="rev-carousel">
+        <button class="rev-nav prev" onclick="scrollRevs(-1)"><i class="bi bi-chevron-left"></i></button>
+        <div class="rev-track" id="revTrack">
+            <div class="rev">
+                <div class="rev-top">
+                    <div class="rev-author">
+                        <div class="rev-avatar" style="background:#e17055;">B</div>
+                        <div><div class="rev-name">Bradley Bostic</div><div class="rev-date">2 months ago</div></div>
+                    </div>
+                    <svg class="rev-google" viewBox="0 0 24 24"><path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34a853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#fbbc05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#ea4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                </div>
+                <div class="rev-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i> <svg class="rev-verified" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#4285f4"/><path d="M10 15.17l-3.59-3.58L5 13l5 5 9-9-1.41-1.42z" fill="#fff"/></svg></div>
+                <div class="rev-text">Rio is an excellent car service. We had Hudson as our driver in Park City and he did a fantastic job. I would recommend Rio to anyone who is looking for first class service at a fair price!</div>
+            </div>
+            <div class="rev">
+                <div class="rev-top">
+                    <div class="rev-author">
+                        <div class="rev-avatar" style="background:#6c5ce7;">M</div>
+                        <div><div class="rev-name">Mert Özdemir</div><div class="rev-date">2 months ago</div></div>
+                    </div>
+                    <svg class="rev-google" viewBox="0 0 24 24"><path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34a853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#fbbc05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#ea4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                </div>
+                <div class="rev-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i> <svg class="rev-verified" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#4285f4"/><path d="M10 15.17l-3.59-3.58L5 13l5 5 9-9-1.41-1.42z" fill="#fff"/></svg></div>
+                <div class="rev-text">Outstanding service from start to finish. The vehicle was spotless, comfortable, and clearly well-maintained. The driver was professional, punctual, and knew exactly how to handle timing and traffic. Highly recommended.</div>
+            </div>
+            <div class="rev">
+                <div class="rev-top">
+                    <div class="rev-author">
+                        <div class="rev-avatar" style="background:#00b894;">M</div>
+                        <div><div class="rev-name">Melanie Drake</div><div class="rev-date">3 months ago</div></div>
+                    </div>
+                    <svg class="rev-google" viewBox="0 0 24 24"><path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34a853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#fbbc05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#ea4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                </div>
+                <div class="rev-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i> <svg class="rev-verified" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#4285f4"/><path d="M10 15.17l-3.59-3.58L5 13l5 5 9-9-1.41-1.42z" fill="#fff"/></svg></div>
+                <div class="rev-text">Excellent Service! We've used them several times for airport runs. They are prompt, patient, and super helpful with car seats and strollers. These guys went above and beyond to accommodate our family.</div>
+            </div>
+            <div class="rev">
+                <div class="rev-top">
+                    <div class="rev-author">
+                        <div class="rev-avatar" style="background:#fdcb6e;">B</div>
+                        <div><div class="rev-name">Briana Lieberman</div><div class="rev-date">1 year ago</div></div>
+                    </div>
+                    <svg class="rev-google" viewBox="0 0 24 24"><path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34a853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#fbbc05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#ea4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                </div>
+                <div class="rev-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i> <svg class="rev-verified" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#4285f4"/><path d="M10 15.17l-3.59-3.58L5 13l5 5 9-9-1.41-1.42z" fill="#fff"/></svg></div>
+                <div class="rev-text">We had a rental car fiasco and found ourselves needing a ride to the airport last minute. Great experience with Rio. Everything was very smooth. The price was also quite a bit less than other quotes. Highly recommend!</div>
+            </div>
+            <div class="rev">
+                <div class="rev-top">
+                    <div class="rev-author">
+                        <div class="rev-avatar" style="background:#0984e3;">N</div>
+                        <div><div class="rev-name">Nasser Len</div><div class="rev-date">1 year ago</div></div>
+                    </div>
+                    <svg class="rev-google" viewBox="0 0 24 24"><path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34a853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#fbbc05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#ea4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                </div>
+                <div class="rev-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i> <svg class="rev-verified" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#4285f4"/><path d="M10 15.17l-3.59-3.58L5 13l5 5 9-9-1.41-1.42z" fill="#fff"/></svg></div>
+                <div class="rev-text">Excellent driving. Excellent service. Very nice Suburbans (GMC's). I highly recommend Rio Transportation for Park City trips.</div>
             </div>
         </div>
-        <div class="rev">
-            <div class="rev-stars">★★★★★</div>
-            <div class="rev-text">"Excellent Service! We've used them several times to get friends and family to and from the airport. They are prompt, patient, and super helpful with getting car seats and strollers. These guys went above and beyond to accommodate our family, including picking up my car seat at my house the day before going to pick up my grandbabies from the airport."</div>
-            <div class="rev-author">
-                <div class="rev-avatar">MD</div>
-                <div><div class="rev-name">Melanie Drake</div><div class="rev-role">Family Airport Transfer</div></div>
-            </div>
-        </div>
-        <div class="rev">
-            <div class="rev-stars">★★★★★</div>
-            <div class="rev-text">"We had a rental car fiasco — our car had to be towed and the rental company left us high and dry. We found ourselves having to book a ride back to the airport on the last day of our trip. We had a great experience with Rio. Everything was very smooth. The price was also quite a bit less than other quotes we got. Would highly recommend!"</div>
-            <div class="rev-author">
-                <div class="rev-avatar">BL</div>
-                <div><div class="rev-name">Briana Lieberman</div><div class="rev-role">Airport Transfer</div></div>
-            </div>
-        </div>
-        <div class="rev">
-            <div class="rev-stars">★★★★★</div>
-            <div class="rev-text">"Excellent driving. Excellent service. Very nice Suburbans (GMC's). I highly recommend Rio Transportation for Park City trips."</div>
-            <div class="rev-author">
-                <div class="rev-avatar">NL</div>
-                <div><div class="rev-name">Nasser Len</div><div class="rev-role">Ski Season</div></div>
-            </div>
-        </div>
+        <button class="rev-nav next" onclick="scrollRevs(1)"><i class="bi bi-chevron-right"></i></button>
     </div>
 </section>
 
@@ -695,6 +746,15 @@ if(statsEl)counterObs.observe(statsEl);
 document.querySelectorAll('.svc-grid .svc').forEach((c,i)=>c.style.transitionDelay=i*.08+'s');
 document.querySelectorAll('.fleet-grid .fleet-card').forEach((c,i)=>c.style.transitionDelay=i*.12+'s');
 document.querySelectorAll('.rev-grid .rev').forEach((c,i)=>c.style.transitionDelay=i*.1+'s');
+
+// REVIEW CAROUSEL
+function scrollRevs(dir){
+    const track=document.getElementById('revTrack');
+    if(!track)return;
+    const card=track.querySelector('.rev');
+    const w=card?card.offsetWidth+16:350;
+    track.scrollBy({left:dir*w,behavior:'smooth'});
+}
 
 // CONTACT FORM
 function submitContact(e){
