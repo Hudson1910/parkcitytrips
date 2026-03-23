@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Park City Trips — Luxury Airport Transportation | SLC to Park City</title>
+    <meta name="description" content="Premium luxury transportation between Salt Lake City Airport and Park City, Utah. Private SUVs, professional drivers. 9,000+ rides. Book now.">
+    <meta name="theme-color" content="#0a0e17">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root{--bg:#0a0e17;--bg2:#0f1420;--bg3:#151c2e;--bg4:#1c2540;
+        --gold:#c9a84c;--gold2:#e8c65a;--accent:#c9a84c;
+        --w:#fff;--t1:#e2e8f0;--t2:#94a3b8;--t3:#64748b;--t4:#475569;--t5:#334155;
+        --border:rgba(201,168,76,.08);}
+        *{margin:0;padding:0;box-sizing:border-box;}
+        html{scroll-behavior:smooth;}
+        body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+        h1,h2,h3,h4{font-family:'Outfit',sans-serif;}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+        .ani{opacity:0;transform:translateY(20px);transition:all .7s ease;}
+        .ani.v{opacity:1;transform:translateY(0);}
+
+        /* NAV */
+        nav{position:fixed;top:0;left:0;right:0;z-index:200;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;transition:all .3s;}
+        nav.scrolled{background:rgba(10,14,23,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+        .logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+        .logo-icon{width:42px;height:42px;background:linear-gradient(135deg,var(--gold),var(--gold2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:Outfit;font-weight:900;font-size:16px;color:#0a0e17;}
+        .logo span{font-family:Outfit;font-weight:800;font-size:22px;color:var(--w);letter-spacing:-0.5px;}
+        .logo .gold{color:var(--gold);}
+        .nav-links{display:flex;align-items:center;gap:28px;}
+        .nav-links a{color:var(--t2);text-decoration:none;font-size:13px;font-weight:600;transition:color .2s;letter-spacing:.3px;}
+        .nav-links a:hover{color:var(--gold);}
+        .nav-cta{padding:10px 24px;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0e17;font-size:13px;font-weight:800;text-decoration:none;transition:all .2s;font-family:Inter;}
+        .nav-cta:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(201,168,76,.25);}
+        @media(max-width:900px){.nav-links{display:none;}nav{padding:0 20px;}}
+
+        /* HERO */
+        .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:100px 20px 80px;}
+        .hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1548041347-390744c58da2?w=1600&h=900&fit=crop') center/cover no-repeat;filter:brightness(.3);}
+        .hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,14,23,.4) 0%,rgba(10,14,23,.8) 70%,var(--bg) 100%);}
+        .hero-content{position:relative;z-index:1;text-align:center;max-width:800px;}
+        .hero-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 16px;border-radius:50px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);color:var(--gold);font-size:12px;font-weight:700;margin-bottom:24px;letter-spacing:1px;text-transform:uppercase;}
+        .hero h1{font-size:62px;font-weight:900;letter-spacing:-2.5px;line-height:1.05;color:var(--w);margin-bottom:18px;}
+        .hero h1 b{background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+        .hero p{font-size:18px;color:var(--t3);line-height:1.6;max-width:560px;margin:0 auto 36px;}
+        .hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+        .btn-gold{padding:14px 32px;border-radius:12px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0e17;font-size:15px;font-weight:800;text-decoration:none;transition:all .2s;font-family:Inter;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;}
+        .btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(201,168,76,.3);}
+        .btn-outline{padding:14px 32px;border-radius:12px;background:transparent;border:1.5px solid rgba(201,168,76,.3);color:var(--gold);font-size:15px;font-weight:700;text-decoration:none;transition:all .2s;font-family:Inter;display:inline-flex;align-items:center;gap:8px;}
+        .btn-outline:hover{border-color:var(--gold);background:rgba(201,168,76,.05);}
+        .hero-stats{display:flex;gap:40px;justify-content:center;margin-top:48px;}
+        .hero-stat{text-align:center;}
+        .hero-stat .num{font-family:Outfit;font-size:32px;font-weight:900;color:var(--gold);}
+        .hero-stat .label{font-size:12px;color:var(--t3);margin-top:2px;text-transform:uppercase;letter-spacing:.5px;}
+        @media(max-width:640px){.hero h1{font-size:36px;letter-spacing:-1.5px;}.hero p{font-size:15px;}.hero-stats{gap:24px;}.hero-stat .num{font-size:24px;}}
+
+        /* SECTION */
+        .section{padding:100px 20px;max-width:1100px;margin:0 auto;}
+        .sec-head{text-align:center;margin-bottom:56px;}
+        .sec-tag{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:50px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;background:rgba(201,168,76,.08);color:var(--gold);border:1px solid rgba(201,168,76,.12);}
+        .sec-head h2{font-size:38px;font-weight:800;color:var(--w);letter-spacing:-1px;margin-bottom:10px;}
+        .sec-head p{font-size:15px;color:var(--t3);max-width:500px;margin:0 auto;}
+        @media(max-width:640px){.sec-head h2{font-size:28px;}.section{padding:60px 14px;}}
+
+        /* SERVICES */
+        .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+        .svc{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:32px 26px;text-align:center;transition:all .3s;}
+        .svc:hover{transform:translateY(-4px);border-color:rgba(201,168,76,.2);box-shadow:0 12px 40px rgba(0,0,0,.3);}
+        .svc-icon{width:56px;height:56px;border-radius:14px;background:rgba(201,168,76,.08);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:24px;color:var(--gold);}
+        .svc h3{font-size:17px;font-weight:700;color:var(--w);margin-bottom:8px;}
+        .svc p{font-size:13px;color:var(--t3);line-height:1.5;}
+        @media(max-width:900px){.svc-grid{grid-template-columns:1fr;}}
+
+        /* FLEET */
+        .fleet-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+        .fleet-card{background:var(--bg2);border:1px solid var(--border);border-radius:20px;overflow:hidden;transition:all .3s;position:relative;}
+        .fleet-card:hover{transform:translateY(-4px);border-color:rgba(201,168,76,.2);box-shadow:0 12px 40px rgba(0,0,0,.3);}
+        .fleet-img{height:200px;background:var(--bg3);display:flex;align-items:center;justify-content:center;overflow:hidden;}
+        .fleet-img img{width:100%;height:100%;object-fit:cover;}
+        .fleet-img i{font-size:48px;color:rgba(201,168,76,.2);}
+        .fleet-info{padding:22px;}
+        .fleet-name{font-family:Outfit;font-size:20px;font-weight:800;color:var(--w);margin-bottom:4px;}
+        .fleet-model{font-size:12px;color:var(--t3);margin-bottom:14px;}
+        .fleet-specs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;}
+        .fleet-spec{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;background:rgba(201,168,76,.06);color:var(--gold);border:1px solid rgba(201,168,76,.1);}
+        .fleet-spec i{font-size:12px;}
+        .fleet-features{list-style:none;margin-bottom:18px;}
+        .fleet-features li{font-size:12px;color:var(--t3);padding:3px 0;display:flex;align-items:center;gap:6px;}
+        .fleet-features li i{color:var(--gold);font-size:10px;}
+        .fleet-price{display:flex;align-items:baseline;gap:4px;}
+        .fleet-price .from{font-size:12px;color:var(--t3);}
+        .fleet-price .amt{font-family:Outfit;font-size:32px;font-weight:900;color:var(--gold);}
+        .fleet-price .trip{font-size:12px;color:var(--t3);}
+        .fleet-book{display:block;margin-top:14px;padding:12px;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0e17;font-size:13px;font-weight:800;text-align:center;text-decoration:none;transition:all .2s;font-family:Inter;}
+        .fleet-book:hover{box-shadow:0 4px 16px rgba(201,168,76,.3);}
+        @media(max-width:900px){.fleet-grid{grid-template-columns:1fr;}}
+
+        /* PRICING TABLE */
+        .price-table{background:var(--bg2);border:1px solid var(--border);border-radius:20px;overflow:hidden;}
+        .price-table table{width:100%;border-collapse:collapse;}
+        .price-table th{padding:16px 20px;text-align:left;font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;background:rgba(201,168,76,.04);border-bottom:1px solid var(--border);}
+        .price-table td{padding:14px 20px;font-size:14px;color:var(--t1);border-bottom:1px solid rgba(255,255,255,.03);}
+        .price-table tr:last-child td{border-bottom:none;}
+        .price-table tr:hover td{background:rgba(201,168,76,.02);}
+        .price-table .price-cell{font-family:Outfit;font-weight:800;font-size:18px;color:var(--gold);}
+        .price-note{padding:16px 20px;font-size:12px;color:var(--t3);border-top:1px solid var(--border);background:rgba(201,168,76,.02);}
+        @media(max-width:640px){.price-table{overflow-x:auto;}.price-table table{min-width:500px;}}
+
+        /* REVIEWS */
+        .rev-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+        .rev{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:28px;transition:all .3s;}
+        .rev:hover{border-color:rgba(201,168,76,.15);}
+        .rev-stars{color:var(--gold);font-size:14px;letter-spacing:2px;margin-bottom:12px;}
+        .rev-text{font-size:14px;color:var(--t2);line-height:1.6;margin-bottom:16px;font-style:italic;}
+        .rev-author{display:flex;align-items:center;gap:12px;}
+        .rev-avatar{width:42px;height:42px;border-radius:50%;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-family:Outfit;font-weight:800;font-size:16px;color:var(--gold);}
+        .rev-name{font-size:14px;font-weight:700;color:var(--w);}
+        .rev-role{font-size:11px;color:var(--t3);}
+        @media(max-width:640px){.rev-grid{grid-template-columns:1fr;}}
+
+        /* ABOUT */
+        .about-box{display:flex;gap:40px;align-items:center;background:var(--bg2);border:1px solid var(--border);border-radius:24px;padding:40px;overflow:hidden;}
+        .about-img{width:200px;height:200px;border-radius:50%;object-fit:cover;flex-shrink:0;border:3px solid rgba(201,168,76,.2);}
+        .about-content h3{font-size:24px;font-weight:800;color:var(--w);margin-bottom:4px;}
+        .about-content .role{font-size:13px;color:var(--gold);font-weight:600;margin-bottom:14px;}
+        .about-content p{font-size:14px;color:var(--t3);line-height:1.7;margin-bottom:12px;}
+        .about-btns{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;}
+        .about-btns a{padding:10px 20px;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none;display:flex;align-items:center;gap:6px;transition:all .2s;}
+        .btn-wa{background:#25d366;color:#fff;}
+        .btn-wa:hover{box-shadow:0 4px 16px rgba(37,211,102,.3);}
+        .btn-phone{background:rgba(201,168,76,.08);color:var(--gold);border:1px solid rgba(201,168,76,.15);}
+        @media(max-width:640px){.about-box{flex-direction:column;text-align:center;padding:28px 20px;}.about-img{width:120px;height:120px;}.about-btns{justify-content:center;}}
+
+        /* CONTACT */
+        .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+        .contact-form{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:32px;}
+        .contact-form h3{font-size:20px;font-weight:800;color:var(--w);margin-bottom:20px;}
+        .cf-group{margin-bottom:14px;}
+        .cf-group label{display:block;font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+        .cf-group input,.cf-group textarea{width:100%;padding:12px 14px;border:1.5px solid rgba(201,168,76,.1);border-radius:10px;background:rgba(201,168,76,.03);color:var(--w);font-size:14px;font-family:Inter;transition:border-color .2s;}
+        .cf-group input:focus,.cf-group textarea:focus{outline:none;border-color:var(--gold);}
+        .cf-group textarea{height:100px;resize:vertical;}
+        .cf-submit{width:100%;padding:14px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0e17;font-size:14px;font-weight:800;cursor:pointer;font-family:Inter;transition:all .2s;}
+        .cf-submit:hover{box-shadow:0 4px 16px rgba(201,168,76,.3);}
+        .contact-info{display:flex;flex-direction:column;gap:16px;}
+        .ci-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:24px;display:flex;align-items:center;gap:16px;}
+        .ci-icon{width:48px;height:48px;border-radius:12px;background:rgba(201,168,76,.08);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--gold);flex-shrink:0;}
+        .ci-label{font-size:12px;color:var(--t3);margin-bottom:2px;}
+        .ci-value{font-size:14px;font-weight:700;color:var(--w);}
+        .ci-value a{color:var(--gold);text-decoration:none;}
+        @media(max-width:640px){.contact-grid{grid-template-columns:1fr;}}
+
+        /* FOOTER */
+        footer{padding:60px 20px 30px;border-top:1px solid var(--border);background:var(--bg2);}
+        .ft-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;margin-bottom:40px;}
+        .ft-col h4{font-family:Outfit;font-size:15px;font-weight:700;color:var(--w);margin-bottom:14px;}
+        .ft-col a{display:block;color:var(--t3);text-decoration:none;font-size:13px;padding:3px 0;transition:color .2s;}
+        .ft-col a:hover{color:var(--gold);}
+        .ft-col p{font-size:13px;color:var(--t4);line-height:1.6;}
+        .ft-brand{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+        .ft-brand span{font-family:Outfit;font-weight:800;font-size:20px;color:var(--w);}
+        .ft-brand .gold{color:var(--gold);}
+        .ft-social{display:flex;gap:10px;margin-top:12px;}
+        .ft-social a{width:36px;height:36px;border-radius:10px;background:rgba(201,168,76,.06);display:flex;align-items:center;justify-content:center;color:var(--t3);font-size:16px;transition:all .2s;text-decoration:none;border:1px solid rgba(201,168,76,.08);}
+        .ft-social a:hover{background:var(--gold);color:#0a0e17;border-color:var(--gold);}
+        .ft-bottom{text-align:center;padding-top:24px;border-top:1px solid var(--border);max-width:1100px;margin:0 auto;}
+        .ft-bottom p{font-size:11px;color:var(--t4);}
+        @media(max-width:640px){.ft-inner{grid-template-columns:1fr;gap:24px;text-align:center;}.ft-social{justify-content:center;}}
+
+        /* WA FLOAT */
+        .wa-float{position:fixed;bottom:20px;right:20px;z-index:999;display:flex;align-items:center;gap:8px;padding:12px 22px;border-radius:50px;background:#25d366;color:#fff;text-decoration:none;font-size:14px;font-weight:700;box-shadow:0 6px 24px rgba(37,211,102,.35);transition:all .3s;font-family:Inter;}
+        .wa-float:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(37,211,102,.45);}
+        .wa-float i{font-size:20px;}
+        @media(max-width:480px){.wa-float span{display:none;}.wa-float{padding:14px;border-radius:50%;}}
+
+        /* MOBILE NAV */
+        .mob-toggle{display:none;width:40px;height:40px;border:none;background:rgba(201,168,76,.08);border-radius:10px;color:var(--gold);font-size:18px;cursor:pointer;}
+        @media(max-width:900px){.mob-toggle{display:flex;align-items:center;justify-content:center;}}
+        .mob-menu{display:none;position:fixed;inset:0;z-index:300;background:rgba(10,14,23,.98);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:24px;}
+        .mob-menu.open{display:flex;}
+        .mob-menu a{font-family:Outfit;font-size:24px;font-weight:700;color:var(--w);text-decoration:none;transition:color .2s;}
+        .mob-menu a:hover{color:var(--gold);}
+        .mob-close{position:absolute;top:20px;right:20px;width:44px;height:44px;border:none;background:none;color:var(--w);font-size:24px;cursor:pointer;}
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+    <a href="/" class="logo">
+        <div class="logo-icon">RIO</div>
+        <span>Park City<span class="gold">Trips</span></span>
+    </a>
+    <div class="nav-links">
+        <a href="#services">Services</a>
+        <a href="#fleet">Fleet</a>
+        <a href="#rates">Rates</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="#book" class="nav-cta">Book Now</a>
+    </div>
+    <button class="mob-toggle" onclick="document.getElementById('mobMenu').classList.add('open')"><i class="bi bi-list"></i></button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mob-menu" id="mobMenu">
+    <button class="mob-close" onclick="this.parentElement.classList.remove('open')"><i class="bi bi-x-lg"></i></button>
+    <a href="#services" onclick="this.parentElement.classList.remove('open')">Services</a>
+    <a href="#fleet" onclick="this.parentElement.classList.remove('open')">Fleet</a>
+    <a href="#rates" onclick="this.parentElement.classList.remove('open')">Rates</a>
+    <a href="#reviews" onclick="this.parentElement.classList.remove('open')">Reviews</a>
+    <a href="#about" onclick="this.parentElement.classList.remove('open')">About</a>
+    <a href="#contact" onclick="this.parentElement.classList.remove('open')">Contact</a>
+    <a href="#book" class="btn-gold" onclick="this.parentElement.classList.remove('open')">Book Now</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content ani">
+        <div class="hero-badge"><i class="bi bi-shield-check"></i> Licensed & Insured in Utah</div>
+        <h1>Luxury Transportation<br>in <b>Park City</b></h1>
+        <p>Premium private SUV service between Salt Lake City Airport and Park City. Professional drivers, luxury vehicles, all-inclusive pricing.</p>
+        <div class="hero-btns">
+            <a href="#book" class="btn-gold"><i class="bi bi-calendar-check"></i> Book Your Ride</a>
+            <a href="tel:+14352146939" class="btn-outline"><i class="bi bi-telephone-fill"></i> (435) 214-6939</a>
+        </div>
+        <div class="hero-stats">
+            <div class="hero-stat"><div class="num">9,000+</div><div class="label">Rides Completed</div></div>
+            <div class="hero-stat"><div class="num">4.6</div><div class="label">Star Rating</div></div>
+            <div class="hero-stat"><div class="num">24/7</div><div class="label">Availability</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section ani" id="services">
+    <div class="sec-head">
+        <div class="sec-tag"><i class="bi bi-stars"></i> Our Services</div>
+        <h2>More Than Just a Ride</h2>
+        <p>From airport transfers to special events, we cover all your transportation needs in Park City</p>
+    </div>
+    <div class="svc-grid">
+        <div class="svc">
+            <div class="svc-icon"><i class="bi bi-airplane-fill"></i></div>
+            <h3>Airport Transfers</h3>
+            <p>Private luxury SUV service between Salt Lake City International Airport and Park City. Driver texts before your flight lands.</p>
+        </div>
+        <div class="svc">
+            <div class="svc-icon"><i class="bi bi-snow2"></i></div>
+            <h3>Ski Resort Shuttles</h3>
+            <p>Door-to-door service to Park City Mountain, Deer Valley, and all major ski resorts in the area.</p>
+        </div>
+        <div class="svc">
+            <div class="svc-icon"><i class="bi bi-geo-alt-fill"></i></div>
+            <h3>Local Transportation</h3>
+            <p>Hourly service around Park City for dining, shopping on Main Street, or exploring the area.</p>
+        </div>
+        <div class="svc">
+            <div class="svc-icon"><i class="bi bi-heart-fill"></i></div>
+            <h3>Weddings & Events</h3>
+            <p>Elegant transportation for your special day. Luxury SUVs for the wedding party and guests.</p>
+        </div>
+        <div class="svc">
+            <div class="svc-icon"><i class="bi bi-building"></i></div>
+            <h3>Corporate Groups</h3>
+            <p>Professional transportation for corporate retreats, conferences, and team events in Park City.</p>
+        </div>
+        <div class="svc">
+            <div class="svc-icon"><i class="bi bi-camera-fill"></i></div>
+            <h3>Custom Tours</h3>
+            <p>Scenic tours of Park City, Heber Valley, Mirror Lake, and the stunning Wasatch Mountains.</p>
+        </div>
+    </div>
+</section>
+
+<!-- FLEET -->
+<section class="section ani" id="fleet">
+    <div class="sec-head">
+        <div class="sec-tag"><i class="bi bi-car-front-fill"></i> Our Fleet</div>
+        <h2>Travel in Style & Comfort</h2>
+        <p>Luxury vehicles maintained to the highest standards</p>
+    </div>
+    <div class="fleet-grid">
+        {% for v in config.VEHICLES %}
+        <div class="fleet-card">
+            <div class="fleet-img">
+                <i class="bi bi-car-front-fill"></i>
+            </div>
+            <div class="fleet-info">
+                <div class="fleet-name">{{ v.name }}</div>
+                <div class="fleet-model">{{ v.model }}</div>
+                <div class="fleet-specs">
+                    <span class="fleet-spec"><i class="bi bi-people-fill"></i> {{ v.passengers }} pax</span>
+                    <span class="fleet-spec"><i class="bi bi-luggage-fill"></i> {{ v.bags }} bags</span>
+                </div>
+                <ul class="fleet-features">
+                    {% for f in v.features %}
+                    <li><i class="bi bi-check-circle-fill"></i> {{ f }}</li>
+                    {% endfor %}
+                </ul>
+                <div class="fleet-price">
+                    <span class="from">from</span>
+                    <span class="amt">${{ v.price }}</span>
+                    <span class="trip">/ trip</span>
+                </div>
+                <a href="#book" class="fleet-book"><i class="bi bi-calendar-check"></i> Book This Vehicle</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- PRICING -->
+<section class="section ani" id="rates">
+    <div class="sec-head">
+        <div class="sec-tag"><i class="bi bi-tag-fill"></i> Transparent Pricing</div>
+        <h2>Our Rates</h2>
+        <p>All-inclusive pricing — driver, taxes, fees, and bottled water included</p>
+    </div>
+    <div class="price-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Route</th>
+                    <th>Mid Size SUV<br><span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px;color:var(--t3);">Up to 6 pax</span></th>
+                    <th>Premier SUV<br><span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px;color:var(--t3);">Up to 7 pax</span></th>
+                    <th>Luxury SUV<br><span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px;color:var(--t3);">Up to 6 pax</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><i class="bi bi-airplane-fill" style="color:var(--gold);margin-right:6px;"></i> SLC Airport → Park City</td>
+                    <td class="price-cell">$129</td>
+                    <td class="price-cell">$189</td>
+                    <td class="price-cell">$220</td>
+                </tr>
+                <tr>
+                    <td><i class="bi bi-geo-alt-fill" style="color:var(--gold);margin-right:6px;"></i> Park City → SLC Airport</td>
+                    <td class="price-cell">$129</td>
+                    <td class="price-cell">$189</td>
+                    <td class="price-cell">$220</td>
+                </tr>
+                <tr>
+                    <td><i class="bi bi-clock-fill" style="color:var(--gold);margin-right:6px;"></i> Local Park City (hourly)</td>
+                    <td class="price-cell">$97</td>
+                    <td class="price-cell">$142</td>
+                    <td class="price-cell">$165</td>
+                </tr>
+                <tr>
+                    <td><i class="bi bi-heart-fill" style="color:var(--gold);margin-right:6px;"></i> Wedding / Special Event</td>
+                    <td class="price-cell">$194</td>
+                    <td class="price-cell">$284</td>
+                    <td class="price-cell">$330</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="price-note">
+            <i class="bi bi-check-circle-fill" style="color:var(--gold);margin-right:4px;"></i>
+            Rates include: Private luxury vehicle, professional driver, all taxes & fees, bottled water. Gratuity at passenger discretion.
+        </div>
+    </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="section ani" id="reviews">
+    <div class="sec-head">
+        <div class="sec-tag"><i class="bi bi-chat-quote-fill"></i> Client Reviews</div>
+        <h2>What Our Guests Say</h2>
+    </div>
+    <div class="rev-grid">
+        <div class="rev">
+            <div class="rev-stars">★★★★★</div>
+            <div class="rev-text">"The vehicle was clean and well-maintained, and the overall ride was smooth and comfortable. Everything was very smooth. The price was also quite a bit less than other quotes we got."</div>
+            <div class="rev-author">
+                <div class="rev-avatar">AT</div>
+                <div><div class="rev-name">Alan Thiago</div><div class="rev-role">Airport Transfer</div></div>
+            </div>
+        </div>
+        <div class="rev">
+            <div class="rev-stars">★★★★★</div>
+            <div class="rev-text">"I recently used Park City Taxi for a trip to the airport and was extremely impressed with the service. Highly professional and punctual."</div>
+            <div class="rev-author">
+                <div class="rev-avatar">MO</div>
+                <div><div class="rev-name">Matheus Oliveira</div><div class="rev-role">Airport Transfer</div></div>
+            </div>
+        </div>
+        <div class="rev">
+            <div class="rev-stars">★★★★★</div>
+            <div class="rev-text">"On time and reliable every day. Thank you!"</div>
+            <div class="rev-author">
+                <div class="rev-avatar">JC</div>
+                <div><div class="rev-name">Jillian Cleveland</div><div class="rev-role">Daily Service</div></div>
+            </div>
+        </div>
+        <div class="rev">
+            <div class="rev-stars">★★★★★</div>
+            <div class="rev-text">"Excellent driving. Excellent service. Very nice Suburbans (GMC's). I highly recommend Rio Transportation for Park City trips."</div>
+            <div class="rev-author">
+                <div class="rev-avatar">NL</div>
+                <div><div class="rev-name">Nasser Len</div><div class="rev-role">Ski Season</div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section ani" id="about">
+    <div class="sec-head">
+        <div class="sec-tag"><i class="bi bi-person-fill"></i> About Us</div>
+        <h2>Meet Your Driver</h2>
+    </div>
+    <div class="about-box">
+        <img src="/static/hudson-photo.jpg" alt="Hudson Valeriano" class="about-img" onerror="this.style.display='none'">
+        <div class="about-content">
+            <h3>Hudson Valeriano</h3>
+            <div class="role">Founder — Rio Transportation LLC</div>
+            <p>Park City, Utah is a popular destination for those seeking a luxurious vacation experience. At Rio Travel, we offer a range of luxury transportation options to help you get around Park City in style and comfort.</p>
+            <p>Our fleet includes high-end sedans, SUVs, and vans perfect for individuals, couples, and groups of all sizes. Whether you're traveling for business or pleasure, our professional drivers are knowledgeable about the area and provide personalized service.</p>
+            <p>We also offer Air Travel, hotel bookings, tours, and special event transportation. Contact us today to book your next trip.</p>
+            <div class="about-btns">
+                <a href="https://wa.me/14352146939" target="_blank" class="btn-wa"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+                <a href="tel:+14352146939" class="btn-phone"><i class="bi bi-telephone-fill"></i> (435) 214-6939</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section ani" id="contact">
+    <div class="sec-head">
+        <div class="sec-tag"><i class="bi bi-envelope-fill"></i> Get in Touch</div>
+        <h2>Contact Us</h2>
+    </div>
+    <div class="contact-grid">
+        <div class="contact-form">
+            <h3>Send a Message</h3>
+            <form id="contactForm" onsubmit="submitContact(event)">
+                <div class="cf-group"><label>Name</label><input type="text" id="cfName" required placeholder="Your name"></div>
+                <div class="cf-group"><label>Email</label><input type="email" id="cfEmail" placeholder="your@email.com"></div>
+                <div class="cf-group"><label>Phone</label><input type="tel" id="cfPhone" placeholder="(435) 000-0000"></div>
+                <div class="cf-group"><label>Message</label><textarea id="cfMsg" required placeholder="How can we help you?"></textarea></div>
+                <button type="submit" class="cf-submit"><i class="bi bi-send-fill"></i> Send Message</button>
+            </form>
+        </div>
+        <div class="contact-info">
+            <div class="ci-card">
+                <div class="ci-icon"><i class="bi bi-telephone-fill"></i></div>
+                <div><div class="ci-label">Phone</div><div class="ci-value"><a href="tel:+14352146939">(435) 214-6939</a></div></div>
+            </div>
+            <div class="ci-card">
+                <div class="ci-icon"><i class="bi bi-whatsapp"></i></div>
+                <div><div class="ci-label">WhatsApp</div><div class="ci-value"><a href="https://wa.me/14352146939" target="_blank">+1 (435) 214-6939</a></div></div>
+            </div>
+            <div class="ci-card">
+                <div class="ci-icon"><i class="bi bi-envelope-fill"></i></div>
+                <div><div class="ci-label">Email</div><div class="ci-value"><a href="mailto:contactus@riotravelpc.com">contactus@riotravelpc.com</a></div></div>
+            </div>
+            <div class="ci-card">
+                <div class="ci-icon"><i class="bi bi-geo-alt-fill"></i></div>
+                <div><div class="ci-label">Location</div><div class="ci-value">Park City, Utah</div></div>
+            </div>
+            <div class="ci-card">
+                <div class="ci-icon"><i class="bi bi-clock-fill"></i></div>
+                <div><div class="ci-label">Hours</div><div class="ci-value">24/7 — Always Available</div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="ft-inner">
+        <div class="ft-col">
+            <div class="ft-brand"><span>Park City<span class="gold">Trips</span></span></div>
+            <p>Premium luxury transportation in Park City, Utah. Serving the Wasatch Back since 2022. Licensed, insured, and locally owned.</p>
+            <div class="ft-social">
+                <a href="https://wa.me/14352146939" target="_blank"><i class="bi bi-whatsapp"></i></a>
+                <a href="https://instagram.com/riotravelllc" target="_blank"><i class="bi bi-instagram"></i></a>
+                <a href="mailto:contactus@riotravelpc.com"><i class="bi bi-envelope-fill"></i></a>
+                <a href="tel:+14352146939"><i class="bi bi-telephone-fill"></i></a>
+            </div>
+        </div>
+        <div class="ft-col">
+            <h4>Services</h4>
+            <a href="#services">Airport Transfers</a>
+            <a href="#services">Ski Resort Shuttles</a>
+            <a href="#services">Local Transportation</a>
+            <a href="#services">Weddings & Events</a>
+            <a href="#services">Corporate Groups</a>
+            <a href="#services">Custom Tours</a>
+        </div>
+        <div class="ft-col">
+            <h4>Contact</h4>
+            <a href="tel:+14352146939"><i class="bi bi-telephone"></i> (435) 214-6939</a>
+            <a href="mailto:contactus@riotravelpc.com"><i class="bi bi-envelope"></i> contactus@riotravelpc.com</a>
+            <a href="https://wa.me/14352146939" target="_blank"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+            <p style="margin-top:12px;font-size:12px;"><i class="bi bi-geo-alt"></i> Park City, Utah — USA</p>
+        </div>
+    </div>
+    <div class="ft-bottom"><p>&copy; 2026 Rio Transportation LLC. All rights reserved. Licensed & Insured.</p></div>
+</footer>
+
+<!-- WA FLOAT -->
+<a href="https://wa.me/14352146939?text=Hi!%20I%20need%20transportation%20in%20Park%20City." target="_blank" class="wa-float"><i class="bi bi-whatsapp"></i> <span>Book a Ride</span></a>
+
+<!-- SCRIPTS -->
+<script>
+// NAV SCROLL
+window.onscroll=()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>40);
+
+// SCROLL ANIMATIONS
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('v');}),{threshold:.1});
+document.querySelectorAll('.ani').forEach(e=>obs.observe(e));
+
+// CONTACT FORM
+function submitContact(e){
+    e.preventDefault();
+    const data={
+        name:document.getElementById('cfName').value,
+        email:document.getElementById('cfEmail').value,
+        phone:document.getElementById('cfPhone').value,
+        message:document.getElementById('cfMsg').value,
+    };
+    fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})
+    .then(r=>r.json()).then(d=>{
+        if(d.success){
+            alert('Message sent! We will contact you shortly.');
+            document.getElementById('contactForm').reset();
+        }
+    });
+}
+</script>
+</body>
+</html>

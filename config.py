@@ -1,0 +1,59 @@
+"""Configuration for Park City Trips."""
+import os
+
+SECRET_KEY = os.getenv('SECRET_KEY', 'parkcitytrips-2026-secret')
+PORT = int(os.getenv('PORT', 5000))
+
+# Company
+COMPANY_NAME = 'Rio Transportation LLC'
+BRAND_NAME = 'Park City Trips'
+PHONE = '+14352146939'
+WHATSAPP = '+14352146939'
+EMAIL = 'contactus@riotravelpc.com'
+ADDRESS = '1776 Kearns Blvd, Park City, UT 84060'
+INSTAGRAM = 'https://instagram.com/riotravelllc'
+
+# Vehicles & Pricing (SLC <-> Park City, per vehicle each way)
+VEHICLES = [
+    {
+        'id': 'mid-suv',
+        'name': 'Mid Size SUV',
+        'model': 'Nissan Pathfinder 2023 or similar',
+        'price': 129,
+        'passengers': 6,
+        'bags': 6,
+        'features': ['Leather seats', 'Climate control', 'USB charging', 'Bottled water'],
+        'image': 'mid-suv.jpg',
+    },
+    {
+        'id': 'premier-suv',
+        'name': 'Premier SUV',
+        'model': 'GMC Yukon 2023 or similar',
+        'price': 189,
+        'passengers': 7,
+        'bags': 7,
+        'features': ['Leather seats', 'Captain chairs', 'WiFi', 'USB charging', 'Bottled water'],
+        'image': 'premier-suv.jpg',
+    },
+    {
+        'id': 'luxury-suv',
+        'name': 'Luxury SUV',
+        'model': 'Cadillac Escalade 2023 or similar',
+        'price': 220,
+        'passengers': 6,
+        'bags': 6,
+        'features': ['Premium leather', 'Heated seats', 'WiFi', 'USB charging', 'Bottled water', 'Privacy glass'],
+        'image': 'luxury-suv.jpg',
+    },
+]
+
+# Routes & pricing multipliers
+ROUTES = {
+    'slc-pc': {'name': 'SLC Airport → Park City', 'multiplier': 1.0},
+    'pc-slc': {'name': 'Park City → SLC Airport', 'multiplier': 1.0},
+    'local': {'name': 'Local Park City (hourly)', 'multiplier': 0.75},
+    'event': {'name': 'Special Event / Wedding', 'multiplier': 1.5},
+}
+
+# Stats
+TOTAL_RIDES = '9,000+'
