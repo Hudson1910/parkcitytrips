@@ -665,7 +665,7 @@
             <p>We're not a rideshare or a shuttle bus — every ride is a <strong>private, door-to-door experience</strong> in a premium SUV. Real-time flight monitoring, complimentary water, phone chargers, and Wi-Fi come standard on every trip.</p>
             <div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:20px;">
                 <div style="text-align:center;flex:1;min-width:120px;padding:16px;background:rgba(212,168,83,.08);border:1px solid rgba(212,168,83,.2);border-radius:12px;">
-                    <div style="font-size:28px;font-weight:800;color:#d4a853;font-family:'Space Grotesk',sans-serif;" id="aboutRidesCount">9,000+</div>
+                    <div style="font-size:28px;font-weight:800;color:#d4a853;font-family:'Space Grotesk',sans-serif;" id="aboutRidesCount" data-count="9000">0</div>
                     <div style="font-size:11px;color:rgba(255,255,255,.6);font-weight:600;text-transform:uppercase;letter-spacing:1px;">Rides Completed</div>
                 </div>
                 <div style="text-align:center;flex:1;min-width:120px;padding:16px;background:rgba(212,168,83,.08);border:1px solid rgba(212,168,83,.2);border-radius:12px;">
@@ -789,43 +789,40 @@ const obs=new IntersectionObserver(es=>{
 document.querySelectorAll('.ani,.svc,.fleet-card,.rev,.ci-card').forEach(e=>obs.observe(e));
 
 // ANIMATED COUNTERS
-function animateCounters(){
-    // Dynamic rides counter: base 9000 on April 16, 2026 + 5 rides/day since
-    const baseDate = new Date(2026, 3, 16); // April 16 2026 (month is 0-indexed)
-    const baseRides = 9000;
-    const ridesPerDay = 5;
-    const now = new Date();
-    const daysSince = Math.max(0, Math.floor((now - baseDate) / (1000 * 60 * 60 * 24)));
-    const totalRides = baseRides + (daysSince * ridesPerDay);
-    const ridesEl = document.getElementById('ridesCounter');
-    if (ridesEl) ridesEl.dataset.count = totalRides.toString();
-    // Sync the About section counter too
-    const aboutRides = document.getElementById('aboutRidesCount');
-    if (aboutRides) aboutRides.textContent = totalRides.toLocaleString() + '+';
-    document.querySelectorAll('[data-count]').forEach(el=>{
-        const target=el.dataset.count;
-        const isNum=!isNaN(parseFloat(target));
-        if(!isNum){el.textContent=target;return;}
-        const end=parseFloat(target);
-        const dur=1800;
-        const start=performance.now();
-        const step=(now)=>{
-            const prog=Math.min((now-start)/dur,1);
-            const eased=1-Math.pow(1-prog,4);
-            el.textContent=target.includes('.')?
-                (end*eased).toFixed(1):
-                Math.floor(end*eased).toLocaleString();
-            if(prog<1)requestAnimationFrame(step);
-            else el.textContent=target.includes('+')?Math.floor(end).toLocaleString()+'+':target.includes('.')?end.toFixed(1):Math.floor(end).toLocaleString();
-        };
-        requestAnimationFrame(step);
+// Dynamic rides counter: base 9000 on April 16, 2026 + 5 rides/day since
+(function(){
+    const baseDate = new Date(2026, 3, 16);
+    const totalRides = 9000 + Math.max(0, Math.floor((new Date() - baseDate) / 86400000)) * 5;
+    document.querySelectorAll('#ridesCounter, #aboutRidesCount').forEach(el=>{
+        el.dataset.count = totalRides.toString();
     });
-}
-const counterObs=new IntersectionObserver(es=>{
-    if(es[0].isIntersecting){animateCounters();counterObs.disconnect();}
-},{threshold:.3});
-const statsEl=document.querySelector('.hero-stats');
-if(statsEl)counterObs.observe(statsEl);
+})();
+// Animate each counter individually when it scrolls into view (hero + about section)
+const counterObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.dataset.animated) {
+            entry.target.dataset.animated = '1';
+            const el = entry.target;
+            const target = el.dataset.count;
+            const isNum = !isNaN(parseFloat(target));
+            if (!isNum) { el.textContent = target; return; }
+            const end = parseFloat(target);
+            const dur = 1800;
+            const start = performance.now();
+            const step = (now) => {
+                const prog = Math.min((now - start) / dur, 1);
+                const eased = 1 - Math.pow(1 - prog, 4);
+                el.textContent = target.includes('.') ?
+                    (end * eased).toFixed(1) :
+                    Math.floor(end * eased).toLocaleString();
+                if (prog < 1) requestAnimationFrame(step);
+                else el.textContent = target.includes('+') ? Math.floor(end).toLocaleString() + '+' : target.includes('.') ? end.toFixed(1) : Math.floor(end).toLocaleString();
+            };
+            requestAnimationFrame(step);
+        }
+    });
+}, { threshold: 0.3 });
+document.querySelectorAll('[data-count]').forEach(el => counterObserver.observe(el));
 
 // PARTICLES
 (function(){
