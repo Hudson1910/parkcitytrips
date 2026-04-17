@@ -471,21 +471,38 @@ function pickAddress(inputId, address) {
 
 function useCurrentLocation(inputId) {
     const input = document.getElementById(inputId);
-    if(!navigator.geolocation) { input.value = 'Location not available'; return; }
-    input.value = 'Getting location...';
+    if(!navigator.geolocation) { alert('Location not available on this device'); return; }
+    input.value = '📍 Getting your location...';
+    input.disabled = true;
     navigator.geolocation.getCurrentPosition(
         pos => {
-            if(MAPBOX_TOKEN) {
-                fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${pos.coords.longitude},${pos.coords.latitude}.json?access_token=${MAPBOX_TOKEN}&limit=1`)
-                    .then(r => r.json())
-                    .then(d => { input.value = d.features?.[0]?.place_name || `${pos.coords.latitude}, ${pos.coords.longitude}`; })
-                    .catch(() => { input.value = `${pos.coords.latitude.toFixed(6)}, ${pos.coords.longitude.toFixed(6)}`; });
-            } else {
-                input.value = `${pos.coords.latitude.toFixed(6)}, ${pos.coords.longitude.toFixed(6)}`;
-            }
+            const lat = pos.coords.latitude;
+            const lng = pos.coords.longitude;
+            // Always try reverse geocode to get a readable address
+            fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${MAPBOX_TOKEN}&limit=1&types=address,poi`)
+                .then(r => r.json())
+                .then(d => {
+                    input.disabled = false;
+                    const place = d.features?.[0];
+                    if(place && place.place_name) {
+                        input.value = place.place_name;
+                    } else {
+                        // Fallback: try without type filter
+                        fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${MAPBOX_TOKEN}&limit=1`)
+                            .then(r2 => r2.json())
+                            .then(d2 => {
+                                input.value = d2.features?.[0]?.place_name || `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+                            });
+                    }
+                })
+                .catch(() => { input.disabled = false; input.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`; });
         },
-        () => { input.value = 'Location denied'; },
-        {enableHighAccuracy: true, timeout: 10000}
+        (err) => {
+            input.disabled = false;
+            input.value = '';
+            alert(err.code === 1 ? 'Location access denied. Please type your address manually.' : 'Could not get location. Please type your address.');
+        },
+        {enableHighAccuracy: true, timeout: 15000}
     );
 }
 
