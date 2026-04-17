@@ -109,22 +109,30 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);mi
             </div>
         </div>
 
-        <!-- Step 3: Flight Info -->
+        <!-- Step 3: Flight Info (FlightAware powered) -->
         <div class="step-label">3 — Flight Information</div>
         <div class="row">
             <div class="field">
                 <label>Flight Number</label>
-                <input type="text" name="flight_number" id="flightInput" placeholder="e.g. DL1234" style="text-transform:uppercase;" oninput="lookupFlight()">
-                <small>We'll track your flight and adjust pickup time</small>
-                <div class="flight-found" id="flightInfo">
-                    <div class="route" id="flightRoute"></div>
-                    <div id="flightDetails" style="color:var(--muted);margin-top:4px;"></div>
+                <div style="position:relative;">
+                    <input type="text" name="flight_number" id="flightInput" placeholder="e.g. DL1234" style="text-transform:uppercase;padding-right:48px;">
+                    <button type="button" id="flightSearchBtn" onclick="searchFlight()" style="position:absolute;right:4px;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:8px;background:var(--accent);border:none;color:#000;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s;" title="Search flight"><i class="bi bi-search"></i></button>
                 </div>
+                <small>Enter flight number and click <i class="bi bi-search"></i> — we use FlightAware to find your flight details</small>
+                <div class="flight-found" id="flightInfo">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+                        <img id="flightLogo" src="" style="height:24px;border-radius:4px;background:#fff;padding:2px;display:none;">
+                        <div class="route" id="flightRoute"></div>
+                    </div>
+                    <div id="flightDetails" style="color:var(--muted);font-size:12px;"></div>
+                </div>
+                <!-- Multiple flights picker -->
+                <div id="flightPicker" style="display:none;margin-top:8px;"></div>
             </div>
             <div class="field">
                 <label>Estimated Arrival Time</label>
                 <input type="time" name="arrival_time" id="arrivalTime">
-                <small>Auto-filled from flight lookup if available</small>
+                <small>Auto-filled from flight lookup · you can edit manually if needed</small>
             </div>
         </div>
 
@@ -267,27 +275,87 @@ function pickVehicle(el, id) {
     document.getElementById('vehicleInput').value = id;
 }
 
-let lookupTimer;
-function lookupFlight() {
-    clearTimeout(lookupTimer);
+function searchFlight() {
     const flight = document.getElementById('flightInput').value.trim().toUpperCase();
-    if (flight.length < 4) return;
-    lookupTimer = setTimeout(() => {
-        fetch('/api/flight-lookup?flight=' + encodeURIComponent(flight))
-            .then(r => r.json())
-            .then(d => {
-                const info = document.getElementById('flightInfo');
-                if (d.found && !d.multiple) {
-                    document.getElementById('flightRoute').textContent = (d.origin || '') + ' → ' + (d.destination || '');
-                    document.getElementById('flightDetails').textContent = (d.departure_time || '') + ' - ' + (d.arrival_time || '') + (d.dep_city ? ' · ' + d.dep_city : '');
-                    info.style.display = 'block';
-                    if (d.arrival_time) document.getElementById('arrivalTime').value = d.arrival_time;
-                } else {
-                    info.style.display = 'none';
-                }
-            }).catch(() => {});
-    }, 600);
+    if (flight.length < 3) return;
+    const dateInput = document.querySelector('[name="date"]');
+    const date = dateInput ? dateInput.value : '';
+
+    const btn = document.getElementById('flightSearchBtn');
+    btn.innerHTML = '<i class="bi bi-hourglass-split"></i>';
+    btn.disabled = true;
+
+    let url = '/api/flight-lookup?flight=' + encodeURIComponent(flight);
+    if (date) url += '&date=' + encodeURIComponent(date);
+
+    fetch(url).then(r => r.json()).then(d => {
+        btn.innerHTML = '<i class="bi bi-search"></i>';
+        btn.disabled = false;
+        const info = document.getElementById('flightInfo');
+        const picker = document.getElementById('flightPicker');
+        picker.style.display = 'none';
+
+        if (d.found && d.multiple && d.options) {
+            // Multiple legs — show picker
+            picker.innerHTML = '<div style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:8px;"><i class="bi bi-info-circle"></i> Multiple flights found — choose yours:</div>' +
+                d.options.map((o,i) => `<button type="button" onclick="pickFlight(${i})" style="display:block;width:100%;text-align:left;padding:12px;background:var(--card);border:1px solid var(--border);border-radius:8px;color:#fff;cursor:pointer;margin-bottom:6px;font-size:13px;transition:border-color .2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'"><strong>${o.origin} → ${o.destination}</strong> <span style="color:var(--muted);margin-left:8px;">${o.departure_time||''} → ${o.arrival_time||''}</span></button>`).join('');
+            picker.style.display = 'block';
+            window._flightOptions = d.options;
+            info.style.display = 'none';
+        } else if (d.found) {
+            showFlightResult(d);
+        } else {
+            info.style.display = 'none';
+            picker.innerHTML = '<div style="padding:10px;color:#ef4444;font-size:13px;"><i class="bi bi-exclamation-triangle"></i> Flight not found. You can enter arrival time manually.</div>';
+            picker.style.display = 'block';
+        }
+    }).catch(() => {
+        btn.innerHTML = '<i class="bi bi-search"></i>';
+        btn.disabled = false;
+    });
 }
+
+function pickFlight(idx) {
+    const o = window._flightOptions[idx];
+    showFlightResult({
+        origin: o.origin, destination: o.destination,
+        departure_time: o.departure_time, arrival_time: o.arrival_time,
+        airline_iata: o.origin ? document.getElementById('flightInput').value.substring(0,2) : '',
+        dep_city: o.origin_city || '', arr_city: o.destination_city || ''
+    });
+    document.getElementById('flightPicker').style.display = 'none';
+}
+
+function showFlightResult(d) {
+    const info = document.getElementById('flightInfo');
+    const logo = document.getElementById('flightLogo');
+    const acode = d.airline_iata || document.getElementById('flightInput').value.substring(0,2).toUpperCase();
+
+    // Show airline logo
+    if (acode) {
+        logo.src = 'https://pics.avs.io/200/200/' + acode + '.png';
+        logo.style.display = 'block';
+        logo.onerror = function(){ this.style.display='none'; };
+    }
+
+    document.getElementById('flightRoute').innerHTML = '<strong>' + (d.origin||'') + ' → ' + (d.destination||'') + '</strong>';
+    let details = '';
+    if (d.departure_time) details += 'Departs ' + d.departure_time;
+    if (d.arrival_time) details += ' · Arrives ' + d.arrival_time;
+    if (d.dep_city) details += ' · ' + d.dep_city;
+    document.getElementById('flightDetails').textContent = details;
+    info.style.display = 'block';
+
+    // Auto-fill arrival time
+    if (d.arrival_time) {
+        document.getElementById('arrivalTime').value = d.arrival_time;
+    }
+}
+
+// Also search on Enter key
+document.getElementById('flightInput').addEventListener('keydown', function(e){
+    if(e.key==='Enter'){e.preventDefault();searchFlight();}
+});
 
 // Pre-select vehicle from URL
 const params = new URLSearchParams(location.search);
