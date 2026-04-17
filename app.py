@@ -18,6 +18,11 @@ def home_v1():
     return render_template('home.html', config=config)
 
 
+@app.route('/weather')
+def weather():
+    return render_template('weather.html', config=config)
+
+
 @app.route('/about')
 def about():
     return render_template('about.html', config=config)

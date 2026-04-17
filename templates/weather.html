@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Mountain Conditions — Deer Valley & Park City Mountain</title>
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-height:100vh;}
+.w-nav{padding:20px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06);}
+.w-nav a{color:#fff;text-decoration:none;}
+.w-nav .logo{font-family:'Onest',sans-serif;font-weight:800;font-size:16px;letter-spacing:.1em;}
+.w-nav .back{font-size:14px;color:#666;display:flex;align-items:center;gap:6px;}
+
+.w-header{text-align:center;padding:60px 20px 30px;}
+.w-header h1{font-family:'Onest',sans-serif;font-size:clamp(28px,5vw,42px);font-weight:900;margin-bottom:8px;}
+.w-header p{color:#666;font-size:14px;}
+.w-header .update{font-size:11px;color:#c9a84c;margin-top:8px;font-family:'DM Sans',sans-serif;letter-spacing:.15em;text-transform:uppercase;}
+
+.w-grid{max-width:1100px;margin:0 auto;padding:0 20px 40px;display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+@media(max-width:768px){.w-grid{grid-template-columns:1fr;}}
+
+.resort-card{background:#111318;border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden;}
+.resort-header{padding:24px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center;}
+.resort-name{font-family:'Onest',sans-serif;font-size:20px;font-weight:800;}
+.resort-status{font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;text-transform:uppercase;letter-spacing:.1em;}
+.status-open{background:rgba(34,197,94,.15);color:#22c55e;}
+.status-closed{background:rgba(239,68,68,.15);color:#ef4444;}
+
+.snow-stats{padding:20px 24px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;border-bottom:1px solid rgba(255,255,255,.06);}
+.snow-stat{text-align:center;}
+.snow-stat .val{font-family:'Onest',sans-serif;font-size:28px;font-weight:800;}
+.snow-stat .lbl{font-size:10px;color:#666;letter-spacing:.15em;text-transform:uppercase;margin-top:4px;}
+
+.conditions{padding:20px 24px;border-bottom:1px solid rgba(255,255,255,.06);}
+.cond-row{display:flex;justify-content:space-between;padding:8px 0;font-size:13px;}
+.cond-row .k{color:#666;}
+.cond-row .v{font-weight:600;}
+
+.lifts-trails{padding:20px 24px;border-bottom:1px solid rgba(255,255,255,.06);}
+.lt-bar{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.lt-bar .lt-label{font-size:12px;color:#666;width:60px;}
+.lt-bar .lt-track{flex:1;height:8px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden;}
+.lt-bar .lt-fill{height:100%;border-radius:4px;transition:width .5s;}
+.lt-bar .lt-num{font-family:'Onest',sans-serif;font-size:13px;font-weight:700;min-width:50px;text-align:right;}
+
+.webcams{padding:20px 24px;}
+.webcam-label{font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#c9a84c;margin-bottom:12px;}
+.webcam-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.webcam-item{border-radius:8px;overflow:hidden;aspect-ratio:16/9;background:#0a0c10;}
+.webcam-item iframe{width:100%;height:100%;border:none;}
+.webcam-item img{width:100%;height:100%;object-fit:cover;}
+@media(max-width:640px){.webcam-grid{grid-template-columns:1fr;}.snow-stats{grid-template-columns:repeat(2,1fr);}}
+
+.w-cta{max-width:1100px;margin:20px auto 60px;padding:0 20px;text-align:center;}
+.w-cta a{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:#c9a84c;color:#000;font-family:'Onest',sans-serif;font-size:14px;font-weight:700;border-radius:50px;text-decoration:none;}
+.w-footer{padding:24px 40px;border-top:1px solid rgba(255,255,255,.06);text-align:center;font-size:12px;color:rgba(255,255,255,.2);}
+    </style>
+</head>
+<body>
+<nav class="w-nav">
+    <a href="/" class="logo">RIO TRANSPORTATION</a>
+    <a href="/" class="back"><i class="bi bi-arrow-left"></i> Back</a>
+</nav>
+
+<div class="w-header">
+    <h1><i class="bi bi-snow2" style="color:#c9a84c;"></i> Mountain Conditions</h1>
+    <p>Real-time snow & weather for Park City's ski resorts</p>
+    <div class="update" id="lastUpdate">Loading conditions...</div>
+</div>
+
+<div class="w-grid">
+    <!-- DEER VALLEY -->
+    <div class="resort-card" id="deerValley">
+        <div class="resort-header">
+            <div class="resort-name">Deer Valley</div>
+            <div class="resort-status status-closed" id="dvStatus">Loading</div>
+        </div>
+        <div class="snow-stats">
+            <div class="snow-stat"><div class="val" id="dvBase">--</div><div class="lbl">Base Depth</div></div>
+            <div class="snow-stat"><div class="val" id="dv24h">--</div><div class="lbl">Last 24h</div></div>
+            <div class="snow-stat"><div class="val" id="dvSeason">--</div><div class="lbl">Season Total</div></div>
+        </div>
+        <div class="conditions">
+            <div class="cond-row"><span class="k">Conditions</span><span class="v" id="dvConditions">--</span></div>
+            <div class="cond-row"><span class="k">Storm Total</span><span class="v" id="dvStorm">--</span></div>
+            <div class="cond-row"><span class="k">Last 48h</span><span class="v" id="dv48h">--</span></div>
+            <div class="cond-row"><span class="k">Last 7 Days</span><span class="v" id="dv7d">--</span></div>
+            <div class="cond-row"><span class="k">Terrain Acres</span><span class="v" id="dvAcres">--</span></div>
+        </div>
+        <div class="lifts-trails">
+            <div class="lt-bar"><span class="lt-label">Lifts</span><div class="lt-track"><div class="lt-fill" id="dvLiftBar" style="width:0%;background:#22c55e;"></div></div><span class="lt-num" id="dvLifts">--</span></div>
+            <div class="lt-bar"><span class="lt-label">Trails</span><div class="lt-track"><div class="lt-fill" id="dvTrailBar" style="width:0%;background:#3b82f6;"></div></div><span class="lt-num" id="dvTrails">--</span></div>
+        </div>
+        <div class="webcams">
+            <div class="webcam-label">Webcams</div>
+            <div class="webcam-grid">
+                <div class="webcam-item"><img src="https://common.snow.com/Mtncams/deervalley1.jpg" alt="Deer Valley Webcam" loading="lazy" onerror="this.parentElement.innerHTML='<div style=display:flex;align-items:center;justify-content:center;height:100%;color:#666;font-size:12px>Cam offline</div>'"></div>
+                <div class="webcam-item"><img src="https://common.snow.com/Mtncams/deervalley2.jpg" alt="Deer Valley Webcam 2" loading="lazy" onerror="this.parentElement.innerHTML='<div style=display:flex;align-items:center;justify-content:center;height:100%;color:#666;font-size:12px>Cam offline</div>'"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PARK CITY MOUNTAIN -->
+    <div class="resort-card" id="parkCity">
+        <div class="resort-header">
+            <div class="resort-name">Park City Mountain</div>
+            <div class="resort-status status-closed" id="pcStatus">Closed for Season</div>
+        </div>
+        <div class="snow-stats">
+            <div class="snow-stat"><div class="val">--</div><div class="lbl">Base Depth</div></div>
+            <div class="snow-stat"><div class="val">--</div><div class="lbl">Last 24h</div></div>
+            <div class="snow-stat"><div class="val">--</div><div class="lbl">Season Total</div></div>
+        </div>
+        <div class="conditions">
+            <div class="cond-row"><span class="k">Status</span><span class="v">Closed for 2025/26 Season</span></div>
+            <div class="cond-row"><span class="k">Terrain</span><span class="v">7,300 acres</span></div>
+            <div class="cond-row"><span class="k">Total Lifts</span><span class="v">43</span></div>
+            <div class="cond-row"><span class="k">Total Runs</span><span class="v">341</span></div>
+            <div class="cond-row"><span class="k">Summit</span><span class="v">10,023 ft</span></div>
+        </div>
+        <div class="lifts-trails">
+            <div class="lt-bar"><span class="lt-label">Lifts</span><div class="lt-track"><div class="lt-fill" style="width:0%;background:#22c55e;"></div></div><span class="lt-num">0/43</span></div>
+            <div class="lt-bar"><span class="lt-label">Trails</span><div class="lt-track"><div class="lt-fill" style="width:0%;background:#3b82f6;"></div></div><span class="lt-num">0/341</span></div>
+        </div>
+        <div class="webcams">
+            <div class="webcam-label">Webcams</div>
+            <div class="webcam-grid">
+                <div class="webcam-item"><iframe src="https://player.brownrice.com/embed/parkcitymtnvillage" allowfullscreen loading="lazy"></iframe></div>
+                <div class="webcam-item"><iframe src="https://player.brownrice.com/embed/parkcitylookoutcabin" allowfullscreen loading="lazy"></iframe></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="w-cta">
+    <p style="color:#666;font-size:14px;margin-bottom:16px;">Need a ride to the slopes?</p>
+    <a href="/book"><i class="bi bi-calendar-check"></i> Book Your Transfer</a>
+</div>
+
+<footer class="w-footer">© 2026 Rio Transportation LLC — Park City, Utah</footer>
+
+<script>
+// Fetch Deer Valley live data from mtnpowder API
+fetch('https://www.mtnpowder.com/feed?format=json&resortId=49')
+    .then(r=>r.json())
+    .then(d=>{
+        const sr = d.SnowReport || {};
+        const base = sr.BaseArea || {};
+        const mid = sr.MidMountainArea || {};
+        const summit = sr.SummitArea || {};
+
+        // Status
+        const status = d.OperatingStatus || 'Closed';
+        const el = document.getElementById('dvStatus');
+        el.textContent = status;
+        el.className = 'resort-status ' + (status.toLowerCase().includes('open') ? 'status-open' : 'status-closed');
+
+        // Snow stats
+        document.getElementById('dvBase').textContent = (sr.SnowBaseRangeIn || '--') + '"';
+        document.getElementById('dv24h').textContent = (base.Last24HoursIn || '0') + '"';
+        document.getElementById('dvSeason').textContent = (sr.SeasonTotalIn || '--') + '"';
+
+        // Conditions
+        document.getElementById('dvConditions').textContent = sr.BaseConditions || '--';
+        document.getElementById('dvStorm').textContent = (sr.StormTotalIn || '0') + '"';
+        document.getElementById('dv48h').textContent = (base.Last48HoursIn || '0') + '"';
+        document.getElementById('dv7d').textContent = (base.Last7DaysIn || '0') + '"';
+        document.getElementById('dvAcres').textContent = (sr.OpenTerrainAcres !== '--' ? sr.OpenTerrainAcres : '0') + ' / ' + (sr.TotalTerrainAcres || '4,300');
+
+        // Lifts & Trails
+        const openLifts = sr.TotalOpenLifts || 0;
+        const totalLifts = sr.TotalLifts || 31;
+        const openTrails = sr.TotalOpenTrails || 0;
+        const totalTrails = sr.TotalTrails || 202;
+        document.getElementById('dvLifts').textContent = openLifts + '/' + totalLifts;
+        document.getElementById('dvTrails').textContent = openTrails + '/' + totalTrails;
+        document.getElementById('dvLiftBar').style.width = (totalLifts > 0 ? (openLifts/totalLifts*100) : 0) + '%';
+        document.getElementById('dvTrailBar').style.width = (totalTrails > 0 ? (openTrails/totalTrails*100) : 0) + '%';
+
+        // Last update
+        const lu = d.LastUpdate || '';
+        document.getElementById('lastUpdate').textContent = 'Last updated: ' + (lu ? new Date(lu).toLocaleString() : 'Unknown');
+    })
+    .catch(()=>{
+        document.getElementById('lastUpdate').textContent = 'Unable to fetch live data';
+    });
+</script>
+</body>
+</html>
