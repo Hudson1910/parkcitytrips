@@ -647,6 +647,110 @@
     </div>
 </section>
 
+<!-- OLYMPICS 2034 COUNTDOWN -->
+<section class="olympics-section" id="olympics">
+    <canvas id="snowCanvas"></canvas>
+    <div class="olympics-overlay">
+        <div class="olympics-rings">
+            <svg viewBox="0 0 500 230" class="rings-svg">
+                <circle cx="105" cy="90" r="55" fill="none" stroke="#0081C8" stroke-width="8"/>
+                <circle cx="250" cy="90" r="55" fill="none" stroke="#f0f0f0" stroke-width="8" opacity="0.9"/>
+                <circle cx="395" cy="90" r="55" fill="none" stroke="#EE334E" stroke-width="8"/>
+                <circle cx="177" cy="145" r="55" fill="none" stroke="#FCB131" stroke-width="8"/>
+                <circle cx="323" cy="145" r="55" fill="none" stroke="#00A651" stroke-width="8"/>
+            </svg>
+        </div>
+        <h2 class="olympics-city">PARK CITY</h2>
+        <div class="olympics-year">2034</div>
+        <p class="olympics-tagline">Winter Olympics are coming to our backyard</p>
+        <div class="olympics-countdown" id="olympicsCountdown">
+            <div class="cd-block"><span class="cd-num" id="cdDays">0</span><span class="cd-label">Days</span></div>
+            <div class="cd-sep">:</div>
+            <div class="cd-block"><span class="cd-num" id="cdHours">0</span><span class="cd-label">Hours</span></div>
+            <div class="cd-sep">:</div>
+            <div class="cd-block"><span class="cd-num" id="cdMins">0</span><span class="cd-label">Min</span></div>
+            <div class="cd-sep">:</div>
+            <div class="cd-block"><span class="cd-num" id="cdSecs">0</span><span class="cd-label">Sec</span></div>
+        </div>
+        <p class="olympics-cta">Your official ride from SLC Airport to Park City</p>
+        <a href="#book" class="olympics-btn"><i class="bi bi-calendar-check"></i> Book Your Olympic Transfer</a>
+    </div>
+</section>
+
+<style>
+.olympics-section{position:relative;min-height:80vh;overflow:hidden;background:#050a14;display:flex;align-items:center;justify-content:center;}
+#snowCanvas{position:absolute;inset:0;z-index:1;}
+.olympics-overlay{position:relative;z-index:2;text-align:center;padding:60px 20px;}
+.rings-svg{width:min(320px,70vw);height:auto;margin-bottom:20px;filter:drop-shadow(0 0 20px rgba(255,255,255,0.15));animation:ringsFloat 6s ease-in-out infinite;}
+@keyframes ringsFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+.olympics-city{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,10vw,6rem);color:#fff;letter-spacing:0.15em;margin:0;line-height:1;text-shadow:0 0 30px rgba(255,255,255,0.2);}
+.olympics-year{font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,16vw,10rem);color:transparent;-webkit-text-stroke:2px rgba(255,255,255,0.25);letter-spacing:0.08em;line-height:0.9;margin-bottom:10px;}
+.olympics-tagline{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:30px;}
+.olympics-countdown{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:30px;}
+.cd-block{display:flex;flex-direction:column;align-items:center;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:14px 18px;min-width:70px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
+.cd-num{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,5vw,2.8rem);color:#fff;line-height:1;}
+.cd-label{font-family:'DM Mono',monospace;font-size:0.45rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-top:4px;}
+.cd-sep{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:rgba(255,255,255,0.2);margin-top:-16px;}
+.olympics-cta{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;color:#FCB131;margin-bottom:16px;}
+.olympics-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:linear-gradient(135deg,#d4a84b,#c9823a);color:#0a0c10;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;border-radius:10px;text-decoration:none;transition:all 0.3s;box-shadow:0 4px 20px rgba(212,168,75,0.3);}
+.olympics-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(212,168,75,0.5);}
+@media(max-width:640px){.cd-block{padding:10px 12px;min-width:55px;}.cd-sep{font-size:1.5rem;}}
+</style>
+
+<script>
+// Olympics snowfall (lightweight version — fewer particles for section use)
+(function(){
+    const canvas = document.getElementById('snowCanvas');
+    if(!canvas) return;
+    const ctx = canvas.getContext('2d',{alpha:false});
+    let w,h,flakes=[];
+    const COLORS=['rgba(255,255,255,0.6)','rgba(0,129,200,0.5)','rgba(252,177,49,0.4)','rgba(0,166,81,0.4)','rgba(238,51,78,0.4)'];
+    function resize(){
+        w=canvas.width=canvas.parentElement.offsetWidth;
+        h=canvas.height=canvas.parentElement.offsetHeight;
+        flakes=[];
+        for(let i=0;i<200;i++) flakes.push(mkFlake(true));
+    }
+    function mkFlake(init){
+        return{x:Math.random()*w,y:init?Math.random()*h:-5,r:0.5+Math.random()*2.5,vy:0.3+Math.random()*1.5,vx:(Math.random()-0.5)*0.8,c:COLORS[Math.floor(Math.random()*5)],o:0.3+Math.random()*0.5};
+    }
+    function draw(){
+        ctx.fillStyle='#050a14';ctx.fillRect(0,0,w,h);
+        for(const f of flakes){
+            f.x+=f.vx;f.y+=f.vy;
+            if(f.y>h+5||f.x<-5||f.x>w+5)Object.assign(f,mkFlake(false));
+            ctx.globalAlpha=f.o;ctx.fillStyle=f.c;
+            ctx.beginPath();ctx.arc(f.x,f.y,f.r,0,6.28);ctx.fill();
+        }
+        ctx.globalAlpha=1;
+        requestAnimationFrame(draw);
+    }
+    // Only run when section is visible
+    const obs=new IntersectionObserver(es=>{
+        if(es[0].isIntersecting){resize();draw();obs.disconnect();}
+    },{threshold:0.1});
+    obs.observe(canvas.parentElement);
+    window.addEventListener('resize',()=>{if(w)resize();});
+})();
+
+// Olympics countdown — Feb 10, 2034 opening ceremony
+(function(){
+    const target=new Date('2034-02-10T19:00:00-07:00').getTime(); // MST
+    const d=document.getElementById('cdDays'),hr=document.getElementById('cdHours'),mn=document.getElementById('cdMins'),sc=document.getElementById('cdSecs');
+    if(!d)return;
+    function tick(){
+        const diff=Math.max(0,target-Date.now());
+        const days=Math.floor(diff/86400000);
+        const hours=Math.floor((diff%86400000)/3600000);
+        const mins=Math.floor((diff%3600000)/60000);
+        const secs=Math.floor((diff%60000)/1000);
+        d.textContent=days;hr.textContent=String(hours).padStart(2,'0');
+        mn.textContent=String(mins).padStart(2,'0');sc.textContent=String(secs).padStart(2,'0');
+    }
+    tick();setInterval(tick,1000);
+})();
+</script>
+
 <!-- REVIEWS -->
 <section class="section ani" id="reviews">
     <div class="sec-head">
