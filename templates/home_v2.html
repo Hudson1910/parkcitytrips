@@ -28,13 +28,13 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);-webkit-f
 .nav.scrolled .nav-logo{color:var(--light-fg);}
 .nav-logo span{font-weight:400;opacity:.5;}
 .nav-links{display:flex;align-items:center;gap:32px;}
-.nav-links a{font-family:var(--font-body);font-size:14px;font-weight:500;color:rgba(255,255,255,.7);text-decoration:none;transition:color .2s;}
-.nav-links a:hover{color:#fff;}
+.nav-links a{font-family:var(--font-body);font-size:14px;font-weight:500;color:rgba(0,0,0,.6);text-decoration:none;transition:color .2s;}
+.nav-links a:hover{color:#000;}
 .nav.scrolled .nav-links a{color:var(--muted);}
 .nav.scrolled .nav-links a:hover{color:var(--light-fg);}
-.nav-cta{padding:10px 24px;border-radius:50px;background:var(--fg);color:var(--bg);font-family:var(--font-body);font-size:13px;font-weight:600;text-decoration:none;transition:all .2s;border:1.5px solid var(--fg);}
+.nav-cta{padding:10px 24px;border-radius:50px;background:#000;color:#fff;font-family:var(--font-body);font-size:13px;font-weight:600;text-decoration:none;transition:all .2s;border:1.5px solid #000;}
 .nav-cta:hover{opacity:.85;}
-.nav.scrolled .nav-cta{background:var(--light-fg);color:var(--light-bg);border-color:var(--light-fg);}
+.nav.scrolled .nav-cta{background:#000;color:#fff;border-color:#000;}
 @media(max-width:768px){.nav{padding:16px 20px;}.nav-links{display:none;}}
 
 /* === ANIMATIONS === */
@@ -135,6 +135,28 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);-webkit-f
 .stat-item .stat-line{width:50px;height:1px;background:currentColor;opacity:.3;margin-bottom:10px;}
 .stat-item .stat-label{font-family:var(--font-label);font-size:12px;font-weight:500;letter-spacing:.25em;text-transform:uppercase;opacity:.6;}
 
+/* === BOOKING GRID === */
+.book-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+.book-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden;transition:all .4s cubic-bezier(.16,1,.3,1);}
+.book-card:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.15);box-shadow:0 20px 60px rgba(0,0,0,.4);}
+.book-img{height:180px;overflow:hidden;background:#111;}
+.book-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
+.book-card:hover .book-img img{transform:scale(1.05);}
+.book-info{padding:24px 20px;}
+.book-tag{display:inline-block;font-family:var(--font-label);font-size:10px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.6);margin-bottom:12px;}
+.book-info h3{font-family:var(--font-display);font-size:20px;font-weight:700;color:#fff;margin-bottom:4px;}
+.book-info>p{font-size:13px;color:rgba(255,255,255,.4);margin-bottom:14px;}
+.book-specs{display:flex;gap:16px;font-size:13px;color:rgba(255,255,255,.5);margin-bottom:16px;}
+.book-specs i{color:var(--accent);margin-right:4px;}
+.book-price{font-family:var(--font-display);font-size:14px;color:rgba(255,255,255,.5);margin-bottom:16px;}
+.book-price strong{font-size:28px;font-weight:800;color:#fff;}
+.book-btn{display:block;text-align:center;padding:12px;border:1.5px solid rgba(255,255,255,.2);border-radius:50px;color:#fff;font-family:var(--font-body);font-size:14px;font-weight:600;text-decoration:none;transition:all .3s;}
+.book-btn:hover{background:#fff;color:#000;border-color:#fff;}
+.book-btn-gold{background:var(--accent);color:#000;border-color:var(--accent);}
+.book-btn-gold:hover{background:#e8c65a;border-color:#e8c65a;}
+@media(max-width:900px){.book-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:640px){.book-grid{grid-template-columns:1fr;}}
+
 /* === REVIEWS TICKER === */
 .rev-section{padding:100px 0;overflow:hidden;}
 .rev-header{text-align:center;margin-bottom:40px;padding:0 20px;}
@@ -202,7 +224,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);-webkit-f
 
 <!-- NAV -->
 <nav class="nav" id="nav">
-    <a href="/" class="nav-logo">RIO <span>Transportation</span></a>
+    <a href="/" class="nav-logo"><img src="https://static.wixstatic.com/media/55a398_efc5a657079e4b5f88a415de4633fbe8~mv2.avif" alt="Rio Transportation" style="height:36px;"></a>
     <div class="nav-links">
         <a href="#services">Services</a>
         <a href="#fleet">Fleet</a>
@@ -222,7 +244,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);-webkit-f
         <p>Luxury private SUV from Salt Lake City Airport to Park City. From $129, all-inclusive. 9,000+ rides completed.</p>
     </div>
     <div class="hero-vehicle">
-        <img src="https://www.velocityjournal.com/images/new/2025/953/905/ln2025navigator953106130_1200.jpg" alt="2025 Lincoln Navigator" onerror="this.src='https://images.unsplash.com/photo-1762769665979-52caeade14a1?w=1200&fit=crop'">
+        <img src="https://static.wixstatic.com/media/55a398_1d427b4af5334f1ca3d0edd76f254f4a~mv2.png" alt="Rio Transportation Fleet">
     </div>
     <div class="hero-scroll"><span><i class="bi bi-chevron-down"></i>Scroll to explore</span></div>
 </section>
@@ -239,7 +261,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);-webkit-f
                 <a href="#book" class="sect-cta">Book Your Ride <i class="bi bi-arrow-right"></i></a>
             </div>
             <div class="split-img glow" style="height:420px;">
-                <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=800&h=600&fit=crop" alt="Luxury SUV interior" style="filter:brightness(.8);">
+                <img src="https://static.wixstatic.com/media/55a398_c807593e42cb4255a62876909c0e0f68~mv2.png" alt="Executive chauffeur service" style="filter:brightness(.85);">
             </div>
         </div>
     </div>
@@ -323,6 +345,62 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);-webkit-f
         <div class="rev-card"><div class="rc-top"><div class="rc-avatar" style="background:#27ae60;">A</div><div><div class="rc-name">Allan Thiiago</div><div class="rc-date">2023</div></div></div><div class="rc-stars">★★★★★</div><div class="rc-text">The best experience me and my family had!</div></div>
         <div class="rev-card"><div class="rc-top"><div class="rc-avatar" style="background:#1abc9c;">M</div><div><div class="rc-name">Mitchell Lyons</div><div class="rc-date">2023</div></div></div><div class="rc-stars">★★★★★</div><div class="rc-text">Safe, clean ride; friendly staff 10/10 would book again.</div></div>
         <div class="rev-card"><div class="rc-top"><div class="rc-avatar" style="background:#e67e22;">B</div><div><div class="rc-name">Bill Mohl</div><div class="rc-date">2024</div></div></div><div class="rc-stars">★★★★★</div><div class="rc-text">On time and a great driver. Very professional. Will use them again!</div></div>
+    </div>
+</section>
+
+<!-- BOOKING — dark section with 4 vehicle tiers -->
+<section class="sect sect-dark" id="book" style="padding-bottom:80px;">
+    <span class="sect-bg-text">BOOK</span>
+    <div class="sect-inner" style="position:relative;z-index:1;">
+        <div class="sect-label reveal" style="text-align:center;">BOOK YOUR RIDE</div>
+        <h2 class="sect-title lg reveal reveal-delay-1" style="text-align:center;">Choose Your Vehicle</h2>
+        <p class="sect-body reveal reveal-delay-2" style="text-align:center;margin:0 auto 48px;color:rgba(255,255,255,.5);">All prices include driver, taxes, fees, bottled water, and complimentary car seats.</p>
+        <div class="book-grid">
+            <div class="book-card reveal">
+                <div class="book-img"><img src="https://static.wixstatic.com/media/55a398_cb5c7d2583204805ab6e961e3daf4140~mv2.webp" alt="Small SUV"></div>
+                <div class="book-info">
+                    <div class="book-tag">Best Value</div>
+                    <h3>Small SUV</h3>
+                    <p>Nissan Rogue or similar</p>
+                    <div class="book-specs"><span><i class="bi bi-people-fill"></i> 4 pax</span><span><i class="bi bi-luggage-fill"></i> 4 bags</span></div>
+                    <div class="book-price">From <strong>$109</strong> / trip</div>
+                    <a href="https://wa.me/14352146939?text=Hi!%20I'd%20like%20to%20book%20a%20Small%20SUV%20to%20Park%20City." target="_blank" class="book-btn">Book Now <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="book-card reveal reveal-delay-1">
+                <div class="book-img"><img src="https://static.wixstatic.com/media/55a398_cb5c7d2583204805ab6e961e3daf4140~mv2.webp" alt="Midsize SUV"></div>
+                <div class="book-info">
+                    <div class="book-tag">Popular</div>
+                    <h3>Midsize SUV</h3>
+                    <p>Nissan Pathfinder or similar</p>
+                    <div class="book-specs"><span><i class="bi bi-people-fill"></i> 6 pax</span><span><i class="bi bi-luggage-fill"></i> 6 bags</span></div>
+                    <div class="book-price">From <strong>$129</strong> / trip</div>
+                    <a href="https://wa.me/14352146939?text=Hi!%20I'd%20like%20to%20book%20a%20Midsize%20SUV%20to%20Park%20City." target="_blank" class="book-btn">Book Now <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="book-card reveal reveal-delay-2">
+                <div class="book-img"><img src="https://static.wixstatic.com/media/55a398_20b37cd36164453da86eb84430394411~mv2.jpg" alt="Premier SUV"></div>
+                <div class="book-info">
+                    <div class="book-tag" style="background:var(--accent);color:#000;">Most Popular</div>
+                    <h3>Premier SUV</h3>
+                    <p>GMC Yukon or similar</p>
+                    <div class="book-specs"><span><i class="bi bi-people-fill"></i> 7 pax</span><span><i class="bi bi-luggage-fill"></i> 7 bags</span></div>
+                    <div class="book-price">From <strong>$189</strong> / trip</div>
+                    <a href="https://wa.me/14352146939?text=Hi!%20I'd%20like%20to%20book%20a%20Premier%20SUV%20(Yukon)%20to%20Park%20City." target="_blank" class="book-btn book-btn-gold">Book Now <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="book-card reveal reveal-delay-3">
+                <div class="book-img"><img src="https://static.wixstatic.com/media/55a398_20b37cd36164453da86eb84430394411~mv2.jpg" alt="Luxury SUV"></div>
+                <div class="book-info">
+                    <div class="book-tag" style="background:rgba(201,168,76,.15);color:var(--accent);">Premium</div>
+                    <h3>Luxury SUV</h3>
+                    <p>Cadillac Escalade or similar</p>
+                    <div class="book-specs"><span><i class="bi bi-people-fill"></i> 6 pax</span><span><i class="bi bi-luggage-fill"></i> 6 bags</span></div>
+                    <div class="book-price">From <strong>$220</strong> / trip</div>
+                    <a href="https://wa.me/14352146939?text=Hi!%20I'd%20like%20to%20book%20a%20Luxury%20SUV%20(Escalade)%20to%20Park%20City." target="_blank" class="book-btn">Book Now <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 
