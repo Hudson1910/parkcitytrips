@@ -117,7 +117,7 @@ setTip(18);
 async function initSquare() {
     if (!window.Square) { console.error('Square SDK not loaded'); return; }
     const payments = window.Square.payments('{{ square_app_id }}', '{{ "production" if config.SQUARE_ENVIRONMENT == "production" else "sandbox" }}');
-    card = await payments.card();
+    card = await payments.card({postalCode: true});
     await card.attach('#card-container');
     document.getElementById('payBtn').disabled = false;
 }
