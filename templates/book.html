@@ -27,7 +27,18 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);mi
 .field small{font-size:11px;color:var(--muted);margin-top:4px;display:block;}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
 .row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
-@media(max-width:640px){.row,.row-3{grid-template-columns:1fr;}}
+@media(max-width:640px){
+    .row,.row-3{grid-template-columns:1fr;}
+    .book-page{padding:24px 16px 60px;}
+    .book-page h1{font-size:24px;}
+    .vehicles{grid-template-columns:repeat(2,1fr);}
+    .v-option{padding:12px 8px;}
+    .v-option img{height:60px;}
+    .v-option h4{font-size:12px;}
+    .v-option .v-price{font-size:16px;}
+    .field input,.field select,.field textarea{font-size:16px !important;} /* prevent iOS zoom */
+    .book-nav{padding:14px 16px;}
+}
 
 /* Vehicle selector */
 .vehicles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:32px;}
@@ -68,7 +79,7 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);mi
 
 <div class="book-page">
     <h1>Book Your Ride</h1>
-    <p class="sub">SLC Airport ↔ Park City · All-inclusive pricing</p>
+    <p class="sub">All-inclusive pricing · No hidden fees</p>
 
     <form id="bookingForm" action="/book/submit" method="POST">
         <!-- Step 1: Vehicle -->
@@ -103,19 +114,9 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);mi
 
         <!-- Step 2: Trip Details -->
         <div class="step-label">2 — Trip Details</div>
-        <div class="row" style="margin-bottom:20px;">
-            <div class="field">
-                <label>Direction</label>
-                <select name="direction" id="directionSelect" onchange="updateAddressDefaults()">
-                    <option value="airport-to-pc">SLC Airport → Park City</option>
-                    <option value="pc-to-airport">Park City → SLC Airport</option>
-                    <option value="roundtrip">Round Trip (Both Ways)</option>
-                </select>
-            </div>
-            <div class="field">
-                <label>Pickup Date</label>
-                <input type="date" name="date" required>
-            </div>
+        <div class="field" style="margin-bottom:20px;">
+            <label>Pickup Date</label>
+            <input type="date" name="date" required>
         </div>
         <!-- Pickup & Dropoff -->
         <div class="row" style="margin-bottom:20px;">
@@ -421,12 +422,17 @@ function setupAutocomplete(inputId, dropdownId) {
 }
 
 function showQuickPicks(dropdown, inputId) {
-    dropdown.innerHTML = QUICK_PICKS.map(p =>
+    let html = `<div class="addr-item" onclick="useCurrentLocation('${inputId}');document.getElementById('${inputId==='pickupInput'?'pickupDropdown':'dropoffDropdown'}').style.display='none';" style="border-bottom:2px solid var(--border);">
+        <i class="bi bi-crosshair" style="color:#22c55e;"></i>
+        <div><div class="addr-main" style="color:#22c55e;">Use Current Location</div><div class="addr-sub">Detect via GPS</div></div>
+    </div>`;
+    html += QUICK_PICKS.map(p =>
         `<div class="addr-item" onclick="pickAddress('${inputId}','${p.address}',this)">
             <i class="bi ${p.icon}"></i>
             <div><div class="addr-main">${p.name}</div><div class="addr-sub">${p.address}</div></div>
         </div>`
     ).join('');
+    dropdown.innerHTML = html;
     dropdown.style.display = 'block';
 }
 
