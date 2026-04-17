@@ -9,6 +9,12 @@ app.secret_key = config.SECRET_KEY
 
 @app.route('/')
 def home():
+    return render_template('home_v2.html', config=config)
+
+
+@app.route('/v1')
+def home_v1():
+    """Old design preserved at /v1 for comparison."""
     return render_template('home.html', config=config)
 
 
