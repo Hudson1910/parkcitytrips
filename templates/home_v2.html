@@ -58,6 +58,11 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);-webkit-f
 .splash-city{font-family:var(--font-display);font-size:clamp(2.5rem,9vw,5rem);font-weight:900;color:#fff;letter-spacing:.1em;line-height:1;}
 .splash-year{font-family:var(--font-display);font-size:clamp(4rem,14vw,8rem);font-weight:900;color:transparent;-webkit-text-stroke:2px rgba(255,255,255,.15);letter-spacing:.06em;line-height:.85;}
 .splash-sub{font-family:var(--font-label);font-size:12px;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-top:10px;}
+.splash-countdown{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:24px;}
+.scd{display:flex;flex-direction:column;align-items:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px 16px;min-width:60px;backdrop-filter:blur(8px);}
+.scd span{font-family:var(--font-display);font-size:clamp(1.5rem,4vw,2.2rem);font-weight:800;color:#fff;line-height:1;}
+.scd small{font-family:var(--font-label);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:4px;}
+.scd-sep{font-family:var(--font-display);font-size:1.5rem;color:rgba(255,255,255,.2);margin-top:-10px;}
 
 /* === HERO (AUTONO-style: centered text + vehicle) === */
 .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;background:#f2f0ed;padding:120px 40px 80px;}
@@ -183,6 +188,15 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);-webkit-f
         <div class="splash-city">PARK CITY</div>
         <div class="splash-year">2034</div>
         <div class="splash-sub">Winter Olympics</div>
+        <div class="splash-countdown" id="splashCD">
+            <div class="scd"><span id="scdD">0</span><small>Days</small></div>
+            <div class="scd-sep">:</div>
+            <div class="scd"><span id="scdH">0</span><small>Hrs</small></div>
+            <div class="scd-sep">:</div>
+            <div class="scd"><span id="scdM">0</span><small>Min</small></div>
+            <div class="scd-sep">:</div>
+            <div class="scd"><span id="scdS">0</span><small>Sec</small></div>
+        </div>
     </div>
 </div>
 
@@ -355,15 +369,21 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);-webkit-f
 (function(){
     const s=document.getElementById('splash');
     if(!s)return;
-    if(sessionStorage.getItem('ss')){s.remove();return;}
-    sessionStorage.setItem('ss','1');
     const c=document.getElementById('splashSnow'),ctx=c.getContext('2d',{alpha:false});
     let w,h,f=[];const C=['rgba(255,255,255,.6)','rgba(0,129,200,.5)','rgba(252,177,49,.4)','rgba(0,166,81,.4)','rgba(238,51,78,.4)'];
     function r(){w=c.width=innerWidth;h=c.height=innerHeight;f=[];for(let i=0;i<250;i++)f.push({x:Math.random()*w,y:Math.random()*h,r:.5+Math.random()*2.5,vy:.3+Math.random()*1.5,vx:(Math.random()-.5)*.8,c:C[Math.floor(Math.random()*5)],o:.3+Math.random()*.5});}
     r();let on=true;
     function d(){if(!on)return;ctx.fillStyle='#050a14';ctx.fillRect(0,0,w,h);for(const p of f){p.x+=p.vx;p.y+=p.vy;if(p.y>h+5)Object.assign(p,{x:Math.random()*w,y:-5});ctx.globalAlpha=p.o;ctx.fillStyle=p.c;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.28);ctx.fill();}ctx.globalAlpha=1;requestAnimationFrame(d);}
     d();
-    setTimeout(()=>{s.classList.add('out');setTimeout(()=>{on=false;s.remove();},800);},4000);
+    // Countdown to Feb 10, 2034 opening ceremony
+    const target=new Date('2034-02-10T19:00:00-07:00').getTime();
+    function tick(){
+        const diff=Math.max(0,target-Date.now());
+        const dd=document.getElementById('scdD'),hh=document.getElementById('scdH'),mm=document.getElementById('scdM'),ss2=document.getElementById('scdS');
+        if(dd){dd.textContent=Math.floor(diff/864e5);hh.textContent=String(Math.floor(diff%864e5/36e5)).padStart(2,'0');mm.textContent=String(Math.floor(diff%36e5/6e4)).padStart(2,'0');ss2.textContent=String(Math.floor(diff%6e4/1e3)).padStart(2,'0');}
+    }
+    tick();setInterval(tick,1000);
+    setTimeout(()=>{s.classList.add('out');setTimeout(()=>{on=false;s.remove();},800);},5000);
     s.addEventListener('click',()=>{s.classList.add('out');setTimeout(()=>{on=false;s.remove();},600);});
 })();
 
