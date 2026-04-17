@@ -67,13 +67,15 @@ def send_booking_email(booking):
         msg['From'] = config.SMTP_USER
         msg['To'] = config.NOTIFY_EMAIL
         msg.attach(MIMEText(html, 'html'))
-        with smtplib.SMTP(config.SMTP_HOST, config.SMTP_PORT) as server:
+        with smtplib.SMTP(config.SMTP_HOST, config.SMTP_PORT, timeout=15) as server:
             server.starttls()
             server.login(config.SMTP_USER, config.SMTP_PASS)
             server.send_message(msg)
         print(f"[Email] Trip request #{bid} sent to {config.NOTIFY_EMAIL}")
     except Exception as e:
         print(f"[Email] Error: {e}")
+        import traceback
+        traceback.print_exc()
 
 # Use /tmp for Railway (persists within a deploy, not across deploys)
 # Or use RAILWAY_VOLUME_MOUNT_PATH if a volume is attached
@@ -256,9 +258,11 @@ def book_save_card():
             save_bookings(bookings)
 
             print(f"[Square] Card saved for booking {booking_id}: {brand} ****{last4}")
-            # Send email in background thread (SMTP is slow, causes worker timeout)
-            import threading
-            threading.Thread(target=send_booking_email, args=(booking,), daemon=True).start()
+            # Send email notification
+            try:
+                send_booking_email(booking)
+            except Exception as email_err:
+                print(f"[Email] Failed but booking OK: {email_err}")
             return jsonify({'success': True, 'booking_id': booking_id})
         else:
             errors = card_data.get('errors', [{}])
