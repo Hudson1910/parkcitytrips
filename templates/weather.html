@@ -54,6 +54,21 @@ body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-heigh
 .webcam-item img{width:100%;height:100%;object-fit:cover;}
 @media(max-width:640px){.webcam-grid{grid-template-columns:1fr;}.snow-stats{grid-template-columns:repeat(2,1fr);}}
 
+/* Detail expandable */
+.area-group{margin-bottom:16px;}
+.area-name{font-family:'Onest',sans-serif;font-size:13px;font-weight:700;color:#fff;margin-bottom:6px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.06);}
+.trail-row{display:flex;align-items:center;gap:8px;padding:3px 0;font-size:12px;color:#999;}
+.trail-row .dot{width:14px;height:14px;border-radius:3px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:8px;color:#fff;}
+.dot-green{background:#22c55e;}.dot-blue{background:#3b82f6;}.dot-black{background:#000;border:1px solid #fff;}.dot-dblack{background:#000;border:1px solid #fff;}
+.trail-row .trail-name{flex:1;}
+.trail-row .trail-status{font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;}
+.ts-open{background:rgba(34,197,94,.15);color:#22c55e;}
+.ts-closed{background:rgba(239,68,68,.1);color:#ef4444;}
+.road-row{display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid rgba(255,255,255,.04);}
+.road-row .road-name{color:#fff;font-weight:600;}
+.road-row .road-status{font-weight:600;}
+.road-open{color:#22c55e;}.road-closed{color:#ef4444;}
+
 .w-cta{max-width:1100px;margin:20px auto 60px;padding:0 20px;text-align:center;}
 .w-cta a{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:#c9a84c;color:#000;font-family:'Onest',sans-serif;font-size:14px;font-weight:700;border-radius:50px;text-decoration:none;}
 .w-footer{padding:24px 40px;border-top:1px solid rgba(255,255,255,.06);text-align:center;font-size:12px;color:rgba(255,255,255,.2);}
@@ -83,16 +98,38 @@ body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-heigh
             <div class="snow-stat"><div class="val" id="dv24h">--</div><div class="lbl">Last 24h</div></div>
             <div class="snow-stat"><div class="val" id="dvSeason">--</div><div class="lbl">Season Total</div></div>
         </div>
-        <div class="conditions">
-            <div class="cond-row"><span class="k">Conditions</span><span class="v" id="dvConditions">--</span></div>
-            <div class="cond-row"><span class="k">Storm Total</span><span class="v" id="dvStorm">--</span></div>
+        <!-- Current Weather -->
+        <div class="conditions" id="dvWeather">
+            <div class="cond-row"><span class="k"><i class="bi bi-thermometer-half"></i> Temperature</span><span class="v" id="dvTemp">--</span></div>
+            <div class="cond-row"><span class="k"><i class="bi bi-wind"></i> Wind</span><span class="v" id="dvWind">--</span></div>
+            <div class="cond-row"><span class="k"><i class="bi bi-cloud"></i> Skies</span><span class="v" id="dvSkies">--</span></div>
+            <div class="cond-row"><span class="k"><i class="bi bi-snow"></i> Conditions</span><span class="v" id="dvConditions">--</span></div>
+            <div class="cond-row"><span class="k"><i class="bi bi-cloud-snow"></i> Storm Total</span><span class="v" id="dvStorm">--</span></div>
             <div class="cond-row"><span class="k">Last 48h</span><span class="v" id="dv48h">--</span></div>
             <div class="cond-row"><span class="k">Last 7 Days</span><span class="v" id="dv7d">--</span></div>
-            <div class="cond-row"><span class="k">Terrain Acres</span><span class="v" id="dvAcres">--</span></div>
+            <div class="cond-row"><span class="k"><i class="bi bi-mountain"></i> Terrain</span><span class="v" id="dvAcres">--</span></div>
+        </div>
+        <!-- Forecast -->
+        <div class="conditions" id="dvForecast" style="border-bottom:1px solid rgba(255,255,255,.06);">
+            <div style="font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#c9a84c;margin-bottom:10px;">FORECAST</div>
+            <div id="dvForecastContent" style="font-size:13px;color:#999;line-height:1.6;">Loading...</div>
+            <div id="dvSnowForecast" style="margin-top:8px;font-size:14px;font-weight:700;color:#fff;"></div>
+        </div>
+        <!-- Roads -->
+        <div class="conditions" id="dvRoads">
+            <div style="font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#c9a84c;margin-bottom:10px;"><i class="bi bi-signpost-2"></i> ROAD CONDITIONS</div>
+            <div id="dvRoadsContent">Loading...</div>
         </div>
         <div class="lifts-trails">
             <div class="lt-bar"><span class="lt-label">Lifts</span><div class="lt-track"><div class="lt-fill" id="dvLiftBar" style="width:0%;background:#22c55e;"></div></div><span class="lt-num" id="dvLifts">--</span></div>
             <div class="lt-bar"><span class="lt-label">Trails</span><div class="lt-track"><div class="lt-fill" id="dvTrailBar" style="width:0%;background:#3b82f6;"></div></div><span class="lt-num" id="dvTrails">--</span></div>
+            <!-- Expandable detail -->
+            <button onclick="toggleDetail('dvDetail')" style="width:100%;margin-top:8px;padding:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;color:#c9a84c;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;letter-spacing:.1em;transition:all .2s;" id="dvDetailBtn">
+                <i class="bi bi-chevron-down"></i> VIEW LIFTS & TRAILS DETAIL
+            </button>
+            <div id="dvDetail" style="display:none;margin-top:12px;max-height:400px;overflow-y:auto;">
+                <div id="dvMountainAreas">Loading...</div>
+            </div>
         </div>
         <div class="webcams">
             <div class="webcam-label">Webcams</div>
@@ -143,14 +180,23 @@ body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-heigh
 <footer class="w-footer">© 2026 Rio Transportation LLC — Park City, Utah</footer>
 
 <script>
-// Fetch Deer Valley live data from mtnpowder API
+function toggleDetail(id){
+    const el=document.getElementById(id);
+    const btn=document.getElementById(id+'Btn');
+    if(el.style.display==='none'){el.style.display='block';btn.innerHTML='<i class="bi bi-chevron-up"></i> HIDE DETAIL';}
+    else{el.style.display='none';btn.innerHTML='<i class="bi bi-chevron-down"></i> VIEW LIFTS & TRAILS DETAIL';}
+}
+
+// Fetch Deer Valley FULL live data from mtnpowder API
 fetch('https://www.mtnpowder.com/feed?format=json&resortId=49')
     .then(r=>r.json())
     .then(d=>{
         const sr = d.SnowReport || {};
         const base = sr.BaseArea || {};
-        const mid = sr.MidMountainArea || {};
-        const summit = sr.SummitArea || {};
+        const cc = d.CurrentConditions || {};
+        const fc = d.Forecast || {};
+        const roads = d.Roads || [];
+        const areas = d.MountainAreas || [];
 
         // Status
         const status = d.OperatingStatus || 'Closed';
@@ -163,12 +209,34 @@ fetch('https://www.mtnpowder.com/feed?format=json&resortId=49')
         document.getElementById('dv24h').textContent = (base.Last24HoursIn || '0') + '"';
         document.getElementById('dvSeason').textContent = (sr.SeasonTotalIn || '--') + '"';
 
+        // Current Weather
+        const baseW = cc.Base || {};
+        document.getElementById('dvTemp').textContent = (baseW.TemperatureF || '--') + '°F (Low ' + (baseW.TemperatureLowF || '--') + '° / High ' + (baseW.TemperatureHighF || '--') + '°)';
+        document.getElementById('dvWind').textContent = (baseW.WindDirection || '--') + ' ' + (baseW.WindStrengthMph || '0') + ' mph' + (baseW.WindGustsMph > baseW.WindStrengthMph ? ', gusts ' + baseW.WindGustsMph + ' mph' : '');
+        document.getElementById('dvSkies').textContent = baseW.Skies || '--';
+
         // Conditions
         document.getElementById('dvConditions').textContent = sr.BaseConditions || '--';
         document.getElementById('dvStorm').textContent = (sr.StormTotalIn || '0') + '"';
         document.getElementById('dv48h').textContent = (base.Last48HoursIn || '0') + '"';
         document.getElementById('dv7d').textContent = (base.Last7DaysIn || '0') + '"';
-        document.getElementById('dvAcres').textContent = (sr.OpenTerrainAcres !== '--' ? sr.OpenTerrainAcres : '0') + ' / ' + (sr.TotalTerrainAcres || '4,300');
+        document.getElementById('dvAcres').textContent = (sr.OpenTerrainAcres !== '--' ? sr.OpenTerrainAcres : '0') + ' / ' + (sr.TotalTerrainAcres || '4,300') + ' acres';
+
+        // Forecast
+        const dayC = fc.DayComments || '';
+        const nightC = fc.NightComments || '';
+        const snowF = fc.ForecastedSnowIn || '0';
+        document.getElementById('dvForecastContent').textContent = dayC || nightC || 'No forecast available';
+        if (snowF !== '0') document.getElementById('dvSnowForecast').innerHTML = '<i class="bi bi-snow2" style="color:#3b82f6;"></i> ' + snowF + '" of snow forecasted';
+
+        // Roads
+        let roadsHtml = '';
+        roads.forEach(r => {
+            const isOpen = r.StatusEnglish === 'open';
+            const chains = r.ChainsRequired === 'Yes' ? ' <span style="color:#f59e0b;font-size:10px;">(Chains Required)</span>' : '';
+            roadsHtml += '<div class="road-row"><span class="road-name">' + r.Name + '</span><span class="road-status ' + (isOpen ? 'road-open' : 'road-closed') + '">' + r.Status + chains + '</span></div>';
+        });
+        document.getElementById('dvRoadsContent').innerHTML = roadsHtml || '<span style="color:#666;">No road data</span>';
 
         // Lifts & Trails
         const openLifts = sr.TotalOpenLifts || 0;
@@ -179,6 +247,21 @@ fetch('https://www.mtnpowder.com/feed?format=json&resortId=49')
         document.getElementById('dvTrails').textContent = openTrails + '/' + totalTrails;
         document.getElementById('dvLiftBar').style.width = (totalLifts > 0 ? (openLifts/totalLifts*100) : 0) + '%';
         document.getElementById('dvTrailBar').style.width = (totalTrails > 0 ? (openTrails/totalTrails*100) : 0) + '%';
+
+        // Mountain Areas + Individual Trails
+        const diffColors = {Easier:'dot-green',Intermediate:'dot-blue','Advanced Intermediate':'dot-blue',Advanced:'dot-black',Expert:'dot-dblack'};
+        let areasHtml = '';
+        areas.forEach(area => {
+            areasHtml += '<div class="area-group"><div class="area-name">' + area.Name + ' <span style="color:#666;font-size:11px;">(' + (area.OpenTrailsCount||0) + '/' + (area.TotalTrailsCount||0) + ' open)</span></div>';
+            (area.Trails || []).forEach(t => {
+                const isOpen = t.StatusEnglish === 'open';
+                const dotClass = diffColors[t.Difficulty] || 'dot-blue';
+                const groomed = t.Grooming === 'Yes' ? ' <i class="bi bi-check-circle" style="color:#c9a84c;font-size:10px;" title="Groomed"></i>' : '';
+                areasHtml += '<div class="trail-row"><div class="dot ' + dotClass + '">' + (t.Difficulty === 'Expert' ? '◆◆' : t.Difficulty === 'Advanced' ? '◆' : t.Difficulty === 'Intermediate' ? '■' : '●') + '</div><span class="trail-name">' + t.Name + groomed + '</span><span class="trail-status ' + (isOpen ? 'ts-open' : 'ts-closed') + '">' + t.Status + '</span></div>';
+            });
+            areasHtml += '</div>';
+        });
+        document.getElementById('dvMountainAreas').innerHTML = areasHtml || '<span style="color:#666;">Trail detail available during season</span>';
 
         // Last update
         const lu = d.LastUpdate || '';
