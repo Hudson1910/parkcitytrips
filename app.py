@@ -256,8 +256,9 @@ def book_save_card():
             save_bookings(bookings)
 
             print(f"[Square] Card saved for booking {booking_id}: {brand} ****{last4}")
-            # Send email notification to Hudson
-            send_booking_email(booking)
+            # Send email in background thread (SMTP is slow, causes worker timeout)
+            import threading
+            threading.Thread(target=send_booking_email, args=(booking,), daemon=True).start()
             return jsonify({'success': True, 'booking_id': booking_id})
         else:
             errors = card_data.get('errors', [{}])
