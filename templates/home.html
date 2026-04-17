@@ -347,7 +347,7 @@
     <a href="#book" class="btn-gold" onclick="this.parentElement.classList.remove('open')">Book Now</a>
 </div>
 
-<!-- CINEMATIC INTRO — Navigator slides in from right -->
+<!-- CINEMATIC INTRO — Black Navigator slides in from right -->
 <section class="intro-scene" id="introScene">
     <div class="intro-bg">
         <div class="intro-glow intro-glow--gold"></div>
@@ -357,22 +357,51 @@
         <p class="intro-tag">Rio Transportation LLC</p>
         <h1 class="intro-headline">ARRIVE IN<br><span class="intro-accent">STYLE.</span></h1>
         <p class="intro-sub">Luxury private SUV service<br>Salt Lake City Airport → Park City</p>
+        <a href="#book" class="intro-cta"><i class="bi bi-calendar-check"></i> Book Now</a>
         <div class="intro-scroll-hint">
             <span class="intro-arrow">↓</span>
             <span class="intro-scroll-text">scroll to explore</span>
         </div>
     </div>
     <div class="intro-car">
-        <img src="https://www.carpro.com/hs-fs/hubfs/2025-lincoln-navigator-black-label-exterior-2-carpro.jpg?width=1200" alt="2025 Lincoln Navigator Black Label" class="intro-car-img" onerror="this.src='https://www.velocityjournal.com/images/new/2025/953/905/ln2025navigator953106122_1200.jpg'">
-        <div class="intro-car-shadow"></div>
+        <img src="https://image.pngaaa.com/234/548234-middle.png" alt="Lincoln Navigator Black Label" class="intro-car-img">
+        <div class="intro-car-glow"></div>
     </div>
     <div class="intro-hud">
         <div class="intro-hud-line"></div>
-        <span class="intro-hud-label">2025 LINCOLN NAVIGATOR BLACK LABEL</span>
+        <span class="intro-hud-label">LINCOLN NAVIGATOR BLACK LABEL</span>
     </div>
 </section>
 
+<!-- OLYMPICS SPLASH — shows fullscreen for 4 seconds on first visit -->
+<div class="olympics-splash" id="olympicsSplash">
+    <canvas id="splashSnow"></canvas>
+    <div class="splash-content">
+        <svg viewBox="0 0 500 230" class="splash-rings">
+            <circle cx="105" cy="90" r="55" fill="none" stroke="#0081C8" stroke-width="8"/>
+            <circle cx="250" cy="90" r="55" fill="none" stroke="#f0f0f0" stroke-width="8" opacity="0.9"/>
+            <circle cx="395" cy="90" r="55" fill="none" stroke="#EE334E" stroke-width="8"/>
+            <circle cx="177" cy="145" r="55" fill="none" stroke="#FCB131" stroke-width="8"/>
+            <circle cx="323" cy="145" r="55" fill="none" stroke="#00A651" stroke-width="8"/>
+        </svg>
+        <div class="splash-city">PARK CITY</div>
+        <div class="splash-year">2034</div>
+        <div class="splash-tagline">Winter Olympics</div>
+    </div>
+</div>
+
 <style>
+/* === OLYMPICS SPLASH (fullscreen on open, fades after 4s) === */
+.olympics-splash{position:fixed;inset:0;z-index:9999;background:#050a14;display:flex;align-items:center;justify-content:center;animation:splashFade 0.8s ease-out 4s forwards;pointer-events:all;}
+.olympics-splash.dismissed{animation:splashFade 0.6s ease-out forwards;}
+.olympics-splash #splashSnow{position:absolute;inset:0;}
+.splash-content{position:relative;z-index:2;text-align:center;animation:introFadeUp 1s 0.3s both;}
+.splash-rings{width:min(280px,65vw);height:auto;margin-bottom:16px;filter:drop-shadow(0 0 30px rgba(255,255,255,0.1));}
+.splash-city{font-family:Outfit,sans-serif;font-size:clamp(2.5rem,9vw,5rem);font-weight:800;color:#fff;letter-spacing:0.12em;line-height:1;margin-bottom:4px;}
+.splash-year{font-family:Outfit,sans-serif;font-size:clamp(4rem,14vw,8rem);font-weight:900;color:transparent;-webkit-text-stroke:2px rgba(255,255,255,0.2);letter-spacing:0.06em;line-height:0.9;}
+.splash-tagline{font-family:Inter,sans-serif;font-size:0.75rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-top:12px;}
+@keyframes splashFade{to{opacity:0;visibility:hidden;pointer-events:none;}}
+
 /* === CINEMATIC INTRO === */
 .intro-scene{position:relative;min-height:100vh;overflow:hidden;background:#0a0c10;display:flex;align-items:center;}
 .intro-bg{position:absolute;inset:0;overflow:hidden;}
@@ -382,39 +411,38 @@
 @keyframes introFloat{0%{transform:translate(0,0) scale(1);}100%{transform:translate(40px,-30px) scale(1.15);}}
 
 .intro-content{position:relative;z-index:3;padding:0 6vw;max-width:550px;}
-.intro-tag{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;color:#d4a84b;opacity:0.7;margin-bottom:1.5rem;animation:introFadeUp 1s 0.3s both;}
-.intro-headline{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,10vw,7.5rem);font-weight:400;letter-spacing:0.02em;line-height:0.88;color:#ede8df;margin-bottom:1.5rem;animation:introFadeUp 1s 0.5s both;}
+.intro-tag{font-family:Inter,sans-serif;font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:#d4a84b;opacity:0.7;margin-bottom:1.5rem;animation:introFadeUp 1s 0.3s both;}
+.intro-headline{font-family:Outfit,sans-serif;font-size:clamp(3.5rem,10vw,7rem);font-weight:900;letter-spacing:-0.02em;line-height:0.92;color:#ede8df;margin-bottom:1.5rem;animation:introFadeUp 1s 0.5s both;}
 .intro-accent{color:#d4a84b;display:inline-block;}
-.intro-sub{font-family:'DM Mono',monospace;font-size:clamp(0.65rem,1.2vw,0.82rem);line-height:1.9;color:rgba(237,232,223,0.5);letter-spacing:0.06em;animation:introFadeUp 1s 0.7s both;}
-.intro-scroll-hint{display:inline-flex;align-items:center;gap:0.6rem;margin-top:2.5rem;color:#d4a84b;animation:introFadeUp 1s 0.9s both,hintPulse 2.5s ease-in-out 1.5s infinite;}
+.intro-sub{font-family:Inter,sans-serif;font-size:clamp(0.75rem,1.3vw,0.9rem);line-height:1.8;color:rgba(237,232,223,0.5);letter-spacing:0.03em;animation:introFadeUp 1s 0.7s both;}
+.intro-cta{display:inline-flex;align-items:center;gap:8px;margin-top:1.8rem;padding:14px 28px;background:#fff;color:#0a0c10;font-family:Outfit,sans-serif;font-size:14px;font-weight:700;border-radius:10px;text-decoration:none;transition:all 0.3s;box-shadow:0 4px 20px rgba(255,255,255,0.15);animation:introFadeUp 1s 0.8s both;}
+.intro-cta:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(255,255,255,0.25);}
+.intro-scroll-hint{display:flex;align-items:center;gap:0.6rem;margin-top:1.5rem;color:#d4a84b;animation:introFadeUp 1s 1s both,hintPulse 2.5s ease-in-out 2s infinite;}
 .intro-arrow{font-size:1.2rem;}
-.intro-scroll-text{font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.25em;text-transform:uppercase;}
+.intro-scroll-text{font-family:Inter,sans-serif;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;}
 @keyframes hintPulse{0%,100%{opacity:1;}50%{opacity:0.2;}}
 
-/* Car entrance from right */
-.intro-car{position:absolute;right:-10%;bottom:5%;z-index:2;width:65%;max-width:900px;animation:carSlideIn 1.8s cubic-bezier(0.16,1,0.3,1) 0.4s both;}
-.intro-car-img{width:100%;height:auto;display:block;filter:drop-shadow(0 20px 60px rgba(0,0,0,0.8));transform:scaleX(-1);}
-.intro-car-shadow{position:absolute;bottom:-20px;left:10%;right:10%;height:40px;background:radial-gradient(ellipse,rgba(0,0,0,0.5),transparent 70%);filter:blur(15px);}
+/* Black Navigator — transparent PNG, slides in from right */
+.intro-car{position:absolute;right:-5%;bottom:3%;z-index:2;width:62%;max-width:850px;animation:carSlideIn 2s cubic-bezier(0.16,1,0.3,1) 0.6s both;}
+.intro-car-img{width:100%;height:auto;display:block;filter:drop-shadow(0 8px 40px rgba(0,0,0,0.9)) drop-shadow(0 2px 8px rgba(212,168,75,0.15));transform:scaleX(-1);}
+.intro-car-glow{position:absolute;bottom:-30px;left:15%;right:15%;height:60px;background:radial-gradient(ellipse,rgba(212,168,75,0.12),transparent 70%);filter:blur(20px);}
 @keyframes carSlideIn{
-    0%{transform:translateX(120%) scale(0.95);opacity:0;filter:blur(8px);}
-    60%{filter:blur(0);opacity:1;}
-    100%{transform:translateX(0) scale(1);opacity:1;filter:blur(0);}
+    0%{transform:translateX(130%);opacity:0;}
+    40%{opacity:1;}
+    100%{transform:translateX(0);opacity:1;}
 }
 
 /* HUD badge bottom-right */
 .intro-hud{position:absolute;bottom:2rem;right:2rem;z-index:4;display:flex;align-items:center;gap:0.6rem;animation:introFadeUp 1s 1.5s both;}
 .intro-hud-line{width:3rem;height:1px;background:#d4a84b;opacity:0.4;}
-.intro-hud-label{font-family:'DM Mono',monospace;font-size:0.45rem;letter-spacing:0.2em;text-transform:uppercase;color:#d4a84b;opacity:0.5;}
+.intro-hud-label{font-family:Inter,sans-serif;font-size:0.5rem;letter-spacing:0.18em;text-transform:uppercase;color:#d4a84b;opacity:0.5;}
 
-@keyframes introFadeUp{
-    0%{transform:translateY(30px);opacity:0;}
-    100%{transform:translateY(0);opacity:1;}
-}
+@keyframes introFadeUp{0%{transform:translateY(30px);opacity:0;}100%{transform:translateY(0);opacity:1;}}
 
 /* Mobile */
 @media(max-width:768px){
     .intro-scene{min-height:100svh;flex-direction:column;justify-content:flex-end;padding-bottom:6vh;}
-    .intro-content{padding:0 7vw;margin-bottom:2rem;}
+    .intro-content{padding:0 7vw;margin-bottom:1rem;}
     .intro-car{position:relative;right:auto;bottom:auto;width:110%;max-width:none;margin-left:-5%;margin-bottom:-3vh;animation-delay:0.3s;}
     .intro-car-img{transform:scaleX(-1);}
     .intro-headline{font-size:clamp(3rem,13vw,5rem);}
@@ -423,6 +451,31 @@
     .intro-glow--warm{display:none;}
 }
 </style>
+
+<script>
+// Olympics splash — snow animation + auto-dismiss after 4s (or tap to skip)
+(function(){
+    const splash=document.getElementById('olympicsSplash');
+    if(!splash)return;
+    // Skip if returning visitor (seen in last 24h)
+    if(sessionStorage.getItem('splashSeen')){splash.remove();return;}
+    sessionStorage.setItem('splashSeen','1');
+    // Snow
+    const c=document.getElementById('splashSnow');
+    const ctx=c.getContext('2d',{alpha:false});
+    let sw,sh,flakes=[];
+    const COLS=['rgba(255,255,255,0.6)','rgba(0,129,200,0.5)','rgba(252,177,49,0.4)','rgba(0,166,81,0.4)','rgba(238,51,78,0.4)'];
+    function resize(){sw=c.width=innerWidth;sh=c.height=innerHeight;flakes=[];for(let i=0;i<250;i++)flakes.push({x:Math.random()*sw,y:Math.random()*sh,r:0.5+Math.random()*2.5,vy:0.3+Math.random()*1.5,vx:(Math.random()-0.5)*0.8,c:COLS[Math.floor(Math.random()*5)],o:0.3+Math.random()*0.5});}
+    resize();
+    let running=true;
+    function draw(){if(!running)return;ctx.fillStyle='#050a14';ctx.fillRect(0,0,sw,sh);for(const f of flakes){f.x+=f.vx;f.y+=f.vy;if(f.y>sh+5)Object.assign(f,{x:Math.random()*sw,y:-5});ctx.globalAlpha=f.o;ctx.fillStyle=f.c;ctx.beginPath();ctx.arc(f.x,f.y,f.r,0,6.28);ctx.fill();}ctx.globalAlpha=1;requestAnimationFrame(draw);}
+    draw();
+    // Auto-dismiss
+    setTimeout(()=>{splash.classList.add('dismissed');setTimeout(()=>{running=false;splash.remove();},800);},4000);
+    // Tap to skip
+    splash.addEventListener('click',()=>{splash.classList.add('dismissed');setTimeout(()=>{running=false;splash.remove();},600);});
+})();
+</script>
 
 <!-- HERO -->
 <section class="hero">
