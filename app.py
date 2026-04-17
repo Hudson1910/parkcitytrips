@@ -18,6 +18,57 @@ def home_v1():
     return render_template('home.html', config=config)
 
 
+@app.route('/book')
+def book():
+    return render_template('book.html', config=config)
+
+
+@app.route('/book/submit', methods=['POST'])
+def book_submit():
+    """Process booking form — send notification to Hudson via SMS/email."""
+    data = request.form.to_dict()
+    # Build summary message
+    vehicle_names = {'small': 'Small SUV (Eclipse Cross)', 'midsize': 'Midsize SUV (Pathfinder)',
+                     'premier': 'Premier SUV (Yukon)', 'luxury': 'Luxury SUV (Navigator)'}
+    msg = f"""🚗 NEW BOOKING REQUEST
+
+Vehicle: {vehicle_names.get(data.get('vehicle',''), data.get('vehicle',''))}
+Direction: {data.get('direction','')}
+Date: {data.get('date','')}
+Flight: {data.get('flight_number','')}
+Arrival: {data.get('arrival_time','')}
+
+Passengers: {data.get('adults','0')} adults, {data.get('children','0')} children, {data.get('infants','0')} infants
+Car Seats: {data.get('car_seats','0')}
+Bags: {data.get('bags','0')} regular, {data.get('ski_bags','0')} ski
+
+Name: {data.get('name','')}
+Phone: {data.get('phone','')}
+Email: {data.get('email','')}
+Hotel: {data.get('destination','')}
+Notes: {data.get('notes','')}"""
+
+    print(f"[Booking] {msg}")
+    # TODO: Send SMS/email to Hudson
+    flash('Booking request received! We\'ll confirm within 30 minutes.', 'success')
+    return redirect(url_for('book_confirm', name=data.get('name','')))
+
+
+@app.route('/book/confirm')
+def book_confirm():
+    name = request.args.get('name', 'there')
+    return f"""<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+    <title>Booking Confirmed — Rio Transportation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>*{{box-sizing:border-box;margin:0;padding:0;}}body{{background:#080a0f;color:#fff;font-family:Onest,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;text-align:center;padding:20px;}}
+    .check{{width:80px;height:80px;border-radius:50%;background:rgba(201,168,76,.1);border:2px solid #c9a84c;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:36px;color:#c9a84c;}}
+    h1{{font-size:32px;margin-bottom:12px;}}p{{color:#666;font-size:16px;margin-bottom:24px;line-height:1.6;}}
+    a{{color:#c9a84c;text-decoration:none;font-weight:700;}}</style></head>
+    <body><div><div class="check">✓</div><h1>Thank you, {name}!</h1>
+    <p>Your booking request has been received.<br>We'll confirm within 30 minutes via phone or text.</p>
+    <a href="/">← Back to Rio Transportation</a></div></body></html>"""
+
+
 @app.route('/blog')
 def blog():
     return render_template('blog.html', posts=POSTS, config=config)
