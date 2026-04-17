@@ -669,6 +669,9 @@ t.addEventListener('touchend',()=>setTimeout(()=>t.style.animationPlayState='run
 // Nav scroll
 window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',scrollY>80);},{passive:true});
 
+// Visitor tracking — notify owner
+if(!sessionStorage.getItem('v')){sessionStorage.setItem('v','1');fetch('/api/visitor',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page:location.pathname,referrer:document.referrer})}).catch(()=>{});}
+
 // Auto language detection + translation
 (function(){
     const T = {

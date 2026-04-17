@@ -165,6 +165,9 @@ def send_booking_email(booking):
 # Use /tmp for Railway (persists within a deploy, not across deploys)
 # Or use RAILWAY_VOLUME_MOUNT_PATH if a volume is attached
 _data_dir = os.getenv('RAILWAY_VOLUME_MOUNT_PATH', os.path.join(os.path.dirname(__file__), 'data'))
+# Visitor tracking
+_recent_visitors = {}
+
 BOOKINGS_FILE = os.path.join(_data_dir, 'bookings.json')
 os.makedirs(os.path.dirname(BOOKINGS_FILE), exist_ok=True)
 
@@ -425,6 +428,68 @@ def admin_charge_booking(booking_id):
 
     except Exception as e:
         return redirect(f'/admin/bookings?pin=6939&msg=Error:+{str(e)}')
+
+
+@app.route('/api/visitor', methods=['POST'])
+def track_visitor():
+    """Track visitor and notify Hudson via email."""
+    import threading
+    ip = request.headers.get('CF-Connecting-IP') or request.headers.get('X-Forwarded-For', '').split(',')[0].strip() or request.remote_addr
+    now = datetime.now().timestamp()
+
+    # Skip if same IP visited in last 2 hours
+    if ip in _recent_visitors and (now - _recent_visitors[ip]) < 7200:
+        return jsonify({'ok': True, 'cached': True})
+
+    # Skip bots and local
+    if not ip or ip.startswith('127.') or ip.startswith('10.'):
+        return jsonify({'ok': True})
+
+    _recent_visitors[ip] = now
+
+    # Get location from IP
+    data = request.get_json() or {}
+    page = data.get('page', '/')
+    referrer = data.get('referrer', '')
+    ua = request.headers.get('User-Agent', '')[:100]
+    device = 'Mobile' if 'Mobile' in ua or 'iPhone' in ua or 'Android' in ua else 'Desktop'
+
+    def notify():
+        try:
+            geo = req.get(f'https://ipapi.co/{ip}/json/', timeout=5, headers={'User-Agent': 'RioTransportation/1.0'}).json()
+            city = geo.get('city', '?')
+            region = geo.get('region', '')
+            country = geo.get('country_name', '?')
+            flag = geo.get('country_code', '')
+            # Convert country code to flag emoji
+            if len(flag) == 2:
+                flag = chr(127397 + ord(flag[0])) + chr(127397 + ord(flag[1]))
+            else:
+                flag = '🌐'
+
+            if config.RESEND_API_KEY:
+                req.post('https://api.resend.com/emails', json={
+                    'from': 'Rio Transportation <booking@parkcitytrips.com>',
+                    'to': ['agendahudsonbarros@gmail.com'],
+                    'subject': f'{flag} Visitor from {city}, {country}',
+                    'html': f"""<div style="font-family:Arial,sans-serif;max-width:400px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;">
+<div style="background:#000;padding:16px 20px;color:#fff;font-size:14px;font-weight:700;">🌐 New Visitor on parkcitytrips.com</div>
+<div style="padding:20px;">
+<table style="width:100%;font-size:14px;color:#333;border-collapse:collapse;">
+<tr><td style="padding:6px 0;color:#999;">Location</td><td style="padding:6px 0;text-align:right;font-weight:700;">{flag} {city}, {region}</td></tr>
+<tr><td style="padding:6px 0;color:#999;">Country</td><td style="padding:6px 0;text-align:right;">{country}</td></tr>
+<tr><td style="padding:6px 0;color:#999;">Device</td><td style="padding:6px 0;text-align:right;">{device}</td></tr>
+<tr><td style="padding:6px 0;color:#999;">Page</td><td style="padding:6px 0;text-align:right;">{page}</td></tr>
+{f'<tr><td style="padding:6px 0;color:#999;">From</td><td style="padding:6px 0;text-align:right;font-size:12px;">{referrer[:60]}</td></tr>' if referrer else ''}
+</table>
+</div></div>""",
+                }, headers={'Authorization': f'Bearer {config.RESEND_API_KEY}'}, timeout=10)
+                print(f"[Visitor] {flag} {city}, {country} — {device} — {page}")
+        except Exception as e:
+            print(f"[Visitor] Error: {e}")
+
+    threading.Thread(target=notify, daemon=True).start()
+    return jsonify({'ok': True})
 
 
 @app.route('/blog')
