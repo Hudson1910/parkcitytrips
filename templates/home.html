@@ -362,7 +362,7 @@
             <a href="https://wa.me/14352146939?text=Hi!%20I%20need%20a%20ride%20to%20Park%20City." target="_blank" class="btn-outline" style="border-color:rgba(37,211,102,.4);color:#25d366;"><i class="bi bi-whatsapp"></i> WhatsApp</a>
         </div>
         <div class="hero-stats">
-            <div class="hero-stat"><div class="num" data-count="9000+">0</div><div class="label">Rides Completed</div></div>
+            <div class="hero-stat"><div class="num" id="ridesCounter" data-count="9000">0</div><div class="label">Rides Completed</div></div>
             <div class="hero-stat"><div class="num" data-count="4.7">0</div><div class="label">Star Rating</div></div>
             <div class="hero-stat"><div class="num" data-count="24/7">24/7</div><div class="label">Availability</div></div>
             <div class="hero-stat"><div class="num" data-count="25">0</div><div class="label">5-Star Reviews</div></div>
@@ -772,12 +772,23 @@ document.querySelectorAll('.ani,.svc,.fleet-card,.rev,.ci-card').forEach(e=>obs.
 
 // ANIMATED COUNTERS
 function animateCounters(){
+    // Dynamic rides counter: base 9000 on April 16, 2026 + 5 rides/day since
+    const ridesEl = document.getElementById('ridesCounter');
+    if (ridesEl) {
+        const baseDate = new Date(2026, 3, 16); // April 16 2026 (month is 0-indexed)
+        const baseRides = 9000;
+        const ridesPerDay = 5;
+        const now = new Date();
+        const daysSince = Math.max(0, Math.floor((now - baseDate) / (1000 * 60 * 60 * 24)));
+        const totalRides = baseRides + (daysSince * ridesPerDay);
+        ridesEl.dataset.count = totalRides.toString();
+    }
     document.querySelectorAll('[data-count]').forEach(el=>{
         const target=el.dataset.count;
         const isNum=!isNaN(parseFloat(target));
         if(!isNum){el.textContent=target;return;}
         const end=parseFloat(target);
-        const dur=1500;
+        const dur=1800;
         const start=performance.now();
         const step=(now)=>{
             const prog=Math.min((now-start)/dur,1);
