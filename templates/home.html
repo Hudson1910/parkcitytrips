@@ -649,18 +649,32 @@
 <!-- ABOUT -->
 <section class="section ani" id="about">
     <div class="sec-head">
-        <div class="sec-tag"><i class="bi bi-person-fill"></i> About Us</div>
-        <h2>Meet Your Driver</h2>
+        <div class="sec-tag"><i class="bi bi-building"></i> About Us</div>
+        <h2>Why Rio Transportation</h2>
     </div>
     <div class="about-box">
-        <img src="/static/hudson-photo.jpg" alt="Hudson Valeriano" class="about-img" onerror="this.style.display='none'">
-        <div class="about-content">
-            <h3>Hudson Valeriano</h3>
-            <div class="role">Founder — Rio Transportation LLC</div>
-            <p>Park City, Utah is a popular destination for those seeking a luxurious vacation experience. At Rio Travel, we offer a range of luxury transportation options to help you get around Park City in style and comfort.</p>
-            <p>Our fleet includes high-end sedans, SUVs, and vans perfect for individuals, couples, and groups of all sizes. Whether you're traveling for business or pleasure, our professional drivers are knowledgeable about the area and provide personalized service.</p>
-            <p>We also offer Air Travel, hotel bookings, tours, and special event transportation. Contact us today to book your next trip.</p>
-            <div class="about-btns">
+        <div class="about-content" style="max-width:100%;">
+            <h3>Rio Transportation LLC</h3>
+            <div class="role">Park City's Trusted Private Car Service Since 2019</div>
+            <p>Rio Transportation was founded with one simple mission: provide the <strong>safest, most reliable private car service</strong> between Salt Lake City Airport and Park City. What started as a one-vehicle operation has grown into a fleet of luxury SUVs serving thousands of passengers every year.</p>
+            <p>With <strong>9,000+ rides completed</strong>, we know every route, every resort entrance, and every shortcut in the Wasatch Mountains. Our professional drivers are licensed, insured, background-checked, and trained specifically for Utah's winter road conditions.</p>
+            <p>We're not a rideshare or a shuttle bus — every ride is a <strong>private, door-to-door experience</strong> in a premium SUV. Real-time flight monitoring, complimentary water, phone chargers, and Wi-Fi come standard on every trip.</p>
+            <div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:20px;">
+                <div style="text-align:center;flex:1;min-width:120px;padding:16px;background:rgba(212,168,83,.08);border:1px solid rgba(212,168,83,.2);border-radius:12px;">
+                    <div style="font-size:28px;font-weight:800;color:#d4a853;font-family:'Space Grotesk',sans-serif;" id="aboutRidesCount">9,000+</div>
+                    <div style="font-size:11px;color:rgba(255,255,255,.6);font-weight:600;text-transform:uppercase;letter-spacing:1px;">Rides Completed</div>
+                </div>
+                <div style="text-align:center;flex:1;min-width:120px;padding:16px;background:rgba(212,168,83,.08);border:1px solid rgba(212,168,83,.2);border-radius:12px;">
+                    <div style="font-size:28px;font-weight:800;color:#d4a853;font-family:'Space Grotesk',sans-serif;">6+</div>
+                    <div style="font-size:11px;color:rgba(255,255,255,.6);font-weight:600;text-transform:uppercase;letter-spacing:1px;">Years of Service</div>
+                </div>
+                <div style="text-align:center;flex:1;min-width:120px;padding:16px;background:rgba(212,168,83,.08);border:1px solid rgba(212,168,83,.2);border-radius:12px;">
+                    <div style="font-size:28px;font-weight:800;color:#d4a853;font-family:'Space Grotesk',sans-serif;">4.7<span style="font-size:16px;">★</span></div>
+                    <div style="font-size:11px;color:rgba(255,255,255,.6);font-weight:600;text-transform:uppercase;letter-spacing:1px;">Google Rating</div>
+                </div>
+            </div>
+            <div class="about-btns" style="margin-top:24px;">
+                <a href="#book" class="btn-gold" style="text-decoration:none;"><i class="bi bi-calendar-check"></i> Book Your Ride</a>
                 <a href="https://wa.me/14352146939" target="_blank" class="btn-wa"><i class="bi bi-whatsapp"></i> WhatsApp</a>
                 <a href="tel:+14352146939" class="btn-phone"><i class="bi bi-telephone-fill"></i> (435) 214-6939</a>
             </div>
@@ -773,16 +787,17 @@ document.querySelectorAll('.ani,.svc,.fleet-card,.rev,.ci-card').forEach(e=>obs.
 // ANIMATED COUNTERS
 function animateCounters(){
     // Dynamic rides counter: base 9000 on April 16, 2026 + 5 rides/day since
+    const baseDate = new Date(2026, 3, 16); // April 16 2026 (month is 0-indexed)
+    const baseRides = 9000;
+    const ridesPerDay = 5;
+    const now = new Date();
+    const daysSince = Math.max(0, Math.floor((now - baseDate) / (1000 * 60 * 60 * 24)));
+    const totalRides = baseRides + (daysSince * ridesPerDay);
     const ridesEl = document.getElementById('ridesCounter');
-    if (ridesEl) {
-        const baseDate = new Date(2026, 3, 16); // April 16 2026 (month is 0-indexed)
-        const baseRides = 9000;
-        const ridesPerDay = 5;
-        const now = new Date();
-        const daysSince = Math.max(0, Math.floor((now - baseDate) / (1000 * 60 * 60 * 24)));
-        const totalRides = baseRides + (daysSince * ridesPerDay);
-        ridesEl.dataset.count = totalRides.toString();
-    }
+    if (ridesEl) ridesEl.dataset.count = totalRides.toString();
+    // Sync the About section counter too
+    const aboutRides = document.getElementById('aboutRidesCount');
+    if (aboutRides) aboutRides.textContent = totalRides.toLocaleString() + '+';
     document.querySelectorAll('[data-count]').forEach(el=>{
         const target=el.dataset.count;
         const isNum=!isNaN(parseFloat(target));
