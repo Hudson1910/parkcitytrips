@@ -18,6 +18,11 @@ def home_v1():
     return render_template('home.html', config=config)
 
 
+@app.route('/fleet')
+def fleet():
+    return render_template('fleet.html', config=config)
+
+
 @app.route('/book')
 def book():
     return render_template('book.html', config=config)

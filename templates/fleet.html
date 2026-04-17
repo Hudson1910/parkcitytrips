@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Our Fleet — Rio Transportation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#080a0f;--card:#111318;--border:#1e2130;--accent:#c9a84c;--fg:#fff;--muted:#666;}
+body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);min-height:100vh;}
+
+/* Nav */
+.f-nav{padding:20px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);}
+.f-nav a{color:var(--fg);text-decoration:none;}
+.f-nav .logo{font-family:'Onest',sans-serif;font-weight:800;font-size:16px;letter-spacing:.1em;}
+.f-nav .back{font-size:14px;color:var(--muted);display:flex;align-items:center;gap:6px;}
+.f-nav .back:hover{color:#fff;}
+
+/* Header */
+.fleet-header{text-align:center;padding:80px 20px 40px;}
+.fleet-header h1{font-family:'Onest',sans-serif;font-size:clamp(32px,6vw,52px);font-weight:900;margin-bottom:8px;}
+.fleet-header p{color:var(--muted);font-size:15px;max-width:500px;margin:0 auto;}
+
+/* Vehicle detail card */
+.v-detail{max-width:1000px;margin:0 auto;padding:0 20px 40px;}
+.v-card{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;padding:60px 0;border-bottom:1px solid var(--border);}
+.v-card:nth-child(even){direction:rtl;}.v-card:nth-child(even)>*{direction:ltr;}
+.v-card-img{border-radius:16px;overflow:hidden;background:var(--card);aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;}
+.v-card-img img{width:100%;height:100%;object-fit:contain;padding:16px;}
+.v-card-info .v-tag{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+.v-card-info h2{font-family:'Onest',sans-serif;font-size:28px;font-weight:800;margin-bottom:4px;}
+.v-card-info .v-model{font-size:14px;color:var(--muted);margin-bottom:16px;}
+.v-card-info .v-desc{font-size:14px;color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:20px;}
+.v-specs{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:20px;}
+.v-spec{display:flex;align-items:center;gap:6px;font-size:13px;color:rgba(255,255,255,.5);background:var(--card);padding:8px 14px;border-radius:8px;}
+.v-spec i{color:var(--accent);}
+.v-features{list-style:none;margin-bottom:24px;}
+.v-features li{font-size:13px;color:rgba(255,255,255,.5);padding:4px 0;display:flex;align-items:center;gap:8px;}
+.v-features li i{color:var(--accent);font-size:12px;}
+.v-price{font-family:'Onest',sans-serif;font-size:14px;color:var(--muted);margin-bottom:16px;}
+.v-price strong{font-size:32px;font-weight:800;color:#fff;}
+.v-book{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:var(--accent);color:#000;font-family:'Onest',sans-serif;font-size:14px;font-weight:700;border-radius:50px;text-decoration:none;transition:all .2s;}
+.v-book:hover{background:#e8c65a;transform:translateY(-1px);}
+
+/* Special — large group */
+.special-card{max-width:1000px;margin:40px auto 80px;padding:0 20px;}
+.special-inner{background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;}
+.special-img{overflow:hidden;}
+.special-img img{width:100%;height:100%;object-fit:cover;}
+.special-info{padding:48px 40px;display:flex;flex-direction:column;justify-content:center;}
+.special-info .v-tag{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+.special-info h2{font-family:'Onest',sans-serif;font-size:28px;font-weight:800;margin-bottom:12px;}
+.special-info p{font-size:14px;color:rgba(255,255,255,.5);line-height:1.7;margin-bottom:20px;}
+.special-info .notice{background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.15);border-radius:10px;padding:14px;font-size:13px;color:var(--accent);margin-bottom:20px;}
+.special-info .notice i{margin-right:6px;}
+
+@media(max-width:768px){
+    .v-card,.special-inner{grid-template-columns:1fr;}
+    .v-card:nth-child(even){direction:ltr;}
+    .special-info{padding:28px 24px;}
+    .f-nav{padding:16px 20px;}
+}
+    </style>
+</head>
+<body>
+<nav class="f-nav">
+    <a href="/" class="logo">RIO TRANSPORTATION</a>
+    <a href="/" class="back"><i class="bi bi-arrow-left"></i> Back</a>
+</nav>
+
+<div class="fleet-header">
+    <h1>Our Fleet</h1>
+    <p>Premium vehicles for every occasion — from solo travelers to large groups</p>
+</div>
+
+<div class="v-detail">
+    <!-- Small SUV -->
+    <div class="v-card">
+        <div class="v-card-img">
+            <img src="https://static.wixstatic.com/media/55a398_cb5c7d2583204805ab6e961e3daf4140~mv2.webp" alt="Mitsubishi Eclipse Cross">
+        </div>
+        <div class="v-card-info">
+            <div class="v-tag">Best Value</div>
+            <h2>Small SUV</h2>
+            <div class="v-model">Mitsubishi Eclipse Cross AWD or similar</div>
+            <div class="v-desc">Perfect for couples, solo travelers, or small families. Compact yet comfortable with all-wheel drive for winter conditions. Ideal for airport transfers with light luggage.</div>
+            <div class="v-specs">
+                <div class="v-spec"><i class="bi bi-people-fill"></i> 5 seats</div>
+                <div class="v-spec"><i class="bi bi-luggage-fill"></i> 4 bags</div>
+                <div class="v-spec"><i class="bi bi-snow2"></i> AWD</div>
+            </div>
+            <ul class="v-features">
+                <li><i class="bi bi-check-circle-fill"></i> Leather seats</li>
+                <li><i class="bi bi-check-circle-fill"></i> Climate control</li>
+                <li><i class="bi bi-check-circle-fill"></i> USB charging</li>
+                <li><i class="bi bi-check-circle-fill"></i> Bottled water</li>
+                <li><i class="bi bi-check-circle-fill"></i> Flight tracking</li>
+            </ul>
+            <div class="v-price">From <strong>$109</strong> / trip</div>
+            <a href="/book?vehicle=small" class="v-book">Book Small SUV <i class="bi bi-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <!-- Midsize SUV -->
+    <div class="v-card">
+        <div class="v-card-img">
+            <img src="/static/pathfinder.avif" alt="Nissan Pathfinder">
+        </div>
+        <div class="v-card-info">
+            <div class="v-tag">Family Size</div>
+            <h2>Midsize SUV</h2>
+            <div class="v-model">Nissan Pathfinder or similar</div>
+            <div class="v-desc">Ideal for families with children. Spacious 3-row seating with plenty of room for car seats, strollers, and luggage. The most popular choice for family ski vacations.</div>
+            <div class="v-specs">
+                <div class="v-spec"><i class="bi bi-people-fill"></i> 7 seats</div>
+                <div class="v-spec"><i class="bi bi-luggage-fill"></i> 6 bags</div>
+                <div class="v-spec"><i class="bi bi-snow2"></i> AWD</div>
+            </div>
+            <ul class="v-features">
+                <li><i class="bi bi-check-circle-fill"></i> 3-row seating</li>
+                <li><i class="bi bi-check-circle-fill"></i> Free car seats</li>
+                <li><i class="bi bi-check-circle-fill"></i> USB charging</li>
+                <li><i class="bi bi-check-circle-fill"></i> Bottled water</li>
+                <li><i class="bi bi-check-circle-fill"></i> Flight tracking</li>
+                <li><i class="bi bi-check-circle-fill"></i> Ski/board rack available</li>
+            </ul>
+            <div class="v-price">From <strong>$129</strong> / trip</div>
+            <a href="/book?vehicle=midsize" class="v-book">Book Midsize SUV <i class="bi bi-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <!-- Premier SUV -->
+    <div class="v-card">
+        <div class="v-card-img">
+            <img src="https://static.wixstatic.com/media/55a398_20b37cd36164453da86eb84430394411~mv2.jpg" alt="GMC Yukon">
+        </div>
+        <div class="v-card-info">
+            <div class="v-tag">Most Popular</div>
+            <h2>Premier SUV</h2>
+            <div class="v-model">GMC Yukon or similar</div>
+            <div class="v-desc">Full-size luxury for larger families and groups. Captain chairs, extended cargo space, and premium amenities. Our most requested vehicle for Park City resort transfers.</div>
+            <div class="v-specs">
+                <div class="v-spec"><i class="bi bi-people-fill"></i> 7 seats</div>
+                <div class="v-spec"><i class="bi bi-luggage-fill"></i> 7 bags</div>
+                <div class="v-spec"><i class="bi bi-wifi"></i> WiFi</div>
+            </div>
+            <ul class="v-features">
+                <li><i class="bi bi-check-circle-fill"></i> Captain chairs</li>
+                <li><i class="bi bi-check-circle-fill"></i> WiFi hotspot</li>
+                <li><i class="bi bi-check-circle-fill"></i> Free car seats</li>
+                <li><i class="bi bi-check-circle-fill"></i> USB charging</li>
+                <li><i class="bi bi-check-circle-fill"></i> Bottled water</li>
+                <li><i class="bi bi-check-circle-fill"></i> Flight tracking</li>
+                <li><i class="bi bi-check-circle-fill"></i> Extra ski/board space</li>
+            </ul>
+            <div class="v-price">From <strong>$189</strong> / trip</div>
+            <a href="/book?vehicle=premier" class="v-book">Book Premier SUV <i class="bi bi-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <!-- Luxury SUV -->
+    <div class="v-card">
+        <div class="v-card-img">
+            <img src="https://static.wixstatic.com/media/55a398_efc5a657079e4b5f88a415de4633fbe8~mv2.avif" alt="Lincoln Navigator">
+        </div>
+        <div class="v-card-info">
+            <div class="v-tag">Executive / VIP</div>
+            <h2>Luxury SUV</h2>
+            <div class="v-model">Lincoln Navigator or similar</div>
+            <div class="v-desc">The ultimate in luxury transportation. Perfect for executives, VIPs, and special occasions. Premium leather, heated seats, privacy glass, and a whisper-quiet cabin for the most discerning travelers.</div>
+            <div class="v-specs">
+                <div class="v-spec"><i class="bi bi-people-fill"></i> 7 seats</div>
+                <div class="v-spec"><i class="bi bi-luggage-fill"></i> 7 bags</div>
+                <div class="v-spec"><i class="bi bi-wifi"></i> WiFi</div>
+                <div class="v-spec"><i class="bi bi-shield-check"></i> Privacy</div>
+            </div>
+            <ul class="v-features">
+                <li><i class="bi bi-check-circle-fill"></i> Premium leather seats</li>
+                <li><i class="bi bi-check-circle-fill"></i> Heated & cooled seats</li>
+                <li><i class="bi bi-check-circle-fill"></i> Privacy glass</li>
+                <li><i class="bi bi-check-circle-fill"></i> WiFi hotspot</li>
+                <li><i class="bi bi-check-circle-fill"></i> Beverages & snacks</li>
+                <li><i class="bi bi-check-circle-fill"></i> Free car seats</li>
+                <li><i class="bi bi-check-circle-fill"></i> Flight tracking</li>
+            </ul>
+            <div class="v-price">From <strong>$220</strong> / trip</div>
+            <a href="/book?vehicle=luxury" class="v-book">Book Luxury SUV <i class="bi bi-arrow-right"></i></a>
+        </div>
+    </div>
+</div>
+
+<!-- Large Groups / Weddings -->
+<div class="special-card">
+    <div class="special-inner">
+        <div class="special-img">
+            <img src="https://static.wixstatic.com/media/55a398_5224bb10e6504989a26897233173179b~mv2.png" alt="Large Group Transportation">
+        </div>
+        <div class="special-info">
+            <div class="v-tag">Special Events</div>
+            <h2>Large Groups & Weddings</h2>
+            <p>Need transportation for 8+ passengers? We coordinate multi-vehicle service for corporate events, wedding parties, family reunions, and ski groups. Multiple SUVs dispatched simultaneously for seamless group logistics.</p>
+            <div class="notice"><i class="bi bi-calendar-check"></i> Advance booking required — contact us at least 72 hours before your event</div>
+            <div class="v-specs">
+                <div class="v-spec"><i class="bi bi-people-fill"></i> 8-30+ guests</div>
+                <div class="v-spec"><i class="bi bi-car-front-fill"></i> Multi-vehicle</div>
+                <div class="v-spec"><i class="bi bi-heart-fill"></i> Weddings</div>
+            </div>
+            <a href="/book?vehicle=group" class="v-book">Request Group Quote <i class="bi bi-arrow-right"></i></a>
+        </div>
+    </div>
+</div>
+
+<footer style="padding:24px 40px;border-top:1px solid var(--border);text-align:center;font-size:12px;color:var(--muted);">
+    © 2026 Rio Transportation LLC — Park City, Utah
+</footer>
+</body>
+</html>
