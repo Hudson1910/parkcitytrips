@@ -58,5 +58,15 @@ ROUTES = {
     'event': {'name': 'Special Event / Wedding', 'multiplier': 1.5},
 }
 
+# Square Payment
+SQUARE_APP_ID = os.getenv('SQUARE_APP_ID', '')
+SQUARE_ACCESS_TOKEN = os.getenv('SQUARE_ACCESS_TOKEN', '')
+SQUARE_ENVIRONMENT = os.getenv('SQUARE_ENVIRONMENT', 'sandbox')
+SQUARE_JS_URL = 'https://web.squarecdn.com/v1/square.js' if SQUARE_ENVIRONMENT == 'production' else 'https://sandbox.web.squarecdn.com/v1/square.js'
+
+# Pricing
+VEHICLE_PRICES = {'small': 109, 'midsize': 129, 'premier': 189, 'luxury': 220, 'hourly': 120, 'group': 0}
+PREMIUM_STOP_PRICE = 60
+
 # Stats
 TOTAL_RIDES = '9,000+'

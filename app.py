@@ -1,7 +1,19 @@
 """Park City Trips — Luxury Transportation in Park City, Utah."""
-from flask import Flask, render_template, request, jsonify, abort, redirect, url_for, flash
-import config
+from flask import Flask, render_template, request, jsonify, abort, redirect, url_for, flash, session
+import config, json, os, uuid, requests as req
+from datetime import datetime
 from blog_data import POSTS
+
+BOOKINGS_FILE = os.path.join(os.path.dirname(__file__), 'data', 'bookings.json')
+os.makedirs(os.path.dirname(BOOKINGS_FILE), exist_ok=True)
+
+def load_bookings():
+    try:
+        with open(BOOKINGS_FILE) as f: return json.load(f)
+    except: return []
+
+def save_bookings(bookings):
+    with open(BOOKINGS_FILE, 'w') as f: json.dump(bookings, f, indent=2)
 
 app = Flask(__name__)
 app.secret_key = config.SECRET_KEY
@@ -40,48 +52,194 @@ def book():
 
 @app.route('/book/submit', methods=['POST'])
 def book_submit():
-    """Process booking form — send notification to Hudson via SMS/email."""
+    """Save booking and redirect to payment page."""
     data = request.form.to_dict()
-    # Build summary message
-    vehicle_names = {'small': 'Small SUV (Eclipse Cross)', 'midsize': 'Midsize SUV (Pathfinder)',
-                     'premier': 'Premier SUV (Yukon)', 'luxury': 'Luxury SUV (Navigator)'}
-    msg = f"""🚗 NEW BOOKING REQUEST
+    booking_id = str(uuid.uuid4())[:8]
+    vehicle = data.get('vehicle', 'premier')
+    base_price = config.VEHICLE_PRICES.get(vehicle, 189)
+    premium_stop = config.PREMIUM_STOP_PRICE if data.get('premium_stop') else 0
 
-Vehicle: {vehicle_names.get(data.get('vehicle',''), data.get('vehicle',''))}
-Direction: {data.get('direction','')}
-Date: {data.get('date','')}
-Flight: {data.get('flight_number','')}
-Arrival: {data.get('arrival_time','')}
+    booking = {
+        'id': booking_id,
+        'vehicle': vehicle,
+        'base_price': base_price,
+        'premium_stop': premium_stop,
+        'subtotal': base_price + premium_stop,
+        'tip_percent': 0,
+        'tip_amount': 0,
+        'total': base_price + premium_stop,
+        'card_id': None,
+        'status': 'pending_payment',
+        'customer': {
+            'name': data.get('name', ''),
+            'phone': data.get('phone', ''),
+            'email': data.get('email', ''),
+        },
+        'trip': {
+            'direction': data.get('direction', ''),
+            'date': data.get('date', ''),
+            'flight_number': data.get('flight_number', ''),
+            'arrival_time': data.get('arrival_time', ''),
+            'destination': data.get('destination', ''),
+            'adults': data.get('adults', '2'),
+            'children': data.get('children', '0'),
+            'infants': data.get('infants', '0'),
+            'car_seats': data.get('car_seats', '0'),
+            'bags': data.get('bags', '2'),
+            'ski_bags': data.get('ski_bags', '0'),
+            'notes': data.get('notes', ''),
+        },
+        'created_at': datetime.now().isoformat(),
+        'charged_at': None,
+    }
 
-Passengers: {data.get('adults','0')} adults, {data.get('children','0')} children, {data.get('infants','0')} infants
-Car Seats: {data.get('car_seats','0')}
-Bags: {data.get('bags','0')} regular, {data.get('ski_bags','0')} ski
-
-Name: {data.get('name','')}
-Phone: {data.get('phone','')}
-Email: {data.get('email','')}
-Hotel: {data.get('destination','')}
-Notes: {data.get('notes','')}"""
-
-    print(f"[Booking] {msg}")
-    # TODO: Send SMS/email to Hudson
-    flash('Booking request received! We\'ll confirm within 30 minutes.', 'success')
-    return redirect(url_for('book_confirm', name=data.get('name','')))
+    bookings = load_bookings()
+    bookings.append(booking)
+    save_bookings(bookings)
+    print(f"[Booking] New booking {booking_id}: {data.get('name','')} — {vehicle} ${base_price}")
+    return redirect(f'/book/payment/{booking_id}')
 
 
-@app.route('/book/confirm')
-def book_confirm():
-    name = request.args.get('name', 'there')
-    return f"""<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
-    <title>Booking Confirmed — Rio Transportation</title>
-    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;700;800&display=swap" rel="stylesheet">
-    <style>*{{box-sizing:border-box;margin:0;padding:0;}}body{{background:#080a0f;color:#fff;font-family:Onest,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;text-align:center;padding:20px;}}
-    .check{{width:80px;height:80px;border-radius:50%;background:rgba(201,168,76,.1);border:2px solid #c9a84c;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:36px;color:#c9a84c;}}
-    h1{{font-size:32px;margin-bottom:12px;}}p{{color:#666;font-size:16px;margin-bottom:24px;line-height:1.6;}}
-    a{{color:#c9a84c;text-decoration:none;font-weight:700;}}</style></head>
-    <body><div><div class="check">✓</div><h1>Thank you, {name}!</h1>
-    <p>Your booking request has been received.<br>We'll confirm within 30 minutes via phone or text.</p>
-    <a href="/">← Back to Rio Transportation</a></div></body></html>"""
+@app.route('/book/payment/<booking_id>')
+def book_payment(booking_id):
+    """Show Square payment form to save card."""
+    bookings = load_bookings()
+    booking = next((b for b in bookings if b['id'] == booking_id), None)
+    if not booking:
+        abort(404)
+    return render_template('book_payment.html', booking=booking, config=config,
+                           square_app_id=config.SQUARE_APP_ID,
+                           square_js_url=config.SQUARE_JS_URL)
+
+
+@app.route('/book/save-card', methods=['POST'])
+def book_save_card():
+    """Save card on file via Square (no charge yet)."""
+    data = request.get_json()
+    booking_id = data.get('booking_id')
+    nonce = data.get('nonce')
+    tip_percent = int(data.get('tip_percent', 0))
+
+    bookings = load_bookings()
+    booking = next((b for b in bookings if b['id'] == booking_id), None)
+    if not booking or not nonce:
+        return jsonify({'error': 'Invalid booking or nonce'}), 400
+
+    # Calculate tip
+    subtotal = booking['subtotal']
+    tip_amount = round(subtotal * tip_percent / 100)
+    total = subtotal + tip_amount
+
+    # Save card on file via Square API
+    square_url = 'https://connect.squareup.com' if config.SQUARE_ENVIRONMENT == 'production' else 'https://connect.squareupsandbox.com'
+    try:
+        # First create a customer
+        cust_resp = req.post(f'{square_url}/v2/customers', json={
+            'given_name': booking['customer']['name'].split()[0] if booking['customer']['name'] else 'Guest',
+            'family_name': ' '.join(booking['customer']['name'].split()[1:]) if len(booking['customer']['name'].split()) > 1 else '',
+            'phone_number': booking['customer']['phone'],
+            'email_address': booking['customer']['email'],
+        }, headers={'Authorization': f'Bearer {config.SQUARE_ACCESS_TOKEN}', 'Content-Type': 'application/json'})
+        customer_id = cust_resp.json().get('customer', {}).get('id', '')
+
+        # Save card on file
+        card_resp = req.post(f'{square_url}/v2/cards', json={
+            'idempotency_key': str(uuid.uuid4()),
+            'source_id': nonce,
+            'card': {
+                'customer_id': customer_id,
+            }
+        }, headers={'Authorization': f'Bearer {config.SQUARE_ACCESS_TOKEN}', 'Content-Type': 'application/json'})
+
+        card_data = card_resp.json()
+        if 'card' in card_data:
+            card_id = card_data['card']['id']
+            last4 = card_data['card'].get('last_4', '****')
+            brand = card_data['card'].get('card_brand', '')
+
+            booking['card_id'] = card_id
+            booking['card_last4'] = last4
+            booking['card_brand'] = brand
+            booking['customer_id'] = customer_id
+            booking['tip_percent'] = tip_percent
+            booking['tip_amount'] = tip_amount
+            booking['total'] = total
+            booking['status'] = 'pending_approval'
+            save_bookings(bookings)
+
+            print(f"[Square] Card saved for booking {booking_id}: {brand} ****{last4}")
+            return jsonify({'success': True, 'booking_id': booking_id})
+        else:
+            errors = card_data.get('errors', [{}])
+            msg = errors[0].get('detail', 'Unknown error') if errors else 'Card save failed'
+            print(f"[Square] Card error: {msg}")
+            return jsonify({'error': msg}), 400
+
+    except Exception as e:
+        print(f"[Square] Error: {e}")
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/book/confirm/<booking_id>')
+def book_confirm(booking_id):
+    bookings = load_bookings()
+    booking = next((b for b in bookings if b['id'] == booking_id), None)
+    name = booking['customer']['name'] if booking else 'there'
+    return render_template('book_confirm.html', name=name, booking=booking)
+
+
+@app.route('/admin/bookings')
+def admin_bookings():
+    """Hudson's booking management panel."""
+    pin = request.args.get('pin', '')
+    if pin != '6939':  # last 4 digits of phone
+        return 'Access denied. Use ?pin=XXXX', 403
+    bookings = sorted(load_bookings(), key=lambda b: b.get('created_at', ''), reverse=True)
+    return render_template('admin_bookings.html', bookings=bookings, config=config)
+
+
+@app.route('/admin/bookings/<booking_id>/charge', methods=['POST'])
+def admin_charge_booking(booking_id):
+    """Charge a saved card for an approved booking."""
+    pin = request.form.get('pin', '')
+    if pin != '6939':
+        return jsonify({'error': 'Unauthorized'}), 403
+
+    bookings = load_bookings()
+    booking = next((b for b in bookings if b['id'] == booking_id), None)
+    if not booking or not booking.get('card_id'):
+        return jsonify({'error': 'Booking not found or no card'}), 404
+
+    square_url = 'https://connect.squareup.com' if config.SQUARE_ENVIRONMENT == 'production' else 'https://connect.squareupsandbox.com'
+    total_cents = int(booking['total'] * 100)
+
+    try:
+        resp = req.post(f'{square_url}/v2/payments', json={
+            'idempotency_key': str(uuid.uuid4()),
+            'source_id': booking['card_id'],
+            'customer_id': booking.get('customer_id', ''),
+            'amount_money': {
+                'amount': total_cents,
+                'currency': 'USD',
+            },
+            'note': f"Rio Transportation — {booking['vehicle']} — {booking['trip']['date']}",
+        }, headers={'Authorization': f'Bearer {config.SQUARE_ACCESS_TOKEN}', 'Content-Type': 'application/json'})
+
+        pay_data = resp.json()
+        if 'payment' in pay_data:
+            booking['status'] = 'charged'
+            booking['charged_at'] = datetime.now().isoformat()
+            booking['payment_id'] = pay_data['payment']['id']
+            save_bookings(bookings)
+            print(f"[Square] Charged ${booking['total']} for booking {booking_id}")
+            return redirect(f'/admin/bookings?pin=6939&msg=Charged+${booking["total"]}+successfully')
+        else:
+            errors = pay_data.get('errors', [{}])
+            msg = errors[0].get('detail', 'Payment failed')
+            return redirect(f'/admin/bookings?pin=6939&msg=Error:+{msg}')
+
+    except Exception as e:
+        return redirect(f'/admin/bookings?pin=6939&msg=Error:+{str(e)}')
 
 
 @app.route('/blog')

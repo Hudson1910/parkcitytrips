@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>Booking Confirmed — Rio Transportation</title>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;700;800&display=swap" rel="stylesheet">
+<style>*{box-sizing:border-box;margin:0;padding:0;}body{background:#080a0f;color:#fff;font-family:Onest,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;text-align:center;padding:20px;}
+.check{width:80px;height:80px;border-radius:50%;background:rgba(201,168,76,.1);border:2px solid #c9a84c;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:36px;color:#c9a84c;animation:pop .5s cubic-bezier(.16,1,.3,1);}
+@keyframes pop{0%{transform:scale(0);}100%{transform:scale(1);}}
+h1{font-size:28px;margin-bottom:12px;}p{color:#666;font-size:15px;margin-bottom:20px;line-height:1.6;}
+a{color:#c9a84c;text-decoration:none;font-weight:700;}
+.detail{background:#111318;border:1px solid #1e2130;border-radius:12px;padding:20px;margin:20px auto;max-width:350px;text-align:left;font-size:13px;}
+.detail .row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.detail .k{color:#666;}.detail .v{font-weight:600;}
+</style></head>
+<body><div>
+<div class="check">✓</div>
+<h1>Thank you, {{ name }}!</h1>
+<p>Your booking request has been received.<br>Your card is saved securely — we'll only charge after confirming your ride.</p>
+<p>We'll contact you within <strong style="color:#c9a84c;">30 minutes</strong> to confirm.</p>
+{% if booking %}
+<div class="detail">
+    <div class="row"><span class="k">Booking ID</span><span class="v">#{{ booking.id }}</span></div>
+    <div class="row"><span class="k">Vehicle</span><span class="v">{{ booking.vehicle|capitalize }}</span></div>
+    <div class="row"><span class="k">Date</span><span class="v">{{ booking.trip.date }}</span></div>
+    <div class="row"><span class="k">Card</span><span class="v">{{ booking.card_brand }} ****{{ booking.card_last4 }}</span></div>
+    <div class="row"><span class="k">Total</span><span class="v" style="color:#c9a84c;">${{ booking.total }}</span></div>
+</div>
+{% endif %}
+<a href="/">← Back to Rio Transportation</a>
+</div></body></html>

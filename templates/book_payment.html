@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Payment — Rio Transportation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#080a0f;--card:#111318;--border:#1e2130;--accent:#c9a84c;--fg:#fff;--muted:#666;}
+body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);min-height:100vh;}
+.pay-nav{padding:20px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);}
+.pay-nav a{color:var(--fg);text-decoration:none;font-family:'Onest',sans-serif;font-weight:700;}
+.pay-page{max-width:520px;margin:0 auto;padding:40px 20px 80px;}
+.pay-page h1{font-family:'Onest',sans-serif;font-size:28px;font-weight:800;margin-bottom:24px;}
+
+.summary{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:24px;}
+.sum-row{display:flex;justify-content:space-between;padding:8px 0;font-size:14px;border-bottom:1px solid rgba(255,255,255,.04);}
+.sum-row:last-child{border:none;}
+.sum-row .k{color:var(--muted);}
+.sum-row .v{font-weight:600;}
+.sum-total{display:flex;justify-content:space-between;padding:14px 0 0;margin-top:8px;border-top:1px solid var(--border);font-size:18px;font-weight:800;}
+.sum-total .v{color:var(--accent);}
+
+.tip-section{margin-bottom:24px;}
+.tip-label{font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+.tip-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
+.tip-btn{padding:14px 8px;background:var(--card);border:1.5px solid var(--border);border-radius:10px;color:#fff;font-family:'Onest',sans-serif;font-size:15px;font-weight:700;cursor:pointer;text-align:center;transition:all .2s;}
+.tip-btn:hover{border-color:rgba(255,255,255,.2);}
+.tip-btn.active{border-color:var(--accent);background:rgba(201,168,76,.08);color:var(--accent);}
+.tip-btn small{display:block;font-size:10px;font-weight:400;color:var(--muted);margin-top:2px;}
+.tip-custom{margin-top:8px;display:none;}
+.tip-custom input{width:100%;padding:12px;background:var(--card);border:1.5px solid var(--border);border-radius:10px;color:#fff;font-size:16px;font-family:'Onest',sans-serif;text-align:center;outline:none;}
+.tip-custom input:focus{border-color:var(--accent);}
+
+.card-section{margin-bottom:24px;}
+.card-label{font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+#card-container{min-height:90px;background:var(--card);border:1.5px solid var(--border);border-radius:10px;padding:16px;}
+
+.pay-btn{width:100%;padding:18px;background:var(--accent);color:#000;font-family:'Onest',sans-serif;font-size:16px;font-weight:800;border:none;border-radius:12px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.pay-btn:hover{background:#e8c65a;}
+.pay-btn:disabled{opacity:.5;cursor:not-allowed;}
+.pay-error{color:#ef4444;font-size:13px;text-align:center;margin-top:12px;display:none;}
+.pay-note{text-align:center;font-size:12px;color:var(--muted);margin-top:12px;line-height:1.6;}
+.pay-note i{color:var(--accent);}
+@media(max-width:480px){.tip-grid{grid-template-columns:repeat(3,1fr);}}
+    </style>
+</head>
+<body>
+<nav class="pay-nav">
+    <a href="/">RIO TRANSPORTATION</a>
+</nav>
+
+<div class="pay-page">
+    <h1><i class="bi bi-credit-card" style="color:var(--accent);"></i> Payment</h1>
+
+    <!-- Booking Summary -->
+    <div class="summary">
+        <div class="sum-row"><span class="k">Vehicle</span><span class="v">{{ {'small':'Small SUV','midsize':'Midsize SUV','premier':'Premier SUV','luxury':'Luxury SUV','hourly':'Hourly Driver','group':'Group Quote'}.get(booking.vehicle, booking.vehicle) }}</span></div>
+        <div class="sum-row"><span class="k">Date</span><span class="v">{{ booking.trip.date }}</span></div>
+        <div class="sum-row"><span class="k">Direction</span><span class="v">{{ booking.trip.direction }}</span></div>
+        <div class="sum-row"><span class="k">Customer</span><span class="v">{{ booking.customer.name }}</span></div>
+        <div class="sum-row"><span class="k">Base Price</span><span class="v">${{ booking.base_price }}</span></div>
+        {% if booking.premium_stop %}
+        <div class="sum-row"><span class="k">Premium Stop</span><span class="v">+${{ booking.premium_stop }}</span></div>
+        {% endif %}
+        <div class="sum-row"><span class="k">Subtotal</span><span class="v">${{ booking.subtotal }}</span></div>
+        <div class="sum-row"><span class="k">Tip</span><span class="v" id="tipDisplay">$0</span></div>
+        <div class="sum-total"><span>Total</span><span class="v" id="totalDisplay">${{ booking.subtotal }}</span></div>
+    </div>
+
+    <!-- Tip Selection -->
+    <div class="tip-section">
+        <div class="tip-label">Add a Tip for Your Driver</div>
+        <div class="tip-grid">
+            <button class="tip-btn" onclick="setTip(15)" data-pct="15">15%<small id="tip15">${{ (booking.subtotal * 0.15)|round|int }}</small></button>
+            <button class="tip-btn active" onclick="setTip(18)" data-pct="18">18%<small id="tip18">${{ (booking.subtotal * 0.18)|round|int }}</small></button>
+            <button class="tip-btn" onclick="setTip(20)" data-pct="20">20%<small id="tip20">${{ (booking.subtotal * 0.20)|round|int }}</small></button>
+            <button class="tip-btn" onclick="setTip(25)" data-pct="25">25%<small id="tip25">${{ (booking.subtotal * 0.25)|round|int }}</small></button>
+            <button class="tip-btn" onclick="setTip(0)" data-pct="0">No Tip<small>&nbsp;</small></button>
+        </div>
+    </div>
+
+    <!-- Card Form -->
+    <div class="card-section">
+        <div class="card-label"><i class="bi bi-lock-fill"></i> Card Details</div>
+        <div id="card-container"></div>
+    </div>
+
+    <button class="pay-btn" id="payBtn" onclick="submitPayment()" disabled>
+        <i class="bi bi-lock-fill"></i> Save Card & Confirm Booking
+    </button>
+    <div class="pay-error" id="payError"></div>
+    <p class="pay-note">
+        <i class="bi bi-shield-check"></i> Your card will NOT be charged now.<br>
+        We'll only charge after confirming your ride. Secure payment via Square.
+    </p>
+</div>
+
+<script src="{{ square_js_url }}"></script>
+<script>
+const SUBTOTAL = {{ booking.subtotal }};
+const BOOKING_ID = '{{ booking.id }}';
+let tipPercent = 18;
+let card = null;
+
+// Initialize tip at 18%
+setTip(18);
+
+async function initSquare() {
+    if (!window.Square) { console.error('Square SDK not loaded'); return; }
+    const payments = window.Square.payments('{{ square_app_id }}', '{{ "production" if config.SQUARE_ENVIRONMENT == "production" else "sandbox" }}');
+    card = await payments.card();
+    await card.attach('#card-container');
+    document.getElementById('payBtn').disabled = false;
+}
+initSquare();
+
+function setTip(pct) {
+    tipPercent = pct;
+    document.querySelectorAll('.tip-btn').forEach(b => b.classList.toggle('active', parseInt(b.dataset.pct) === pct));
+    const tipAmt = Math.round(SUBTOTAL * pct / 100);
+    const total = SUBTOTAL + tipAmt;
+    document.getElementById('tipDisplay').textContent = '$' + tipAmt;
+    document.getElementById('totalDisplay').textContent = '$' + total;
+}
+
+async function submitPayment() {
+    const btn = document.getElementById('payBtn');
+    const err = document.getElementById('payError');
+    err.style.display = 'none';
+    btn.disabled = true;
+    btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Processing...';
+
+    try {
+        const result = await card.tokenize();
+        if (result.status !== 'OK') {
+            throw new Error(result.errors?.[0]?.message || 'Card tokenization failed');
+        }
+
+        const resp = await fetch('/book/save-card', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                booking_id: BOOKING_ID,
+                nonce: result.token,
+                tip_percent: tipPercent,
+            })
+        });
+        const data = await resp.json();
+
+        if (data.success) {
+            window.location.href = '/book/confirm/' + BOOKING_ID;
+        } else {
+            throw new Error(data.error || 'Failed to save card');
+        }
+    } catch (e) {
+        err.textContent = e.message;
+        err.style.display = 'block';
+        btn.disabled = false;
+        btn.innerHTML = '<i class="bi bi-lock-fill"></i> Save Card & Confirm Booking';
+    }
+}
+</script>
+</body>
+</html>

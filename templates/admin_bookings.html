@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>Bookings — Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;600;700;800&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-height:100vh;padding:20px;}
+h1{font-family:'Onest',sans-serif;font-size:24px;margin-bottom:8px;}
+.msg{background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);border-radius:8px;padding:12px;margin-bottom:20px;color:#c9a84c;font-size:13px;}
+.card{background:#111318;border:1px solid #1e2130;border-radius:12px;padding:20px;margin-bottom:16px;}
+.card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.card-head h3{font-family:'Onest',sans-serif;font-size:16px;}
+.badge{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;}
+.badge-pending{background:rgba(245,158,11,.15);color:#f59e0b;}
+.badge-charged{background:rgba(34,197,94,.15);color:#22c55e;}
+.badge-payment{background:rgba(99,102,241,.15);color:#818cf8;}
+.row{display:flex;justify-content:space-between;padding:4px 0;font-size:13px;}
+.row .k{color:#666;}.row .v{font-weight:600;}
+.charge-btn{margin-top:12px;padding:12px 24px;background:#22c55e;color:#000;border:none;border-radius:8px;font-family:'Onest',sans-serif;font-size:14px;font-weight:700;cursor:pointer;width:100%;}
+.charge-btn:hover{background:#16a34a;}
+.empty{text-align:center;color:#666;padding:40px;font-size:15px;}
+.back{color:#c9a84c;text-decoration:none;font-size:13px;display:inline-flex;align-items:center;gap:4px;margin-bottom:20px;}
+</style></head>
+<body>
+<a href="/" class="back"><i class="bi bi-arrow-left"></i> Back to site</a>
+<h1><i class="bi bi-clipboard-check" style="color:#c9a84c;"></i> Booking Requests</h1>
+<p style="color:#666;font-size:13px;margin-bottom:24px;">{{ bookings|length }} total bookings</p>
+
+{% if request.args.get('msg') %}
+<div class="msg"><i class="bi bi-check-circle"></i> {{ request.args.get('msg') }}</div>
+{% endif %}
+
+{% if not bookings %}
+<div class="empty"><i class="bi bi-inbox" style="font-size:40px;display:block;margin-bottom:12px;"></i>No bookings yet</div>
+{% endif %}
+
+{% for b in bookings %}
+<div class="card">
+    <div class="card-head">
+        <h3>#{{ b.id }} — {{ b.customer.name }}</h3>
+        <span class="badge {% if b.status == 'charged' %}badge-charged{% elif b.status == 'pending_approval' %}badge-pending{% else %}badge-payment{% endif %}">
+            {{ b.status|replace('_',' ') }}
+        </span>
+    </div>
+    <div class="row"><span class="k">Vehicle</span><span class="v">{{ b.vehicle }}</span></div>
+    <div class="row"><span class="k">Date</span><span class="v">{{ b.trip.date }}</span></div>
+    <div class="row"><span class="k">Direction</span><span class="v">{{ b.trip.direction }}</span></div>
+    <div class="row"><span class="k">Flight</span><span class="v">{{ b.trip.flight_number or 'N/A' }}</span></div>
+    <div class="row"><span class="k">Arrival</span><span class="v">{{ b.trip.arrival_time or 'N/A' }}</span></div>
+    <div class="row"><span class="k">Passengers</span><span class="v">{{ b.trip.adults }} adults, {{ b.trip.children }} children, {{ b.trip.infants }} infants</span></div>
+    <div class="row"><span class="k">Bags</span><span class="v">{{ b.trip.bags }} regular, {{ b.trip.ski_bags }} ski</span></div>
+    <div class="row"><span class="k">Car Seats</span><span class="v">{{ b.trip.car_seats }}</span></div>
+    <div class="row"><span class="k">Destination</span><span class="v">{{ b.trip.destination or 'N/A' }}</span></div>
+    {% if b.trip.notes %}<div class="row"><span class="k">Notes</span><span class="v">{{ b.trip.notes }}</span></div>{% endif %}
+    <div class="row"><span class="k">Phone</span><span class="v"><a href="tel:{{ b.customer.phone }}" style="color:#c9a84c;text-decoration:none;">{{ b.customer.phone }}</a></span></div>
+    <div class="row"><span class="k">Email</span><span class="v">{{ b.customer.email or 'N/A' }}</span></div>
+    <div style="margin-top:12px;padding-top:12px;border-top:1px solid #1e2130;">
+        <div class="row"><span class="k">Base Price</span><span class="v">${{ b.base_price }}</span></div>
+        {% if b.premium_stop %}<div class="row"><span class="k">Premium Stop</span><span class="v">+${{ b.premium_stop }}</span></div>{% endif %}
+        <div class="row"><span class="k">Tip ({{ b.tip_percent }}%)</span><span class="v">${{ b.tip_amount }}</span></div>
+        <div class="row" style="font-size:16px;font-weight:800;padding-top:8px;"><span class="k" style="color:#fff;">TOTAL</span><span class="v" style="color:#c9a84c;">${{ b.total }}</span></div>
+    </div>
+    {% if b.card_id %}
+    <div style="margin-top:8px;font-size:12px;color:#666;"><i class="bi bi-credit-card"></i> {{ b.card_brand }} ****{{ b.card_last4 }}</div>
+    {% endif %}
+    {% if b.status == 'pending_approval' %}
+    <form action="/admin/bookings/{{ b.id }}/charge" method="post" onsubmit="return confirm('Charge ${{ b.total }} to {{ b.card_brand }} ****{{ b.card_last4 }}?')">
+        <input type="hidden" name="pin" value="6939">
+        <button type="submit" class="charge-btn"><i class="bi bi-check-circle"></i> Approve & Charge ${{ b.total }}</button>
+    </form>
+    {% elif b.status == 'charged' %}
+    <div style="margin-top:12px;text-align:center;color:#22c55e;font-weight:700;font-size:14px;"><i class="bi bi-check-circle-fill"></i> Charged {{ b.charged_at[:16] if b.charged_at else '' }}</div>
+    {% endif %}
+    <div style="margin-top:8px;font-size:10px;color:#444;">Created: {{ b.created_at[:16] if b.created_at else '' }}</div>
+</div>
+{% endfor %}
+</body></html>
