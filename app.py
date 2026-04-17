@@ -55,7 +55,7 @@ def _send_quick_email(booking):
     print(f"[Email] Admin notification: {resp.status_code} — {resp.text[:200]}")
 
     # 2. Email to customer (confirmation)
-    if c.get('email'):
+    if c.get('email') and c['email'].strip():
         customer_html = f"""<div style="font-family:Arial,sans-serif;max-width:550px;margin:0 auto;background:#0a0c10;border-radius:12px;overflow:hidden;">
 <div style="background:linear-gradient(135deg,#c9a84c,#e8c65a);padding:20px 28px;text-align:center;">
 <h1 style="margin:0;color:#000;font-size:20px;">Trip Request Received!</h1>

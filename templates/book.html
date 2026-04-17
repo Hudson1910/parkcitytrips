@@ -459,10 +459,8 @@ function searchAddress(query, dropdown, inputId) {
 
 function pickAddress(inputId, address) {
     document.getElementById(inputId).value = address;
-    document.getElementById(inputId.replace('Input','')).closest('.field').querySelector('.addr-dropdown').style.display = 'none';
-    // Fix: hide the correct dropdown
-    const dd = document.getElementById(inputId === 'pickupInput' ? 'pickupDropdown' : 'dropoffDropdown');
-    if(dd) dd.style.display = 'none';
+    // Close ALL dropdowns
+    document.querySelectorAll('.addr-dropdown').forEach(d => d.style.display = 'none');
 }
 
 function useCurrentLocation(inputId) {
