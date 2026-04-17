@@ -78,13 +78,13 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);mi
                 <div class="v-price">$129</div>
             </div>
             <div class="v-option {{ 'selected' if request.args.get('vehicle')=='premier' or not request.args.get('vehicle') }}" onclick="pickVehicle(this,'premier')">
-                <img src="https://static.wixstatic.com/media/55a398_20b37cd36164453da86eb84430394411~mv2.jpg" alt="Premier SUV">
+                <img src="/static/gallery/rio-10.jpg" alt="Premier SUV">
                 <h4>Premier SUV</h4>
                 <div class="v-model">GMC Yukon</div>
                 <div class="v-price">$189</div>
             </div>
             <div class="v-option {{ 'selected' if request.args.get('vehicle')=='luxury' }}" onclick="pickVehicle(this,'luxury')">
-                <img src="https://static.wixstatic.com/media/55a398_efc5a657079e4b5f88a415de4633fbe8~mv2.avif" alt="Luxury SUV">
+                <img src="/static/gallery/rio-7.jpg" alt="Luxury SUV">
                 <h4>Luxury SUV</h4>
                 <div class="v-model">Lincoln Navigator</div>
                 <div class="v-price">$220</div>
