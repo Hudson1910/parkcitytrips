@@ -75,7 +75,10 @@ def send_booking_email(booking):
     except Exception as e:
         print(f"[Email] Error: {e}")
 
-BOOKINGS_FILE = os.path.join(os.path.dirname(__file__), 'data', 'bookings.json')
+# Use /tmp for Railway (persists within a deploy, not across deploys)
+# Or use RAILWAY_VOLUME_MOUNT_PATH if a volume is attached
+_data_dir = os.getenv('RAILWAY_VOLUME_MOUNT_PATH', os.path.join(os.path.dirname(__file__), 'data'))
+BOOKINGS_FILE = os.path.join(_data_dir, 'bookings.json')
 os.makedirs(os.path.dirname(BOOKINGS_FILE), exist_ok=True)
 
 def load_bookings():
@@ -169,6 +172,8 @@ def book_submit():
     bookings = load_bookings()
     bookings.append(booking)
     save_bookings(bookings)
+    # Also store in session as backup (survives redeploys)
+    session[f'booking_{booking_id}'] = booking
     print(f"[Booking] New booking {booking_id}: {data.get('name','')} — {vehicle} ${base_price}")
     return redirect(f'/book/payment/{booking_id}')
 
@@ -178,6 +183,8 @@ def book_payment(booking_id):
     """Show Square payment form to save card."""
     bookings = load_bookings()
     booking = next((b for b in bookings if b['id'] == booking_id), None)
+    if not booking:
+        booking = session.get(f'booking_{booking_id}')
     if not booking:
         abort(404)
     return render_template('book_payment.html', booking=booking, config=config,
@@ -195,6 +202,11 @@ def book_save_card():
 
     bookings = load_bookings()
     booking = next((b for b in bookings if b['id'] == booking_id), None)
+    # Fallback: check session if file was lost during redeploy
+    if not booking:
+        booking = session.get(f'booking_{booking_id}')
+        if booking:
+            bookings.append(booking)
     if not booking or not nonce:
         return jsonify({'error': 'Invalid booking or nonce'}), 400
 
