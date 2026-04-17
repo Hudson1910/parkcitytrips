@@ -25,7 +25,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);-webkit-f
 .nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 40px;transition:background .4s,border .4s;}
 .nav.scrolled{background:rgba(255,255,255,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--light-border);}
 .nav-logo{font-family:var(--font-display);font-size:18px;font-weight:800;color:#fff;text-decoration:none;letter-spacing:.12em;text-transform:uppercase;}
-.nav.scrolled .nav-logo{color:#000;}
+.nav.scrolled .nav-logo img{filter:brightness(0);}
 .nav-logo span{font-weight:400;opacity:.5;}
 .nav-links{display:flex;align-items:center;gap:32px;}
 .nav-links a{font-family:var(--font-body);font-size:14px;font-weight:500;color:rgba(255,255,255,.7);text-decoration:none;transition:color .2s;}
@@ -71,16 +71,14 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);-webkit-f
 .hero-text h1{font-family:var(--font-display);font-size:clamp(3rem,8vw,5.5rem);font-weight:800;color:#fff;letter-spacing:-.02em;line-height:.95;margin-bottom:20px;animation:fadeUp 1.2s .3s both;}
 .hero-text p{font-family:var(--font-body);font-size:clamp(14px,1.4vw,18px);color:rgba(255,255,255,.5);max-width:500px;margin:0 auto;line-height:1.7;animation:fadeUp 1.2s .6s both;}
 .hero-vehicle{position:relative;z-index:2;margin-top:40px;width:min(800px,95vw);animation:carEnter 2.5s cubic-bezier(0.22,1,0.36,1) 0.6s both;overflow:visible;}
-.hero-vehicle img{width:100%;height:auto;filter:invert(1) brightness(0.45) contrast(1.3) sepia(0.05);mix-blend-mode:screen;}
-/* Headlight glow arrives before the car */
-.hero-vehicle::before{content:'';position:absolute;top:35%;right:-5%;width:200px;height:80px;background:radial-gradient(ellipse,rgba(255,255,255,.12),transparent 70%);filter:blur(30px);animation:glowPulse 3s ease-in-out 2.5s infinite;}
-.hero-vehicle::after{content:'';position:absolute;bottom:-30px;left:5%;right:5%;height:80px;background:radial-gradient(ellipse,rgba(255,255,255,.06),transparent 70%);filter:blur(25px);}
+.hero-vehicle img{width:100%;height:auto;position:relative;z-index:1;}
+/* Spotlight mask — hides white bg edges, reveals car in center */
+.hero-vehicle .car-mask{position:absolute;inset:-10px;z-index:2;pointer-events:none;background:radial-gradient(ellipse 80% 90% at 50% 55%,transparent 35%,#080a0f 72%);}
 @keyframes carEnter{
-    0%{transform:translateX(calc(100vw)) scale(0.95);opacity:0;}
-    15%{opacity:1;}
-    100%{transform:translateX(0) scale(1);opacity:1;}
+    0%{transform:translateX(100vw);opacity:0;}
+    10%{opacity:1;}
+    100%{transform:translateX(0);opacity:1;}
 }
-@keyframes glowPulse{0%,100%{opacity:.5;}50%{opacity:1;}}
 .hero-scroll{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);z-index:3;animation:fadeUp 1s 1.5s both;}
 .hero-scroll span{font-family:var(--font-label);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);display:flex;flex-direction:column;align-items:center;gap:6px;}
 .hero-scroll i{animation:float 2s infinite;font-size:16px;}
@@ -233,7 +231,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);-webkit-f
 
 <!-- NAV -->
 <nav class="nav" id="nav">
-    <a href="/" class="nav-logo">RIO <span>Transportation</span></a>
+    <a href="/" class="nav-logo"><img src="https://static.wixstatic.com/media/55a398_1d427b4af5334f1ca3d0edd76f254f4a~mv2.png" alt="Rio Transportation" style="height:40px;filter:brightness(10);"></a>
     <div class="nav-links">
         <a href="#services">Services</a>
         <a href="#fleet">Fleet</a>
@@ -251,9 +249,14 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);-webkit-f
     <div class="hero-text">
         <h1>THE FUTURE OF<br>PARK CITY<br>TRANSPORTATION</h1>
         <p>Luxury private SUV from Salt Lake City Airport to Park City. From $129, all-inclusive. 9,000+ rides completed.</p>
+        <div style="display:flex;gap:14px;justify-content:center;margin-top:28px;flex-wrap:wrap;animation:fadeUp 1.2s .9s both;">
+            <a href="#book" style="padding:16px 36px;background:#fff;color:#000;font-family:var(--font-display);font-size:16px;font-weight:700;border-radius:8px;text-decoration:none;letter-spacing:.05em;transition:all .2s;display:inline-flex;align-items:center;gap:8px;">BOOK NOW <i class="bi bi-arrow-right"></i></a>
+            <a href="tel:+14352146939" style="padding:16px 28px;background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.3);font-family:var(--font-body);font-size:14px;font-weight:600;border-radius:8px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s;"><i class="bi bi-telephone-fill"></i> (435) 214-6939</a>
+        </div>
     </div>
     <div class="hero-vehicle">
         <img src="https://static.wixstatic.com/media/55a398_efc5a657079e4b5f88a415de4633fbe8~mv2.avif" alt="Lincoln Navigator Black Label">
+        <div class="car-mask"></div>
     </div>
     <div class="hero-scroll"><span><i class="bi bi-chevron-down"></i>Scroll to explore</span></div>
 </section>
@@ -377,7 +380,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);-webkit-f
                 </div>
             </div>
             <div class="book-card reveal reveal-delay-1">
-                <div class="book-img"><img src="https://static.wixstatic.com/media/55a398_20b37cd36164453da86eb84430394411~mv2.jpg" alt="Midsize SUV"></div>
+                <div class="book-img"><img src="/static/pathfinder.avif" alt="Nissan Pathfinder"></div>
                 <div class="book-info">
                     <div class="book-tag">Popular</div>
                     <h3>Midsize SUV</h3>
