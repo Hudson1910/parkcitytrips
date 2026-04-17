@@ -8,61 +8,50 @@ from blog_data import POSTS
 
 
 def _send_quick_email(booking):
-    """Send email via Gmail API over HTTPS (Railway blocks SMTP ports)."""
-    if not config.SMTP_USER or not config.SMTP_PASS:
-        print("[Email] No credentials configured")
+    """Send email via Resend.com HTTP API (Railway blocks SMTP ports)."""
+    if not config.RESEND_API_KEY:
+        print("[Email] No RESEND_API_KEY configured")
         return
-    import base64
     vehicle_names = {'small':'Small SUV','midsize':'Midsize SUV','premier':'Premier SUV','luxury':'Luxury SUV'}
     c = booking['customer']
     t = booking['trip']
     bid = booking['id'].upper()
-    body = f"""🚗 NEW TRIP REQUEST — #{bid}
+    v = vehicle_names.get(booking['vehicle'], booking['vehicle'])
 
-Customer: {c['name']}
-Phone: {c['phone']}
-Email: {c.get('email','—')}
+    html = f"""<div style="font-family:Arial,sans-serif;max-width:550px;margin:0 auto;background:#0a0c10;border-radius:12px;overflow:hidden;">
+<div style="background:linear-gradient(135deg,#c9a84c,#e8c65a);padding:20px 28px;text-align:center;">
+<h1 style="margin:0;color:#000;font-size:20px;">🚗 New Trip Request</h1></div>
+<div style="padding:24px 28px;color:#fff;">
+<div style="background:#111318;border:1px solid #1e2130;border-radius:10px;padding:16px;margin-bottom:16px;">
+<div style="font-size:11px;color:#c9a84c;letter-spacing:2px;margin-bottom:8px;">ORDER #{bid}</div>
+<table style="width:100%;font-size:13px;color:#fff;border-collapse:collapse;">
+<tr><td style="padding:5px 0;color:#666;">Customer</td><td style="padding:5px 0;text-align:right;font-weight:700;">{c['name']}</td></tr>
+<tr><td style="padding:5px 0;color:#666;">Phone</td><td style="padding:5px 0;text-align:right;"><a href="tel:{c['phone']}" style="color:#c9a84c;">{c['phone']}</a></td></tr>
+<tr><td style="padding:5px 0;color:#666;">Email</td><td style="padding:5px 0;text-align:right;">{c.get('email','—')}</td></tr>
+<tr><td colspan="2" style="border-bottom:1px solid #1e2130;padding:6px 0;"></td></tr>
+<tr><td style="padding:5px 0;color:#666;">Vehicle</td><td style="padding:5px 0;text-align:right;font-weight:700;">{v}</td></tr>
+<tr><td style="padding:5px 0;color:#666;">Date</td><td style="padding:5px 0;text-align:right;">{t.get('date','—')}</td></tr>
+<tr><td style="padding:5px 0;color:#666;">Pickup</td><td style="padding:5px 0;text-align:right;color:#22c55e;">{t.get('pickup','—')}</td></tr>
+<tr><td style="padding:5px 0;color:#666;">Dropoff</td><td style="padding:5px 0;text-align:right;color:#ef4444;">{t.get('dropoff','—')}</td></tr>
+<tr><td style="padding:5px 0;color:#666;">Flight</td><td style="padding:5px 0;text-align:right;">{t.get('flight_number','—')}</td></tr>
+<tr><td style="padding:5px 0;color:#666;">Arrival</td><td style="padding:5px 0;text-align:right;">{t.get('arrival_time','—')}</td></tr>
+<tr><td colspan="2" style="border-bottom:1px solid #1e2130;padding:6px 0;"></td></tr>
+<tr><td style="padding:5px 0;color:#666;">Passengers</td><td style="padding:5px 0;text-align:right;">{t.get('adults','0')} adults, {t.get('children','0')} kids</td></tr>
+<tr><td style="padding:5px 0;color:#666;">Bags</td><td style="padding:5px 0;text-align:right;">{t.get('bags','0')} + {t.get('ski_bags','0')} ski</td></tr>
+<tr><td colspan="2" style="border-bottom:1px solid #1e2130;padding:6px 0;"></td></tr>
+<tr><td style="padding:5px 0;color:#666;">Total</td><td style="padding:5px 0;text-align:right;font-size:18px;font-weight:800;color:#c9a84c;">${booking['total']}</td></tr>
+</table></div>
+{'<div style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:8px;padding:10px;font-size:12px;color:#22c55e;margin-bottom:12px;">💳 '+booking.get('card_brand','')+' ****'+booking.get('card_last4','')+'</div>' if booking.get('card_last4') else ''}
+<div style="text-align:center;"><a href="https://web-production-d69bf.up.railway.app/admin/bookings?pin=6939" style="display:inline-block;padding:12px 24px;background:#c9a84c;color:#000;border-radius:50px;text-decoration:none;font-weight:700;font-size:13px;">Review & Approve</a></div>
+</div></div>"""
 
-Vehicle: {vehicle_names.get(booking['vehicle'], booking['vehicle'])}
-Date: {t.get('date','—')}
-Pickup: {t.get('pickup','—')}
-Dropoff: {t.get('dropoff','—')}
-Flight: {t.get('flight_number','—')}
-Arrival: {t.get('arrival_time','—')}
-
-Passengers: {t.get('adults','0')} adults, {t.get('children','0')} children
-Car Seats: {t.get('car_seats','0')}
-Bags: {t.get('bags','0')} + {t.get('ski_bags','0')} ski
-
-Base: ${booking['base_price']}
-Premium Stop: ${booking.get('premium_stop',0)}
-Tip ({booking.get('tip_percent',0)}%): ${booking.get('tip_amount',0)}
-TOTAL: ${booking['total']}
-
-Card: {booking.get('card_brand','')} ****{booking.get('card_last4','')}
-
-Admin: https://web-production-d69bf.up.railway.app/admin/bookings?pin=6939"""
-
-    subject = f"🚗 Trip #{bid} — {c['name']} — ${booking['total']}"
-
-    # Use SMTP over SSL (port 465) — Railway sometimes allows this when 587 is blocked
-    import ssl
-    try:
-        context = ssl.create_default_context()
-        with smtplib.SMTP_SSL('smtp.gmail.com', 465, timeout=10, context=context) as s:
-            s.login(config.SMTP_USER, config.SMTP_PASS)
-            msg = MIMEText(body, 'plain')
-            msg['Subject'] = subject
-            msg['From'] = config.SMTP_USER
-            msg['To'] = config.NOTIFY_EMAIL
-            s.send_message(msg)
-        print(f"[Email] Sent via SMTP_SSL OK")
-        return
-    except Exception as e:
-        print(f"[Email] SMTP_SSL failed: {e}")
-
-    # Fallback: send via Mailgun-style HTTP API if available
-    print("[Email] All methods failed")
+    resp = req.post('https://api.resend.com/emails', json={
+        'from': 'Rio Transportation <onboarding@resend.dev>',
+        'to': [config.NOTIFY_EMAIL],
+        'subject': f"🚗 Trip #{bid} — {c['name']} — {v} — ${booking['total']}",
+        'html': html,
+    }, headers={'Authorization': f'Bearer {config.RESEND_API_KEY}'}, timeout=10)
+    print(f"[Email] Resend response: {resp.status_code} — {resp.text[:200]}")
 
 
 def send_booking_email(booking):
