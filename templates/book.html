@@ -285,7 +285,7 @@ function searchFlight() {
     btn.innerHTML = '<i class="bi bi-hourglass-split"></i>';
     btn.disabled = true;
 
-    let url = '/api/flight-lookup?flight=' + encodeURIComponent(flight);
+    let url = 'https://web-production-1378b.up.railway.app/api/flight-lookup?flight=' + encodeURIComponent(flight);
     if (date) url += '&date=' + encodeURIComponent(date);
 
     fetch(url).then(r => r.json()).then(d => {
