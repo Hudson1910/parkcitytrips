@@ -73,7 +73,7 @@ PREMIUM_STOP_PRICE = 60
 
 # Email notifications
 RESEND_API_KEY = os.getenv('RESEND_API_KEY', '')
-NOTIFY_EMAIL = os.getenv('NOTIFY_EMAIL', 'agendahudsonbarros@gmail.com')
+NOTIFY_EMAIL = os.getenv('NOTIFY_EMAIL', 'agendahudsonbarros@gmail.com,contactus@riotravelpc.com')
 # Legacy SMTP (Railway blocks ports, keeping for local dev)
 SMTP_USER = os.getenv('SMTP_USER', '')
 SMTP_PASS = os.getenv('SMTP_PASS', '')

@@ -48,7 +48,7 @@ def _send_quick_email(booking):
     # 1. Email to Hudson (admin notification)
     resp = req.post('https://api.resend.com/emails', json={
         'from': 'Rio Transportation <booking@parkcitytrips.com>',
-        'to': [config.NOTIFY_EMAIL],
+        'to': [e.strip() for e in config.NOTIFY_EMAIL.split(',')],
         'subject': f"🚗 Trip #{bid} — {c['name']} — {v} — ${booking['total']}",
         'html': html,
     }, headers={'Authorization': f'Bearer {config.RESEND_API_KEY}'}, timeout=10)
@@ -56,30 +56,32 @@ def _send_quick_email(booking):
 
     # 2. Email to customer (confirmation)
     if c.get('email') and c['email'].strip():
-        customer_html = f"""<div style="font-family:Arial,sans-serif;max-width:550px;margin:0 auto;background:#0a0c10;border-radius:12px;overflow:hidden;">
-<div style="background:linear-gradient(135deg,#c9a84c,#e8c65a);padding:20px 28px;text-align:center;">
-<h1 style="margin:0;color:#000;font-size:20px;">Trip Request Received!</h1>
-<p style="margin:4px 0 0;color:rgba(0,0,0,.6);font-size:12px;">Rio Transportation LLC</p></div>
-<div style="padding:24px 28px;color:#fff;">
-<p style="font-size:15px;margin-bottom:16px;">Hi {c['name'].split()[0]},</p>
-<p style="font-size:14px;color:#999;line-height:1.7;margin-bottom:20px;">Thank you for your trip request! This is <strong style="color:#fff;">not a confirmed booking yet</strong> — our team will review and contact you within <strong style="color:#c9a84c;">30 minutes</strong> to confirm your ride.</p>
-<div style="background:#111318;border:1px solid #1e2130;border-radius:10px;padding:16px;margin-bottom:16px;">
-<div style="font-size:11px;color:#c9a84c;letter-spacing:2px;margin-bottom:8px;">ORDER #{bid}</div>
-<table style="width:100%;font-size:13px;color:#fff;border-collapse:collapse;">
-<tr><td style="padding:5px 0;color:#666;">Vehicle</td><td style="padding:5px 0;text-align:right;font-weight:700;">{v}</td></tr>
-<tr><td style="padding:5px 0;color:#666;">Date</td><td style="padding:5px 0;text-align:right;">{t.get('date','—')}</td></tr>
-<tr><td style="padding:5px 0;color:#666;">Pickup</td><td style="padding:5px 0;text-align:right;color:#22c55e;">{t.get('pickup','—')}</td></tr>
-<tr><td style="padding:5px 0;color:#666;">Dropoff</td><td style="padding:5px 0;text-align:right;color:#ef4444;">{t.get('dropoff','—')}</td></tr>
-<tr><td colspan="2" style="border-bottom:1px solid #1e2130;padding:6px 0;"></td></tr>
-<tr><td style="padding:5px 0;color:#666;">Estimated Total</td><td style="padding:5px 0;text-align:right;font-size:18px;font-weight:800;color:#c9a84c;">${booking['total']}</td></tr>
-</table></div>
-<div style="background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.15);border-radius:8px;padding:12px;font-size:12px;color:rgba(255,255,255,.6);margin-bottom:16px;">
-<strong>💳 Your card will NOT be charged</strong> until we confirm your ride.</div>
-<p style="font-size:13px;color:#666;margin-bottom:16px;">Questions? Call or text us anytime:</p>
-<div style="text-align:center;margin-bottom:8px;"><a href="tel:+14352146939" style="color:#c9a84c;text-decoration:none;font-weight:700;font-size:15px;">📞 (435) 214-6939</a></div>
-<div style="text-align:center;"><a href="https://wa.me/14352146939" style="color:#25d366;text-decoration:none;font-weight:600;font-size:13px;">💬 WhatsApp</a></div>
+        customer_html = f"""<div style="font-family:Arial,Helvetica,sans-serif;max-width:520px;margin:0 auto;background:#ffffff;">
+<div style="padding:32px 32px 24px;border-bottom:3px solid #000;">
+<h1 style="margin:0;color:#000;font-size:22px;font-weight:800;">Rio Transportation</h1>
 </div>
-<div style="padding:12px 28px;border-top:1px solid #1e2130;font-size:10px;color:#444;text-align:center;">Rio Transportation LLC · Park City, Utah · parkcitytrips.com</div>
+<div style="padding:28px 32px;">
+<p style="font-size:15px;color:#333;margin-bottom:6px;">Hi {c['name'].split()[0]},</p>
+<p style="font-size:14px;color:#666;line-height:1.7;margin-bottom:24px;">Thank you for your trip request. This is <strong style="color:#000;">not a confirmed booking yet</strong> — our team will contact you within <strong style="color:#000;">30 minutes</strong> to confirm.</p>
+<div style="background:#f8f8f6;border:1px solid #e8e8e4;border-radius:8px;padding:20px;margin-bottom:20px;">
+<div style="font-size:10px;color:#999;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">ORDER #{bid}</div>
+<table style="width:100%;font-size:14px;color:#333;border-collapse:collapse;">
+<tr><td style="padding:6px 0;color:#999;">Vehicle</td><td style="padding:6px 0;text-align:right;font-weight:700;">{v}</td></tr>
+<tr><td style="padding:6px 0;color:#999;">Date</td><td style="padding:6px 0;text-align:right;">{t.get('date','—')}</td></tr>
+<tr><td style="padding:6px 0;color:#999;">Pickup</td><td style="padding:6px 0;text-align:right;">{t.get('pickup','—')}</td></tr>
+<tr><td style="padding:6px 0;color:#999;">Dropoff</td><td style="padding:6px 0;text-align:right;">{t.get('dropoff','—')}</td></tr>
+<tr><td colspan="2" style="border-bottom:1px solid #e8e8e4;padding:8px 0;"></td></tr>
+<tr><td style="padding:8px 0;font-weight:700;color:#000;">Estimated Total</td><td style="padding:8px 0;text-align:right;font-size:20px;font-weight:800;color:#000;">${booking['total']}</td></tr>
+</table></div>
+<div style="background:#f0f7ff;border:1px solid #d4e5f7;border-radius:6px;padding:12px 16px;font-size:13px;color:#555;margin-bottom:24px;">
+💳 Your card will <strong>not be charged</strong> until we confirm your ride.</div>
+<div style="text-align:center;margin-bottom:24px;">
+<p style="font-size:13px;color:#999;margin-bottom:12px;">Questions? Contact us anytime</p>
+<a href="tel:+14352146939" style="display:inline-block;padding:10px 24px;background:#000;color:#fff;border-radius:50px;text-decoration:none;font-weight:700;font-size:14px;margin-right:8px;">📞 (435) 214-6939</a>
+<a href="https://wa.me/14352146939" style="display:inline-block;padding:10px 24px;background:#25d366;color:#fff;border-radius:50px;text-decoration:none;font-weight:700;font-size:14px;">💬 WhatsApp</a>
+</div>
+</div>
+<div style="padding:16px 32px;border-top:1px solid #eee;font-size:11px;color:#bbb;text-align:center;">Rio Transportation LLC · Park City, Utah · parkcitytrips.com</div>
 </div>"""
         resp2 = req.post('https://api.resend.com/emails', json={
             'from': 'Rio Transportation <booking@parkcitytrips.com>',
