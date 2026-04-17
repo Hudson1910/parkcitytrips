@@ -44,6 +44,8 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);mi
 .pay-error{color:#ef4444;font-size:13px;text-align:center;margin-top:12px;display:none;}
 .pay-note{text-align:center;font-size:12px;color:var(--muted);margin-top:12px;line-height:1.6;}
 .pay-note i{color:var(--accent);}
+.spinner{width:20px;height:20px;border:2.5px solid rgba(0,0,0,.2);border-top-color:#000;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;}
+@keyframes spin{to{transform:rotate(360deg);}}
 @media(max-width:480px){
     .tip-grid{grid-template-columns:repeat(3,1fr);}
     .pay-page{padding:24px 16px 60px;}
@@ -146,7 +148,7 @@ async function submitPayment() {
     const err = document.getElementById('payError');
     err.style.display = 'none';
     btn.disabled = true;
-    btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Processing...';
+    btn.innerHTML = '<div class="spinner"></div> Processing payment...';
 
     try {
         const result = await card.tokenize();
