@@ -82,7 +82,7 @@
     }
     </script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Bebas+Neue&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Onest:wght@400;500;600;700;800;900&family=DM+Sans:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
     <style>
         :root{--bg:#0a0e17;--bg2:#0f1420;--bg3:#151c2e;--bg4:#1c2540;
         --bg-light:#ffffff;--bg-light2:#f8f8f6;
@@ -92,22 +92,26 @@
         --border:rgba(201,168,76,.08);}
         *{margin:0;padding:0;box-sizing:border-box;}
         html{scroll-behavior:smooth;}
-        body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
-        h1,h2,h3,h4{font-family:'Outfit',sans-serif;}
-        @keyframes fadeIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
-        @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
-        @keyframes glow{0%,100%{box-shadow:0 0 20px rgba(201,168,76,.1);}50%{box-shadow:0 0 40px rgba(201,168,76,.2);}}
-        @keyframes shimmer{0%{background-position:-200% 0;}100%{background-position:200% 0;}}
-        @keyframes pulse-gold{0%,100%{box-shadow:0 0 0 0 rgba(201,168,76,.3);}70%{box-shadow:0 0 0 14px rgba(201,168,76,0);}}
-        @keyframes rotate-slow{from{transform:rotate(0);}to{transform:rotate(360deg);}}
-        @keyframes slide-in-left{from{opacity:0;transform:translateX(-30px);}to{opacity:1;transform:translateX(0);}}
-        @keyframes slide-in-right{from{opacity:0;transform:translateX(30px);}to{opacity:1;transform:translateX(0);}}
-        @keyframes count-up{from{opacity:0;transform:scale(.5);}to{opacity:1;transform:scale(1);}}
-        .ani{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(.16,1,.3,1);}
+        body{font-family:'Montserrat','Inter',sans-serif;background:var(--bg);color:var(--t1);-webkit-font-smoothing:antialiased;overflow-x:hidden;font-weight:400;}
+        h1,h2,h3,h4{font-family:'Onest','Outfit',sans-serif;font-weight:700;}
+
+        /* AUTONO scroll reveal animations */
+        .ani{opacity:0;transform:translateY(50px);transition:all 1s cubic-bezier(.16,1,.3,1);}
         .ani.v{opacity:1;transform:translateY(0);}
-        .ani-delay-1{transition-delay:.1s;}
-        .ani-delay-2{transition-delay:.2s;}
-        .ani-delay-3{transition-delay:.3s;}
+        /* Stagger children inside visible sections */
+        .ani.v .svc,.ani.v .fleet-card,.ani.v .rev,.ani.v .ci-card{opacity:1;transform:translateY(0);}
+        .svc,.fleet-card,.ci-card{opacity:0;transform:translateY(40px);transition:all .8s cubic-bezier(.16,1,.3,1);}
+        .svc:nth-child(1),.fleet-card:nth-child(1){transition-delay:.1s;}
+        .svc:nth-child(2),.fleet-card:nth-child(2){transition-delay:.25s;}
+        .svc:nth-child(3),.fleet-card:nth-child(3){transition-delay:.4s;}
+        .svc:nth-child(4){transition-delay:.55s;}
+        .svc:nth-child(5){transition-delay:.7s;}
+        .svc:nth-child(6){transition-delay:.85s;}
+        /* Parallax text — large bg text behind sections */
+        .sec-parallax-text{position:absolute;font-family:'Onest',sans-serif;font-size:clamp(10rem,22vw,20rem);font-weight:900;color:rgba(255,255,255,.03);pointer-events:none;user-select:none;white-space:nowrap;line-height:1;bottom:-0.1em;left:-0.02em;letter-spacing:-0.04em;z-index:0;}
+        .section-wrap.light .sec-parallax-text{color:rgba(0,0,0,.04);}
+        /* Section divider line */
+        .sec-divider{width:60px;height:1px;background:var(--gold);margin:0 auto 24px;opacity:0.4;}
         /* Particles background */
         .particles{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
         .particle{position:absolute;width:2px;height:2px;border-radius:50%;background:var(--gold);opacity:.15;animation:float 6s ease-in-out infinite;}
@@ -168,9 +172,9 @@
         .section-wrap.light .sec-head p{color:var(--mid-gray);}
         .section-wrap.light .sec-tag{color:var(--black);background:transparent;border:none;padding:0;}
         .sec-head{text-align:center;margin-bottom:64px;}
-        .sec-tag{display:block;font-size:11px;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;margin-bottom:18px;color:var(--gold);background:transparent;border:none;padding:0;}
-        .sec-head h2{font-family:Outfit,sans-serif;font-size:clamp(32px,5vw,48px);font-weight:800;color:var(--w);letter-spacing:-1px;margin-bottom:14px;line-height:1.15;}
-        .sec-head p{font-size:16px;color:var(--t3);max-width:520px;margin:0 auto;line-height:1.7;}
+        .sec-tag{display:block;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.3em;text-transform:uppercase;margin-bottom:20px;color:var(--gold);}
+        .sec-head h2{font-family:'Onest',sans-serif;font-size:clamp(28px,5vw,44px);font-weight:600;color:var(--w);letter-spacing:-0.5px;margin-bottom:16px;line-height:1.2;}
+        .sec-head p{font-family:'Montserrat',sans-serif;font-size:16px;color:var(--t3);max-width:520px;margin:0 auto;line-height:1.7;font-weight:400;}
         @media(max-width:640px){.sec-head h2{font-size:28px;}.section{padding:80px 14px;}.section-wrap{padding:80px 0;}}
 
         /* SERVICES — clean AUTONO-style cards */
@@ -416,8 +420,8 @@
 @keyframes introZoom{0%{transform:scale(1.1);}100%{transform:scale(1);}}
 
 .intro-content{position:relative;z-index:3;padding:0 6vw;max-width:600px;}
-.intro-tag{font-family:Inter,sans-serif;font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:#d4a84b;opacity:0.7;margin-bottom:1.5rem;animation:introFadeUp 1s 0.3s both;}
-.intro-headline{font-family:Outfit,sans-serif;font-size:clamp(3.5rem,10vw,7rem);font-weight:900;letter-spacing:-0.02em;line-height:0.92;color:#ede8df;margin-bottom:1.5rem;animation:introFadeUp 1s 0.5s both;}
+.intro-tag{font-family:'DM Sans',sans-serif;font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;color:#d4a84b;opacity:0.7;margin-bottom:1.5rem;animation:introFadeUp 1s 0.3s both;}
+.intro-headline{font-family:'Onest',sans-serif;font-size:clamp(3.5rem,10vw,7rem);font-weight:900;letter-spacing:-0.02em;line-height:0.92;color:#ede8df;margin-bottom:1.5rem;animation:introFadeUp 1s 0.5s both;}
 .intro-accent{color:#d4a84b;display:inline-block;}
 .intro-sub{font-family:Inter,sans-serif;font-size:clamp(0.8rem,1.3vw,0.95rem);line-height:1.8;color:rgba(237,232,223,0.55);letter-spacing:0.02em;animation:introFadeUp 1s 0.7s both;}
 .intro-btns{display:flex;gap:12px;margin-top:1.8rem;flex-wrap:wrap;animation:introFadeUp 1s 0.9s both;}
@@ -500,10 +504,12 @@
 </section>
 
 <!-- SERVICES -->
-<div class="section-wrap light">
-<section class="section ani" id="services">
+<div class="section-wrap light" style="position:relative;overflow:hidden;">
+<span class="sec-parallax-text">SERVICES</span>
+<section class="section ani" id="services" style="position:relative;z-index:1;">
     <div class="sec-head">
         <div class="sec-tag">SERVICES</div>
+        <div class="sec-divider"></div>
         <h2>More Than Just a Ride</h2>
         <p>From airport transfers to special events, we cover all your transportation needs in Park City</p>
     </div>
@@ -543,9 +549,12 @@
 </div>
 
 <!-- FLEET (dark) -->
-<section class="section ani" id="fleet">
+<div style="position:relative;overflow:hidden;">
+<span class="sec-parallax-text">FLEET</span>
+<section class="section ani" id="fleet" style="position:relative;z-index:1;">
     <div class="sec-head">
         <div class="sec-tag">FLEET</div>
+        <div class="sec-divider"></div>
         <h2>Travel in Style & Comfort</h2>
         <p>Luxury vehicles maintained to the highest standards</p>
     </div>
@@ -579,6 +588,7 @@
         {% endfor %}
     </div>
 </section>
+</div>
 
 <!-- WHY CHOOSE US (light) -->
 <div class="section-wrap light">
@@ -1014,15 +1024,39 @@ window.addEventListener('scroll',()=>{
     if(bg&&s<window.innerHeight)bg.style.transform=`scale(${1+s*.0001}) translateY(${s*.3}px)`;
 });
 
-// SCROLL ANIMATIONS with stagger
+// AUTONO-STYLE SCROLL ANIMATIONS — dramatic reveals with parallax
 const obs=new IntersectionObserver(es=>{
-    es.forEach((e,i)=>{
+    es.forEach(e=>{
         if(e.isIntersecting){
-            setTimeout(()=>e.target.classList.add('v'),i*80);
+            e.target.classList.add('v');
+            obs.unobserve(e.target); // once revealed, stop watching
         }
     });
-},{threshold:.1});
+},{threshold:.15,rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.ani,.svc,.fleet-card,.rev,.ci-card').forEach(e=>obs.observe(e));
+
+// Parallax background text — moves slowly on scroll for depth effect
+(function(){
+    const pTexts = document.querySelectorAll('.sec-parallax-text');
+    if(!pTexts.length) return;
+    let ticking = false;
+    window.addEventListener('scroll',()=>{
+        if(ticking) return;
+        ticking = true;
+        requestAnimationFrame(()=>{
+            const scrollY = window.scrollY;
+            pTexts.forEach(el=>{
+                const rect = el.parentElement.getBoundingClientRect();
+                const visible = rect.top < window.innerHeight && rect.bottom > 0;
+                if(visible){
+                    const offset = (rect.top / window.innerHeight) * 40;
+                    el.style.transform = `translateY(${offset}px)`;
+                }
+            });
+            ticking = false;
+        });
+    },{passive:true});
+})();
 
 // ANIMATED COUNTERS
 // Dynamic rides counter: base 9000 on April 16, 2026 + 5 rides/day since
