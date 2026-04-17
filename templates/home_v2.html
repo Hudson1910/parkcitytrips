@@ -279,10 +279,10 @@ body.light .hero-scroll span{color:var(--muted);}
 <section class="hero" id="home">
     <div class="hero-bg"></div>
     <div class="hero-text">
-        <h1>THE FUTURE OF<br>PARK CITY<br>TRANSPORTATION</h1>
-        <p>Luxury private SUV from Salt Lake City Airport to Park City. From $129, all-inclusive. 9,000+ rides completed.</p>
+        <h1 data-i18n="hero_h1">YOUR RIDE.<br>YOUR RULES.<br>YOUR MOUNTAIN.</h1>
+        <p data-i18n="hero_p">Private luxury SUV from SLC Airport to Park City in 35 minutes. No shared rides. No surge pricing. Just you and the Wasatch Mountains.</p>
         <div style="display:flex;gap:14px;justify-content:center;margin-top:28px;flex-wrap:wrap;animation:fadeUp 1.2s .9s both;">
-            <a href="#book" style="padding:16px 36px;background:#fff;color:#000;font-family:var(--font-display);font-size:16px;font-weight:700;border-radius:8px;text-decoration:none;letter-spacing:.05em;transition:all .2s;display:inline-flex;align-items:center;gap:8px;">BOOK NOW <i class="bi bi-arrow-right"></i></a>
+            <a href="/book" style="padding:16px 36px;background:#fff;color:#000;font-family:var(--font-display);font-size:16px;font-weight:700;border-radius:8px;text-decoration:none;letter-spacing:.05em;transition:all .2s;display:inline-flex;align-items:center;gap:8px;" data-i18n="book_now">BOOK NOW</a>
             <a href="tel:+14352146939" style="padding:16px 28px;background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.3);font-family:var(--font-body);font-size:14px;font-weight:600;border-radius:8px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s;"><i class="bi bi-telephone-fill"></i> (435) 214-6939</a>
         </div>
         <div class="hero-stats">
@@ -534,6 +534,82 @@ body.light .hero-scroll span{color:var(--muted);}
 
 // Nav scroll
 window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',scrollY>80);},{passive:true});
+
+// Auto language detection + translation
+(function(){
+    const T = {
+        en: {
+            hero_h1: 'YOUR RIDE.<br>YOUR RULES.<br>YOUR MOUNTAIN.',
+            hero_p: 'Private luxury SUV from SLC Airport to Park City in 35 minutes. No shared rides. No surge pricing. Just you and the Wasatch Mountains.',
+            book_now: 'BOOK NOW',
+            scroll: 'Scroll to explore',
+            vision_label: 'VISION',
+            vision_h2: "We're Changing the Way Park City Moves",
+            vision_p: 'No shared shuttles. No surge pricing. No waiting in taxi lines at the airport. Just a private luxury SUV, a professional driver, and a smooth 35-minute ride through the Wasatch Mountains to your destination.',
+            book_ride: 'Book Your Ride',
+            svc_label: 'SERVICES',
+            svc_h2: 'We Deliver Exceptional Transportation Services',
+            why_label: 'WHY RIO',
+            why_h2: 'A different approach to Park City transportation.',
+            why_p: 'While others pack you into shared vans, we provide a private, door-to-door experience in a premium SUV. All-inclusive pricing — no hidden fees, no surprises.',
+            view_rates: 'View Rates',
+            num_label: 'RIO IN NUMBERS',
+            num_h2: 'Rio Transportation In Numbers',
+            contact_label: 'CONTACT',
+            contact_h2: 'Get in Touch',
+        },
+        pt: {
+            hero_h1: 'SUA VIAGEM.<br>SUAS REGRAS.<br>SUA MONTANHA.',
+            hero_p: 'SUV de luxo privado do Aeroporto SLC a Park City em 35 minutos. Sem compartilhar. Sem preço dinâmico. Só você e as montanhas Wasatch.',
+            book_now: 'RESERVE AGORA',
+            scroll: 'Deslize para explorar',
+            vision_label: 'VISÃO',
+            vision_h2: 'Estamos Mudando Como Park City Se Move',
+            vision_p: 'Sem shuttles compartilhados. Sem preço dinâmico. Sem fila de táxi no aeroporto. Apenas um SUV de luxo privado e um motorista profissional.',
+            book_ride: 'Reserve Sua Viagem',
+            svc_label: 'SERVIÇOS',
+            svc_h2: 'Serviços de Transporte Excepcionais',
+            why_label: 'POR QUE RIO',
+            why_h2: 'Uma abordagem diferente ao transporte em Park City.',
+            why_p: 'Enquanto outros colocam você em vans compartilhadas, nós oferecemos uma experiência privada e porta-a-porta em um SUV premium.',
+            view_rates: 'Ver Tarifas',
+            num_label: 'RIO EM NÚMEROS',
+            num_h2: 'Rio Transportation Em Números',
+            contact_label: 'CONTATO',
+            contact_h2: 'Entre em Contato',
+        },
+        es: {
+            hero_h1: 'TU VIAJE.<br>TUS REGLAS.<br>TU MONTAÑA.',
+            hero_p: 'SUV de lujo privado del Aeropuerto SLC a Park City en 35 minutos. Sin compartir. Sin precios dinámicos. Solo tú y las montañas Wasatch.',
+            book_now: 'RESERVAR AHORA',
+            scroll: 'Desplaza para explorar',
+            vision_label: 'VISIÓN',
+            vision_h2: 'Estamos Cambiando Cómo Se Mueve Park City',
+            vision_p: 'Sin shuttles compartidos. Sin precios dinámicos. Sin filas de taxi. Solo un SUV de lujo privado y un conductor profesional.',
+            book_ride: 'Reserva Tu Viaje',
+            svc_label: 'SERVICIOS',
+            svc_h2: 'Servicios de Transporte Excepcionales',
+            why_label: 'POR QUÉ RIO',
+            why_h2: 'Un enfoque diferente al transporte en Park City.',
+            why_p: 'Mientras otros te meten en vans compartidas, nosotros ofrecemos una experiencia privada puerta a puerta en un SUV premium.',
+            view_rates: 'Ver Tarifas',
+            num_label: 'RIO EN NÚMEROS',
+            num_h2: 'Rio Transportation En Números',
+            contact_label: 'CONTACTO',
+            contact_h2: 'Contáctanos',
+        }
+    };
+    // Detect browser language
+    const browserLang = (navigator.language || navigator.userLanguage || 'en').substring(0,2).toLowerCase();
+    const lang = T[browserLang] ? browserLang : 'en';
+    if (lang === 'en') return; // default is already English
+    const t = T[lang];
+    // Apply translations to data-i18n elements
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.dataset.i18n;
+        if (t[key]) el.innerHTML = t[key];
+    });
+})();
 
 // Dark/Light toggle
 (function(){
