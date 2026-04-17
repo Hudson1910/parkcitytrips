@@ -47,7 +47,7 @@ def _send_quick_email(booking):
 
     # 1. Email to Hudson (admin notification)
     resp = req.post('https://api.resend.com/emails', json={
-        'from': 'Rio Transportation <onboarding@resend.dev>',
+        'from': 'Rio Transportation <booking@parkcitytrips.com>',
         'to': [config.NOTIFY_EMAIL],
         'subject': f"🚗 Trip #{bid} — {c['name']} — {v} — ${booking['total']}",
         'html': html,
@@ -82,7 +82,7 @@ def _send_quick_email(booking):
 <div style="padding:12px 28px;border-top:1px solid #1e2130;font-size:10px;color:#444;text-align:center;">Rio Transportation LLC · Park City, Utah · parkcitytrips.com</div>
 </div>"""
         resp2 = req.post('https://api.resend.com/emails', json={
-            'from': 'Rio Transportation <onboarding@resend.dev>',
+            'from': 'Rio Transportation <booking@parkcitytrips.com>',
             'to': [c['email']],
             'subject': f"Your Trip Request #{bid} — Rio Transportation",
             'html': customer_html,
