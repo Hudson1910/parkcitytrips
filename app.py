@@ -45,13 +45,49 @@ def _send_quick_email(booking):
 <div style="text-align:center;"><a href="https://web-production-d69bf.up.railway.app/admin/bookings?pin=6939" style="display:inline-block;padding:12px 24px;background:#c9a84c;color:#000;border-radius:50px;text-decoration:none;font-weight:700;font-size:13px;">Review & Approve</a></div>
 </div></div>"""
 
+    # 1. Email to Hudson (admin notification)
     resp = req.post('https://api.resend.com/emails', json={
         'from': 'Rio Transportation <onboarding@resend.dev>',
         'to': [config.NOTIFY_EMAIL],
         'subject': f"🚗 Trip #{bid} — {c['name']} — {v} — ${booking['total']}",
         'html': html,
     }, headers={'Authorization': f'Bearer {config.RESEND_API_KEY}'}, timeout=10)
-    print(f"[Email] Resend response: {resp.status_code} — {resp.text[:200]}")
+    print(f"[Email] Admin notification: {resp.status_code} — {resp.text[:200]}")
+
+    # 2. Email to customer (confirmation)
+    if c.get('email'):
+        customer_html = f"""<div style="font-family:Arial,sans-serif;max-width:550px;margin:0 auto;background:#0a0c10;border-radius:12px;overflow:hidden;">
+<div style="background:linear-gradient(135deg,#c9a84c,#e8c65a);padding:20px 28px;text-align:center;">
+<h1 style="margin:0;color:#000;font-size:20px;">Trip Request Received!</h1>
+<p style="margin:4px 0 0;color:rgba(0,0,0,.6);font-size:12px;">Rio Transportation LLC</p></div>
+<div style="padding:24px 28px;color:#fff;">
+<p style="font-size:15px;margin-bottom:16px;">Hi {c['name'].split()[0]},</p>
+<p style="font-size:14px;color:#999;line-height:1.7;margin-bottom:20px;">Thank you for your trip request! This is <strong style="color:#fff;">not a confirmed booking yet</strong> — our team will review and contact you within <strong style="color:#c9a84c;">30 minutes</strong> to confirm your ride.</p>
+<div style="background:#111318;border:1px solid #1e2130;border-radius:10px;padding:16px;margin-bottom:16px;">
+<div style="font-size:11px;color:#c9a84c;letter-spacing:2px;margin-bottom:8px;">ORDER #{bid}</div>
+<table style="width:100%;font-size:13px;color:#fff;border-collapse:collapse;">
+<tr><td style="padding:5px 0;color:#666;">Vehicle</td><td style="padding:5px 0;text-align:right;font-weight:700;">{v}</td></tr>
+<tr><td style="padding:5px 0;color:#666;">Date</td><td style="padding:5px 0;text-align:right;">{t.get('date','—')}</td></tr>
+<tr><td style="padding:5px 0;color:#666;">Pickup</td><td style="padding:5px 0;text-align:right;color:#22c55e;">{t.get('pickup','—')}</td></tr>
+<tr><td style="padding:5px 0;color:#666;">Dropoff</td><td style="padding:5px 0;text-align:right;color:#ef4444;">{t.get('dropoff','—')}</td></tr>
+<tr><td colspan="2" style="border-bottom:1px solid #1e2130;padding:6px 0;"></td></tr>
+<tr><td style="padding:5px 0;color:#666;">Estimated Total</td><td style="padding:5px 0;text-align:right;font-size:18px;font-weight:800;color:#c9a84c;">${booking['total']}</td></tr>
+</table></div>
+<div style="background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.15);border-radius:8px;padding:12px;font-size:12px;color:rgba(255,255,255,.6);margin-bottom:16px;">
+<strong>💳 Your card will NOT be charged</strong> until we confirm your ride.</div>
+<p style="font-size:13px;color:#666;margin-bottom:16px;">Questions? Call or text us anytime:</p>
+<div style="text-align:center;margin-bottom:8px;"><a href="tel:+14352146939" style="color:#c9a84c;text-decoration:none;font-weight:700;font-size:15px;">📞 (435) 214-6939</a></div>
+<div style="text-align:center;"><a href="https://wa.me/14352146939" style="color:#25d366;text-decoration:none;font-weight:600;font-size:13px;">💬 WhatsApp</a></div>
+</div>
+<div style="padding:12px 28px;border-top:1px solid #1e2130;font-size:10px;color:#444;text-align:center;">Rio Transportation LLC · Park City, Utah · parkcitytrips.com</div>
+</div>"""
+        resp2 = req.post('https://api.resend.com/emails', json={
+            'from': 'Rio Transportation <onboarding@resend.dev>',
+            'to': [c['email']],
+            'subject': f"Your Trip Request #{bid} — Rio Transportation",
+            'html': customer_html,
+        }, headers={'Authorization': f'Bearer {config.RESEND_API_KEY}'}, timeout=10)
+        print(f"[Email] Customer confirmation to {c['email']}: {resp2.status_code}")
 
 
 def send_booking_email(booking):
