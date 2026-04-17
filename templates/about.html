@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>About Us — Rio Transportation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-height:100vh;}
+
+/* Nav */
+.a-nav{padding:20px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06);}
+.a-nav a{color:#fff;text-decoration:none;}
+.a-nav .logo{font-family:'Onest',sans-serif;font-weight:800;font-size:16px;letter-spacing:.1em;}
+.a-nav .back{font-size:14px;color:#666;display:flex;align-items:center;gap:6px;}
+.a-nav .back:hover{color:#fff;}
+
+/* Hero */
+.about-hero{position:relative;min-height:50vh;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.about-hero-bg{position:absolute;inset:0;background:url('https://static.wixstatic.com/media/55a398_44b22dc0a21645a9a92edf4210bb92d9~mv2.png') center/cover;opacity:.2;}
+.about-hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,10,15,.4),rgba(8,10,15,1));}
+.about-hero-text{position:relative;z-index:2;text-align:center;padding:80px 20px 40px;}
+.about-hero-text .label{font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:#c9a84c;margin-bottom:16px;}
+.about-hero-text h1{font-family:'Playfair Display',serif;font-size:clamp(36px,7vw,64px);font-weight:700;font-style:italic;letter-spacing:-.02em;line-height:1.1;margin-bottom:16px;}
+.about-hero-text h1 span{color:#c9a84c;font-style:normal;}
+
+/* Content */
+.about-content{max-width:760px;margin:0 auto;padding:60px 24px 100px;}
+.about-content p{font-family:'Playfair Display',serif;font-size:clamp(17px,2vw,20px);line-height:1.85;color:rgba(255,255,255,.65);margin-bottom:28px;font-weight:400;}
+.about-content p:first-of-type::first-letter{font-size:3.5em;float:left;line-height:.8;margin-right:10px;margin-top:6px;color:#c9a84c;font-weight:700;}
+.about-content .highlight{color:#fff;font-weight:600;}
+.about-divider{width:60px;height:1px;background:#c9a84c;opacity:.3;margin:40px auto;}
+
+/* Stats */
+.about-stats{display:flex;gap:48px;justify-content:center;padding:48px 0;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);margin:40px 0;}
+.about-stat{text-align:center;}
+.about-stat .num{font-family:'Onest',sans-serif;font-size:36px;font-weight:800;color:#fff;}
+.about-stat .lbl{font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-top:6px;}
+
+/* CTA */
+.about-cta{text-align:center;padding:40px 0;}
+.about-cta a{display:inline-flex;align-items:center;gap:8px;padding:16px 32px;background:#c9a84c;color:#000;font-family:'Onest',sans-serif;font-size:15px;font-weight:700;border-radius:50px;text-decoration:none;transition:all .2s;}
+.about-cta a:hover{background:#e8c65a;transform:translateY(-2px);}
+
+/* Footer */
+.about-footer{padding:24px 40px;border-top:1px solid rgba(255,255,255,.06);text-align:center;font-size:12px;color:rgba(255,255,255,.2);}
+
+@media(max-width:640px){.about-stats{flex-direction:column;gap:24px;}.a-nav{padding:16px 20px;}}
+    </style>
+</head>
+<body>
+<nav class="a-nav">
+    <a href="/" class="logo">RIO TRANSPORTATION</a>
+    <a href="/" class="back"><i class="bi bi-arrow-left"></i> Back</a>
+</nav>
+
+<div class="about-hero">
+    <div class="about-hero-bg"></div>
+    <div class="about-hero-overlay"></div>
+    <div class="about-hero-text">
+        <div class="label">ABOUT US</div>
+        <h1>The <span>Story</span> Behind<br>Every Ride</h1>
+    </div>
+</div>
+
+<div class="about-content">
+    <p><span class="highlight">Park City, Utah</span> is a popular destination for those seeking a luxurious vacation experience. One of the best ways to enhance that experience is by using luxury transportation services while in the area.</p>
+
+    <p>At <span class="highlight">Rio Transportation</span>, we offer a range of luxury transportation options to help you get around Park City in style and comfort. Our fleet of vehicles includes high-end SUVs and vans that are perfect for individuals, couples, and groups of all sizes.</p>
+
+    <div class="about-divider"></div>
+
+    <p>Whether you're traveling to Park City for business or pleasure, we can provide the transportation you need to make your trip a success. Our <span class="highlight">professional drivers</span> are knowledgeable about the area and can provide personalized service to ensure that you arrive at your destination safely and on time.</p>
+
+    <p>In addition to providing transportation to and from the airport, we also offer a variety of other services — including <span class="highlight">hourly charter</span> for local Park City rides, ski resort shuttles, and special event transportation for weddings and corporate groups.</p>
+
+    <div class="about-divider"></div>
+
+    <p>At Rio Transportation, we pride ourselves on offering the <span class="highlight">highest level of customer service</span>. We are dedicated to making your travel experience in Park City as seamless and enjoyable as possible. Contact us today to learn more about our transportation options and to book your next trip.</p>
+
+    <div class="about-stats">
+        <div class="about-stat"><div class="num">9,000+</div><div class="lbl">Rides</div></div>
+        <div class="about-stat"><div class="num">4.8</div><div class="lbl">Google Rating</div></div>
+        <div class="about-stat"><div class="num">6+</div><div class="lbl">Years</div></div>
+        <div class="about-stat"><div class="num">24/7</div><div class="lbl">Available</div></div>
+    </div>
+
+    <div class="about-cta">
+        <a href="/book"><i class="bi bi-calendar-check"></i> Book Your Ride</a>
+    </div>
+</div>
+
+<footer class="about-footer">© 2026 Rio Transportation LLC — Park City, Utah</footer>
+</body>
+</html>
