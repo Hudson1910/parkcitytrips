@@ -225,9 +225,13 @@
         .rev-header .rating-count{font-size:13px;color:var(--t3);}
         .rev-header .google-badge{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-size:18px;font-weight:700;}
         .rev-header .google-badge span{color:var(--t2);}
-        .rev-carousel{position:relative;overflow:hidden;padding:0 40px;}
-        .rev-track{display:flex;gap:16px;transition:transform .5s cubic-bezier(.16,1,.3,1);overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:10px 0;}
-        .rev-track::-webkit-scrollbar{display:none;}
+        .rev-carousel{position:relative;overflow:hidden;padding:0;}
+        .rev-track{display:flex;gap:16px;padding:10px 0;width:max-content;animation:revScroll 40s linear infinite;}
+        .rev-track:hover, .rev-track.paused{animation-play-state:paused;}
+        @keyframes revScroll{
+            0%{transform:translateX(0);}
+            100%{transform:translateX(-50%);}
+        }
         .rev{background:var(--bg3);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:22px;min-width:320px;max-width:380px;flex-shrink:0;scroll-snap-align:start;transition:all .3s;}
         .rev:hover{border-color:rgba(201,168,76,.15);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.3);}
         .rev-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
@@ -240,11 +244,8 @@
         .rev-stars i{color:var(--gold);font-size:14px;}
         .rev-verified{width:14px;height:14px;color:#4285f4;}
         .rev-text{font-size:13px;color:var(--t2);line-height:1.6;}
-        .rev-nav{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.15);color:var(--gold);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;z-index:2;}
-        .rev-nav:hover{background:var(--gold);color:#0a0e17;}
-        .rev-nav.prev{left:0;}
-        .rev-nav.next{right:0;}
-        @media(max-width:640px){.rev{min-width:280px;}.rev-carousel{padding:0 10px;}.rev-nav{display:none;}}
+        .rev-nav{display:none;}
+        @media(max-width:640px){.rev{min-width:280px;}}
 
         /* ABOUT */
         .about-box{display:flex;gap:40px;align-items:center;background:var(--bg2);border:1px solid var(--border);border-radius:24px;padding:40px;overflow:hidden;}
@@ -845,45 +846,19 @@ document.querySelectorAll('.svc-grid .svc').forEach((c,i)=>c.style.transitionDel
 document.querySelectorAll('.fleet-grid .fleet-card').forEach((c,i)=>c.style.transitionDelay=i*.12+'s');
 document.querySelectorAll('.rev-grid .rev').forEach((c,i)=>c.style.transitionDelay=i*.1+'s');
 
-// REVIEW CAROUSEL — auto-scrolling infinite loop
+// REVIEW CAROUSEL — continuous smooth movement (CSS animation powered)
 (function(){
     const track=document.getElementById('revTrack');
     if(!track)return;
     const cards=track.querySelectorAll('.rev');
     if(!cards.length)return;
-    // Clone all cards to create seamless infinite loop
+    // Clone all cards for seamless infinite loop — CSS translateX(-50%) resets invisibly
     cards.forEach(c=>{ track.appendChild(c.cloneNode(true)); });
-    let autoScrollId=null;
-    let isPaused=false;
-    function startAutoScroll(){
-        if(autoScrollId)return;
-        autoScrollId=setInterval(()=>{
-            if(isPaused)return;
-            const card=track.querySelector('.rev');
-            const w=card?card.offsetWidth+16:350;
-            track.scrollBy({left:w,behavior:'smooth'});
-            // Reset to start when we've scrolled past all originals (seamless loop)
-            setTimeout(()=>{
-                if(track.scrollLeft>=track.scrollWidth/2){
-                    track.style.scrollBehavior='auto';
-                    track.scrollLeft=0;
-                    track.style.scrollBehavior='smooth';
-                }
-            },600);
-        },5000);
-    }
-    // Pause on hover/touch
-    track.addEventListener('mouseenter',()=>{isPaused=true;});
-    track.addEventListener('mouseleave',()=>{isPaused=false;});
-    track.addEventListener('touchstart',()=>{isPaused=true;},{passive:true});
-    track.addEventListener('touchend',()=>{setTimeout(()=>{isPaused=false;},2000);},{passive:true});
-    startAutoScroll();
-    // Manual buttons still work
-    window.scrollRevs=function(dir){
-        const card=track.querySelector('.rev');
-        const w=card?card.offsetWidth+16:350;
-        track.scrollBy({left:dir*w,behavior:'smooth'});
-    };
+    // Pause on touch (mobile) — add/remove .paused class
+    track.addEventListener('touchstart',()=>{track.classList.add('paused');},{passive:true});
+    track.addEventListener('touchend',()=>{setTimeout(()=>{track.classList.remove('paused');},2000);},{passive:true});
+    // Manual buttons
+    window.scrollRevs=function(){};
 })();
 
 // CONTACT FORM
