@@ -70,14 +70,17 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);-webkit-f
 .hero-text{position:relative;z-index:2;text-align:center;max-width:800px;}
 .hero-text h1{font-family:var(--font-display);font-size:clamp(3rem,8vw,5.5rem);font-weight:800;color:#fff;letter-spacing:-.02em;line-height:.95;margin-bottom:20px;animation:fadeUp 1.2s .3s both;}
 .hero-text p{font-family:var(--font-body);font-size:clamp(14px,1.4vw,18px);color:rgba(255,255,255,.5);max-width:500px;margin:0 auto;line-height:1.7;animation:fadeUp 1.2s .6s both;}
-.hero-vehicle{position:relative;z-index:2;margin-top:40px;width:min(750px,90vw);animation:carEnter 2.2s cubic-bezier(0.16,1,0.3,1) 0.5s both;}
-.hero-vehicle img{width:100%;height:auto;filter:drop-shadow(0 20px 80px rgba(0,0,0,.6)) drop-shadow(0 0 40px rgba(201,168,76,.08));}
-.hero-vehicle::after{content:'';position:absolute;bottom:-20px;left:10%;right:10%;height:60px;background:radial-gradient(ellipse,rgba(201,168,76,.08),transparent 70%);filter:blur(20px);}
+.hero-vehicle{position:relative;z-index:2;margin-top:40px;width:min(800px,95vw);animation:carEnter 2.5s cubic-bezier(0.22,1,0.36,1) 0.6s both;overflow:visible;}
+.hero-vehicle img{width:100%;height:auto;filter:invert(1) brightness(0.45) contrast(1.3) sepia(0.05);mix-blend-mode:screen;}
+/* Headlight glow arrives before the car */
+.hero-vehicle::before{content:'';position:absolute;top:35%;right:-5%;width:200px;height:80px;background:radial-gradient(ellipse,rgba(255,255,255,.12),transparent 70%);filter:blur(30px);animation:glowPulse 3s ease-in-out 2.5s infinite;}
+.hero-vehicle::after{content:'';position:absolute;bottom:-30px;left:5%;right:5%;height:80px;background:radial-gradient(ellipse,rgba(255,255,255,.06),transparent 70%);filter:blur(25px);}
 @keyframes carEnter{
-    0%{transform:translateX(120px) scale(0.92);opacity:0;filter:blur(6px);}
-    50%{filter:blur(0);opacity:1;}
-    100%{transform:translateX(0) scale(1);opacity:1;filter:blur(0);}
+    0%{transform:translateX(calc(100vw)) scale(0.95);opacity:0;}
+    15%{opacity:1;}
+    100%{transform:translateX(0) scale(1);opacity:1;}
 }
+@keyframes glowPulse{0%,100%{opacity:.5;}50%{opacity:1;}}
 .hero-scroll{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);z-index:3;animation:fadeUp 1s 1.5s both;}
 .hero-scroll span{font-family:var(--font-label);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);display:flex;flex-direction:column;align-items:center;gap:6px;}
 .hero-scroll i{animation:float 2s infinite;font-size:16px;}
