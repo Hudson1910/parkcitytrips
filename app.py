@@ -302,12 +302,15 @@ def book_save_card():
             save_bookings(bookings)
 
             print(f"[Square] Card saved for booking {booking_id}: {brand} ****{last4}")
-            # Send simple email notification (inline, with timeout)
+            # Send email — save booking first so it persists even if email fails
+            save_bookings(bookings)
             try:
                 _send_quick_email(booking)
                 print(f"[Email] Sent OK for #{booking_id}")
             except Exception as email_err:
                 print(f"[Email] FAILED: {email_err}")
+                import traceback
+                traceback.print_exc()
             return jsonify({'success': True, 'booking_id': booking_id})
         else:
             errors = card_data.get('errors', [{}])
