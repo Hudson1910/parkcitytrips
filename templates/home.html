@@ -85,8 +85,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Bebas+Neue&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
     <style>
         :root{--bg:#0a0e17;--bg2:#0f1420;--bg3:#151c2e;--bg4:#1c2540;
+        --bg-light:#ffffff;--bg-light2:#f8f8f6;
         --gold:#c9a84c;--gold2:#e8c65a;--accent:#c9a84c;
         --w:#fff;--t1:#e2e8f0;--t2:#94a3b8;--t3:#64748b;--t4:#475569;--t5:#334155;
+        --black:#000000;--dark-text:#1a1a1a;--mid-gray:#595959;--light-border:#e6e6e6;
         --border:rgba(201,168,76,.08);}
         *{margin:0;padding:0;box-sizing:border-box;}
         html{scroll-behavior:smooth;}
@@ -120,19 +122,19 @@
         .shine::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(201,168,76,.06),transparent);transition:none;}
         .shine:hover::after{left:150%;transition:left .8s ease;}
 
-        /* NAV */
-        nav{position:fixed;top:0;left:0;right:0;z-index:200;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;transition:all .3s;}
-        nav.scrolled{background:rgba(10,14,23,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+        /* NAV — AUTONO minimal style */
+        nav{position:fixed;top:0;left:0;right:0;z-index:200;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;transition:all .4s;}
+        nav.scrolled{background:rgba(10,14,23,.97);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid rgba(255,255,255,.06);}
         .logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
         .logo-icon{width:42px;height:42px;border-radius:10px;}
         .logo-icon img{width:100%;height:100%;border-radius:10px;}
-        .logo span{font-family:Outfit;font-weight:800;font-size:22px;color:var(--w);letter-spacing:-0.5px;}
+        .logo span{font-family:Outfit;font-weight:800;font-size:20px;color:var(--w);letter-spacing:0.02em;}
         .logo .gold{color:var(--gold);}
-        .nav-links{display:flex;align-items:center;gap:28px;}
-        .nav-links a{color:var(--t2);text-decoration:none;font-size:13px;font-weight:600;transition:color .2s;letter-spacing:.3px;}
-        .nav-links a:hover{color:var(--gold);}
-        .nav-cta{padding:10px 24px;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0e17;font-size:13px;font-weight:800;text-decoration:none;transition:all .2s;font-family:Inter;animation:pulse-gold 2.5s infinite;}
-        .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(201,168,76,.35);}
+        .nav-links{display:flex;align-items:center;gap:32px;}
+        .nav-links a{color:rgba(255,255,255,.6);text-decoration:none;font-size:13px;font-weight:500;transition:color .2s;letter-spacing:.02em;}
+        .nav-links a:hover{color:#fff;}
+        .nav-cta{padding:10px 24px;border-radius:50px;background:#fff;color:#000;font-size:13px;font-weight:700;text-decoration:none;transition:all .2s;font-family:Inter;}
+        .nav-cta:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(255,255,255,.2);}
         @media(max-width:900px){.nav-links{display:none;}nav{padding:0 20px;}}
 
         /* HERO */
@@ -148,34 +150,42 @@
         .hero h1 b{background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
         .hero p{font-size:18px;color:var(--t3);line-height:1.6;max-width:560px;margin:0 auto 36px;}
         .hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
-        .btn-gold{padding:14px 32px;border-radius:12px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0e17;font-size:15px;font-weight:800;text-decoration:none;transition:all .2s;font-family:Inter;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;}
-        .btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(201,168,76,.3);}
-        .btn-outline{padding:14px 32px;border-radius:12px;background:transparent;border:1.5px solid rgba(201,168,76,.3);color:var(--gold);font-size:15px;font-weight:700;text-decoration:none;transition:all .2s;font-family:Inter;display:inline-flex;align-items:center;gap:8px;}
-        .btn-outline:hover{border-color:var(--gold);background:rgba(201,168,76,.05);}
-        .hero-stats{display:flex;gap:40px;justify-content:center;margin-top:48px;}
+        .btn-gold{padding:15px 32px;border-radius:50px;background:#fff;color:#000;font-size:15px;font-weight:700;text-decoration:none;transition:all .3s;font-family:Inter;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;}
+        .btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(255,255,255,.2);}
+        .btn-outline{padding:15px 32px;border-radius:50px;background:transparent;border:1.5px solid rgba(255,255,255,.25);color:#fff;font-size:15px;font-weight:600;text-decoration:none;transition:all .3s;font-family:Inter;display:inline-flex;align-items:center;gap:8px;}
+        .btn-outline:hover{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.05);}
+        .hero-stats{display:flex;gap:48px;justify-content:center;margin-top:56px;padding:32px 0;border-top:1px solid rgba(255,255,255,.08);}
         .hero-stat{text-align:center;}
-        .hero-stat .num{font-family:Outfit;font-size:32px;font-weight:900;color:var(--gold);text-shadow:0 0 30px rgba(201,168,76,.2);}
-        .hero-stat .label{font-size:12px;color:var(--t3);margin-top:2px;text-transform:uppercase;letter-spacing:.5px;}
-        @media(max-width:640px){.hero h1{font-size:36px;letter-spacing:-1.5px;}.hero p{font-size:15px;}.hero-stats{gap:24px;}.hero-stat .num{font-size:24px;}}
+        .hero-stat .num{font-family:Outfit;font-size:36px;font-weight:900;color:var(--w);}
+        .hero-stat .label{font-size:11px;color:var(--t3);margin-top:4px;text-transform:uppercase;letter-spacing:.2em;font-weight:500;}
+        @media(max-width:640px){.hero h1{font-size:36px;letter-spacing:-1.5px;}.hero p{font-size:15px;}.hero-stats{gap:24px;flex-wrap:wrap;}.hero-stat .num{font-size:26px;}}
 
-        /* SECTION */
-        .section{padding:100px 20px;max-width:1100px;margin:0 auto;}
-        .sec-head{text-align:center;margin-bottom:56px;}
-        .sec-tag{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:50px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;background:rgba(201,168,76,.08);color:var(--gold);border:1px solid rgba(201,168,76,.12);}
-        .sec-head h2{font-size:38px;font-weight:800;color:var(--w);letter-spacing:-1px;margin-bottom:10px;}
-        .sec-head p{font-size:15px;color:var(--t3);max-width:500px;margin:0 auto;}
-        @media(max-width:640px){.sec-head h2{font-size:28px;}.section{padding:60px 14px;}}
+        /* SECTION — AUTONO style: generous whitespace, editorial typography */
+        .section{padding:120px 20px;max-width:1100px;margin:0 auto;}
+        .section-wrap{padding:120px 0;}
+        .section-wrap.light{background:var(--bg-light);}
+        .section-wrap.light .sec-head h2{color:var(--black);}
+        .section-wrap.light .sec-head p{color:var(--mid-gray);}
+        .section-wrap.light .sec-tag{color:var(--black);background:transparent;border:none;padding:0;}
+        .sec-head{text-align:center;margin-bottom:64px;}
+        .sec-tag{display:block;font-size:11px;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;margin-bottom:18px;color:var(--gold);background:transparent;border:none;padding:0;}
+        .sec-head h2{font-family:Outfit,sans-serif;font-size:clamp(32px,5vw,48px);font-weight:800;color:var(--w);letter-spacing:-1px;margin-bottom:14px;line-height:1.15;}
+        .sec-head p{font-size:16px;color:var(--t3);max-width:520px;margin:0 auto;line-height:1.7;}
+        @media(max-width:640px){.sec-head h2{font-size:28px;}.section{padding:80px 14px;}.section-wrap{padding:80px 0;}}
 
-        /* SERVICES */
-        .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-        .svc{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:32px 26px;text-align:center;transition:all .4s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden;}
-        .svc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity .3s;}
-        .svc:hover{transform:translateY(-6px);border-color:rgba(201,168,76,.25);box-shadow:0 16px 48px rgba(0,0,0,.4),0 0 40px rgba(201,168,76,.05);}
-        .svc:hover::before{opacity:1;}
-        .svc-icon{width:56px;height:56px;border-radius:14px;background:rgba(201,168,76,.08);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:24px;color:var(--gold);transition:all .3s;}
-        .svc:hover .svc-icon{transform:scale(1.1);background:rgba(201,168,76,.15);box-shadow:0 0 24px rgba(201,168,76,.15);}
-        .svc h3{font-size:17px;font-weight:700;color:var(--w);margin-bottom:8px;}
-        .svc p{font-size:13px;color:var(--t3);line-height:1.5;}
+        /* SERVICES — clean AUTONO-style cards */
+        .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+        .svc{background:var(--bg2);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:36px 28px;text-align:left;transition:all .4s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden;}
+        .svc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .4s;transform-origin:left;}
+        .svc:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.12);box-shadow:0 20px 60px rgba(0,0,0,.3);}
+        .svc:hover::before{transform:scaleX(1);}
+        .svc-icon{width:48px;height:48px;border-radius:12px;background:rgba(201,168,76,.08);display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:22px;color:var(--gold);transition:all .3s;}
+        .svc:hover .svc-icon{background:rgba(201,168,76,.15);}
+        .svc h3{font-size:18px;font-weight:700;color:var(--w);margin-bottom:10px;letter-spacing:-0.3px;}
+        .svc p{font-size:14px;color:var(--t3);line-height:1.65;}
+        .section-wrap.light .svc{background:var(--bg-light2);border-color:var(--light-border);}
+        .section-wrap.light .svc h3{color:var(--black);}
+        .section-wrap.light .svc p{color:var(--mid-gray);}
         @media(max-width:900px){.svc-grid{grid-template-columns:1fr;}}
 
         /* FLEET */
@@ -490,9 +500,10 @@
 </section>
 
 <!-- SERVICES -->
+<div class="section-wrap light">
 <section class="section ani" id="services">
     <div class="sec-head">
-        <div class="sec-tag"><i class="bi bi-stars"></i> Our Services</div>
+        <div class="sec-tag">SERVICES</div>
         <h2>More Than Just a Ride</h2>
         <p>From airport transfers to special events, we cover all your transportation needs in Park City</p>
     </div>
@@ -529,11 +540,12 @@
         </div>
     </div>
 </section>
+</div>
 
-<!-- FLEET -->
+<!-- FLEET (dark) -->
 <section class="section ani" id="fleet">
     <div class="sec-head">
-        <div class="sec-tag"><i class="bi bi-car-front-fill"></i> Our Fleet</div>
+        <div class="sec-tag">FLEET</div>
         <h2>Travel in Style & Comfort</h2>
         <p>Luxury vehicles maintained to the highest standards</p>
     </div>
@@ -568,10 +580,11 @@
     </div>
 </section>
 
-<!-- WHY CHOOSE US — Competitive Advantages -->
+<!-- WHY CHOOSE US (light) -->
+<div class="section-wrap light">
 <section class="section ani" id="why">
     <div class="sec-head">
-        <div class="sec-tag"><i class="bi bi-trophy-fill"></i> Why Choose Rio</div>
+        <div class="sec-tag">WHY RIO</div>
         <h2>Best Value in Park City</h2>
         <p>See how we compare to other transportation services</p>
     </div>
@@ -635,11 +648,12 @@
         </div>
     </div>
 </section>
+</div>
 
-<!-- PRICING -->
+<!-- PRICING (dark) -->
 <section class="section ani" id="rates">
     <div class="sec-head">
-        <div class="sec-tag"><i class="bi bi-tag-fill"></i> Transparent Pricing</div>
+        <div class="sec-tag">RATES</div>
         <h2>Our Rates</h2>
         <p>All-inclusive pricing — driver, taxes, fees, and bottled water included</p>
     </div>
@@ -795,7 +809,7 @@
 <!-- REVIEWS -->
 <section class="section ani" id="reviews">
     <div class="sec-head">
-        <div class="sec-tag"><i class="bi bi-chat-quote-fill"></i> Client Reviews</div>
+        <div class="sec-tag">REVIEWS</div>
         <h2>Why Our Guests Choose Rio</h2>
     </div>
     <div class="rev-header">
@@ -875,7 +889,7 @@
 <!-- ABOUT -->
 <section class="section ani" id="about">
     <div class="sec-head">
-        <div class="sec-tag"><i class="bi bi-building"></i> About Us</div>
+        <div class="sec-tag">ABOUT</div>
         <h2>Why Rio Transportation</h2>
     </div>
     <div class="about-box">
@@ -911,7 +925,7 @@
 <!-- CONTACT -->
 <section class="section ani" id="contact">
     <div class="sec-head">
-        <div class="sec-tag"><i class="bi bi-envelope-fill"></i> Get in Touch</div>
+        <div class="sec-tag">CONTACT</div>
         <h2>Contact Us</h2>
     </div>
     <div class="contact-grid">
