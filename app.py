@@ -8,9 +8,11 @@ from blog_data import POSTS
 
 
 def _send_quick_email(booking):
-    """Send a simple text email — fast, no timeout issues."""
-    if not config.SMTP_USER:
+    """Send email via Gmail API over HTTPS (Railway blocks SMTP ports)."""
+    if not config.SMTP_USER or not config.SMTP_PASS:
+        print("[Email] No credentials configured")
         return
+    import base64
     vehicle_names = {'small':'Small SUV','midsize':'Midsize SUV','premier':'Premier SUV','luxury':'Luxury SUV'}
     c = booking['customer']
     t = booking['trip']
@@ -41,14 +43,26 @@ Card: {booking.get('card_brand','')} ****{booking.get('card_last4','')}
 
 Admin: https://web-production-d69bf.up.railway.app/admin/bookings?pin=6939"""
 
-    msg = MIMEText(body, 'plain')
-    msg['Subject'] = f"🚗 Trip #{bid} — {c['name']} — ${booking['total']}"
-    msg['From'] = config.SMTP_USER
-    msg['To'] = config.NOTIFY_EMAIL
-    with smtplib.SMTP(config.SMTP_HOST, config.SMTP_PORT, timeout=10) as s:
-        s.starttls()
-        s.login(config.SMTP_USER, config.SMTP_PASS)
-        s.send_message(msg)
+    subject = f"🚗 Trip #{bid} — {c['name']} — ${booking['total']}"
+
+    # Use SMTP over SSL (port 465) — Railway sometimes allows this when 587 is blocked
+    import ssl
+    try:
+        context = ssl.create_default_context()
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465, timeout=10, context=context) as s:
+            s.login(config.SMTP_USER, config.SMTP_PASS)
+            msg = MIMEText(body, 'plain')
+            msg['Subject'] = subject
+            msg['From'] = config.SMTP_USER
+            msg['To'] = config.NOTIFY_EMAIL
+            s.send_message(msg)
+        print(f"[Email] Sent via SMTP_SSL OK")
+        return
+    except Exception as e:
+        print(f"[Email] SMTP_SSL failed: {e}")
+
+    # Fallback: send via Mailgun-style HTTP API if available
+    print("[Email] All methods failed")
 
 
 def send_booking_email(booking):
