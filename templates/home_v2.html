@@ -379,6 +379,41 @@ body.light .hero-scroll span{color:var(--muted);}
     </div>
 </section>
 
+<!-- GALLERY — real fleet photos -->
+<section class="sect sect-dark" style="padding:80px 0;overflow:hidden;">
+    <div style="max-width:1100px;margin:0 auto;padding:0 20px;">
+        <div class="sect-label reveal" style="text-align:center;">OUR FLEET IN ACTION</div>
+        <h2 class="sect-title lg reveal reveal-delay-1" style="text-align:center;margin-bottom:40px;">Real Rides. Real Service.</h2>
+    </div>
+    <div class="gallery-track" id="galleryTrack">
+        <div class="gallery-item"><img src="/static/gallery/rio-10.jpg" alt="Fleet at airport" loading="lazy"></div>
+        <div class="gallery-item"><img src="/static/gallery/rio-9.jpg" alt="Yukon side view" loading="lazy"></div>
+        <div class="gallery-item"><img src="/static/gallery/rio-5.jpg" alt="Lincoln Navigator at FBO" loading="lazy"></div>
+        <div class="gallery-item"><img src="/static/gallery/rio-6.jpg" alt="Hudson with fleet" loading="lazy"></div>
+        <div class="gallery-item"><img src="/static/gallery/rio-7.jpg" alt="GMC and Escalade" loading="lazy"></div>
+        <div class="gallery-item"><img src="/static/gallery/rio-4.jpg" alt="Snow drive to Park City" loading="lazy"></div>
+        <div class="gallery-item"><img src="/static/gallery/rio-8.jpg" alt="Yukon and Tesla" loading="lazy"></div>
+        <div class="gallery-item"><img src="/static/gallery/rio-3.jpg" alt="Fleet in snow" loading="lazy"></div>
+        <div class="gallery-item"><img src="/static/gallery/rio-1.jpg" alt="Highway to Park City" loading="lazy"></div>
+        <div class="gallery-item"><img src="/static/gallery/rio-2.jpg" alt="Yukon winter drive" loading="lazy"></div>
+    </div>
+</section>
+<style>
+.gallery-track{display:flex;gap:12px;width:max-content;animation:galleryScroll 60s linear infinite;padding:10px 0;}
+.gallery-track:hover{animation-play-state:paused;}
+.gallery-item{flex-shrink:0;height:280px;border-radius:12px;overflow:hidden;}
+.gallery-item img{height:100%;width:auto;object-fit:cover;display:block;transition:transform .4s;}
+.gallery-item:hover img{transform:scale(1.05);}
+@keyframes galleryScroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+</style>
+<script>
+// Clone gallery items for infinite loop
+(function(){const t=document.getElementById('galleryTrack');if(!t)return;const items=t.querySelectorAll('.gallery-item');items.forEach(i=>t.appendChild(i.cloneNode(true)));
+t.addEventListener('touchstart',()=>t.style.animationPlayState='paused',{passive:true});
+t.addEventListener('touchend',()=>setTimeout(()=>t.style.animationPlayState='running',2000),{passive:true});
+})();
+</script>
+
 <!-- REVIEWS — dark section, auto-scrolling ticker -->
 <section class="sect-dark rev-section" id="reviews">
     <div class="rev-header">
