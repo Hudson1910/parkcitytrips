@@ -64,6 +64,9 @@ SQUARE_ACCESS_TOKEN = os.getenv('SQUARE_ACCESS_TOKEN', '')
 SQUARE_ENVIRONMENT = os.getenv('SQUARE_ENVIRONMENT', 'sandbox')
 SQUARE_JS_URL = 'https://web.squarecdn.com/v1/square.js' if SQUARE_ENVIRONMENT == 'production' else 'https://sandbox.web.squarecdn.com/v1/square.js'
 
+# Mapbox (address autocomplete)
+MAPBOX_TOKEN = os.getenv('MAPBOX_TOKEN', '')
+
 # Pricing
 VEHICLE_PRICES = {'small': 109, 'midsize': 129, 'premier': 189, 'luxury': 220, 'hourly': 120, 'group': 0}
 PREMIUM_STOP_PRICE = 60

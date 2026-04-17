@@ -51,7 +51,9 @@ h1{font-family:'Onest',sans-serif;font-size:24px;margin-bottom:8px;}
     <div class="row"><span class="k">Passengers</span><span class="v">{{ b.trip.adults }} adults, {{ b.trip.children }} children, {{ b.trip.infants }} infants</span></div>
     <div class="row"><span class="k">Bags</span><span class="v">{{ b.trip.bags }} regular, {{ b.trip.ski_bags }} ski</span></div>
     <div class="row"><span class="k">Car Seats</span><span class="v">{{ b.trip.car_seats }}</span></div>
-    <div class="row"><span class="k">Destination</span><span class="v">{{ b.trip.destination or 'N/A' }}</span></div>
+    {% if b.trip.pickup %}<div class="row"><span class="k">Pickup</span><span class="v" style="color:#22c55e;">{{ b.trip.pickup }}</span></div>{% endif %}
+    {% if b.trip.dropoff %}<div class="row"><span class="k">Dropoff</span><span class="v" style="color:#ef4444;">{{ b.trip.dropoff }}</span></div>{% endif %}
+    <div class="row"><span class="k">Hotel/Address</span><span class="v">{{ b.trip.destination or 'N/A' }}</span></div>
     {% if b.trip.notes %}<div class="row"><span class="k">Notes</span><span class="v">{{ b.trip.notes }}</span></div>{% endif %}
     <div class="row"><span class="k">Phone</span><span class="v"><a href="tel:{{ b.customer.phone }}" style="color:#c9a84c;text-decoration:none;">{{ b.customer.phone }}</a></span></div>
     <div class="row"><span class="k">Email</span><span class="v">{{ b.customer.email or 'N/A' }}</span></div>

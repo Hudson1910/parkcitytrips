@@ -45,6 +45,15 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);mi
 .flight-found .route{font-weight:700;font-size:15px;}
 
 /* Submit */
+/* Address autocomplete dropdown */
+.addr-dropdown{display:none;position:absolute;left:0;right:0;top:100%;z-index:100;background:var(--card);border:1px solid var(--border);border-radius:10px;margin-top:4px;max-height:240px;overflow-y:auto;box-shadow:0 12px 40px rgba(0,0,0,.5);}
+.addr-item{padding:12px 14px;cursor:pointer;font-size:13px;color:#fff;border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:10px;transition:background .15s;}
+.addr-item:hover{background:rgba(201,168,76,.06);}
+.addr-item i{color:var(--accent);flex-shrink:0;}
+.addr-item .addr-main{font-weight:600;}
+.addr-item .addr-sub{font-size:11px;color:var(--muted);margin-top:2px;}
+.field{position:relative;}
+
 .submit-btn{width:100%;padding:18px;background:var(--accent);color:#000;font-family:'Onest',sans-serif;font-size:16px;font-weight:800;border:none;border-radius:12px;cursor:pointer;letter-spacing:.05em;transition:all .2s;margin-top:20px;}
 .submit-btn:hover{background:#e8c65a;transform:translateY(-1px);}
 
@@ -97,7 +106,7 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);mi
         <div class="row" style="margin-bottom:20px;">
             <div class="field">
                 <label>Direction</label>
-                <select name="direction">
+                <select name="direction" id="directionSelect" onchange="updateAddressDefaults()">
                     <option value="airport-to-pc">SLC Airport → Park City</option>
                     <option value="pc-to-airport">Park City → SLC Airport</option>
                     <option value="roundtrip">Round Trip (Both Ways)</option>
@@ -106,6 +115,25 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);mi
             <div class="field">
                 <label>Pickup Date</label>
                 <input type="date" name="date" required>
+            </div>
+        </div>
+        <!-- Pickup & Dropoff -->
+        <div class="row" style="margin-bottom:20px;">
+            <div class="field">
+                <label><i class="bi bi-geo-alt-fill" style="color:#22c55e;"></i> Pickup Location</label>
+                <div style="position:relative;">
+                    <input type="text" name="pickup" id="pickupInput" placeholder="SLC Airport, hotel, address..." autocomplete="off">
+                    <button type="button" onclick="useCurrentLocation('pickupInput')" style="position:absolute;right:4px;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--muted);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;" title="Use current location"><i class="bi bi-crosshair"></i></button>
+                </div>
+                <div class="addr-dropdown" id="pickupDropdown"></div>
+            </div>
+            <div class="field">
+                <label><i class="bi bi-geo-alt-fill" style="color:#ef4444;"></i> Dropoff Location</label>
+                <div style="position:relative;">
+                    <input type="text" name="dropoff" id="dropoffInput" placeholder="Hotel, home address, resort..." autocomplete="off">
+                    <button type="button" onclick="useCurrentLocation('dropoffInput')" style="position:absolute;right:4px;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--muted);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;" title="Use current location"><i class="bi bi-crosshair"></i></button>
+                </div>
+                <div class="addr-dropdown" id="dropoffDropdown"></div>
             </div>
         </div>
 
@@ -356,6 +384,123 @@ function showFlightResult(d) {
 document.getElementById('flightInput').addEventListener('keydown', function(e){
     if(e.key==='Enter'){e.preventDefault();searchFlight();}
 });
+
+// === ADDRESS AUTOCOMPLETE (Mapbox) ===
+const MAPBOX_TOKEN = '{{ config.MAPBOX_TOKEN }}';
+const QUICK_PICKS = [
+    {name: 'Salt Lake City International Airport (SLC)', address: 'SLC Airport, 776 N Terminal Dr, Salt Lake City, UT 84122', icon: 'bi-airplane-fill'},
+    {name: 'Park City Mountain Resort', address: '1345 Lowell Ave, Park City, UT 84060', icon: 'bi-snow2'},
+    {name: 'Deer Valley Resort', address: '2250 Deer Valley Dr, Park City, UT 84060', icon: 'bi-snow2'},
+    {name: 'Montage Deer Valley', address: '9100 Marsac Ave, Park City, UT 84060', icon: 'bi-building'},
+    {name: 'St. Regis Deer Valley', address: '2300 Deer Valley Dr E, Park City, UT 84060', icon: 'bi-building'},
+    {name: 'Park Hyatt Park City', address: '2001 Park Ave, Park City, UT 84060', icon: 'bi-building'},
+    {name: 'Waldorf Astoria Park City', address: '2100 Frostwood Blvd, Park City, UT 84098', icon: 'bi-building'},
+    {name: 'Pendry Park City', address: '2417 W High Mountain Rd, Park City, UT 84098', icon: 'bi-building'},
+];
+
+let searchTimer;
+function setupAutocomplete(inputId, dropdownId) {
+    const input = document.getElementById(inputId);
+    const dropdown = document.getElementById(dropdownId);
+    if(!input || !dropdown) return;
+
+    input.addEventListener('focus', () => {
+        if(!input.value) showQuickPicks(dropdown, inputId);
+    });
+
+    input.addEventListener('input', () => {
+        clearTimeout(searchTimer);
+        const q = input.value.trim();
+        if(q.length < 2) { showQuickPicks(dropdown, inputId); return; }
+        searchTimer = setTimeout(() => searchAddress(q, dropdown, inputId), 300);
+    });
+
+    document.addEventListener('click', (e) => {
+        if(!input.contains(e.target) && !dropdown.contains(e.target)) dropdown.style.display = 'none';
+    });
+}
+
+function showQuickPicks(dropdown, inputId) {
+    dropdown.innerHTML = QUICK_PICKS.map(p =>
+        `<div class="addr-item" onclick="pickAddress('${inputId}','${p.address}',this)">
+            <i class="bi ${p.icon}"></i>
+            <div><div class="addr-main">${p.name}</div><div class="addr-sub">${p.address}</div></div>
+        </div>`
+    ).join('');
+    dropdown.style.display = 'block';
+}
+
+function searchAddress(query, dropdown, inputId) {
+    if(!MAPBOX_TOKEN) { showQuickPicks(dropdown, inputId); return; }
+    const bbox = '-112.2,40.3,-111.3,40.9'; // Utah/Park City area
+    fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${MAPBOX_TOKEN}&bbox=${bbox}&limit=5&types=address,poi&country=US`)
+        .then(r => r.json())
+        .then(d => {
+            const features = d.features || [];
+            let html = '';
+            // Show matching quick picks first
+            QUICK_PICKS.forEach(p => {
+                if(p.name.toLowerCase().includes(query.toLowerCase()) || p.address.toLowerCase().includes(query.toLowerCase())) {
+                    html += `<div class="addr-item" onclick="pickAddress('${inputId}','${p.address}',this)"><i class="bi ${p.icon}"></i><div><div class="addr-main">${p.name}</div><div class="addr-sub">${p.address}</div></div></div>`;
+                }
+            });
+            // Then Mapbox results
+            features.forEach(f => {
+                html += `<div class="addr-item" onclick="pickAddress('${inputId}','${f.place_name}',this)"><i class="bi bi-geo-alt"></i><div><div class="addr-main">${f.text}</div><div class="addr-sub">${f.place_name}</div></div></div>`;
+            });
+            if(!html) html = '<div style="padding:14px;color:var(--muted);font-size:13px;text-align:center;">No results — type a full address</div>';
+            dropdown.innerHTML = html;
+            dropdown.style.display = 'block';
+        })
+        .catch(() => showQuickPicks(dropdown, inputId));
+}
+
+function pickAddress(inputId, address) {
+    document.getElementById(inputId).value = address;
+    document.getElementById(inputId.replace('Input','')).closest('.field').querySelector('.addr-dropdown').style.display = 'none';
+    // Fix: hide the correct dropdown
+    const dd = document.getElementById(inputId === 'pickupInput' ? 'pickupDropdown' : 'dropoffDropdown');
+    if(dd) dd.style.display = 'none';
+}
+
+function useCurrentLocation(inputId) {
+    const input = document.getElementById(inputId);
+    if(!navigator.geolocation) { input.value = 'Location not available'; return; }
+    input.value = 'Getting location...';
+    navigator.geolocation.getCurrentPosition(
+        pos => {
+            if(MAPBOX_TOKEN) {
+                fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${pos.coords.longitude},${pos.coords.latitude}.json?access_token=${MAPBOX_TOKEN}&limit=1`)
+                    .then(r => r.json())
+                    .then(d => { input.value = d.features?.[0]?.place_name || `${pos.coords.latitude}, ${pos.coords.longitude}`; })
+                    .catch(() => { input.value = `${pos.coords.latitude.toFixed(6)}, ${pos.coords.longitude.toFixed(6)}`; });
+            } else {
+                input.value = `${pos.coords.latitude.toFixed(6)}, ${pos.coords.longitude.toFixed(6)}`;
+            }
+        },
+        () => { input.value = 'Location denied'; },
+        {enableHighAccuracy: true, timeout: 10000}
+    );
+}
+
+function updateAddressDefaults() {
+    const dir = document.getElementById('directionSelect').value;
+    const pickup = document.getElementById('pickupInput');
+    const dropoff = document.getElementById('dropoffInput');
+    if(dir === 'airport-to-pc') {
+        if(!pickup.value) pickup.value = 'SLC Airport, 776 N Terminal Dr, Salt Lake City, UT 84122';
+        dropoff.value = '';
+        dropoff.focus();
+    } else if(dir === 'pc-to-airport') {
+        pickup.value = '';
+        if(!dropoff.value) dropoff.value = 'SLC Airport, 776 N Terminal Dr, Salt Lake City, UT 84122';
+        pickup.focus();
+    }
+}
+
+// Initialize autocompletes
+setupAutocomplete('pickupInput', 'pickupDropdown');
+setupAutocomplete('dropoffInput', 'dropoffDropdown');
 
 // Pre-select vehicle from URL
 const params = new URLSearchParams(location.search);

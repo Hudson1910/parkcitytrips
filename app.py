@@ -80,6 +80,8 @@ def book_submit():
             'date': data.get('date', ''),
             'flight_number': data.get('flight_number', ''),
             'arrival_time': data.get('arrival_time', ''),
+            'pickup': data.get('pickup', ''),
+            'dropoff': data.get('dropoff', ''),
             'destination': data.get('destination', ''),
             'adults': data.get('adults', '2'),
             'children': data.get('children', '0'),
