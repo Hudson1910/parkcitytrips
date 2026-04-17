@@ -82,7 +82,7 @@
     }
     </script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Bebas+Neue&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
     <style>
         :root{--bg:#0a0e17;--bg2:#0f1420;--bg3:#151c2e;--bg4:#1c2540;
         --gold:#c9a84c;--gold2:#e8c65a;--accent:#c9a84c;
@@ -346,6 +346,83 @@
     <a href="/blog" onclick="this.parentElement.classList.remove('open')">Blog</a>
     <a href="#book" class="btn-gold" onclick="this.parentElement.classList.remove('open')">Book Now</a>
 </div>
+
+<!-- CINEMATIC INTRO — Navigator slides in from right -->
+<section class="intro-scene" id="introScene">
+    <div class="intro-bg">
+        <div class="intro-glow intro-glow--gold"></div>
+        <div class="intro-glow intro-glow--warm"></div>
+    </div>
+    <div class="intro-content">
+        <p class="intro-tag">Rio Transportation LLC</p>
+        <h1 class="intro-headline">ARRIVE IN<br><span class="intro-accent">STYLE.</span></h1>
+        <p class="intro-sub">Luxury private SUV service<br>Salt Lake City Airport → Park City</p>
+        <div class="intro-scroll-hint">
+            <span class="intro-arrow">↓</span>
+            <span class="intro-scroll-text">scroll to explore</span>
+        </div>
+    </div>
+    <div class="intro-car">
+        <img src="https://www.carpro.com/hs-fs/hubfs/2025-lincoln-navigator-black-label-exterior-2-carpro.jpg?width=1200" alt="2025 Lincoln Navigator Black Label" class="intro-car-img" onerror="this.src='https://www.velocityjournal.com/images/new/2025/953/905/ln2025navigator953106122_1200.jpg'">
+        <div class="intro-car-shadow"></div>
+    </div>
+    <div class="intro-hud">
+        <div class="intro-hud-line"></div>
+        <span class="intro-hud-label">2025 LINCOLN NAVIGATOR BLACK LABEL</span>
+    </div>
+</section>
+
+<style>
+/* === CINEMATIC INTRO === */
+.intro-scene{position:relative;min-height:100vh;overflow:hidden;background:#0a0c10;display:flex;align-items:center;}
+.intro-bg{position:absolute;inset:0;overflow:hidden;}
+.intro-glow{position:absolute;border-radius:50%;filter:blur(120px);opacity:0.3;will-change:transform;}
+.intro-glow--gold{width:600px;height:600px;background:radial-gradient(circle,#d4a84b,transparent 70%);top:-100px;right:-200px;animation:introFloat 12s ease-in-out infinite alternate;}
+.intro-glow--warm{width:400px;height:400px;background:radial-gradient(circle,#c9823a,transparent 70%);bottom:-100px;left:-100px;animation:introFloat 15s ease-in-out infinite alternate-reverse;}
+@keyframes introFloat{0%{transform:translate(0,0) scale(1);}100%{transform:translate(40px,-30px) scale(1.15);}}
+
+.intro-content{position:relative;z-index:3;padding:0 6vw;max-width:550px;}
+.intro-tag{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;color:#d4a84b;opacity:0.7;margin-bottom:1.5rem;animation:introFadeUp 1s 0.3s both;}
+.intro-headline{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,10vw,7.5rem);font-weight:400;letter-spacing:0.02em;line-height:0.88;color:#ede8df;margin-bottom:1.5rem;animation:introFadeUp 1s 0.5s both;}
+.intro-accent{color:#d4a84b;display:inline-block;}
+.intro-sub{font-family:'DM Mono',monospace;font-size:clamp(0.65rem,1.2vw,0.82rem);line-height:1.9;color:rgba(237,232,223,0.5);letter-spacing:0.06em;animation:introFadeUp 1s 0.7s both;}
+.intro-scroll-hint{display:inline-flex;align-items:center;gap:0.6rem;margin-top:2.5rem;color:#d4a84b;animation:introFadeUp 1s 0.9s both,hintPulse 2.5s ease-in-out 1.5s infinite;}
+.intro-arrow{font-size:1.2rem;}
+.intro-scroll-text{font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.25em;text-transform:uppercase;}
+@keyframes hintPulse{0%,100%{opacity:1;}50%{opacity:0.2;}}
+
+/* Car entrance from right */
+.intro-car{position:absolute;right:-10%;bottom:5%;z-index:2;width:65%;max-width:900px;animation:carSlideIn 1.8s cubic-bezier(0.16,1,0.3,1) 0.4s both;}
+.intro-car-img{width:100%;height:auto;display:block;filter:drop-shadow(0 20px 60px rgba(0,0,0,0.8));transform:scaleX(-1);}
+.intro-car-shadow{position:absolute;bottom:-20px;left:10%;right:10%;height:40px;background:radial-gradient(ellipse,rgba(0,0,0,0.5),transparent 70%);filter:blur(15px);}
+@keyframes carSlideIn{
+    0%{transform:translateX(120%) scale(0.95);opacity:0;filter:blur(8px);}
+    60%{filter:blur(0);opacity:1;}
+    100%{transform:translateX(0) scale(1);opacity:1;filter:blur(0);}
+}
+
+/* HUD badge bottom-right */
+.intro-hud{position:absolute;bottom:2rem;right:2rem;z-index:4;display:flex;align-items:center;gap:0.6rem;animation:introFadeUp 1s 1.5s both;}
+.intro-hud-line{width:3rem;height:1px;background:#d4a84b;opacity:0.4;}
+.intro-hud-label{font-family:'DM Mono',monospace;font-size:0.45rem;letter-spacing:0.2em;text-transform:uppercase;color:#d4a84b;opacity:0.5;}
+
+@keyframes introFadeUp{
+    0%{transform:translateY(30px);opacity:0;}
+    100%{transform:translateY(0);opacity:1;}
+}
+
+/* Mobile */
+@media(max-width:768px){
+    .intro-scene{min-height:100svh;flex-direction:column;justify-content:flex-end;padding-bottom:6vh;}
+    .intro-content{padding:0 7vw;margin-bottom:2rem;}
+    .intro-car{position:relative;right:auto;bottom:auto;width:110%;max-width:none;margin-left:-5%;margin-bottom:-3vh;animation-delay:0.3s;}
+    .intro-car-img{transform:scaleX(-1);}
+    .intro-headline{font-size:clamp(3rem,13vw,5rem);}
+    .intro-hud{bottom:1rem;right:1rem;}
+    .intro-glow--gold{width:300px;height:300px;top:-50px;right:-50px;}
+    .intro-glow--warm{display:none;}
+}
+</style>
 
 <!-- HERO -->
 <section class="hero">
