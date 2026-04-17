@@ -246,7 +246,21 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);mi
             </div>
             <div class="field">
                 <label>Phone *</label>
-                <input type="tel" name="phone" required placeholder="+1 (435) 000-0000">
+                <div style="display:flex;gap:0;">
+                    <div style="position:relative;">
+                        <button type="button" id="ccBtn" onclick="toggleCountryList()" style="display:flex;align-items:center;gap:6px;padding:14px 12px;background:var(--card);border:1.5px solid var(--border);border-right:none;border-radius:10px 0 0 10px;color:#fff;cursor:pointer;font-size:14px;white-space:nowrap;height:100%;">
+                            <span id="ccFlag">🇺🇸</span>
+                            <span id="ccCode">+1</span>
+                            <i class="bi bi-chevron-down" style="font-size:10px;color:var(--muted);"></i>
+                        </button>
+                        <div id="countryList" style="display:none;position:absolute;top:100%;left:0;width:280px;max-height:300px;overflow-y:auto;background:var(--card);border:1px solid var(--border);border-radius:10px;margin-top:4px;z-index:100;box-shadow:0 12px 40px rgba(0,0,0,.5);">
+                            <input type="text" id="ccSearch" placeholder="Search country..." oninput="filterCountries()" style="width:100%;padding:10px 14px;background:transparent;border:none;border-bottom:1px solid var(--border);color:#fff;font-size:13px;outline:none;">
+                            <div id="ccItems"></div>
+                        </div>
+                    </div>
+                    <input type="tel" name="phone" id="phoneInput" required placeholder="(435) 000-0000" style="border-radius:0 10px 10px 0;flex:1;">
+                    <input type="hidden" name="phone_code" id="phoneCode" value="+1">
+                </div>
             </div>
         </div>
         <div class="row">
@@ -380,6 +394,85 @@ function showFlightResult(d) {
 // Also search on Enter key
 document.getElementById('flightInput').addEventListener('keydown', function(e){
     if(e.key==='Enter'){e.preventDefault();searchFlight();}
+});
+
+// === COUNTRY CODE SELECTOR ===
+const COUNTRIES = [
+    {code:'+1',flag:'🇺🇸',name:'United States'},
+    {code:'+1',flag:'🇨🇦',name:'Canada'},
+    {code:'+52',flag:'🇲🇽',name:'Mexico'},
+    {code:'+55',flag:'🇧🇷',name:'Brazil'},
+    {code:'+54',flag:'🇦🇷',name:'Argentina'},
+    {code:'+57',flag:'🇨🇴',name:'Colombia'},
+    {code:'+56',flag:'🇨🇱',name:'Chile'},
+    {code:'+51',flag:'🇵🇪',name:'Peru'},
+    {code:'+44',flag:'🇬🇧',name:'United Kingdom'},
+    {code:'+33',flag:'🇫🇷',name:'France'},
+    {code:'+49',flag:'🇩🇪',name:'Germany'},
+    {code:'+34',flag:'🇪🇸',name:'Spain'},
+    {code:'+39',flag:'🇮🇹',name:'Italy'},
+    {code:'+351',flag:'🇵🇹',name:'Portugal'},
+    {code:'+31',flag:'🇳🇱',name:'Netherlands'},
+    {code:'+41',flag:'🇨🇭',name:'Switzerland'},
+    {code:'+43',flag:'🇦🇹',name:'Austria'},
+    {code:'+46',flag:'🇸🇪',name:'Sweden'},
+    {code:'+47',flag:'🇳🇴',name:'Norway'},
+    {code:'+45',flag:'🇩🇰',name:'Denmark'},
+    {code:'+61',flag:'🇦🇺',name:'Australia'},
+    {code:'+64',flag:'🇳🇿',name:'New Zealand'},
+    {code:'+81',flag:'🇯🇵',name:'Japan'},
+    {code:'+82',flag:'🇰🇷',name:'South Korea'},
+    {code:'+86',flag:'🇨🇳',name:'China'},
+    {code:'+91',flag:'🇮🇳',name:'India'},
+    {code:'+971',flag:'🇦🇪',name:'UAE'},
+    {code:'+972',flag:'🇮🇱',name:'Israel'},
+    {code:'+966',flag:'🇸🇦',name:'Saudi Arabia'},
+    {code:'+27',flag:'🇿🇦',name:'South Africa'},
+    {code:'+7',flag:'🇷🇺',name:'Russia'},
+    {code:'+90',flag:'🇹🇷',name:'Turkey'},
+    {code:'+48',flag:'🇵🇱',name:'Poland'},
+    {code:'+353',flag:'🇮🇪',name:'Ireland'},
+    {code:'+506',flag:'🇨🇷',name:'Costa Rica'},
+    {code:'+507',flag:'🇵🇦',name:'Panama'},
+    {code:'+593',flag:'🇪🇨',name:'Ecuador'},
+];
+
+function renderCountries(filter) {
+    const q = (filter||'').toLowerCase();
+    return COUNTRIES.filter(c => !q || c.name.toLowerCase().includes(q) || c.code.includes(q))
+        .map(c => `<div onclick="selectCountry('${c.flag}','${c.code}')" style="display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;font-size:13px;color:#fff;border-bottom:1px solid rgba(255,255,255,.04);transition:background .15s;" onmouseover="this.style.background='rgba(201,168,76,.06)'" onmouseout="this.style.background='transparent'"><span style="font-size:20px;">${c.flag}</span><span style="flex:1;">${c.name}</span><span style="color:var(--muted);">${c.code}</span></div>`)
+        .join('');
+}
+
+function toggleCountryList() {
+    const list = document.getElementById('countryList');
+    if (list.style.display === 'none') {
+        document.getElementById('ccItems').innerHTML = renderCountries();
+        list.style.display = 'block';
+        document.getElementById('ccSearch').value = '';
+        document.getElementById('ccSearch').focus();
+    } else {
+        list.style.display = 'none';
+    }
+}
+
+function filterCountries() {
+    document.getElementById('ccItems').innerHTML = renderCountries(document.getElementById('ccSearch').value);
+}
+
+function selectCountry(flag, code) {
+    document.getElementById('ccFlag').textContent = flag;
+    document.getElementById('ccCode').textContent = code;
+    document.getElementById('phoneCode').value = code;
+    document.getElementById('countryList').style.display = 'none';
+    document.getElementById('phoneInput').focus();
+}
+
+// Close on click outside
+document.addEventListener('click', e => {
+    const list = document.getElementById('countryList');
+    const btn = document.getElementById('ccBtn');
+    if (list && !list.contains(e.target) && !btn.contains(e.target)) list.style.display = 'none';
 });
 
 // === ADDRESS AUTOCOMPLETE (Mapbox) ===
