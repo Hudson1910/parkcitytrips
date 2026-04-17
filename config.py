@@ -71,5 +71,12 @@ MAPBOX_TOKEN = os.getenv('MAPBOX_TOKEN', '')
 VEHICLE_PRICES = {'small': 109, 'midsize': 129, 'premier': 189, 'luxury': 220, 'hourly': 120, 'group': 0}
 PREMIUM_STOP_PRICE = 60
 
+# Email notifications
+SMTP_HOST = os.getenv('SMTP_HOST', 'smtp.gmail.com')
+SMTP_PORT = int(os.getenv('SMTP_PORT', '587'))
+SMTP_USER = os.getenv('SMTP_USER', '')
+SMTP_PASS = os.getenv('SMTP_PASS', '')
+NOTIFY_EMAIL = os.getenv('NOTIFY_EMAIL', 'contactus@riotravelpc.com')
+
 # Stats
 TOTAL_RIDES = '9,000+'

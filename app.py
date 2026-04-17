@@ -1,8 +1,79 @@
 """Park City Trips — Luxury Transportation in Park City, Utah."""
 from flask import Flask, render_template, request, jsonify, abort, redirect, url_for, flash, session
-import config, json, os, uuid, requests as req
+import config, json, os, uuid, requests as req, smtplib
 from datetime import datetime
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 from blog_data import POSTS
+
+
+def send_booking_email(booking):
+    """Send styled email notification for new trip request."""
+    if not config.SMTP_USER:
+        print("[Email] SMTP not configured, skipping")
+        return
+    vehicle_names = {'small':'Small SUV (Eclipse Cross)','midsize':'Midsize SUV (Pathfinder)',
+                     'premier':'Premier SUV (GMC Yukon)','luxury':'Luxury SUV (Lincoln Navigator)'}
+    v = vehicle_names.get(booking['vehicle'], booking['vehicle'])
+    c = booking['customer']
+    t = booking['trip']
+    bid = booking['id'].upper()
+
+    html = f"""
+    <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#0a0c10;color:#fff;border-radius:12px;overflow:hidden;">
+        <div style="background:linear-gradient(135deg,#c9a84c,#e8c65a);padding:24px 32px;text-align:center;">
+            <h1 style="margin:0;color:#000;font-size:22px;">🚗 New Trip Request</h1>
+            <p style="margin:4px 0 0;color:rgba(0,0,0,.6);font-size:13px;">Rio Transportation LLC</p>
+        </div>
+        <div style="padding:28px 32px;">
+            <div style="background:#111318;border:1px solid #1e2130;border-radius:10px;padding:18px;margin-bottom:20px;">
+                <div style="font-size:11px;color:#c9a84c;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">ORDER #{bid}</div>
+                <table style="width:100%;border-collapse:collapse;font-size:14px;color:#fff;">
+                    <tr><td style="padding:6px 0;color:#666;">Customer</td><td style="padding:6px 0;text-align:right;font-weight:700;">{c['name']}</td></tr>
+                    <tr><td style="padding:6px 0;color:#666;">Phone</td><td style="padding:6px 0;text-align:right;"><a href="tel:{c['phone']}" style="color:#c9a84c;text-decoration:none;">{c['phone']}</a></td></tr>
+                    <tr><td style="padding:6px 0;color:#666;">Email</td><td style="padding:6px 0;text-align:right;">{c.get('email','—')}</td></tr>
+                    <tr><td colspan="2" style="border-bottom:1px solid #1e2130;padding:8px 0;"></td></tr>
+                    <tr><td style="padding:6px 0;color:#666;">Vehicle</td><td style="padding:6px 0;text-align:right;font-weight:700;">{v}</td></tr>
+                    <tr><td style="padding:6px 0;color:#666;">Date</td><td style="padding:6px 0;text-align:right;">{t.get('date','—')}</td></tr>
+                    <tr><td style="padding:6px 0;color:#666;">Pickup</td><td style="padding:6px 0;text-align:right;color:#22c55e;">{t.get('pickup','—')}</td></tr>
+                    <tr><td style="padding:6px 0;color:#666;">Dropoff</td><td style="padding:6px 0;text-align:right;color:#ef4444;">{t.get('dropoff','—')}</td></tr>
+                    <tr><td style="padding:6px 0;color:#666;">Flight</td><td style="padding:6px 0;text-align:right;">{t.get('flight_number','—')}</td></tr>
+                    <tr><td style="padding:6px 0;color:#666;">Arrival</td><td style="padding:6px 0;text-align:right;">{t.get('arrival_time','—')}</td></tr>
+                    <tr><td colspan="2" style="border-bottom:1px solid #1e2130;padding:8px 0;"></td></tr>
+                    <tr><td style="padding:6px 0;color:#666;">Passengers</td><td style="padding:6px 0;text-align:right;">{t.get('adults','0')} adults, {t.get('children','0')} children, {t.get('infants','0')} infants</td></tr>
+                    <tr><td style="padding:6px 0;color:#666;">Car Seats</td><td style="padding:6px 0;text-align:right;">{t.get('car_seats','0')}</td></tr>
+                    <tr><td style="padding:6px 0;color:#666;">Bags</td><td style="padding:6px 0;text-align:right;">{t.get('bags','0')} regular, {t.get('ski_bags','0')} ski</td></tr>
+                    {'<tr><td style="padding:6px 0;color:#666;">Notes</td><td style="padding:6px 0;text-align:right;">'+t.get('notes','')+'</td></tr>' if t.get('notes') else ''}
+                    <tr><td colspan="2" style="border-bottom:1px solid #1e2130;padding:8px 0;"></td></tr>
+                    <tr><td style="padding:6px 0;color:#666;">Base Price</td><td style="padding:6px 0;text-align:right;">${booking['base_price']}</td></tr>
+                    {'<tr><td style="padding:6px 0;color:#666;">Premium Stop</td><td style="padding:6px 0;text-align:right;">+$'+str(booking['premium_stop'])+'</td></tr>' if booking.get('premium_stop') else ''}
+                    <tr><td style="padding:6px 0;color:#666;">Tip ({booking.get('tip_percent',0)}%)</td><td style="padding:6px 0;text-align:right;">${booking.get('tip_amount',0)}</td></tr>
+                    <tr><td style="padding:10px 0;font-size:18px;font-weight:800;">TOTAL</td><td style="padding:10px 0;text-align:right;font-size:18px;font-weight:800;color:#c9a84c;">${booking['total']}</td></tr>
+                </table>
+            </div>
+            {'<div style="background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.15);border-radius:8px;padding:12px;font-size:12px;color:#22c55e;margin-bottom:16px;">💳 Card saved: '+booking.get('card_brand','')+'  ****'+booking.get('card_last4','')+'</div>' if booking.get('card_last4') else ''}
+            <div style="text-align:center;margin-top:16px;">
+                <a href="https://web-production-d69bf.up.railway.app/admin/bookings?pin=6939" style="display:inline-block;padding:14px 28px;background:#c9a84c;color:#000;border-radius:50px;text-decoration:none;font-weight:700;font-size:14px;">Review & Approve Booking</a>
+            </div>
+        </div>
+        <div style="padding:16px 32px;border-top:1px solid #1e2130;font-size:11px;color:#444;text-align:center;">
+            Rio Transportation LLC · 1776 Kearns Blvd, Park City, UT 84060 · (435) 214-6939
+        </div>
+    </div>"""
+
+    try:
+        msg = MIMEMultipart('alternative')
+        msg['Subject'] = f"🚗 Trip Request #{bid} — {c['name']} — {v}"
+        msg['From'] = config.SMTP_USER
+        msg['To'] = config.NOTIFY_EMAIL
+        msg.attach(MIMEText(html, 'html'))
+        with smtplib.SMTP(config.SMTP_HOST, config.SMTP_PORT) as server:
+            server.starttls()
+            server.login(config.SMTP_USER, config.SMTP_PASS)
+            server.send_message(msg)
+        print(f"[Email] Trip request #{bid} sent to {config.NOTIFY_EMAIL}")
+    except Exception as e:
+        print(f"[Email] Error: {e}")
 
 BOOKINGS_FILE = os.path.join(os.path.dirname(__file__), 'data', 'bookings.json')
 os.makedirs(os.path.dirname(BOOKINGS_FILE), exist_ok=True)
@@ -170,6 +241,8 @@ def book_save_card():
             save_bookings(bookings)
 
             print(f"[Square] Card saved for booking {booking_id}: {brand} ****{last4}")
+            # Send email notification to Hudson
+            send_booking_email(booking)
             return jsonify({'success': True, 'booking_id': booking_id})
         else:
             errors = card_data.get('errors', [{}])
