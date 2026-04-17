@@ -228,6 +228,8 @@ def book_save_card():
         customer_id = cust_resp.json().get('customer', {}).get('id', '')
 
         # Save card on file
+        print(f"[Square] Customer created: {customer_id}")
+        print(f"[Square] Saving card with nonce: {nonce[:30]}...")
         card_resp = req.post(f'{square_url}/v2/cards', json={
             'idempotency_key': str(uuid.uuid4()),
             'source_id': nonce,
@@ -235,6 +237,7 @@ def book_save_card():
                 'customer_id': customer_id,
             }
         }, headers={'Authorization': f'Bearer {config.SQUARE_ACCESS_TOKEN}', 'Content-Type': 'application/json'})
+        print(f"[Square] Card API response {card_resp.status_code}: {card_resp.text[:500]}")
 
         card_data = card_resp.json()
         if 'card' in card_data:
@@ -263,8 +266,9 @@ def book_save_card():
             return jsonify({'error': msg}), 400
 
     except Exception as e:
-        print(f"[Square] Error: {e}")
-        return jsonify({'error': str(e)}), 500
+        import traceback
+        traceback.print_exc()
+        return jsonify({'error': f'Server error: {str(e)}'}), 500
 
 
 @app.route('/book/confirm/<booking_id>')
