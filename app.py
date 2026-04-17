@@ -7,6 +7,50 @@ from email.mime.multipart import MIMEMultipart
 from blog_data import POSTS
 
 
+def _send_quick_email(booking):
+    """Send a simple text email — fast, no timeout issues."""
+    if not config.SMTP_USER:
+        return
+    vehicle_names = {'small':'Small SUV','midsize':'Midsize SUV','premier':'Premier SUV','luxury':'Luxury SUV'}
+    c = booking['customer']
+    t = booking['trip']
+    bid = booking['id'].upper()
+    body = f"""🚗 NEW TRIP REQUEST — #{bid}
+
+Customer: {c['name']}
+Phone: {c['phone']}
+Email: {c.get('email','—')}
+
+Vehicle: {vehicle_names.get(booking['vehicle'], booking['vehicle'])}
+Date: {t.get('date','—')}
+Pickup: {t.get('pickup','—')}
+Dropoff: {t.get('dropoff','—')}
+Flight: {t.get('flight_number','—')}
+Arrival: {t.get('arrival_time','—')}
+
+Passengers: {t.get('adults','0')} adults, {t.get('children','0')} children
+Car Seats: {t.get('car_seats','0')}
+Bags: {t.get('bags','0')} + {t.get('ski_bags','0')} ski
+
+Base: ${booking['base_price']}
+Premium Stop: ${booking.get('premium_stop',0)}
+Tip ({booking.get('tip_percent',0)}%): ${booking.get('tip_amount',0)}
+TOTAL: ${booking['total']}
+
+Card: {booking.get('card_brand','')} ****{booking.get('card_last4','')}
+
+Admin: https://web-production-d69bf.up.railway.app/admin/bookings?pin=6939"""
+
+    msg = MIMEText(body, 'plain')
+    msg['Subject'] = f"🚗 Trip #{bid} — {c['name']} — ${booking['total']}"
+    msg['From'] = config.SMTP_USER
+    msg['To'] = config.NOTIFY_EMAIL
+    with smtplib.SMTP(config.SMTP_HOST, config.SMTP_PORT, timeout=10) as s:
+        s.starttls()
+        s.login(config.SMTP_USER, config.SMTP_PASS)
+        s.send_message(msg)
+
+
 def send_booking_email(booking):
     """Send styled email notification for new trip request."""
     if not config.SMTP_USER:
@@ -258,11 +302,12 @@ def book_save_card():
             save_bookings(bookings)
 
             print(f"[Square] Card saved for booking {booking_id}: {brand} ****{last4}")
-            # Send email notification
+            # Send simple email notification (inline, with timeout)
             try:
-                send_booking_email(booking)
+                _send_quick_email(booking)
+                print(f"[Email] Sent OK for #{booking_id}")
             except Exception as email_err:
-                print(f"[Email] Failed but booking OK: {email_err}")
+                print(f"[Email] FAILED: {email_err}")
             return jsonify({'success': True, 'booking_id': booking_id})
         else:
             errors = card_data.get('errors', [{}])
