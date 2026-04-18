@@ -105,11 +105,6 @@ function pickV(el,id){
     document.getElementById('vehicleInput').value=id;
 }
 </script>
-<script>
-document.addEventListener('touchstart',function(e){if(e.touches.length>1)e.preventDefault();},{passive:false});
-var lastTap=0;document.addEventListener('touchend',function(e){if(e.target.closest('.mobile-menu'))return;var now=Date.now();if(now-lastTap<300){e.preventDefault();}lastTap=now;},{passive:false});
-document.addEventListener('gesturestart',function(e){e.preventDefault();},{passive:false});
-document.addEventListener('gesturechange',function(e){e.preventDefault();},{passive:false});
-</script>
+<script src="/static/no-zoom.js"></script>
 </body>
 </html>
