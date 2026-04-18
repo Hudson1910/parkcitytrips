@@ -23,9 +23,14 @@ h1{font-family:'Onest',sans-serif;font-size:24px;margin-bottom:8px;}
 .back{color:#c9a84c;text-decoration:none;font-size:13px;display:inline-flex;align-items:center;gap:4px;margin-bottom:20px;}
 </style></head>
 <body>
-<a href="/" class="back"><i class="bi bi-arrow-left"></i> Back to site</a>
-<h1><i class="bi bi-clipboard-check" style="color:#c9a84c;"></i> Booking Requests</h1>
-<p style="color:#666;font-size:13px;margin-bottom:24px;">{{ bookings|length }} total bookings</p>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+    <div>
+        <a href="/admin" style="color:#c9a84c;text-decoration:none;font-size:13px;"><i class="bi bi-arrow-left"></i> Dashboard</a>
+        <h1 style="margin-top:8px;"><i class="bi bi-clipboard-check" style="color:#c9a84c;"></i> Booking Requests</h1>
+        <p style="color:#666;font-size:13px;">{{ bookings|length }} total bookings</p>
+    </div>
+    <a href="/admin/new-booking" style="padding:12px 24px;background:#c9a84c;color:#000;border-radius:10px;font-family:'Onest',sans-serif;font-size:14px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px;"><i class="bi bi-plus-circle"></i> New Booking</a>
+</div>
 
 {% if request.args.get('msg') %}
 <div class="msg"><i class="bi bi-check-circle"></i> {{ request.args.get('msg') }}</div>
