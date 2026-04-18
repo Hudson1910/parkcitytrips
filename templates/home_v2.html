@@ -43,9 +43,8 @@
     --font-body:'Montserrat',sans-serif;
     --font-label:'DM Sans',sans-serif;
 }
-html{scroll-behavior:smooth;}
-body{font-family:var(--font-body);background:var(--bg);color:var(--fg);-webkit-font-smoothing:antialiased;overflow-x:hidden;font-weight:400;font-size:16px;line-height:1.6;position:relative;}
-html{overflow-x:hidden;}
+html{scroll-behavior:smooth;overflow-x:hidden;-webkit-text-size-adjust:100%;}
+body{font-family:var(--font-body);background:var(--bg);color:var(--fg);-webkit-font-smoothing:antialiased;overflow-x:hidden;font-weight:400;font-size:16px;line-height:1.6;position:relative;touch-action:pan-y;-webkit-overflow-scrolling:touch;}
 
 /* === NAV (AUTONO) === */
 .nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 40px;transition:background .4s,border .4s;}
@@ -338,6 +337,7 @@ body.light .mobile-menu-btn{color:#000;}
     </style>
 </head>
 <body>
+<div id="app-wrapper" style="width:100%;max-width:100vw;overflow-x:hidden;position:relative;">
 
 <!-- OLYMPICS SPLASH -->
 <div class="splash" id="splash">
@@ -871,5 +871,6 @@ document.querySelectorAll('[data-count]').forEach(e=>cObs.observe(e));
 // Dynamic ride count
 (function(){const base=9000,perDay=5,since=new Date(2026,3,16);const days=Math.max(0,Math.floor((Date.now()-since)/864e5));const total=base+days*perDay;document.querySelectorAll('[data-count]').forEach(el=>{if(el.textContent==='0'&&el.closest('.stat-item'))el.dataset.count=total;});})();
 </script>
+</div><!-- /app-wrapper -->
 </body>
 </html>
