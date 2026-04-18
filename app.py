@@ -197,6 +197,18 @@ app = Flask(__name__)
 app.secret_key = config.SECRET_KEY
 
 
+@app.after_request
+def add_seo_headers(response):
+    """Add cache + security headers for SEO performance."""
+    if request.path.startswith('/static/'):
+        response.headers['Cache-Control'] = 'public, max-age=2592000'  # 30 days
+    elif not request.path.startswith('/admin') and not request.path.startswith('/signin'):
+        response.headers['Cache-Control'] = 'public, max-age=300'  # 5 min for pages
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+    return response
+
+
 @app.route('/')
 def home():
     return render_template('home_v2.html', config=config)
@@ -876,10 +888,19 @@ def seo_page(slug):
 @app.route('/sitemap.xml')
 def sitemap():
     from flask import Response
-    pages = ['/', '/fleet', '/about', '/weather', '/book'] + [f'/s/{s}' for s in SEO_PAGES] + ['/blog'] + [f'/blog/{p["slug"]}' for p in POSTS]
+    today = datetime.now().strftime('%Y-%m-%d')
+    pages = [
+        ('/', '1.0', 'daily'),
+        ('/book', '0.9', 'weekly'),
+        ('/fleet', '0.8', 'weekly'),
+        ('/about', '0.7', 'monthly'),
+        ('/weather', '0.8', 'daily'),
+    ] + [(f'/s/{s}', '0.8', 'weekly') for s in SEO_PAGES] + [
+        ('/blog', '0.7', 'weekly'),
+    ] + [(f'/blog/{p["slug"]}', '0.6', 'monthly') for p in POSTS]
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-    for p in pages:
-        xml += f'  <url><loc>https://www.parkcitytrips.com{p}</loc><changefreq>weekly</changefreq><priority>{"1.0" if p=="/" else "0.8"}</priority></url>\n'
+    for url, priority, freq in pages:
+        xml += f'  <url><loc>https://parkcitytrips.com{url}</loc><lastmod>{today}</lastmod><changefreq>{freq}</changefreq><priority>{priority}</priority></url>\n'
     xml += '</urlset>'
     return Response(xml, mimetype='application/xml')
 
