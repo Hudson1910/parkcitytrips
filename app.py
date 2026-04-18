@@ -334,6 +334,124 @@ def admin_seo():
         site_pages=site_pages)
 
 
+@app.route('/admin/new-booking', methods=['GET', 'POST'])
+def admin_new_booking():
+    if not session.get('admin'):
+        return redirect('/signin')
+    if request.method == 'POST':
+        data = request.form.to_dict()
+        booking_id = str(uuid.uuid4())[:8]
+        vehicle = data.get('vehicle', 'premier')
+        base_price = config.VEHICLE_PRICES.get(vehicle, 189)
+        premium_stop = config.PREMIUM_STOP_PRICE if data.get('premium_stop') else 0
+        total = base_price + premium_stop
+
+        booking = {
+            'id': booking_id, 'vehicle': vehicle, 'base_price': base_price,
+            'premium_stop': premium_stop, 'subtotal': total, 'tip_percent': 0,
+            'tip_amount': 0, 'total': total, 'card_id': None, 'card_last4': '',
+            'card_brand': '', 'status': 'confirmed_manual',
+            'customer': {'name': data.get('name',''), 'phone': data.get('phone',''), 'email': data.get('email','')},
+            'trip': {'date': data.get('date',''), 'pickup': data.get('pickup',''), 'dropoff': data.get('dropoff',''),
+                     'flight_number': data.get('flight_number',''), 'arrival_time': data.get('arrival_time',''),
+                     'adults': data.get('adults','1'), 'children': data.get('children','0'),
+                     'infants': data.get('infants','0'), 'car_seats': data.get('car_seats','0'),
+                     'bags': data.get('bags','0'), 'ski_bags': data.get('ski_bags','0'),
+                     'notes': data.get('notes','')},
+            'created_at': datetime.now().isoformat(), 'charged_at': None,
+        }
+        bookings = load_bookings()
+        bookings.append(booking)
+        save_bookings(bookings)
+
+        # Send confirmation email to client
+        if data.get('email') and config.RESEND_API_KEY:
+            vehicle_names = {'small':'Small SUV','midsize':'Midsize SUV','premier':'Premier SUV','luxury':'Luxury SUV'}
+            v = vehicle_names.get(vehicle, vehicle)
+            bid = booking_id.upper()
+            c = booking['customer']
+            t = booking['trip']
+            customer_html = f"""<div style="font-family:Arial,Helvetica,sans-serif;max-width:520px;margin:0 auto;background:#ffffff;">
+<div style="padding:32px 32px 24px;border-bottom:3px solid #000;">
+<h1 style="margin:0;color:#000;font-size:22px;font-weight:800;">Rio Transportation</h1>
+</div>
+<div style="padding:28px 32px;">
+<p style="font-size:15px;color:#333;margin-bottom:6px;">Hi {c['name'].split()[0] if c['name'] else 'there'},</p>
+<p style="font-size:14px;color:#666;line-height:1.7;margin-bottom:24px;">Your ride has been <strong style="color:#000;">confirmed</strong>! Here are your trip details:</p>
+<div style="background:#f8f8f6;border:1px solid #e8e8e4;border-radius:8px;padding:20px;margin-bottom:20px;">
+<div style="font-size:10px;color:#999;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">BOOKING #{bid}</div>
+<table style="width:100%;font-size:14px;color:#333;border-collapse:collapse;">
+<tr><td style="padding:6px 0;color:#999;">Vehicle</td><td style="padding:6px 0;text-align:right;font-weight:700;">{v}</td></tr>
+<tr><td style="padding:6px 0;color:#999;">Date</td><td style="padding:6px 0;text-align:right;font-weight:700;">{t.get('date','—')}</td></tr>
+<tr><td style="padding:6px 0;color:#999;">Pickup</td><td style="padding:6px 0;text-align:right;">{t.get('pickup','—')}</td></tr>
+<tr><td style="padding:6px 0;color:#999;">Dropoff</td><td style="padding:6px 0;text-align:right;">{t.get('dropoff','—')}</td></tr>
+{f'<tr><td style="padding:6px 0;color:#999;">Flight</td><td style="padding:6px 0;text-align:right;">{t["flight_number"]}</td></tr>' if t.get('flight_number') else ''}
+{f'<tr><td style="padding:6px 0;color:#999;">Arrival</td><td style="padding:6px 0;text-align:right;">{t["arrival_time"]}</td></tr>' if t.get('arrival_time') else ''}
+<tr><td colspan="2" style="border-bottom:1px solid #e8e8e4;padding:8px 0;"></td></tr>
+<tr><td style="padding:8px 0;font-weight:700;color:#000;">Total</td><td style="padding:8px 0;text-align:right;font-size:20px;font-weight:800;color:#000;">${total}</td></tr>
+</table></div>
+<div style="background:#f0f7ff;border:1px solid #d4e5f7;border-radius:6px;padding:12px 16px;font-size:13px;color:#555;margin-bottom:24px;">
+✅ Your ride is <strong>confirmed</strong>. Our driver will track your flight and contact you before arrival.</div>
+<div style="text-align:center;margin-bottom:24px;">
+<p style="font-size:13px;color:#999;margin-bottom:12px;">Questions? Contact us anytime</p>
+<a href="tel:+14352146939" style="display:inline-block;padding:10px 24px;background:#000;color:#fff;border-radius:50px;text-decoration:none;font-weight:700;font-size:14px;margin-right:8px;">📞 (435) 214-6939</a>
+<a href="https://wa.me/14352146939" style="display:inline-block;padding:10px 24px;background:#25d366;color:#fff;border-radius:50px;text-decoration:none;font-weight:700;font-size:14px;">💬 WhatsApp</a>
+</div></div>
+<div style="padding:16px 32px;border-top:1px solid #eee;font-size:11px;color:#bbb;text-align:center;">Rio Transportation LLC · Park City, Utah · parkcitytrips.com</div>
+</div>"""
+            try:
+                req.post('https://api.resend.com/emails', json={
+                    'from': 'Rio Transportation <booking@parkcitytrips.com>',
+                    'to': [data['email']],
+                    'subject': f'Booking Confirmed #{bid} — Rio Transportation',
+                    'html': customer_html,
+                }, headers={'Authorization': f'Bearer {config.RESEND_API_KEY}'}, timeout=10)
+                print(f"[Email] Manual booking confirmation sent to {data['email']}")
+            except Exception as e:
+                print(f"[Email] Error: {e}")
+
+        return redirect(f'/admin/bookings?pin={config.ADMIN_PIN}&msg=Booking+{booking_id}+created+and+email+sent')
+    return render_template('admin_new_booking.html')
+
+
+@app.route('/admin/email-preview')
+def admin_email_preview():
+    """Preview the booking confirmation email template."""
+    if not session.get('admin'):
+        return redirect('/signin')
+    html = """<div style="font-family:Arial,Helvetica,sans-serif;max-width:520px;margin:0 auto;background:#ffffff;">
+<div style="padding:32px 32px 24px;border-bottom:3px solid #000;">
+<h1 style="margin:0;color:#000;font-size:22px;font-weight:800;">Rio Transportation</h1>
+</div>
+<div style="padding:28px 32px;">
+<p style="font-size:15px;color:#333;margin-bottom:6px;">Hi John,</p>
+<p style="font-size:14px;color:#666;line-height:1.7;margin-bottom:24px;">Your ride has been <strong style="color:#000;">confirmed</strong>! Here are your trip details:</p>
+<div style="background:#f8f8f6;border:1px solid #e8e8e4;border-radius:8px;padding:20px;margin-bottom:20px;">
+<div style="font-size:10px;color:#999;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">BOOKING #A1B2C3D4</div>
+<table style="width:100%;font-size:14px;color:#333;border-collapse:collapse;">
+<tr><td style="padding:6px 0;color:#999;">Vehicle</td><td style="padding:6px 0;text-align:right;font-weight:700;">Premier SUV (GMC Yukon)</td></tr>
+<tr><td style="padding:6px 0;color:#999;">Date</td><td style="padding:6px 0;text-align:right;font-weight:700;">April 25, 2026</td></tr>
+<tr><td style="padding:6px 0;color:#999;">Pickup</td><td style="padding:6px 0;text-align:right;">SLC Airport, Terminal 1</td></tr>
+<tr><td style="padding:6px 0;color:#999;">Dropoff</td><td style="padding:6px 0;text-align:right;">Montage Deer Valley</td></tr>
+<tr><td style="padding:6px 0;color:#999;">Flight</td><td style="padding:6px 0;text-align:right;">DL1234</td></tr>
+<tr><td style="padding:6px 0;color:#999;">Arrival</td><td style="padding:6px 0;text-align:right;">2:30 PM</td></tr>
+<tr><td colspan="2" style="border-bottom:1px solid #e8e8e4;padding:8px 0;"></td></tr>
+<tr><td style="padding:8px 0;font-weight:700;color:#000;">Total</td><td style="padding:8px 0;text-align:right;font-size:20px;font-weight:800;color:#000;">$189</td></tr>
+</table></div>
+<div style="background:#f0f7ff;border:1px solid #d4e5f7;border-radius:6px;padding:12px 16px;font-size:13px;color:#555;margin-bottom:24px;">
+✅ Your ride is <strong>confirmed</strong>. Our driver will track your flight and contact you before arrival.</div>
+<div style="text-align:center;margin-bottom:24px;">
+<p style="font-size:13px;color:#999;margin-bottom:12px;">Questions? Contact us anytime</p>
+<a href="tel:+14352146939" style="display:inline-block;padding:10px 24px;background:#000;color:#fff;border-radius:50px;text-decoration:none;font-weight:700;font-size:14px;margin-right:8px;">📞 (435) 214-6939</a>
+<a href="https://wa.me/14352146939" style="display:inline-block;padding:10px 24px;background:#25d366;color:#fff;border-radius:50px;text-decoration:none;font-weight:700;font-size:14px;">💬 WhatsApp</a>
+</div></div>
+<div style="padding:16px 32px;border-top:1px solid #eee;font-size:11px;color:#bbb;text-align:center;">Rio Transportation LLC · Park City, Utah · parkcitytrips.com</div>
+</div>"""
+    return f"""<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>Email Preview</title><style>body{{background:#f5f5f5;padding:40px 20px;margin:0;}}</style></head>
+<body><div style="text-align:center;margin-bottom:20px;font-family:Arial;font-size:13px;color:#999;">EMAIL TEMPLATE PREVIEW — <a href="/admin">Back to Admin</a></div>{html}</body></html>"""
+
+
 @app.route('/admin/crm')
 def admin_crm():
     if not session.get('admin'):

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="robots" content="noindex,nofollow">
+    <title>New Booking — Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;600;700;800&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-height:100vh;}
+.nav{padding:16px 24px;border-bottom:1px solid #1e2130;display:flex;align-items:center;justify-content:space-between;}
+.nav a{color:#fff;text-decoration:none;font-family:'Onest',sans-serif;font-weight:800;font-size:14px;letter-spacing:.1em;}
+.nav .back{font-size:13px;color:#666;display:flex;align-items:center;gap:6px;}
+.page{max-width:600px;margin:0 auto;padding:32px 20px 80px;}
+h1{font-family:'Onest',sans-serif;font-size:24px;font-weight:800;margin-bottom:24px;}
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:12px;font-weight:600;color:#999;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
+.field input,.field select,.field textarea{width:100%;padding:14px 16px;background:#111318;border:1.5px solid #1e2130;border-radius:10px;color:#fff;font-size:15px;outline:none;font-family:'Montserrat',sans-serif;}
+.field input:focus,.field select:focus{border-color:#c9a84c;}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.vehicles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;}
+.v-opt{padding:14px 8px;background:#111318;border:2px solid #1e2130;border-radius:10px;text-align:center;cursor:pointer;transition:all .2s;}
+.v-opt:hover{border-color:rgba(255,255,255,.2);}
+.v-opt.sel{border-color:#c9a84c;background:rgba(201,168,76,.06);}
+.v-opt h4{font-family:'Onest',sans-serif;font-size:13px;font-weight:700;margin-bottom:2px;}
+.v-opt .price{font-family:'Onest',sans-serif;font-size:18px;font-weight:800;color:#c9a84c;}
+.divider{height:1px;background:#1e2130;margin:24px 0;}
+.step{font-family:'Onest',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#c9a84c;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.step::after{content:'';flex:1;height:1px;background:#1e2130;}
+.btn{width:100%;padding:18px;background:#c9a84c;color:#000;font-family:'Onest',sans-serif;font-size:16px;font-weight:800;border:none;border-radius:12px;cursor:pointer;margin-top:8px;}
+.btn:hover{background:#e8c65a;}
+.check-row{display:flex;align-items:center;gap:10px;padding:14px;background:#111318;border:1px solid #1e2130;border-radius:10px;margin-bottom:16px;cursor:pointer;}
+.check-row input{display:none;}
+.check-box{width:20px;height:20px;border:2px solid #1e2130;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#c9a84c;transition:all .2s;flex-shrink:0;}
+.check-row input:checked ~ .check-box{border-color:#c9a84c;background:rgba(201,168,76,.15);}
+@media(max-width:640px){.row,.row-3{grid-template-columns:1fr;}.vehicles{grid-template-columns:repeat(2,1fr);}}
+    </style>
+</head>
+<body>
+<nav class="nav">
+    <a href="/admin">RIO ADMIN</a>
+    <a href="/admin" class="back"><i class="bi bi-arrow-left"></i> Dashboard</a>
+</nav>
+
+<div class="page">
+    <h1><i class="bi bi-plus-circle" style="color:#c9a84c;"></i> New Manual Booking</h1>
+
+    <form method="POST" action="/admin/new-booking">
+        <div class="step">1 — Vehicle</div>
+        <div class="vehicles">
+            <div class="v-opt" onclick="pickV(this,'small')"><h4>Small SUV</h4><div class="price">$109</div></div>
+            <div class="v-opt" onclick="pickV(this,'midsize')"><h4>Midsize SUV</h4><div class="price">$129</div></div>
+            <div class="v-opt sel" onclick="pickV(this,'premier')"><h4>Premier SUV</h4><div class="price">$189</div></div>
+            <div class="v-opt" onclick="pickV(this,'luxury')"><h4>Luxury SUV</h4><div class="price">$220</div></div>
+        </div>
+        <input type="hidden" name="vehicle" id="vehicleInput" value="premier">
+
+        <div class="step">2 — Trip Details</div>
+        <div class="row">
+            <div class="field"><label>Date</label><input type="date" name="date" required></div>
+            <div class="field"><label>Flight #</label><input type="text" name="flight_number" placeholder="DL1234" style="text-transform:uppercase;"></div>
+        </div>
+        <div class="row">
+            <div class="field"><label>Pickup</label><input type="text" name="pickup" placeholder="SLC Airport"></div>
+            <div class="field"><label>Dropoff</label><input type="text" name="dropoff" placeholder="Montage Deer Valley"></div>
+        </div>
+        <div class="row">
+            <div class="field"><label>Arrival Time</label><input type="time" name="arrival_time"></div>
+            <div class="field"><label>Passengers</label><input type="number" name="adults" value="2" min="1" max="7"></div>
+        </div>
+
+        <div class="divider"></div>
+        <div class="step">3 — Customer</div>
+        <div class="row">
+            <div class="field"><label>Full Name *</label><input type="text" name="name" required placeholder="John Smith"></div>
+            <div class="field"><label>Phone *</label><input type="tel" name="phone" required placeholder="+1 435 000 0000"></div>
+        </div>
+        <div class="field"><label>Email (confirmation will be sent)</label><input type="email" name="email" placeholder="john@email.com"></div>
+
+        <div class="divider"></div>
+        <div class="step">4 — Extras</div>
+        <label class="check-row">
+            <input type="checkbox" name="premium_stop" value="1" onchange="this.nextElementSibling.querySelector('i').style.opacity=this.checked?1:0">
+            <div class="check-box"><i class="bi bi-check" style="opacity:0;transition:opacity .2s;"></i></div>
+            <div style="flex:1;"><div style="font-weight:700;font-size:14px;">Premium Stop — Grocery/Liquor</div><div style="font-size:12px;color:#666;">+$60</div></div>
+        </label>
+        <div class="field"><label>Notes</label><textarea name="notes" rows="2" placeholder="Special requests..." style="background:#111318;border:1.5px solid #1e2130;border-radius:10px;color:#fff;padding:14px;font-family:'Montserrat',sans-serif;font-size:14px;resize:vertical;width:100%;outline:none;"></textarea></div>
+
+        <button type="submit" class="btn"><i class="bi bi-check-circle"></i> Create Booking & Send Confirmation</button>
+        <p style="text-align:center;font-size:12px;color:#666;margin-top:10px;">Confirmation email will be sent to the customer automatically</p>
+    </form>
+
+    <div style="margin-top:32px;text-align:center;">
+        <a href="/admin/email-preview" target="_blank" style="color:#c9a84c;font-size:13px;text-decoration:none;"><i class="bi bi-eye"></i> Preview email template</a>
+    </div>
+</div>
+
+<script>
+function pickV(el,id){
+    document.querySelectorAll('.v-opt').forEach(v=>v.classList.remove('sel'));
+    el.classList.add('sel');
+    document.getElementById('vehicleInput').value=id;
+}
+</script>
+</body>
+</html>
