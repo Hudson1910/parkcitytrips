@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<html><head><meta charset=utf-8><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Trip Request Received — Rio Transportation</title>
 <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;600;700;800&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
@@ -31,7 +31,7 @@ h1{font-family:'Onest',sans-serif;font-size:clamp(24px,5vw,32px);font-weight:800
 @keyframes fadeUp{0%{opacity:0;transform:translateY(20px);}100%{opacity:1;transform:translateY(0);}}
 </style>
 </head>
-<body>
+<body style="overflow-x:hidden;touch-action:pan-y;">
 <canvas id="fireworks"></canvas>
 <div class="content">
     <div class="card">
@@ -157,6 +157,12 @@ h1{font-family:'Onest',sans-serif;font-size:clamp(24px,5vw,32px);font-weight:800
     }
     draw();
 })();
+</script>
+<script>
+document.addEventListener('touchstart',function(e){if(e.touches.length>1)e.preventDefault();},{passive:false});
+var lastTap=0;document.addEventListener('touchend',function(e){if(e.target.closest('.mobile-menu'))return;var now=Date.now();if(now-lastTap<300){e.preventDefault();}lastTap=now;},{passive:false});
+document.addEventListener('gesturestart',function(e){e.preventDefault();},{passive:false});
+document.addEventListener('gesturechange',function(e){e.preventDefault();},{passive:false});
 </script>
 </body>
 </html>

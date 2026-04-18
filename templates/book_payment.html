@@ -57,7 +57,7 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);mi
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2J1TXGYYMD"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-2J1TXGYYMD");</script>
 </head>
-<body>
+<body style="overflow-x:hidden;touch-action:pan-y;">
 <nav class="pay-nav">
     <a href="/">RIO TRANSPORTATION</a>
 </nav>
@@ -181,6 +181,12 @@ async function submitPayment() {
         btn.innerHTML = '<i class="bi bi-lock-fill"></i> Save Card & Confirm Booking';
     }
 }
+</script>
+<script>
+document.addEventListener('touchstart',function(e){if(e.touches.length>1)e.preventDefault();},{passive:false});
+var lastTap=0;document.addEventListener('touchend',function(e){if(e.target.closest('.mobile-menu'))return;var now=Date.now();if(now-lastTap<300){e.preventDefault();}lastTap=now;},{passive:false});
+document.addEventListener('gesturestart',function(e){e.preventDefault();},{passive:false});
+document.addEventListener('gesturechange',function(e){e.preventDefault();},{passive:false});
 </script>
 </body>
 </html>

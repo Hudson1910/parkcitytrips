@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
     <title>{{ post.title }} — Rio Transportation Blog</title>
     <meta name="description" content="{{ post.subtitle }}">
     <meta name="theme-color" content="#0a0e17">
@@ -48,7 +48,7 @@
         @media(max-width:640px){nav{padding:0 16px;}.post-hero{height:300px;}.post-hero-title{font-size:26px;}.post-hero-content{bottom:24px;}}
     </style>
 </head>
-<body>
+<body style="overflow-x:hidden;touch-action:pan-y;">
 <nav>
     <a href="/" class="logo"><img src="/static/icon.svg" alt="Rio"><span>Rio <span class="gold">Transportation</span></span></a>
     <a href="/blog" class="back"><i class="bi bi-arrow-left"></i> All Posts</a>
@@ -77,5 +77,11 @@
         <a href="/#book"><i class="bi bi-calendar-check"></i> Book Your Ride</a>
     </div>
 </article>
+<script>
+document.addEventListener('touchstart',function(e){if(e.touches.length>1)e.preventDefault();},{passive:false});
+var lastTap=0;document.addEventListener('touchend',function(e){if(e.target.closest('.mobile-menu'))return;var now=Date.now();if(now-lastTap<300){e.preventDefault();}lastTap=now;},{passive:false});
+document.addEventListener('gesturestart',function(e){e.preventDefault();},{passive:false});
+document.addEventListener('gesturechange',function(e){e.preventDefault();},{passive:false});
+</script>
 </body>
 </html>

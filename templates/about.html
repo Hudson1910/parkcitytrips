@@ -55,7 +55,7 @@ body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-heigh
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2J1TXGYYMD"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-2J1TXGYYMD");</script>
 </head>
-<body>
+<body style="overflow-x:hidden;touch-action:pan-y;">
 <nav class="a-nav">
     <a href="/" class="logo">RIO TRANSPORTATION</a>
     <a href="/" class="back"><i class="bi bi-arrow-left"></i> Back</a>
@@ -98,5 +98,11 @@ body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-heigh
 </div>
 
 <footer class="about-footer">© 2026 Rio Transportation LLC — Park City, Utah</footer>
+<script>
+document.addEventListener('touchstart',function(e){if(e.touches.length>1)e.preventDefault();},{passive:false});
+var lastTap=0;document.addEventListener('touchend',function(e){if(e.target.closest('.mobile-menu'))return;var now=Date.now();if(now-lastTap<300){e.preventDefault();}lastTap=now;},{passive:false});
+document.addEventListener('gesturestart',function(e){e.preventDefault();},{passive:false});
+document.addEventListener('gesturechange',function(e){e.preventDefault();},{passive:false});
+</script>
 </body>
 </html>

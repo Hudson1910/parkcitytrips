@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="robots" content="noindex,nofollow">
     <title>New Booking — Admin</title>
     <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;600;700;800&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
@@ -39,7 +39,7 @@ h1{font-family:'Onest',sans-serif;font-size:24px;font-weight:800;margin-bottom:2
 @media(max-width:640px){.row,.row-3{grid-template-columns:1fr;}.vehicles{grid-template-columns:repeat(2,1fr);}}
     </style>
 </head>
-<body>
+<body style="overflow-x:hidden;touch-action:pan-y;">
 <nav class="nav">
     <a href="/admin">RIO ADMIN</a>
     <a href="/admin" class="back"><i class="bi bi-arrow-left"></i> Dashboard</a>
@@ -104,6 +104,12 @@ function pickV(el,id){
     el.classList.add('sel');
     document.getElementById('vehicleInput').value=id;
 }
+</script>
+<script>
+document.addEventListener('touchstart',function(e){if(e.touches.length>1)e.preventDefault();},{passive:false});
+var lastTap=0;document.addEventListener('touchend',function(e){if(e.target.closest('.mobile-menu'))return;var now=Date.now();if(now-lastTap<300){e.preventDefault();}lastTap=now;},{passive:false});
+document.addEventListener('gesturestart',function(e){e.preventDefault();},{passive:false});
+document.addEventListener('gesturechange',function(e){e.preventDefault();},{passive:false});
 </script>
 </body>
 </html>

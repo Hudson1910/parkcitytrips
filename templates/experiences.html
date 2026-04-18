@@ -64,7 +64,7 @@ body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-heigh
 @media(max-width:640px){.e-nav{padding:14px 16px;}}
     </style>
 </head>
-<body>
+<body style="overflow-x:hidden;touch-action:pan-y;">
 <nav class="e-nav">
     <a href="/" class="logo">RIO TRANSPORTATION</a>
     <a href="/" class="back"><i class="bi bi-arrow-left"></i> Back</a>
@@ -299,6 +299,12 @@ function filterCards(cat){
         else c.style.display=c.dataset.season.includes(cat)?'':'none';
     });
 }
+</script>
+<script>
+document.addEventListener('touchstart',function(e){if(e.touches.length>1)e.preventDefault();},{passive:false});
+var lastTap=0;document.addEventListener('touchend',function(e){if(e.target.closest('.mobile-menu'))return;var now=Date.now();if(now-lastTap<300){e.preventDefault();}lastTap=now;},{passive:false});
+document.addEventListener('gesturestart',function(e){e.preventDefault();},{passive:false});
+document.addEventListener('gesturechange',function(e){e.preventDefault();},{passive:false});
 </script>
 </body>
 </html>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="robots" content="noindex,nofollow">
     <title>Dashboard — Rio Transportation</title>
     <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
@@ -64,7 +64,7 @@ h1{font-family:'Onest',sans-serif;font-size:24px;font-weight:800;margin-bottom:2
 @media(max-width:768px){.grid-2{grid-template-columns:1fr;}}
     </style>
 </head>
-<body>
+<body style="overflow-x:hidden;touch-action:pan-y;">
 <nav class="admin-nav">
     <a href="/admin" class="logo">RIO ADMIN</a>
     <div class="links">
@@ -153,5 +153,11 @@ h1{font-family:'Onest',sans-serif;font-size:24px;font-weight:800;margin-bottom:2
         </div>
     </div>
 </div>
+<script>
+document.addEventListener('touchstart',function(e){if(e.touches.length>1)e.preventDefault();},{passive:false});
+var lastTap=0;document.addEventListener('touchend',function(e){if(e.target.closest('.mobile-menu'))return;var now=Date.now();if(now-lastTap<300){e.preventDefault();}lastTap=now;},{passive:false});
+document.addEventListener('gesturestart',function(e){e.preventDefault();},{passive:false});
+document.addEventListener('gesturechange',function(e){e.preventDefault();},{passive:false});
+</script>
 </body>
 </html>
