@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="robots" content="noindex,nofollow">
+    <title>SEO & Analytics — Rio Transportation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-height:100vh;}
+.admin-nav{padding:16px 24px;border-bottom:1px solid #1e2130;display:flex;align-items:center;justify-content:space-between;}
+.admin-nav .logo{font-family:'Onest',sans-serif;font-weight:800;font-size:14px;letter-spacing:.1em;color:#fff;text-decoration:none;}
+.admin-nav .links{display:flex;gap:20px;align-items:center;}
+.admin-nav .links a{font-size:13px;color:#666;text-decoration:none;}
+.admin-nav .links a:hover,.admin-nav .links a.active{color:#c9a84c;}
+.page{max-width:1200px;margin:0 auto;padding:24px 20px;}
+h1{font-family:'Onest',sans-serif;font-size:24px;font-weight:800;margin-bottom:20px;}
+.card{background:#111318;border:1px solid #1e2130;border-radius:12px;padding:24px;margin-bottom:20px;}
+.card h3{font-family:'Onest',sans-serif;font-size:15px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.card h3 i{color:#c9a84c;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+@media(max-width:768px){.grid-2{grid-template-columns:1fr;}}
+
+/* Quick links */
+.qlink{display:flex;align-items:center;gap:12px;padding:14px 16px;background:rgba(255,255,255,.03);border:1px solid #1e2130;border-radius:10px;margin-bottom:10px;text-decoration:none;color:#fff;transition:all .2s;}
+.qlink:hover{border-color:#c9a84c;background:rgba(201,168,76,.04);}
+.qlink .icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.qlink .info{flex:1;}
+.qlink .info .title{font-weight:700;font-size:14px;}
+.qlink .info .desc{font-size:11px;color:#666;margin-top:2px;}
+.qlink .arrow{color:#666;font-size:16px;}
+
+/* SEO checklist */
+.check-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:13px;}
+.check-item:last-child{border:none;}
+.check-icon{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;}
+.check-ok{background:rgba(34,197,94,.15);color:#22c55e;}
+.check-warn{background:rgba(245,158,11,.15);color:#f59e0b;}
+.check-info{background:rgba(99,102,241,.15);color:#818cf8;}
+
+/* Page list */
+.page-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:13px;}
+.page-row:last-child{border:none;}
+.page-url{color:#c9a84c;font-weight:600;text-decoration:none;}
+.page-status{font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;}
+
+/* Visitor stats */
+.v-stat{text-align:center;padding:16px;background:rgba(255,255,255,.02);border-radius:10px;}
+.v-stat .num{font-family:'Onest',sans-serif;font-size:32px;font-weight:800;}
+.v-stat .label{font-size:10px;color:#666;letter-spacing:.15em;text-transform:uppercase;margin-top:4px;}
+.v-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px;}
+@media(max-width:768px){.v-stats{grid-template-columns:repeat(3,1fr);}}
+
+/* Top pages / sources */
+.rank-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:13px;}
+.rank-item:last-child{border:none;}
+.rank-num{font-family:'Onest',sans-serif;font-weight:800;color:#c9a84c;width:24px;text-align:center;}
+.rank-bar{flex:1;height:6px;background:#1e2130;border-radius:3px;overflow:hidden;}
+.rank-fill{height:100%;border-radius:3px;}
+.rank-count{font-weight:700;min-width:30px;text-align:right;}
+    </style>
+</head>
+<body>
+<nav class="admin-nav">
+    <a href="/admin" class="logo">RIO ADMIN</a>
+    <div class="links">
+        <a href="/admin"><i class="bi bi-grid"></i> Dashboard</a>
+        <a href="/admin/crm"><i class="bi bi-briefcase"></i> CRM</a>
+        <a href="/admin/bookings?pin={{ session.get('admin_pin','') }}"><i class="bi bi-calendar-check"></i> Bookings</a>
+        <a href="/admin/visitors"><i class="bi bi-people"></i> Visitors</a>
+        <a href="/admin/seo" class="active"><i class="bi bi-graph-up-arrow"></i> SEO</a>
+        <a href="/" target="_blank"><i class="bi bi-box-arrow-up-right"></i> Site</a>
+        <a href="/signout" style="color:#ef4444;"><i class="bi bi-box-arrow-right"></i></a>
+    </div>
+</nav>
+
+<div class="page">
+    <h1><i class="bi bi-graph-up-arrow" style="color:#c9a84c;"></i> SEO & Analytics</h1>
+
+    <!-- Visitor Stats -->
+    <div class="v-stats">
+        <div class="v-stat"><div class="num">{{ visitors_today }}</div><div class="label">Today</div></div>
+        <div class="v-stat"><div class="num">{{ visitors_7d }}</div><div class="label">7 Days</div></div>
+        <div class="v-stat"><div class="num">{{ visitors_30d }}</div><div class="label">30 Days</div></div>
+        <div class="v-stat"><div class="num">{{ pct_mobile }}%</div><div class="label">Mobile</div></div>
+        <div class="v-stat"><div class="num">{{ unique_countries }}</div><div class="label">Countries</div></div>
+    </div>
+
+    <div class="grid-2">
+        <!-- Top Pages -->
+        <div class="card">
+            <h3><i class="bi bi-file-earmark"></i> Top Pages</h3>
+            {% for p in top_pages %}
+            <div class="rank-item">
+                <span class="rank-num">{{ loop.index }}</span>
+                <span style="flex:1;">{{ p.name }}</span>
+                <div class="rank-bar" style="max-width:100px;"><div class="rank-fill" style="width:{{ p.pct }}%;background:#c9a84c;"></div></div>
+                <span class="rank-count">{{ p.count }}</span>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Top Sources -->
+        <div class="card">
+            <h3><i class="bi bi-funnel"></i> Traffic Sources</h3>
+            {% for s in top_sources %}
+            <div class="rank-item">
+                <span class="rank-num">{{ loop.index }}</span>
+                <span style="flex:1;">{{ s.name }}</span>
+                <div class="rank-bar" style="max-width:100px;"><div class="rank-fill" style="width:{{ s.pct }}%;background:{{ s.color }};"></div></div>
+                <span class="rank-count">{{ s.count }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="grid-2">
+        <!-- Top Countries -->
+        <div class="card">
+            <h3><i class="bi bi-globe"></i> Top Countries</h3>
+            {% for c in top_countries %}
+            <div class="rank-item">
+                <span style="font-size:18px;">{{ c.flag }}</span>
+                <span style="flex:1;">{{ c.name }}</span>
+                <span class="rank-count">{{ c.count }}</span>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- SEO Checklist -->
+        <div class="card">
+            <h3><i class="bi bi-check-circle"></i> SEO Status</h3>
+            <div class="check-item"><div class="check-icon check-ok"><i class="bi bi-check"></i></div> Google Analytics (G-2J1TXGYYMD)</div>
+            <div class="check-item"><div class="check-icon check-ok"><i class="bi bi-check"></i></div> Google Search Console</div>
+            <div class="check-item"><div class="check-icon check-ok"><i class="bi bi-check"></i></div> Sitemap.xml submitted</div>
+            <div class="check-item"><div class="check-icon check-ok"><i class="bi bi-check"></i></div> Schema.org JSON-LD</div>
+            <div class="check-item"><div class="check-icon check-ok"><i class="bi bi-check"></i></div> Meta tags + Open Graph</div>
+            <div class="check-item"><div class="check-icon check-ok"><i class="bi bi-check"></i></div> Cloudflare SSL + CDN</div>
+            <div class="check-item"><div class="check-icon check-ok"><i class="bi bi-check"></i></div> Mobile responsive</div>
+            <div class="check-item"><div class="check-icon check-ok"><i class="bi bi-check"></i></div> robots.txt configured</div>
+        </div>
+    </div>
+
+    <!-- Quick Access Links -->
+    <div class="card">
+        <h3><i class="bi bi-link-45deg"></i> Quick Access</h3>
+        <div class="grid-2">
+            <a href="https://analytics.google.com/analytics/web/#/p441561666/reports/intelligenthome" target="_blank" class="qlink">
+                <div class="icon" style="background:rgba(66,133,244,.1);color:#4285f4;"><i class="bi bi-bar-chart-line"></i></div>
+                <div class="info"><div class="title">Google Analytics</div><div class="desc">Real-time visitors, behavior, conversions</div></div>
+                <i class="bi bi-box-arrow-up-right arrow"></i>
+            </a>
+            <a href="https://search.google.com/search-console?resource_id=sc-domain:parkcitytrips.com" target="_blank" class="qlink">
+                <div class="icon" style="background:rgba(234,67,53,.1);color:#ea4335;"><i class="bi bi-search"></i></div>
+                <div class="info"><div class="title">Search Console</div><div class="desc">Keywords, impressions, ranking position</div></div>
+                <i class="bi bi-box-arrow-up-right arrow"></i>
+            </a>
+            <a href="https://dash.cloudflare.com" target="_blank" class="qlink">
+                <div class="icon" style="background:rgba(245,158,11,.1);color:#f59e0b;"><i class="bi bi-cloud"></i></div>
+                <div class="info"><div class="title">Cloudflare</div><div class="desc">DNS, SSL, caching, DDoS protection</div></div>
+                <i class="bi bi-box-arrow-up-right arrow"></i>
+            </a>
+            <a href="https://squareup.com/dashboard" target="_blank" class="qlink">
+                <div class="icon" style="background:rgba(34,197,94,.1);color:#22c55e;"><i class="bi bi-credit-card"></i></div>
+                <div class="info"><div class="title">Square Dashboard</div><div class="desc">Payments, cards on file, transactions</div></div>
+                <i class="bi bi-box-arrow-up-right arrow"></i>
+            </a>
+            <a href="https://resend.com/emails" target="_blank" class="qlink">
+                <div class="icon" style="background:rgba(139,92,246,.1);color:#8b5cf6;"><i class="bi bi-envelope"></i></div>
+                <div class="info"><div class="title">Resend</div><div class="desc">Email delivery, logs, domain verification</div></div>
+                <i class="bi bi-box-arrow-up-right arrow"></i>
+            </a>
+            <a href="https://parkcitytrips.com/sitemap.xml" target="_blank" class="qlink">
+                <div class="icon" style="background:rgba(6,182,212,.1);color:#06b6d4;"><i class="bi bi-diagram-3"></i></div>
+                <div class="info"><div class="title">Sitemap.xml</div><div class="desc">All indexed pages</div></div>
+                <i class="bi bi-box-arrow-up-right arrow"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Indexed Pages -->
+    <div class="card">
+        <h3><i class="bi bi-file-earmark-code"></i> Site Pages</h3>
+        {% for p in site_pages %}
+        <div class="page-row">
+            <a href="{{ p.url }}" target="_blank" class="page-url">{{ p.url }}</a>
+            <span>{{ p.title }}</span>
+            <span class="page-status" style="background:rgba(34,197,94,.1);color:#22c55e;">Indexed</span>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</body>
+</html>

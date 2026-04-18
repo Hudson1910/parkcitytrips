@@ -273,6 +273,67 @@ def admin_visitors():
         bookings=[], top_sources=[], recent_visitors=visitors[:100])
 
 
+@app.route('/admin/seo')
+def admin_seo():
+    if not session.get('admin'):
+        return redirect('/signin')
+    visitors = load_visitors()
+    now = datetime.now()
+    today_str = now.strftime('%Y-%m-%d')
+    week_ago = (now - __import__('datetime').timedelta(days=7)).isoformat()
+    month_ago = (now - __import__('datetime').timedelta(days=30)).isoformat()
+
+    visitors_today = sum(1 for v in visitors if v.get('timestamp', '')[:10] == today_str)
+    visitors_7d = sum(1 for v in visitors if v.get('timestamp', '') >= week_ago)
+    visitors_30d = sum(1 for v in visitors if v.get('timestamp', '') >= month_ago)
+    mobile_count = sum(1 for v in visitors if v.get('device') == 'Mobile')
+    pct_mobile = round(mobile_count / max(len(visitors), 1) * 100)
+    countries = set(v.get('country', '') for v in visitors if v.get('country'))
+
+    # Top pages
+    pages = {}
+    for v in visitors:
+        p = v.get('page', '/')
+        name = {'/' : 'Home', '/book': 'Booking', '/fleet': 'Fleet', '/about': 'About', '/weather': 'Weather', '/blog': 'Blog'}.get(p, p)
+        pages[name] = pages.get(name, 0) + 1
+    max_page = max(pages.values()) if pages else 1
+    top_pages = sorted([{'name': k, 'count': v, 'pct': round(v / max_page * 100)} for k, v in pages.items()], key=lambda x: -x['count'])[:10]
+
+    # Top sources
+    sources = {}
+    for v in visitors:
+        s = v.get('source', 'Direct')
+        sources[s] = sources.get(s, 0) + 1
+    max_src = max(sources.values()) if sources else 1
+    src_colors = {'Google': '#22c55e', 'Direct': '#6366f1', 'Facebook': '#3b82f6', 'Instagram': '#ec4899', 'Bing': '#f59e0b', 'Yelp': '#ef4444'}
+    top_sources = sorted([{'name': k, 'count': v, 'pct': round(v / max_src * 100), 'color': src_colors.get(k, '#666')} for k, v in sources.items()], key=lambda x: -x['count'])[:8]
+
+    # Top countries
+    country_data = {}
+    for v in visitors:
+        c = v.get('country', '')
+        if c:
+            flag = v.get('flag', '🌐')
+            country_data[c] = {'name': c, 'flag': flag, 'count': country_data.get(c, {}).get('count', 0) + 1}
+    top_countries = sorted(country_data.values(), key=lambda x: -x['count'])[:10]
+
+    # Site pages
+    site_pages = [
+        {'url': '/', 'title': 'Home'},
+        {'url': '/fleet', 'title': 'Fleet'},
+        {'url': '/about', 'title': 'About'},
+        {'url': '/weather', 'title': 'Weather & Conditions'},
+        {'url': '/book', 'title': 'Booking'},
+        {'url': '/blog', 'title': 'Blog'},
+    ]
+
+    return render_template('admin_seo.html',
+        visitors_today=visitors_today, visitors_7d=visitors_7d, visitors_30d=visitors_30d,
+        pct_mobile=pct_mobile, unique_countries=len(countries),
+        top_pages=top_pages, top_sources=top_sources, top_countries=top_countries,
+        site_pages=site_pages)
+
+
 @app.route('/admin/crm')
 def admin_crm():
     if not session.get('admin'):
