@@ -870,6 +870,12 @@ document.querySelectorAll('[data-count]').forEach(e=>cObs.observe(e));
 
 // Dynamic ride count
 (function(){const base=9000,perDay=5,since=new Date(2026,3,16);const days=Math.max(0,Math.floor((Date.now()-since)/864e5));const total=base+days*perDay;document.querySelectorAll('[data-count]').forEach(el=>{if(el.textContent==='0'&&el.closest('.stat-item'))el.dataset.count=total;});})();
+
+// Block pinch zoom & double-tap zoom on mobile
+document.addEventListener('touchstart',function(e){if(e.touches.length>1)e.preventDefault();},{passive:false});
+var lastTap=0;document.addEventListener('touchend',function(e){var now=Date.now();if(now-lastTap<300){e.preventDefault();}lastTap=now;},{passive:false});
+document.addEventListener('gesturestart',function(e){e.preventDefault();},{passive:false});
+document.addEventListener('gesturechange',function(e){e.preventDefault();},{passive:false});
 </script>
 </div><!-- /app-wrapper -->
 </body>
