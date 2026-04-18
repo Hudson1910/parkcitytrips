@@ -157,7 +157,6 @@ body.light .mobile-menu-btn{color:#000;}
     .sect-cta{padding:10px 22px;font-size:13px;}
     h2{word-wrap:break-word;}
     /* Prevent horizontal scroll */
-    .gallery-track,.rev-track{max-width:100vw;}
     /* Olympics splash */
     .splash-city{font-size:clamp(2rem,8vw,4rem);}
     .splash-year{font-size:clamp(3rem,12vw,6rem);}
@@ -383,8 +382,8 @@ body.light .mobile-menu-btn{color:#000;}
         <a href="/book" class="nav-cta">Book Now</a>
         <button class="lang-toggle" id="langToggle" title="Change language" onclick="cycleLang()">EN</button>
         <button class="theme-toggle" id="themeToggle" title="Toggle light/dark mode"><i class="bi bi-moon-fill"></i></button>
-        <button class="mobile-menu-btn" onclick="document.getElementById('mobileMenu').classList.add('open')"><i class="bi bi-list"></i></button>
     </div>
+    <button class="mobile-menu-btn" onclick="document.getElementById('mobileMenu').classList.add('open')"><i class="bi bi-list"></i></button>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
     <button class="close-btn" onclick="this.parentElement.classList.remove('open')"><i class="bi bi-x-lg"></i></button>
