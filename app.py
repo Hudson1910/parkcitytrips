@@ -208,6 +208,71 @@ def home_v1():
     return render_template('home.html', config=config)
 
 
+@app.route('/signin', methods=['GET', 'POST'])
+def signin():
+    if request.method == 'POST':
+        pin = request.form.get('pin', '')
+        email = request.form.get('email', '')
+        if pin == config.ADMIN_PIN:
+            session['admin'] = True
+            session['admin_email'] = email
+            session['admin_pin'] = pin
+            return redirect('/admin')
+        return render_template('signin.html', error='Invalid PIN')
+    return render_template('signin.html', error=None)
+
+
+@app.route('/signout')
+def signout():
+    session.clear()
+    return redirect('/')
+
+
+@app.route('/admin')
+def admin_dashboard():
+    if not session.get('admin'):
+        return redirect('/signin')
+    # Load visitors
+    visitors = load_visitors()
+    now = datetime.now()
+    today_str = now.strftime('%Y-%m-%d')
+    week_ago = (now - __import__('datetime').timedelta(days=7)).isoformat()
+
+    visitors_today = sum(1 for v in visitors if v.get('timestamp', '')[:10] == today_str)
+    visitors_7d = sum(1 for v in visitors if v.get('timestamp', '') >= week_ago)
+
+    # Source breakdown (last 7 days)
+    sources = {}
+    recent = [v for v in visitors if v.get('timestamp', '') >= week_ago]
+    for v in recent:
+        src = v.get('source', 'Direct')
+        sources[src] = sources.get(src, 0) + 1
+    total_visits = max(len(recent), 1)
+    src_colors = {'Google': '#22c55e', 'Direct': '#6366f1', 'Facebook': '#3b82f6', 'Instagram': '#ec4899', 'Bing': '#f59e0b', 'Yelp': '#ef4444', 'TripAdvisor': '#06b6d4'}
+    top_sources = sorted([{'name': k, 'count': v, 'pct': round(v / total_visits * 100), 'color': src_colors.get(k, '#666')} for k, v in sources.items()], key=lambda x: -x['count'])[:8]
+
+    # Load bookings
+    bookings = sorted(load_bookings(), key=lambda b: b.get('created_at', ''), reverse=True)
+    revenue = sum(b.get('total', 0) for b in bookings if b.get('status') == 'charged')
+
+    return render_template('admin_dashboard.html',
+        visitors_today=visitors_today, visitors_7d=visitors_7d,
+        bookings_total=len(bookings), revenue=revenue,
+        bookings=bookings, top_sources=top_sources,
+        recent_visitors=list(reversed(visitors[-20:])))
+
+
+@app.route('/admin/visitors')
+def admin_visitors():
+    if not session.get('admin'):
+        return redirect('/signin')
+    visitors = list(reversed(load_visitors()))
+    return render_template('admin_dashboard.html',
+        visitors_today=len([v for v in visitors if v.get('timestamp','')[:10]==datetime.now().strftime('%Y-%m-%d')]),
+        visitors_7d=len(visitors), bookings_total=0, revenue=0,
+        bookings=[], top_sources=[], recent_visitors=visitors[:100])
+
+
 @app.route('/weather')
 def weather():
     return render_template('weather.html', config=config)
@@ -614,7 +679,7 @@ def seo_page(slug):
 @app.route('/sitemap.xml')
 def sitemap():
     from flask import Response
-    pages = ['/'] + [f'/s/{s}' for s in SEO_PAGES] + ['/blog'] + [f'/blog/{p["slug"]}' for p in POSTS]
+    pages = ['/', '/fleet', '/about', '/weather', '/book'] + [f'/s/{s}' for s in SEO_PAGES] + ['/blog'] + [f'/blog/{p["slug"]}' for p in POSTS]
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     for p in pages:
         xml += f'  <url><loc>https://www.parkcitytrips.com{p}</loc><changefreq>weekly</changefreq><priority>{"1.0" if p=="/" else "0.8"}</priority></url>\n'
@@ -625,7 +690,7 @@ def sitemap():
 @app.route('/robots.txt')
 def robots():
     from flask import Response
-    txt = "User-agent: *\nAllow: /\nSitemap: https://www.parkcitytrips.com/sitemap.xml\n"
+    txt = "User-agent: *\nAllow: /\nDisallow: /signin\nDisallow: /admin\nDisallow: /signout\nSitemap: https://parkcitytrips.com/sitemap.xml\n"
     return Response(txt, mimetype='text/plain')
 
 

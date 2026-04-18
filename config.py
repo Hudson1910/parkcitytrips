@@ -78,5 +78,8 @@ NOTIFY_EMAIL = os.getenv('NOTIFY_EMAIL', 'agendahudsonbarros@gmail.com,contactus
 SMTP_USER = os.getenv('SMTP_USER', '')
 SMTP_PASS = os.getenv('SMTP_PASS', '')
 
+# Admin
+ADMIN_PIN = os.getenv('ADMIN_PIN', '6939')
+
 # Stats
 TOTAL_RIDES = '9,000+'

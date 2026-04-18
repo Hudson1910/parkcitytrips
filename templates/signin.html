@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="robots" content="noindex,nofollow">
+    <title>Sign In — Rio Transportation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;600;700;800&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center;}
+.login-card{width:100%;max-width:380px;padding:40px;text-align:center;}
+.logo{font-family:'Onest',sans-serif;font-size:20px;font-weight:800;letter-spacing:.1em;margin-bottom:8px;}
+.sub{font-size:13px;color:#666;margin-bottom:32px;}
+.field{margin-bottom:16px;text-align:left;}
+.field label{font-size:11px;font-weight:600;color:#999;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:6px;}
+.field input{width:100%;padding:14px 16px;background:#111318;border:1.5px solid #1e2130;border-radius:10px;color:#fff;font-size:16px;outline:none;font-family:'Montserrat',sans-serif;}
+.field input:focus{border-color:#c9a84c;}
+.btn{width:100%;padding:16px;background:#c9a84c;color:#000;border:none;border-radius:10px;font-family:'Onest',sans-serif;font-size:15px;font-weight:700;cursor:pointer;margin-top:8px;transition:all .2s;}
+.btn:hover{background:#e8c65a;}
+.error{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);border-radius:8px;padding:10px;color:#ef4444;font-size:13px;margin-bottom:16px;display:none;}
+.back{display:block;margin-top:20px;font-size:13px;color:#666;text-decoration:none;}
+.back:hover{color:#fff;}
+    </style>
+</head>
+<body>
+<div class="login-card">
+    <div class="logo">RIO TRANSPORTATION</div>
+    <div class="sub">Admin Dashboard</div>
+    {% if error %}
+    <div class="error" style="display:block;">{{ error }}</div>
+    {% endif %}
+    <form method="POST" action="/signin">
+        <div class="field">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="your@email.com" required>
+        </div>
+        <div class="field">
+            <label>PIN</label>
+            <input type="password" name="pin" placeholder="••••" required maxlength="10">
+        </div>
+        <button type="submit" class="btn">Sign In</button>
+    </form>
+    <a href="/" class="back">← Back to site</a>
+</div>
+</body>
+</html>
