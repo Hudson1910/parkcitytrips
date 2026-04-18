@@ -242,8 +242,7 @@ body.light .mobile-menu-btn{color:#000;}
 .split{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
 .split-reverse{direction:rtl;}.split-reverse>*{direction:ltr;}
 @media(max-width:768px){.split,.split-reverse{grid-template-columns:1fr;gap:40px;}}
-.split-img{border-radius:4px;overflow:hidden;}
-.split-img img{width:100%;height:100%;object-fit:cover;display:block;}
+.split-img{border-radius:4px;overflow:hidden;background-size:cover;background-position:center;}
 .split-img.glow{position:relative;}
 .split-img.glow::after{content:'';position:absolute;inset:-20%;background:radial-gradient(ellipse,rgba(255,255,255,.06),transparent 70%);pointer-events:none;}
 
@@ -259,8 +258,7 @@ body.light .mobile-menu-btn{color:#000;}
 
 /* === FULL-BLEED IMAGE + OVERLAY CARD === */
 .bleed{position:relative;min-height:80vh;display:flex;align-items:center;overflow:hidden;}
-.bleed-bg{position:absolute;inset:0;}
-.bleed-bg img{width:100%;height:100%;object-fit:cover;}
+.bleed-bg{position:absolute;inset:0;background-size:cover;background-position:center;}
 .bleed-card{position:relative;z-index:2;background:rgba(0,0,0,.85);backdrop-filter:blur(12px);padding:48px;max-width:520px;margin:60px;border-radius:2px;}
 .bleed-card .sect-label{color:rgba(255,255,255,.4);}
 .bleed-card .sect-title{color:#fff;}
@@ -279,9 +277,8 @@ body.light .mobile-menu-btn{color:#000;}
 .book-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
 .book-card{background:#111318;border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden;transition:all .4s cubic-bezier(.16,1,.3,1);display:flex;flex-direction:column;}
 .book-card:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.15);box-shadow:0 20px 60px rgba(0,0,0,.4);}
-.book-img{height:180px;overflow:hidden;background:#0a0c10;display:flex;align-items:center;justify-content:center;padding:16px;}
-.book-img img{max-width:100%;max-height:100%;object-fit:contain;transition:transform .5s;}
-.book-card:hover .book-img img{transform:scale(1.05);}
+.book-img{height:180px;overflow:hidden;background:#0a0c10;transition:transform .5s;}
+.book-card:hover .book-img{transform:scale(1.05);}
 .book-info{padding:24px 20px;flex:1;display:flex;flex-direction:column;}
 .book-info .book-price{margin-top:auto;}
 .book-info .book-btn{margin-top:12px;}
@@ -429,8 +426,7 @@ body.light .mobile-menu-btn{color:#000;}
                 <p class="sect-body" data-i18n="vision_p">No shared shuttles. No surge pricing. No waiting in taxi lines at the airport. Just a private luxury SUV, a professional driver, and a smooth 45-minute ride through the Wasatch Mountains to your destination. No last-minute cancellation fees.</p>
                 <a href="#book" class="sect-cta">Book Your Ride <i class="bi bi-arrow-right"></i></a>
             </div>
-            <div class="split-img glow" style="height:420px;">
-                <img src="https://static.wixstatic.com/media/55a398_c807593e42cb4255a62876909c0e0f68~mv2.png" alt="Executive chauffeur service" style="filter:brightness(.85);">
+            <div class="split-img glow" style="height:420px;background-image:url('https://static.wixstatic.com/media/55a398_c807593e42cb4255a62876909c0e0f68~mv2.png');background-size:cover;background-position:center;filter:brightness(.85);">
             </div>
         </div>
     </div>
@@ -464,8 +460,7 @@ body.light .mobile-menu-btn{color:#000;}
 
 <!-- WHY RIO — full bleed image + dark overlay card -->
 <section class="bleed reveal" id="why">
-    <div class="bleed-bg">
-        <img src="https://static.wixstatic.com/media/55a398_44b22dc0a21645a9a92edf4210bb92d9~mv2.png" alt="Park City" loading="lazy">
+    <div class="bleed-bg" style="background-image:url('https://static.wixstatic.com/media/55a398_44b22dc0a21645a9a92edf4210bb92d9~mv2.png');background-size:cover;background-position:center;">
     </div>
     <div class="bleed-card">
         <div class="sect-label">WHY RIO</div>
@@ -479,8 +474,7 @@ body.light .mobile-menu-btn{color:#000;}
 <section class="sect sect-light" id="numbers">
     <div class="sect-inner">
         <div class="split">
-            <div class="split-img reveal" style="height:450px;">
-                <img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&h=600&fit=crop" alt="Park City">
+            <div class="split-img reveal" style="height:450px;background-image:url('https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&h=600&fit=crop');background-size:cover;background-position:center;">
             </div>
             <div class="reveal reveal-delay-1">
                 <div class="sect-label">RIO IN NUMBERS</div>
@@ -503,23 +497,22 @@ body.light .mobile-menu-btn{color:#000;}
         <h2 class="sect-title lg reveal reveal-delay-1" style="text-align:center;margin-bottom:40px;">Real Rides. Real Service.</h2>
     </div>
     <div class="gallery-track" id="galleryTrack">
-        <div class="gallery-item"><img src="/static/gallery/rio-10.jpg" alt="Fleet at airport" loading="lazy"></div>
-        <div class="gallery-item"><img src="/static/gallery/rio-9.jpg" alt="Yukon side view" loading="lazy"></div>
-        <div class="gallery-item"><img src="/static/gallery/rio-5.jpg" alt="Lincoln Navigator at FBO" loading="lazy"></div>
-        <div class="gallery-item"><img src="/static/gallery/rio-6.jpg" alt="Hudson with fleet" loading="lazy"></div>
-        <div class="gallery-item"><img src="/static/gallery/rio-7.jpg" alt="GMC and Escalade" loading="lazy"></div>
-        <div class="gallery-item"><img src="/static/gallery/rio-4.jpg" alt="Snow drive to Park City" loading="lazy"></div>
-        <div class="gallery-item"><img src="/static/gallery/rio-8.jpg" alt="Yukon and Tesla" loading="lazy"></div>
-        <div class="gallery-item"><img src="/static/gallery/rio-3.jpg" alt="Fleet in snow" loading="lazy"></div>
-        <div class="gallery-item"><img src="/static/gallery/rio-1.jpg" alt="Highway to Park City" loading="lazy"></div>
-        <div class="gallery-item"><img src="/static/gallery/rio-2.jpg" alt="Yukon winter drive" loading="lazy"></div>
+        <div class="gallery-item" style="background-image:url('/static/gallery/rio-10.jpg');width:420px;"></div>
+        <div class="gallery-item" style="background-image:url('/static/gallery/rio-9.jpg');width:420px;"></div>
+        <div class="gallery-item" style="background-image:url('/static/gallery/rio-5.jpg');width:420px;"></div>
+        <div class="gallery-item" style="background-image:url('/static/gallery/rio-6.jpg');width:420px;"></div>
+        <div class="gallery-item" style="background-image:url('/static/gallery/rio-7.jpg');width:420px;"></div>
+        <div class="gallery-item" style="background-image:url('/static/gallery/rio-4.jpg');width:420px;"></div>
+        <div class="gallery-item" style="background-image:url('/static/gallery/rio-8.jpg');width:420px;"></div>
+        <div class="gallery-item" style="background-image:url('/static/gallery/rio-3.jpg');width:420px;"></div>
+        <div class="gallery-item" style="background-image:url('/static/gallery/rio-1.jpg');width:420px;"></div>
+        <div class="gallery-item" style="background-image:url('/static/gallery/rio-2.jpg');width:420px;"></div>
     </div>
 </section>
 <style>
 .gallery-track{display:flex;gap:12px;width:max-content;animation:galleryScroll 40s linear infinite;padding:10px 0;}
 .gallery-track:hover{animation-play-state:paused;}
-.gallery-item{flex-shrink:0;height:280px;border-radius:12px;overflow:hidden;}
-.gallery-item img{height:100%;width:auto;object-fit:cover;display:block;transition:transform .4s;}
+.gallery-item{flex-shrink:0;height:280px;border-radius:12px;overflow:hidden;background-size:cover;background-position:center;}
 .gallery-item:hover img{transform:scale(1.05);}
 @keyframes galleryScroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
 </style>
@@ -561,7 +554,7 @@ t.addEventListener('touchend',()=>setTimeout(()=>t.style.animationPlayState='run
         <p class="sect-body reveal reveal-delay-2" style="text-align:center;margin:0 auto 48px;color:rgba(255,255,255,.5);">All prices include driver, taxes, fees, bottled water, and complimentary car seats.</p>
         <div class="book-grid">
             <div class="book-card reveal">
-                <div class="book-img"><img src="https://static.wixstatic.com/media/55a398_cb5c7d2583204805ab6e961e3daf4140~mv2.webp" alt="Small SUV or similar"></div>
+                <div class="book-img" style="background-image:url('https://static.wixstatic.com/media/55a398_cb5c7d2583204805ab6e961e3daf4140~mv2.webp');background-size:contain;background-repeat:no-repeat;background-position:center;"></div>
                 <div class="book-info">
                     <div class="book-tag">Best Value</div>
                     <h3>Small SUV</h3>
@@ -572,7 +565,7 @@ t.addEventListener('touchend',()=>setTimeout(()=>t.style.animationPlayState='run
                 </div>
             </div>
             <div class="book-card reveal reveal-delay-1">
-                <div class="book-img"><img src="/static/pathfinder.avif" alt="Nissan Pathfinder"></div>
+                <div class="book-img" style="background-image:url('/static/pathfinder.avif');background-size:contain;background-repeat:no-repeat;background-position:center;"></div>
                 <div class="book-info">
                     <div class="book-tag">Popular</div>
                     <h3>Midsize SUV</h3>
@@ -583,7 +576,7 @@ t.addEventListener('touchend',()=>setTimeout(()=>t.style.animationPlayState='run
                 </div>
             </div>
             <div class="book-card reveal reveal-delay-2">
-                <div class="book-img"><img src="/static/premier-suv.jpg" alt="Premier SUV"></div>
+                <div class="book-img" style="background-image:url('/static/premier-suv.jpg');background-size:contain;background-repeat:no-repeat;background-position:center;"></div>
                 <div class="book-info">
                     <div class="book-tag" style="background:var(--accent);color:#000;">Most Popular</div>
                     <h3>Premier SUV</h3>
@@ -594,7 +587,7 @@ t.addEventListener('touchend',()=>setTimeout(()=>t.style.animationPlayState='run
                 </div>
             </div>
             <div class="book-card reveal reveal-delay-3">
-                <div class="book-img"><img src="/static/luxury-suv.jpg" alt="Luxury SUV"></div>
+                <div class="book-img" style="background-image:url('/static/luxury-suv.jpg');background-size:contain;background-repeat:no-repeat;background-position:center;"></div>
                 <div class="book-info">
                     <div class="book-tag" style="background:rgba(201,168,76,.15);color:var(--accent);">Premium</div>
                     <h3>Luxury SUV</h3>
