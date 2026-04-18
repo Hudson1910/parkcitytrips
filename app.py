@@ -167,6 +167,20 @@ def send_booking_email(booking):
 _data_dir = os.getenv('RAILWAY_VOLUME_MOUNT_PATH', os.path.join(os.path.dirname(__file__), 'data'))
 # Visitor tracking
 _recent_visitors = {}
+VISITORS_FILE = os.path.join(_data_dir, 'visitors.json')
+
+def load_visitors():
+    try:
+        with open(VISITORS_FILE) as f: return json.load(f)
+    except: return []
+
+def save_visitor(entry):
+    visitors = load_visitors()
+    visitors.append(entry)
+    # Keep last 1000 entries
+    if len(visitors) > 1000:
+        visitors = visitors[-1000:]
+    with open(VISITORS_FILE, 'w') as f: json.dump(visitors, f)
 
 BOOKINGS_FILE = os.path.join(_data_dir, 'bookings.json')
 os.makedirs(os.path.dirname(BOOKINGS_FILE), exist_ok=True)
@@ -447,12 +461,34 @@ def track_visitor():
 
     _recent_visitors[ip] = now
 
-    # Get location from IP
+    # Get visitor data from JS beacon
     data = request.get_json() or {}
     page = data.get('page', '/')
+    title = data.get('title', '')
     referrer = data.get('referrer', '')
-    ua = request.headers.get('User-Agent', '')[:100]
-    device = 'Mobile' if 'Mobile' in ua or 'iPhone' in ua or 'Android' in ua else 'Desktop'
+    utm_source = data.get('utm_source', '')
+    screen_size = data.get('screen', '')
+    lang = data.get('lang', '')
+    ua = request.headers.get('User-Agent', '')[:150]
+    device = 'Mobile' if any(x in ua for x in ['Mobile','iPhone','Android','iPad']) else 'Desktop'
+    browser = 'Chrome' if 'Chrome' in ua else 'Safari' if 'Safari' in ua else 'Firefox' if 'Firefox' in ua else 'Other'
+
+    # Determine traffic source
+    source = 'Direct'
+    if utm_source:
+        source = utm_source.capitalize()
+    elif referrer:
+        ref = referrer.lower()
+        if 'google' in ref: source = 'Google'
+        elif 'facebook' in ref or 'fb.' in ref: source = 'Facebook'
+        elif 'instagram' in ref: source = 'Instagram'
+        elif 'bing' in ref: source = 'Bing'
+        elif 'yahoo' in ref: source = 'Yahoo'
+        elif 'tiktok' in ref: source = 'TikTok'
+        elif 'twitter' in ref or 'x.com' in ref: source = 'Twitter/X'
+        elif 'yelp' in ref: source = 'Yelp'
+        elif 'tripadvisor' in ref: source = 'TripAdvisor'
+        else: source = referrer.split('/')[2][:30] if '//' in referrer else referrer[:30]
 
     def notify():
         try:
@@ -460,31 +496,39 @@ def track_visitor():
             city = geo.get('city', '?')
             region = geo.get('region', '')
             country = geo.get('country_name', '?')
-            flag = geo.get('country_code', '')
-            # Convert country code to flag emoji
-            if len(flag) == 2:
-                flag = chr(127397 + ord(flag[0])) + chr(127397 + ord(flag[1]))
-            else:
-                flag = '🌐'
+            cc = geo.get('country_code', '')
+            flag = chr(127397 + ord(cc[0])) + chr(127397 + ord(cc[1])) if len(cc) == 2 else '🌐'
 
+            # Save to log
+            save_visitor({
+                'ip': ip[:20], 'city': city, 'region': region, 'country': country, 'flag': flag,
+                'device': device, 'browser': browser, 'page': page, 'source': source,
+                'referrer': referrer[:100], 'screen': screen_size, 'lang': lang,
+                'timestamp': datetime.now().isoformat()
+            })
+
+            # Send email notification
             if config.RESEND_API_KEY:
+                page_name = {'/' : 'Home', '/book': 'Booking', '/fleet': 'Fleet', '/about': 'About', '/weather': 'Weather', '/blog': 'Blog'}.get(page, page)
                 req.post('https://api.resend.com/emails', json={
                     'from': 'Rio Transportation <booking@parkcitytrips.com>',
                     'to': ['agendahudsonbarros@gmail.com'],
-                    'subject': f'{flag} Visitor from {city}, {country}',
-                    'html': f"""<div style="font-family:Arial,sans-serif;max-width:400px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;">
-<div style="background:#000;padding:16px 20px;color:#fff;font-size:14px;font-weight:700;">🌐 New Visitor on parkcitytrips.com</div>
-<div style="padding:20px;">
-<table style="width:100%;font-size:14px;color:#333;border-collapse:collapse;">
-<tr><td style="padding:6px 0;color:#999;">Location</td><td style="padding:6px 0;text-align:right;font-weight:700;">{flag} {city}, {region}</td></tr>
-<tr><td style="padding:6px 0;color:#999;">Country</td><td style="padding:6px 0;text-align:right;">{country}</td></tr>
-<tr><td style="padding:6px 0;color:#999;">Device</td><td style="padding:6px 0;text-align:right;">{device}</td></tr>
-<tr><td style="padding:6px 0;color:#999;">Page</td><td style="padding:6px 0;text-align:right;">{page}</td></tr>
-{f'<tr><td style="padding:6px 0;color:#999;">From</td><td style="padding:6px 0;text-align:right;font-size:12px;">{referrer[:60]}</td></tr>' if referrer else ''}
+                    'subject': f'{flag} {city} — {source} — {page_name}',
+                    'html': f"""<div style="font-family:Arial,sans-serif;max-width:420px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;">
+<div style="background:#000;padding:14px 20px;color:#fff;font-size:13px;font-weight:700;">🌐 New Visitor — parkcitytrips.com</div>
+<div style="padding:16px 20px;">
+<table style="width:100%;font-size:13px;color:#333;border-collapse:collapse;">
+<tr><td style="padding:5px 0;color:#999;">📍 Location</td><td style="padding:5px 0;text-align:right;font-weight:700;">{flag} {city}, {region}</td></tr>
+<tr><td style="padding:5px 0;color:#999;">🌍 Country</td><td style="padding:5px 0;text-align:right;">{country}</td></tr>
+<tr><td style="padding:5px 0;color:#999;">📱 Device</td><td style="padding:5px 0;text-align:right;">{device} · {browser}</td></tr>
+<tr><td style="padding:5px 0;color:#999;">📄 Page</td><td style="padding:5px 0;text-align:right;font-weight:700;">{page_name}</td></tr>
+<tr><td style="padding:5px 0;color:#999;">🔗 Source</td><td style="padding:5px 0;text-align:right;font-weight:700;color:{'#22c55e' if source=='Google' else '#3b82f6' if source in ('Facebook','Instagram') else '#000'};">{source}</td></tr>
+{f'<tr><td style="padding:5px 0;color:#999;">↩ Referrer</td><td style="padding:5px 0;text-align:right;font-size:11px;color:#999;">{referrer[:60]}</td></tr>' if referrer and source=='Direct' else ''}
+<tr><td style="padding:5px 0;color:#999;">🗣 Language</td><td style="padding:5px 0;text-align:right;">{lang}</td></tr>
 </table>
 </div></div>""",
                 }, headers={'Authorization': f'Bearer {config.RESEND_API_KEY}'}, timeout=10)
-                print(f"[Visitor] {flag} {city}, {country} — {device} — {page}")
+                print(f"[Visitor] {flag} {city} — {source} — {page_name} — {device}")
         except Exception as e:
             print(f"[Visitor] Error: {e}")
 

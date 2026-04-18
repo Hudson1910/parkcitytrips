@@ -670,7 +670,7 @@ t.addEventListener('touchend',()=>setTimeout(()=>t.style.animationPlayState='run
 window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',scrollY>80);},{passive:true});
 
 // Visitor tracking — notify owner
-if(!sessionStorage.getItem('v')){sessionStorage.setItem('v','1');fetch('/api/visitor',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page:location.pathname,referrer:document.referrer})}).catch(()=>{});}
+if(!sessionStorage.getItem('v')){sessionStorage.setItem('v','1');fetch('/api/visitor',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page:location.pathname||'/',title:document.title,referrer:document.referrer,utm_source:new URLSearchParams(location.search).get('utm_source')||'',utm_medium:new URLSearchParams(location.search).get('utm_medium')||'',screen:screen.width+'x'+screen.height,lang:navigator.language})}).catch(()=>{});}
 
 // Auto language detection + translation
 (function(){
