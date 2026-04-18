@@ -902,6 +902,27 @@ SEO_PAGES = {
         'keywords': 'Park City private shuttle, private shuttle to Park City, Park City shuttle service, private van Park City, Park City shuttle from airport',
         'content': 'Why share a shuttle van with strangers when you can have a private luxury SUV? Rio Transportation\'s private shuttle service takes you directly from Salt Lake City Airport to your Park City destination — no waiting for other passengers, no extra stops, no crowded vans. Perfect for families with children (free car seats provided), groups with ski equipment, and anyone who values their time and comfort. Our fleet includes the Nissan Pathfinder (7 seats), GMC Yukon (7 seats), and Lincoln Navigator (7 seats). Every ride includes bottled water, phone chargers, Wi-Fi, and a professional driver who knows Park City inside and out.',
     },
+    'park-city-snow-report': {
+        'title': 'Park City Snow Report Today | Deer Valley & PCM Live Conditions',
+        'h1': 'Park City Snow Report — Live Conditions',
+        'desc': 'Real-time snow report for Park City, Utah. Deer Valley and Park City Mountain conditions, snowfall, base depth, open lifts, webcams, road conditions. Updated daily.',
+        'keywords': 'Park City snow report, Park City snow conditions, Deer Valley snow report, Park City Mountain conditions today, Park City ski conditions, Utah snow report',
+        'content': 'Check the latest snow conditions for both Park City ski resorts in one place. Our <a href="/weather">live conditions dashboard</a> pulls real-time data from Deer Valley Resort and Park City Mountain including current temperature, wind speed, snowfall in the last 24/48/72 hours, base depth, season total, open lifts and trails, road conditions on I-80 and SR-224, and 8 live webcams. No need to check two different websites — see everything side by side and plan your ski day. Whether you\'re deciding between Deer Valley and Park City Mountain, or just want to know if it\'s a powder day, our snow report has you covered. Need a ride to the slopes? Book a private SUV from SLC Airport starting at $109.',
+    },
+    'park-city-webcams': {
+        'title': 'Park City Webcams Live | Deer Valley & Park City Mountain Cameras',
+        'h1': 'Park City Live Webcams',
+        'desc': 'Live webcams from Park City Mountain and Deer Valley. 8 cameras: summit, base, snow stakes, ridgeline. Check conditions before you go. Updated every 5 min.',
+        'keywords': 'Park City webcams, Park City Mountain webcam, Deer Valley webcam, Park City live camera, Park City snow cam, ski resort webcam Utah',
+        'content': 'See Park City ski conditions in real-time with our <a href="/weather">8 live webcams</a> from Park City Mountain Resort. Cameras include Orange Bubble Summit, Lookout Cabin, Crescent Ridge, Crescent Summit, Mountain Village Base, High Meadow, and two snow stake cameras. All cameras update every 5 minutes and stream live video. Perfect for checking snow conditions, visibility, and crowd levels before heading to the mountain. We also show Deer Valley webcams and a complete snow report with temperature, wind, snowfall data, and I-80 road conditions. Planning your ski trip? Book your airport transfer from SLC to Park City starting at $109.',
+    },
+    'park-city-road-conditions': {
+        'title': 'Park City Road Conditions | I-80 & SR-224 Status | Chain Requirements',
+        'h1': 'Park City Road Conditions — I-80, US-40, SR-224',
+        'desc': 'Live road conditions to Park City, Utah. I-80 Parley\'s Canyon, SR-224, US-40 status. Chain requirements, closures, winter driving info. Updated in real-time.',
+        'keywords': 'Park City road conditions, I-80 conditions, Parleys Canyon road conditions, SR-224 conditions, driving to Park City winter, chains required Park City',
+        'content': 'Driving to Park City? Check <a href="/weather">live road conditions</a> on our conditions page. We pull real-time status for I-80 (Parley\'s Canyon), US-40, SR-224, and SR-248 including open/closed status, chain requirements, and weather alerts. Winter driving through Parley\'s Canyon can be challenging — our data helps you decide whether to drive yourself or book a professional driver who handles these roads daily. Skip the stress of winter mountain driving. Our professional drivers navigate I-80 and SR-224 in all conditions with AWD luxury SUVs equipped for Utah winters. Private transfers from SLC Airport start at $109.',
+    },
     'park-city-limo-service': {
         'title': 'Park City Limo Service | Luxury SUV & Executive Transportation',
         'h1': 'Park City Limousine & Luxury SUV Service',
