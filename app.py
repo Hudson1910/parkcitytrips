@@ -482,6 +482,11 @@ def admin_crm():
     return render_template('admin_crm.html', clients=clients, quotes=quotes, finance=finance)
 
 
+@app.route('/experiences')
+def experiences():
+    return render_template('experiences.html', config=config)
+
+
 @app.route('/weather')
 def weather():
     return render_template('weather.html', config=config)
