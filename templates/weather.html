@@ -195,31 +195,36 @@ body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-heigh
         </div>
         <div style="padding:20px;">
             <p style="font-size:13px;color:#666;margin-bottom:16px;">Live traffic cameras along I-80, SR-224, and US-40 — the routes from SLC Airport to Park City. Powered by UDOT.</p>
-            <!-- Road tabs -->
-            <div style="display:flex;gap:8px;margin-bottom:12px;">
-                <button onclick="showRoad('i80')" class="road-tab active" id="tab-i80" style="padding:8px 16px;background:rgba(201,168,76,.15);color:#c9a84c;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;">I-80</button>
-                <button onclick="showRoad('sr224')" class="road-tab" id="tab-sr224" style="padding:8px 16px;background:rgba(255,255,255,.04);color:#999;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;">SR-224</button>
-                <button onclick="showRoad('us40')" class="road-tab" id="tab-us40" style="padding:8px 16px;background:rgba(255,255,255,.04);color:#999;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;">US-40</button>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+                <a href="https://udottraffic.utah.gov/cctv?start=0&length=10&filters%5B0%5D%5Bi%5D=2&filters%5B0%5D%5Bs%5D=I-80&order%5Bi%5D=1&order%5Bdir%5D=asc" target="_blank" style="background:#0a0c10;border-radius:10px;text-decoration:none;display:block;border:1px solid #1e2130;transition:all .2s;overflow:hidden;" onmouseover="this.style.borderColor='#c9a84c';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='#1e2130';this.style.transform='none'">
+                    <div style="background:linear-gradient(135deg,#1a1a2e,#0a0c10);padding:28px 20px;text-align:center;">
+                        <div style="font-size:36px;margin-bottom:10px;">🛣️</div>
+                        <div style="font-family:'Onest',sans-serif;font-size:18px;font-weight:800;color:#fff;">I-80</div>
+                        <div style="font-size:12px;color:#c9a84c;font-weight:600;margin-top:4px;">Parley's Canyon</div>
+                        <div style="font-size:11px;color:#666;margin-top:6px;">SLC → Park City main route</div>
+                        <div style="margin-top:14px;padding:8px 16px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);border-radius:6px;display:inline-block;font-size:11px;color:#c9a84c;font-weight:600;">View Live Cameras →</div>
+                    </div>
+                </a>
+                <a href="https://udottraffic.utah.gov/cctv?start=0&length=10&filters%5B0%5D%5Bi%5D=2&filters%5B0%5D%5Bs%5D=SR+224&order%5Bi%5D=1&order%5Bdir%5D=asc" target="_blank" style="background:#0a0c10;border-radius:10px;text-decoration:none;display:block;border:1px solid #1e2130;transition:all .2s;overflow:hidden;" onmouseover="this.style.borderColor='#c9a84c';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='#1e2130';this.style.transform='none'">
+                    <div style="background:linear-gradient(135deg,#1a1a2e,#0a0c10);padding:28px 20px;text-align:center;">
+                        <div style="font-size:36px;margin-bottom:10px;">🏔️</div>
+                        <div style="font-family:'Onest',sans-serif;font-size:18px;font-weight:800;color:#fff;">SR-224</div>
+                        <div style="font-size:12px;color:#c9a84c;font-weight:600;margin-top:4px;">Kimball Junction</div>
+                        <div style="font-size:11px;color:#666;margin-top:6px;">I-80 exit to Park City</div>
+                        <div style="margin-top:14px;padding:8px 16px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);border-radius:6px;display:inline-block;font-size:11px;color:#c9a84c;font-weight:600;">View Live Cameras →</div>
+                    </div>
+                </a>
+                <a href="https://udottraffic.utah.gov/cctv?start=0&length=10&filters%5B0%5D%5Bi%5D=2&filters%5B0%5D%5Bs%5D=US+40&order%5Bi%5D=1&order%5Bdir%5D=asc" target="_blank" style="background:#0a0c10;border-radius:10px;text-decoration:none;display:block;border:1px solid #1e2130;transition:all .2s;overflow:hidden;" onmouseover="this.style.borderColor='#c9a84c';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='#1e2130';this.style.transform='none'">
+                    <div style="background:linear-gradient(135deg,#1a1a2e,#0a0c10);padding:28px 20px;text-align:center;">
+                        <div style="font-size:36px;margin-bottom:10px;">🏞️</div>
+                        <div style="font-family:'Onest',sans-serif;font-size:18px;font-weight:800;color:#fff;">US-40</div>
+                        <div style="font-size:12px;color:#c9a84c;font-weight:600;margin-top:4px;">Heber Valley</div>
+                        <div style="font-size:11px;color:#666;margin-top:6px;">Alternate route via Heber</div>
+                        <div style="margin-top:14px;padding:8px 16px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);border-radius:6px;display:inline-block;font-size:11px;color:#c9a84c;font-weight:600;">View Live Cameras →</div>
+                    </div>
+                </a>
             </div>
-            <div id="road-i80" style="border-radius:8px;overflow:hidden;border:1px solid #1e2130;">
-                <iframe src="https://udottraffic.utah.gov/cctv?start=0&length=10&filters%5B0%5D%5Bi%5D=2&filters%5B0%5D%5Bs%5D=I-80&order%5Bi%5D=1&order%5Bdir%5D=asc" style="width:100%;height:500px;border:none;" loading="lazy"></iframe>
-            </div>
-            <div id="road-sr224" style="border-radius:8px;overflow:hidden;border:1px solid #1e2130;display:none;">
-                <iframe src="https://udottraffic.utah.gov/cctv?start=0&length=10&filters%5B0%5D%5Bi%5D=2&filters%5B0%5D%5Bs%5D=SR+224&order%5Bi%5D=1&order%5Bdir%5D=asc" style="width:100%;height:500px;border:none;" loading="lazy"></iframe>
-            </div>
-            <div id="road-us40" style="border-radius:8px;overflow:hidden;border:1px solid #1e2130;display:none;">
-                <iframe src="https://udottraffic.utah.gov/cctv?start=0&length=10&filters%5B0%5D%5Bi%5D=2&filters%5B0%5D%5Bs%5D=US+40&order%5Bi%5D=1&order%5Bdir%5D=asc" style="width:100%;height:500px;border:none;" loading="lazy"></iframe>
-            </div>
-            <script>
-            function showRoad(id){
-                document.querySelectorAll('[id^="road-"]').forEach(d=>d.style.display='none');
-                document.querySelectorAll('.road-tab').forEach(t=>{t.style.background='rgba(255,255,255,.04)';t.style.color='#999';});
-                document.getElementById('road-'+id).style.display='block';
-                var tab=document.getElementById('tab-'+id);
-                tab.style.background='rgba(201,168,76,.15)';tab.style.color='#c9a84c';
-            }
-            </script>
-            <p style="font-size:11px;color:#444;margin-top:12px;text-align:center;">Live cameras powered by UDOT Traffic · <a href="https://udottraffic.utah.gov/map" target="_blank" style="color:#c9a84c;text-decoration:none;">View full map</a></p>
+            <p style="font-size:11px;color:#444;margin-top:12px;text-align:center;">Live cameras powered by UDOT Traffic · <a href="https://udottraffic.utah.gov/map" target="_blank" style="color:#c9a84c;text-decoration:none;">View full Utah map</a></p>
         </div>
     </div>
 </div>
