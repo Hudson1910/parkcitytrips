@@ -196,60 +196,21 @@ body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-heigh
         <div style="padding:20px;">
             <p style="font-size:13px;color:#666;margin-bottom:16px;">Live traffic cameras along I-80, SR-224, and US-40 — the routes from SLC Airport to Park City. Powered by UDOT.</p>
             <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
-                <div style="background:#0a0c10;border-radius:8px;overflow:hidden;">
-                    <div style="aspect-ratio:16/9;background:#111;display:flex;align-items:center;justify-content:center;">
-                        <a href="https://udottraffic.utah.gov/map?lon=-111.5964&lat=40.7468&zoom=14&mlayers=Cameras" target="_blank" style="text-decoration:none;text-align:center;color:#fff;padding:20px;">
-                            <i class="bi bi-camera-video" style="font-size:32px;color:#c9a84c;display:block;margin-bottom:8px;"></i>
-                            <div style="font-size:13px;font-weight:700;">Kimball Junction</div>
-                            <div style="font-size:10px;color:#666;">SR-224 @ I-80</div>
-                        </a>
-                    </div>
-                </div>
-                <div style="background:#0a0c10;border-radius:8px;overflow:hidden;">
-                    <div style="aspect-ratio:16/9;background:#111;display:flex;align-items:center;justify-content:center;">
-                        <a href="https://udottraffic.utah.gov/map?lon=-111.5476&lat=40.7536&zoom=14&mlayers=Cameras" target="_blank" style="text-decoration:none;text-align:center;color:#fff;padding:20px;">
-                            <i class="bi bi-camera-video" style="font-size:32px;color:#c9a84c;display:block;margin-bottom:8px;"></i>
-                            <div style="font-size:13px;font-weight:700;">Parley's Summit</div>
-                            <div style="font-size:10px;color:#666;">I-80 MP 143</div>
-                        </a>
-                    </div>
-                </div>
-                <div style="background:#0a0c10;border-radius:8px;overflow:hidden;">
-                    <div style="aspect-ratio:16/9;background:#111;display:flex;align-items:center;justify-content:center;">
-                        <a href="https://udottraffic.utah.gov/map?lon=-111.5022&lat=40.6963&zoom=14&mlayers=Cameras" target="_blank" style="text-decoration:none;text-align:center;color:#fff;padding:20px;">
-                            <i class="bi bi-camera-video" style="font-size:32px;color:#c9a84c;display:block;margin-bottom:8px;"></i>
-                            <div style="font-size:13px;font-weight:700;">Park City</div>
-                            <div style="font-size:10px;color:#666;">SR-224 @ Kearns Blvd</div>
-                        </a>
-                    </div>
-                </div>
-                <div style="background:#0a0c10;border-radius:8px;overflow:hidden;">
-                    <div style="aspect-ratio:16/9;background:#111;display:flex;align-items:center;justify-content:center;">
-                        <a href="https://udottraffic.utah.gov/map?lon=-111.4923&lat=40.7293&zoom=14&mlayers=Cameras" target="_blank" style="text-decoration:none;text-align:center;color:#fff;padding:20px;">
-                            <i class="bi bi-camera-video" style="font-size:32px;color:#c9a84c;display:block;margin-bottom:8px;"></i>
-                            <div style="font-size:13px;font-weight:700;">Silver Creek</div>
-                            <div style="font-size:10px;color:#666;">I-80 @ US-40</div>
-                        </a>
-                    </div>
-                </div>
-                <div style="background:#0a0c10;border-radius:8px;overflow:hidden;">
-                    <div style="aspect-ratio:16/9;background:#111;display:flex;align-items:center;justify-content:center;">
-                        <a href="https://udottraffic.utah.gov/map?lon=-111.6426&lat=40.7182&zoom=14&mlayers=Cameras" target="_blank" style="text-decoration:none;text-align:center;color:#fff;padding:20px;">
-                            <i class="bi bi-camera-video" style="font-size:32px;color:#c9a84c;display:block;margin-bottom:8px;"></i>
-                            <div style="font-size:13px;font-weight:700;">Parley's Canyon</div>
-                            <div style="font-size:10px;color:#666;">I-80 MP 137</div>
-                        </a>
-                    </div>
-                </div>
-                <div style="background:#0a0c10;border-radius:8px;overflow:hidden;">
-                    <div style="aspect-ratio:16/9;background:#111;display:flex;align-items:center;justify-content:center;">
-                        <a href="https://udottraffic.utah.gov/map?lon=-111.4131&lat=40.5071&zoom=14&mlayers=Cameras" target="_blank" style="text-decoration:none;text-align:center;color:#fff;padding:20px;">
-                            <i class="bi bi-camera-video" style="font-size:32px;color:#c9a84c;display:block;margin-bottom:8px;"></i>
-                            <div style="font-size:13px;font-weight:700;">US-40 Heber</div>
-                            <div style="font-size:10px;color:#666;">US-40 @ SR-32</div>
-                        </a>
-                    </div>
-                </div>
+                <a href="https://udottraffic.utah.gov/cctv?start=0&length=10&filters%5B0%5D%5Bi%5D=2&filters%5B0%5D%5Bs%5D=I-80&order%5Bi%5D=1&order%5Bdir%5D=asc" target="_blank" style="background:#0a0c10;border-radius:8px;overflow:hidden;text-decoration:none;display:block;padding:24px;text-align:center;border:1px solid #1e2130;transition:border-color .2s;" onmouseover="this.style.borderColor='#c9a84c'" onmouseout="this.style.borderColor='#1e2130'">
+                    <i class="bi bi-camera-video" style="font-size:32px;color:#c9a84c;display:block;margin-bottom:8px;"></i>
+                    <div style="font-size:14px;font-weight:700;color:#fff;">I-80 Cameras</div>
+                    <div style="font-size:11px;color:#666;margin-top:4px;">Parley's Canyon to Park City</div>
+                </a>
+                <a href="https://udottraffic.utah.gov/cctv?start=0&length=10&filters%5B0%5D%5Bi%5D=2&filters%5B0%5D%5Bs%5D=SR-224&order%5Bi%5D=1&order%5Bdir%5D=asc" target="_blank" style="background:#0a0c10;border-radius:8px;overflow:hidden;text-decoration:none;display:block;padding:24px;text-align:center;border:1px solid #1e2130;transition:border-color .2s;" onmouseover="this.style.borderColor='#c9a84c'" onmouseout="this.style.borderColor='#1e2130'">
+                    <i class="bi bi-camera-video" style="font-size:32px;color:#c9a84c;display:block;margin-bottom:8px;"></i>
+                    <div style="font-size:14px;font-weight:700;color:#fff;">SR-224 Cameras</div>
+                    <div style="font-size:11px;color:#666;margin-top:4px;">Kimball Jct to Park City</div>
+                </a>
+                <a href="https://udottraffic.utah.gov/cctv?start=0&length=10&filters%5B0%5D%5Bi%5D=2&filters%5B0%5D%5Bs%5D=US-40&order%5Bi%5D=1&order%5Bdir%5D=asc" target="_blank" style="background:#0a0c10;border-radius:8px;overflow:hidden;text-decoration:none;display:block;padding:24px;text-align:center;border:1px solid #1e2130;transition:border-color .2s;" onmouseover="this.style.borderColor='#c9a84c'" onmouseout="this.style.borderColor='#1e2130'">
+                    <i class="bi bi-camera-video" style="font-size:32px;color:#c9a84c;display:block;margin-bottom:8px;"></i>
+                    <div style="font-size:14px;font-weight:700;color:#fff;">US-40 Cameras</div>
+                    <div style="font-size:11px;color:#666;margin-top:4px;">Heber Valley to Park City</div>
+                </a>
             </div>
             <p style="font-size:11px;color:#444;margin-top:12px;text-align:center;">Click any camera to view live feed on UDOT Traffic · <a href="https://udottraffic.utah.gov/map" target="_blank" style="color:#c9a84c;text-decoration:none;">View all Utah cameras</a></p>
         </div>
