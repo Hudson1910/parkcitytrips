@@ -80,6 +80,8 @@ SMTP_PASS = os.getenv('SMTP_PASS', '')
 
 # Admin
 ADMIN_PIN = os.getenv('ADMIN_PIN', '6939')
+TRAVELFORZA_API = os.getenv('TRAVELFORZA_API', 'https://web-production-1378b.up.railway.app')
+TRANSP_API_KEY = os.getenv('TRANSP_API_KEY', 'rio-transp-2026')
 
 # Stats
 TOTAL_RIDES = '9,000+'

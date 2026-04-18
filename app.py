@@ -273,6 +273,24 @@ def admin_visitors():
         bookings=[], top_sources=[], recent_visitors=visitors[:100])
 
 
+@app.route('/admin/crm')
+def admin_crm():
+    if not session.get('admin'):
+        return redirect('/signin')
+    # Fetch clients + quotes + finance from TravelForza API
+    headers = {'X-API-Key': config.TRANSP_API_KEY}
+    try:
+        clients = req.get(f'{config.TRAVELFORZA_API}/api/transp/clients', headers=headers, timeout=10).json().get('clients', [])
+    except: clients = []
+    try:
+        quotes = req.get(f'{config.TRAVELFORZA_API}/api/transp/quotes', headers=headers, timeout=10).json().get('quotes', [])
+    except: quotes = []
+    try:
+        finance = req.get(f'{config.TRAVELFORZA_API}/api/transp/finance', headers=headers, timeout=10).json()
+    except: finance = {'summary': {}, 'expenses': []}
+    return render_template('admin_crm.html', clients=clients, quotes=quotes, finance=finance)
+
+
 @app.route('/weather')
 def weather():
     return render_template('weather.html', config=config)
