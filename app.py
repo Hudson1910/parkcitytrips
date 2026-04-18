@@ -874,6 +874,41 @@ SEO_PAGES = {
         'keywords': 'Park City corporate transportation, corporate shuttle Park City, group transportation Park City, conference shuttle Utah',
         'content': 'Impress your team and clients with professional luxury transportation. Rio Transportation handles corporate retreats, conference shuttles, and team-building event transfers throughout Park City and the Wasatch Back region.',
     },
+    'slc-to-park-city-car-service': {
+        'title': 'SLC to Park City Car Service | Private Luxury SUV from $109',
+        'h1': 'Private Car Service: SLC Airport to Park City',
+        'desc': 'Premium private car service from Salt Lake City to Park City. Lincoln Navigator, GMC Yukon, Cadillac Escalade. From $109 all-inclusive. 9,000+ rides. (435) 214-6939',
+        'keywords': 'SLC to Park City car service, private car Park City, luxury car service Salt Lake City to Park City, black car service Park City',
+        'content': 'Looking for a premium car service from Salt Lake City to Park City? Rio Transportation provides luxury private SUV service with professional drivers. Unlike rideshare apps with surge pricing or crowded shuttle vans, our private car service offers a direct, comfortable 45-minute ride in a premium vehicle. Choose from our Lincoln Navigator, GMC Yukon, or Cadillac Escalade fleet. All-inclusive pricing from $109 — no hidden fees, no surge pricing, no tips required. Flight tracking, car seats, bottled water, and Wi-Fi included. With over 9,000 rides completed and a 4.8-star Google rating, we\'re Park City\'s most trusted private transportation service.',
+    },
+    'deer-valley-airport-transfer': {
+        'title': 'Deer Valley Airport Transfer | Private SUV Shuttle from SLC',
+        'h1': 'Deer Valley Airport Transfer Service',
+        'desc': 'Private airport transfer to Deer Valley Resort from SLC Airport. Luxury SUV, 45 min direct. Ski gear welcome. From $109. No shared rides. Book now!',
+        'keywords': 'Deer Valley airport transfer, Deer Valley shuttle from airport, SLC to Deer Valley, Deer Valley private transfer, Deer Valley car service',
+        'content': 'Arriving at Salt Lake City Airport and heading to Deer Valley Resort? Rio Transportation provides the most comfortable private transfer service. Our luxury SUVs take you directly to your Deer Valley hotel, lodge, or condo in just 45 minutes — no shared rides, no multiple stops. Our drivers know every entrance to Deer Valley properties including Snow Park Lodge, Silver Lake Village, and Empire Canyon Lodge. Ski and snowboard equipment is always welcome with plenty of cargo space. We track your flight in real-time and adjust pickup time if your flight is delayed. Starting at just $109 with all-inclusive pricing.',
+    },
+    'park-city-uber-alternative': {
+        'title': 'Park City Uber Alternative | Private SUV No Surge Pricing',
+        'h1': 'Better Than Uber in Park City',
+        'desc': 'Skip Uber surge pricing in Park City. Private luxury SUV from $109, fixed price, no surge. Professional drivers, flight tracking, car seats available.',
+        'keywords': 'Park City Uber alternative, Uber Park City, Lyft Park City, rideshare Park City, Park City ride service no surge',
+        'content': 'Tired of Uber surge pricing in Park City? During ski season and events, Uber and Lyft prices can surge to $150-300+ for a single ride from SLC Airport. Rio Transportation offers a fixed-price alternative starting at just $109 — no surge, no surprises, no matter the time or season. Unlike rideshare drivers who may not know the area, our professional drivers navigate Parley\'s Canyon and Park City roads daily, including during winter storm conditions. We also offer car seats for children (free), flight tracking, and space for ski equipment — none of which Uber guarantees. Book in advance and lock in your price. Your driver will be waiting when you land.',
+    },
+    'park-city-private-shuttle': {
+        'title': 'Park City Private Shuttle | Door-to-Door SUV Service from $109',
+        'h1': 'Private Shuttle to Park City',
+        'desc': 'Private shuttle from SLC Airport to Park City. No shared rides. Luxury SUV, professional driver. Families, groups, ski trips. From $109. Book online.',
+        'keywords': 'Park City private shuttle, private shuttle to Park City, Park City shuttle service, private van Park City, Park City shuttle from airport',
+        'content': 'Why share a shuttle van with strangers when you can have a private luxury SUV? Rio Transportation\'s private shuttle service takes you directly from Salt Lake City Airport to your Park City destination — no waiting for other passengers, no extra stops, no crowded vans. Perfect for families with children (free car seats provided), groups with ski equipment, and anyone who values their time and comfort. Our fleet includes the Nissan Pathfinder (7 seats), GMC Yukon (7 seats), and Lincoln Navigator (7 seats). Every ride includes bottled water, phone chargers, Wi-Fi, and a professional driver who knows Park City inside and out.',
+    },
+    'park-city-limo-service': {
+        'title': 'Park City Limo Service | Luxury SUV & Executive Transportation',
+        'h1': 'Park City Limousine & Luxury SUV Service',
+        'desc': 'Luxury limousine and SUV service in Park City, Utah. Lincoln Navigator, Cadillac Escalade. Airport transfers, special events, VIP service. (435) 214-6939',
+        'keywords': 'Park City limo, Park City limousine, luxury SUV Park City, executive car service Park City, VIP transportation Park City',
+        'content': 'Experience Park City in style with Rio Transportation\'s luxury SUV and executive car service. Our fleet of Lincoln Navigators, Cadillac Escalades, and GMC Yukons provides the same level of comfort and sophistication as a traditional limousine — with the added benefit of all-wheel drive for Utah\'s mountain roads. Perfect for VIP airport transfers, romantic evenings on Main Street, celebrity and athlete transportation, corporate executive travel, and special celebrations. Our professional drivers are discreet, experienced, and available 24/7. With privacy glass, premium leather interiors, and complimentary beverages, every ride feels first-class.',
+    },
 }
 
 
