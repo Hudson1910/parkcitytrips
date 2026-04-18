@@ -38,9 +38,8 @@ body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-heigh
 
 .card{background:#111318;border:1px solid #1e2130;border-radius:16px;overflow:hidden;transition:all .3s;}
 .card:hover{border-color:rgba(201,168,76,.3);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.3);}
-.card-img{height:200px;overflow:hidden;position:relative;}
-.card-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
-.card:hover .card-img img{transform:scale(1.05);}
+.card-img{height:200px;overflow:hidden;position:relative;background-size:cover;background-position:center;transition:background-size .4s;}
+.card:hover .card-img{background-size:110%;}
 .card-badge{position:absolute;top:12px;left:12px;padding:4px 10px;border-radius:6px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;}
 .badge-winter{background:rgba(59,130,246,.9);color:#fff;}
 .badge-summer{background:rgba(34,197,94,.9);color:#fff;}
@@ -88,8 +87,7 @@ body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-heigh
 <div class="grid" id="actGrid">
     <!-- YEAR-ROUND -->
     <div class="card" data-season="year dining">
-        <div class="card-img">
-            <img src="/static/experiences/gourmet-dining.jpg" loading="lazy">
+        <div class="card-img" style="background-image:url('/static/experiences/gourmet-dining.jpg');">
             <span class="card-badge badge-year">Year-Round</span>
         </div>
         <div class="card-body">
@@ -104,8 +102,7 @@ body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-heigh
     </div>
 
     <div class="card" data-season="year">
-        <div class="card-img">
-            <img src="/static/experiences/crater.jpg" loading="lazy">
+        <div class="card-img" style="background-image:url('/static/experiences/crater.jpg');">
             <span class="card-badge badge-year">Year-Round</span>
         </div>
         <div class="card-body">
@@ -120,8 +117,7 @@ body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-heigh
     </div>
 
     <div class="card" data-season="year">
-        <div class="card-img">
-            <img src="/static/experiences/gondola.jpg" loading="lazy">
+        <div class="card-img" style="background-image:url('/static/experiences/gondola.jpg');">
             <span class="card-badge badge-year">Year-Round</span>
         </div>
         <div class="card-body">
@@ -137,8 +133,7 @@ body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-heigh
 
     <!-- WINTER -->
     <div class="card" data-season="winter adventure">
-        <div class="card-img">
-            <img src="/static/experiences/snowboard.jpg" loading="lazy">
+        <div class="card-img" style="background-image:url('/static/experiences/snowboard.jpg');">
             <span class="card-badge badge-winter">Winter</span>
         </div>
         <div class="card-body">
@@ -153,8 +148,7 @@ body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-heigh
     </div>
 
     <div class="card" data-season="winter adventure">
-        <div class="card-img">
-            <img src="/static/experiences/dog-sledding.jpg" loading="lazy">
+        <div class="card-img" style="background-image:url('/static/experiences/dog-sledding.jpg');">
             <span class="card-badge badge-winter">Winter</span>
         </div>
         <div class="card-body">
@@ -169,8 +163,7 @@ body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-heigh
     </div>
 
     <div class="card" data-season="winter adventure">
-        <div class="card-img">
-            <img src="/static/experiences/snowmobile.jpg" loading="lazy">
+        <div class="card-img" style="background-image:url('/static/experiences/snowmobile.jpg');">
             <span class="card-badge badge-winter">Winter</span>
         </div>
         <div class="card-body">
@@ -185,8 +178,7 @@ body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-heigh
     </div>
 
     <div class="card" data-season="winter">
-        <div class="card-img">
-            <img src="/static/experiences/ice-castles.jpg" loading="lazy">
+        <div class="card-img" style="background-image:url('/static/experiences/ice-castles.jpg');">
             <span class="card-badge badge-winter">Winter</span>
         </div>
         <div class="card-body">
@@ -201,8 +193,7 @@ body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-heigh
     </div>
 
     <div class="card" data-season="winter adventure">
-        <div class="card-img">
-            <img src="/static/experiences/atv.jpg" loading="lazy">
+        <div class="card-img" style="background-image:url('/static/experiences/atv.jpg');">
             <span class="card-badge badge-winter">Winter</span>
         </div>
         <div class="card-body">
@@ -218,8 +209,7 @@ body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-heigh
 
     <!-- SUMMER -->
     <div class="card" data-season="summer adventure">
-        <div class="card-img">
-            <img src="/static/experiences/mountain-bike.jpg" loading="lazy">
+        <div class="card-img" style="background-image:url('/static/experiences/mountain-bike.jpg');">
             <span class="card-badge badge-summer">Summer</span>
         </div>
         <div class="card-body">
@@ -234,8 +224,7 @@ body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-heigh
     </div>
 
     <div class="card" data-season="summer adventure">
-        <div class="card-img">
-            <img src="/static/experiences/balloon.jpg" loading="lazy">
+        <div class="card-img" style="background-image:url('/static/experiences/balloon.jpg');">
             <span class="card-badge badge-summer">Summer</span>
         </div>
         <div class="card-body">
@@ -250,8 +239,7 @@ body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-heigh
     </div>
 
     <div class="card" data-season="summer adventure">
-        <div class="card-img">
-            <img src="/static/experiences/fishing.jpg" loading="lazy">
+        <div class="card-img" style="background-image:url('/static/experiences/fishing.jpg');">
             <span class="card-badge badge-summer">Summer</span>
         </div>
         <div class="card-body">
@@ -266,8 +254,7 @@ body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-heigh
     </div>
 
     <div class="card" data-season="year dining">
-        <div class="card-img">
-            <img src="/static/experiences/spa.avif" loading="lazy">
+        <div class="card-img" style="background-image:url('/static/experiences/spa.avif');">
             <span class="card-badge badge-year">Year-Round</span>
         </div>
         <div class="card-body">

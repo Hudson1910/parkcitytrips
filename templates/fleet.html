@@ -32,8 +32,7 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);mi
 .v-detail{max-width:1000px;margin:0 auto;padding:0 20px 40px;}
 .v-card{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;padding:60px 0;border-bottom:1px solid var(--border);}
 .v-card:nth-child(even){direction:rtl;}.v-card:nth-child(even)>*{direction:ltr;}
-.v-card-img{border-radius:16px;overflow:hidden;background:#0a0c10;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;padding:20px;}
-.v-card-img img{max-width:100%;max-height:100%;object-fit:contain;}
+.v-card-img{border-radius:16px;overflow:hidden;background:#0a0c10;aspect-ratio:4/3;background-size:contain;background-repeat:no-repeat;background-position:center;}
 .v-card-info .v-tag{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
 .v-card-info h2{font-family:'Onest',sans-serif;font-size:28px;font-weight:800;margin-bottom:4px;}
 .v-card-info .v-model{font-size:14px;color:var(--muted);margin-bottom:16px;}
@@ -52,8 +51,7 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);mi
 /* Special — large group */
 .special-card{max-width:1000px;margin:40px auto 80px;padding:0 20px;}
 .special-inner{background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;}
-.special-img{overflow:hidden;min-height:300px;display:flex;align-items:center;justify-content:center;background:#0a0c10;padding:16px;}
-.special-img img{width:100%;height:100%;object-fit:contain;}
+.special-img{overflow:hidden;min-height:300px;background:#0a0c10;background-size:contain;background-repeat:no-repeat;background-position:center;}
 .special-info{padding:48px 40px;display:flex;flex-direction:column;justify-content:center;}
 .special-info .v-tag{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
 .special-info h2{font-family:'Onest',sans-serif;font-size:28px;font-weight:800;margin-bottom:12px;}
@@ -83,9 +81,7 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);mi
 <div class="v-detail">
     <!-- Small SUV -->
     <div class="v-card">
-        <div class="v-card-img">
-            <img src="https://static.wixstatic.com/media/55a398_cb5c7d2583204805ab6e961e3daf4140~mv2.webp" alt="Mitsubishi Eclipse Cross">
-        </div>
+        <div class="v-card-img" style="background-image:url('https://static.wixstatic.com/media/55a398_cb5c7d2583204805ab6e961e3daf4140~mv2.webp');"></div>
         <div class="v-card-info">
             <div class="v-tag">Best Value</div>
             <h2>Small SUV</h2>
@@ -110,9 +106,7 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);mi
 
     <!-- Midsize SUV -->
     <div class="v-card">
-        <div class="v-card-img">
-            <img src="/static/pathfinder.avif" alt="Nissan Pathfinder">
-        </div>
+        <div class="v-card-img" style="background-image:url('/static/pathfinder.avif');"></div>
         <div class="v-card-info">
             <div class="v-tag">Family Size</div>
             <h2>Midsize SUV</h2>
@@ -138,9 +132,7 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);mi
 
     <!-- Premier SUV -->
     <div class="v-card">
-        <div class="v-card-img">
-            <img src="/static/premier-suv.jpg" alt="GMC Yukon">
-        </div>
+        <div class="v-card-img" style="background-image:url('/static/premier-suv.jpg');"></div>
         <div class="v-card-info">
             <div class="v-tag">Most Popular</div>
             <h2>Premier SUV</h2>
@@ -167,9 +159,7 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);mi
 
     <!-- Luxury SUV -->
     <div class="v-card">
-        <div class="v-card-img">
-            <img src="/static/luxury-suv.jpg" alt="Lincoln Navigator">
-        </div>
+        <div class="v-card-img" style="background-image:url('/static/luxury-suv.jpg');"></div>
         <div class="v-card-info">
             <div class="v-tag">Executive / VIP</div>
             <h2>Luxury SUV</h2>
@@ -199,9 +189,7 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);mi
 <!-- Large Groups / Weddings -->
 <div class="special-card">
     <div class="special-inner">
-        <div class="special-img">
-            <img src="https://static.wixstatic.com/media/55a398_5224bb10e6504989a26897233173179b~mv2.png" alt="Large Group Transportation">
-        </div>
+        <div class="special-img" style="background-image:url('https://static.wixstatic.com/media/55a398_5224bb10e6504989a26897233173179b~mv2.png');"></div>
         <div class="special-info">
             <div class="v-tag">Special Events</div>
             <h2>Large Groups & Weddings</h2>

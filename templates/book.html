@@ -36,7 +36,7 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);mi
     .book-page h1{font-size:24px;}
     .vehicles{grid-template-columns:repeat(2,1fr);}
     .v-option{padding:12px 8px;}
-    .v-option img{height:60px;}
+    .v-img{height:60px;}
     .v-option h4{font-size:12px;}
     .v-option .v-price{font-size:16px;}
     .field input,.field select,.field textarea{font-size:16px !important;} /* prevent iOS zoom */
@@ -49,7 +49,7 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);mi
 .v-option{background:var(--card);border:2px solid var(--border);border-radius:12px;padding:16px 12px;text-align:center;cursor:pointer;transition:all .2s;}
 .v-option:hover{border-color:rgba(255,255,255,.2);}
 .v-option.selected{border-color:var(--accent);background:rgba(201,168,76,.06);}
-.v-option img{height:80px;object-fit:contain;margin-bottom:8px;border-radius:8px;background:#0a0c10;padding:4px;}
+.v-img{height:80px;margin-bottom:8px;border-radius:8px;background:#0a0c10;padding:4px;background-size:contain;background-repeat:no-repeat;background-position:center;}
 .v-option h4{font-family:'Onest',sans-serif;font-size:14px;font-weight:700;margin-bottom:2px;}
 .v-option .v-model{font-size:11px;color:var(--muted);}
 .v-option .v-price{font-family:'Onest',sans-serif;font-size:18px;font-weight:800;color:var(--accent);margin-top:8px;}
@@ -91,25 +91,25 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);mi
         <div class="step-label">1 — Choose Your Vehicle</div>
         <div class="vehicles">
             <div class="v-option {{ 'selected' if request.args.get('vehicle')=='small' }}" onclick="pickVehicle(this,'small')">
-                <img src="https://static.wixstatic.com/media/55a398_cb5c7d2583204805ab6e961e3daf4140~mv2.webp" alt="Small SUV">
+                <div class="v-img" style="background-image:url('https://static.wixstatic.com/media/55a398_cb5c7d2583204805ab6e961e3daf4140~mv2.webp');" title="Small SUV"></div>
                 <h4>Small SUV</h4>
                 <div class="v-model">Eclipse Cross AWD</div>
                 <div class="v-price">$109</div>
             </div>
             <div class="v-option {{ 'selected' if request.args.get('vehicle')=='midsize' }}" onclick="pickVehicle(this,'midsize')">
-                <img src="/static/pathfinder.avif" alt="Midsize SUV">
+                <div class="v-img" style="background-image:url('/static/pathfinder.avif');" title="Midsize SUV"></div>
                 <h4>Midsize SUV</h4>
                 <div class="v-model">Nissan Pathfinder</div>
                 <div class="v-price">$129</div>
             </div>
             <div class="v-option {{ 'selected' if request.args.get('vehicle')=='premier' or not request.args.get('vehicle') }}" onclick="pickVehicle(this,'premier')">
-                <img src="/static/premier-suv.jpg" alt="Premier SUV">
+                <div class="v-img" style="background-image:url('/static/premier-suv.jpg');" title="Premier SUV"></div>
                 <h4>Premier SUV</h4>
                 <div class="v-model">GMC Yukon</div>
                 <div class="v-price">$189</div>
             </div>
             <div class="v-option {{ 'selected' if request.args.get('vehicle')=='luxury' }}" onclick="pickVehicle(this,'luxury')">
-                <img src="/static/luxury-suv.jpg" alt="Luxury SUV">
+                <div class="v-img" style="background-image:url('/static/luxury-suv.jpg');" title="Luxury SUV"></div>
                 <h4>Luxury SUV</h4>
                 <div class="v-model">Lincoln Navigator</div>
                 <div class="v-price">$220</div>

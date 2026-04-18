@@ -57,7 +57,6 @@ body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-heigh
 .webcam-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
 .webcam-item{border-radius:8px;overflow:hidden;aspect-ratio:16/9;background:#0a0c10;}
 .webcam-item iframe{width:100%;height:100%;border:none;}
-.webcam-item img{width:100%;height:100%;object-fit:cover;}
 @media(max-width:640px){.webcam-grid{grid-template-columns:1fr;}.snow-stats{grid-template-columns:repeat(2,1fr);}}
 
 /* Detail expandable */
@@ -142,8 +141,8 @@ body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-heigh
         <div class="webcams">
             <div class="webcam-label">Webcams</div>
             <div class="webcam-grid">
-                <div class="webcam-item"><img src="https://common.snow.com/Mtncams/deervalley1.jpg" alt="Deer Valley Webcam" loading="lazy" onerror="this.parentElement.innerHTML='<div style=display:flex;align-items:center;justify-content:center;height:100%;color:#666;font-size:12px>Cam offline</div>'"></div>
-                <div class="webcam-item"><img src="https://common.snow.com/Mtncams/deervalley2.jpg" alt="Deer Valley Webcam 2" loading="lazy" onerror="this.parentElement.innerHTML='<div style=display:flex;align-items:center;justify-content:center;height:100%;color:#666;font-size:12px>Cam offline</div>'"></div>
+                <div class="webcam-item" style="background-image:url('https://common.snow.com/Mtncams/deervalley1.jpg');background-size:cover;background-position:center;"></div>
+                <div class="webcam-item" style="background-image:url('https://common.snow.com/Mtncams/deervalley2.jpg');background-size:cover;background-position:center;"></div>
             </div>
         </div>
     </div>
