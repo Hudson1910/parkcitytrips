@@ -93,7 +93,7 @@ POSTS = [
 <h2>Transportation Options Compared</h2>
 
 <h3>1. Private SUV Service (Recommended)</h3>
-<p>A <strong>private luxury SUV</strong> is the most comfortable and stress-free way to get to Park City. Companies like <a href="/"><strong>Rio Transportation</strong></a> offer door-to-door service in GMC Yukons, Lincoln Navigators, Cadillac Escalades, and Nissan Pathfinders. Your driver monitors your flight in real-time, adjusts pickup for delays, and meets you at baggage claim with a sign. Prices start at <strong>$109</strong> with all-inclusive pricing — no hidden fees, no surge pricing, tips included.</p>
+<p>A <strong>private luxury SUV</strong> is the most comfortable and stress-free way to get to Park City. Companies like <a href="/"><strong>Rio Transportation</strong></a> offer door-to-door service in GMC Yukons, Lincoln Navigators, Cadillac Escalades, and Nissan Pathfinders. Your driver monitors your flight in real-time, adjusts pickup for delays, and meets you at baggage claim with a sign. Prices start at <strong>$109</strong> with all-inclusive pricing — no hidden fees and no surge pricing. Gratuity is at your discretion.</p>
 <ul>
 <li><strong>Pros:</strong> Private, comfortable, flight tracking, free car seats, ski gear storage, AWD for winter roads, 45-minute door-to-door time</li>
 <li><strong>Cons:</strong> Costs more than a shared shuttle</li>
@@ -144,7 +144,7 @@ POSTS = [
 <li><strong>Book at least 48 hours ahead</strong> during ski season. Good drivers sell out.</li>
 <li><strong>Check I-80 road conditions</strong> on our <a href="/s/park-city-road-conditions">live road status page</a> before you fly.</li>
 <li><strong>Bring layers.</strong> Park City is typically 20–30°F colder than the airport.</li>
-<li><strong>Tip your driver if they handle extra trips</strong> (grocery stop, ski rental pickup) — Rio Transportation includes tips in the base fare for normal airport transfers.</li>
+<li><strong>Tip your driver</strong> — gratuity is at your discretion and always appreciated, especially when your driver handles extra stops (grocery run, ski rental pickup) or works in difficult weather conditions.</li>
 <li><strong>If you're going to Deer Valley,</strong> make sure the company knows which specific lodge. See our <a href="/s/deer-valley-airport-transfer">Deer Valley transfer page</a> for details on Snow Park, Silver Lake, and Empire Canyon access.</li>
 </ul>
 
