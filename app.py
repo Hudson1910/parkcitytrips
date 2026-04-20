@@ -197,6 +197,16 @@ app = Flask(__name__)
 app.secret_key = config.SECRET_KEY
 
 
+@app.before_request
+def canonicalize_host():
+    """301 redirect www.parkcitytrips.com → parkcitytrips.com so Google
+    treats the site as a single canonical host. Matches sitemap.xml."""
+    host = (request.host or '').lower()
+    if host.startswith('www.parkcitytrips.com'):
+        new_url = request.url.replace('://www.parkcitytrips.com', '://parkcitytrips.com', 1)
+        return redirect(new_url, code=301)
+
+
 @app.after_request
 def add_seo_headers(response):
     """Add cache + security headers for SEO performance."""
@@ -969,7 +979,19 @@ def sitemap():
 @app.route('/robots.txt')
 def robots():
     from flask import Response
-    txt = "User-agent: *\nAllow: /\nDisallow: /signin\nDisallow: /admin\nDisallow: /signout\nSitemap: https://parkcitytrips.com/sitemap.xml\n"
+    txt = (
+        "User-agent: *\n"
+        "Allow: /\n"
+        "Disallow: /signin\n"
+        "Disallow: /signout\n"
+        "Disallow: /admin\n"
+        "Disallow: /admin/\n"
+        "Disallow: /book/payment/\n"
+        "Disallow: /book/confirm/\n"
+        "Disallow: /v1\n"
+        "Disallow: /api/\n"
+        "Sitemap: https://parkcitytrips.com/sitemap.xml\n"
+    )
     return Response(txt, mimetype='text/plain')
 
 
