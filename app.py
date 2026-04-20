@@ -945,6 +945,63 @@ SEO_PAGES = {
         'keywords': 'Park City limo, Park City limousine, luxury SUV Park City, executive car service Park City, VIP transportation Park City',
         'content': 'Experience Park City in style with Rio Transportation\'s luxury SUV and executive car service. Our fleet of Lincoln Navigators, Cadillac Escalades, and GMC Yukons provides the same level of comfort and sophistication as a traditional limousine — with the added benefit of all-wheel drive for Utah\'s mountain roads. Perfect for VIP airport transfers, romantic evenings on Main Street, celebrity and athlete transportation, corporate executive travel, and special celebrations. Our professional drivers are discreet, experienced, and available 24/7. With privacy glass, premium leather interiors, and complimentary beverages, every ride feels first-class.',
     },
+    # --- Long-tail expansion (2026-04-20) ---
+    'park-city-to-canyons-shuttle': {
+        'title': 'Park City to Canyons Village Shuttle | Private Luxury SUV',
+        'h1': 'Park City to Canyons Village Shuttle',
+        'desc': 'Private shuttle between Old Town Park City and Canyons Village. Luxury SUVs, ski gear welcome, fixed pricing. Door-to-door service from $89.',
+        'keywords': 'Park City to Canyons shuttle, Canyons Village shuttle, Park City Mountain Canyons, Park City local shuttle, Old Town to Canyons',
+        'content': 'Need a ride between Old Town Park City and Canyons Village? Rio Transportation offers private luxury SUV service between the two base areas of Park City Mountain Resort. The drive takes about 12 minutes via SR-224, but taxi and rideshare availability in the canyons is unreliable, especially on storm days. Our private shuttle takes you directly to the base of the Orange Bubble, the Red Pine Gondola, or any specific condo address in Canyons Village. Ski gear, snowboard bags, and large luggage always welcome. Fixed pricing — no surge. Available 24/7 for late-night après-ski returns to your lodging. Book online or call (435) 214-6939.',
+    },
+    'slc-airport-car-service-24-7': {
+        'title': 'SLC Airport Car Service 24/7 | Overnight & Red-Eye Transfers',
+        'h1': '24/7 SLC Airport Car Service to Park City',
+        'desc': 'Round-the-clock private car service from Salt Lake City Airport to Park City. Red-eye arrivals, early morning departures, overnight transfers. From $109.',
+        'keywords': 'SLC airport 24 hour car service, Park City late night airport, overnight Park City shuttle, red eye SLC Park City, 2 AM airport shuttle Park City',
+        'content': 'Arriving at Salt Lake City Airport at 2 AM? Departing on a 5 AM flight? Rio Transportation operates 24/7 — no surcharges for red-eye arrivals or early-morning departures. Unlike rideshare drivers who avoid late-night airport pickups in winter, our professional drivers pre-schedule around your flight time. Your driver tracks your flight in real-time and will be waiting at baggage claim regardless of delays. Book 24 hours ahead for any time slot, even middle-of-the-night pickups. We also handle early-morning departures when Park City Mountain ski shuttles aren\'t running. Ideal for business travelers, international arrivals, and anyone with non-standard flight times.',
+    },
+    'park-city-group-transportation': {
+        'title': 'Park City Group Transportation | 10-50 Passengers, Van & SUV Fleet',
+        'h1': 'Group Transportation in Park City',
+        'desc': 'Large group transportation in Park City — weddings, corporate retreats, ski groups, bachelor parties. Multiple vehicles, coordinated pickups, from 10 to 50+ pax.',
+        'keywords': 'Park City group transportation, Park City wedding shuttle, Park City group shuttle, large group Park City, Park City bachelor party transportation, Park City corporate group',
+        'content': 'Planning a large event in Park City? Rio Transportation coordinates multi-vehicle group transportation for weddings, corporate retreats, ski groups, bachelor and bachelorette parties, and family reunions. Our fleet scales from a single 7-passenger luxury SUV to fleets of 5-10 vehicles running simultaneously for groups of 50+. We handle airport meet-and-greets (multiple arrivals coordinated), venue-to-venue shuttles during events, late-night returns to lodging, and multi-day packages. Single point of contact, unified billing, detailed trip manifests for event planners. Call (435) 214-6939 or request a group quote online — pricing scales attractively for groups over 20 passengers.',
+    },
+    'deer-valley-resort-shuttle': {
+        'title': 'Deer Valley Resort Shuttle | Snow Park, Silver Lake, Empire Canyon',
+        'h1': 'Deer Valley Resort Shuttle Service',
+        'desc': 'Private Deer Valley shuttle to Snow Park Lodge, Silver Lake Village, and Empire Canyon. Ski gear welcome, professional drivers who know every resort entrance.',
+        'keywords': 'Deer Valley shuttle, Snow Park Lodge shuttle, Silver Lake Village shuttle, Empire Canyon shuttle, Deer Valley resort transportation, Deer Valley private transfer',
+        'content': 'Deer Valley Resort spans three distinct base areas — Snow Park Lodge, Silver Lake Village, and Empire Canyon Lodge — plus ski-in/ski-out hotels like Stein Eriksen, Montage Deer Valley, and St. Regis. Our drivers know every entrance, every service road, and the specific drop-off points for each property. Skip the confusion of rideshare drivers who don\'t know where Stein\'s valet is or how to reach Empire Canyon in winter. We handle ski and snowboard equipment (ski-only resort note: Deer Valley doesn\'t allow snowboarding, so our snowboarder clients are taken to Park City Mountain instead on request). Private luxury SUVs from SLC Airport or between any two points inside Deer Valley.',
+    },
+    'park-city-bachelor-party-transportation': {
+        'title': 'Park City Bachelor Party Transportation | Private SUV Groups',
+        'h1': 'Park City Bachelor / Bachelorette Party Transportation',
+        'desc': 'Luxury SUV party transportation in Park City. Main Street bar crawl, ski day shuttle, multi-vehicle coordination for bachelor and bachelorette groups.',
+        'keywords': 'Park City bachelor party, Park City bachelorette party, bachelor party transportation Utah, Park City party bus, bachelor party shuttle Park City',
+        'content': 'Plan the perfect bachelor or bachelorette weekend in Park City with stress-free group transportation. Rio Transportation handles everything: SLC airport pickup for all arrivals (even staggered flights), day-of ski shuttle to Deer Valley or Park City Mountain, downtown Main Street bar crawl transportation (multiple stops pre-arranged), late-night returns to lodging, and departure day airport runs. We offer flat rates for multi-hour hourly service — perfect for Main Street crawls where you want the SUV waiting outside while you enjoy dinner or the bars. Multiple vehicles coordinated for groups of 10-20+. Professional, discreet drivers who understand the vibe. Call (435) 214-6939 for a custom group package.',
+    },
+    'park-city-hourly-chauffeur': {
+        'title': 'Park City Hourly Chauffeur | Private Driver by the Hour from $89/hr',
+        'h1': 'Park City Hourly Chauffeur Service',
+        'desc': 'Private driver in Park City by the hour. Main Street dinner, ski day, multiple stops. From $89/hour with 2-hour minimum. Luxury SUV + professional chauffeur.',
+        'keywords': 'Park City hourly car service, Park City chauffeur, private driver Park City by hour, Park City hourly limo, Park City on-demand driver',
+        'content': 'Need a driver for the whole day or evening? Rio Transportation offers hourly chauffeur service in Park City starting at $89/hour with a 2-hour minimum. Perfect for: Main Street dinner nights with multiple restaurant stops, shopping days at Tanger Outlets and Main Street boutiques, ski days where you want the SUV ready when you clip out, wine-tasting or distillery tours, medical appointments in Salt Lake City with return to Park City, and photography tours of the Wasatch Back. Your chauffeur waits on standby between stops — no re-booking, no surge pricing. The SUV, driver, fuel, tolls, and parking are all included in the hourly rate. Ideal for visitors who want flexibility without worrying about ride availability.',
+    },
+    'park-city-ski-trip-transportation': {
+        'title': 'Park City Ski Trip Transportation | Complete Package from $109',
+        'h1': 'Park City Ski Trip Transportation Package',
+        'desc': 'Complete ski trip transportation: SLC airport transfer, resort shuttles, equipment stops, après-ski returns. All-inclusive Park City ski package from $109.',
+        'keywords': 'Park City ski trip transportation, ski trip shuttle Park City, Park City ski package transportation, ski vacation Park City shuttle, ski transfer Utah',
+        'content': 'Planning a ski trip to Park City? Make transportation the easiest part. Rio Transportation offers complete ski-trip packages: round-trip SLC airport transfers with ski gear capacity, optional ski equipment rental stops on the way to your lodging (Aloha Ski &amp; Snowboard, Cole Sport, Jans Mountain Outfitters), daily resort shuttle service between your hotel/condo and Park City Mountain or Deer Valley, late-day pickup at the slopes, optional Main Street evening transportation, and morning grocery run support on arrival day. Everything bundled into one quote. Whether you\'re planning a 3-day weekend or a 10-day extended stay, we handle every ride so your group can focus on the skiing. AWD luxury SUVs equipped for Utah winter conditions.',
+    },
+    'park-city-family-suv-shuttle': {
+        'title': 'Park City Family SUV Shuttle | Free Car Seats, Kid-Friendly',
+        'h1': 'Family SUV Shuttle to Park City',
+        'desc': 'Family-friendly private SUV transfers to Park City. Free car seats (infant, convertible, booster), kid-friendly drivers, ski gear, and stroller space.',
+        'keywords': 'Park City family shuttle, Park City with kids transportation, Park City car seat shuttle, family airport transfer Park City, Park City kids SUV',
+        'content': 'Traveling to Park City with kids? Rio Transportation provides family-first SUV transfers with free car seats for every age group — infant rear-facing, convertible, and booster seats, all installed properly by your driver before pickup. Unlike Uber or Lyft where car seat availability is inconsistent, we guarantee car seats on every family booking. Our 7-passenger GMC Yukon, Nissan Pathfinder, and Lincoln Navigator have plenty of room for strollers, pack-n-plays, ski gear, and multiple bags. Drivers are parents themselves and understand that arriving after an 8-hour travel day with exhausted kids needs to be smooth, not stressful. Snacks and water bottles available on request for kids. From $129 flat rate, all-inclusive.',
+    },
 }
 
 
@@ -953,7 +1010,22 @@ def seo_page(slug):
     page = SEO_PAGES.get(slug)
     if not page:
         abort(404)
-    return render_template('seo_page.html', page=page, config=config, vehicles=config.VEHICLES)
+    # Inject slug (referenced by the template's canonical + related links)
+    page_with_slug = {**page, 'slug': slug}
+    # Related services — pick up to 5 other SEO pages, round-robin across the dict
+    all_slugs = list(SEO_PAGES.keys())
+    if slug in all_slugs:
+        start = (all_slugs.index(slug) + 1) % len(all_slugs)
+        related_slugs = (all_slugs[start:] + all_slugs[:start])
+        related_slugs = [s for s in related_slugs if s != slug][:5]
+    else:
+        related_slugs = [s for s in all_slugs if s != slug][:5]
+    related = [{'slug': s, 'title': SEO_PAGES[s]['h1']} for s in related_slugs]
+    return render_template(
+        'seo_page.html',
+        page=page_with_slug, config=config, vehicles=config.VEHICLES,
+        related=related,
+    )
 
 
 @app.route('/sitemap.xml')

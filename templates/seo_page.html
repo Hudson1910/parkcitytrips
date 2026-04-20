@@ -123,6 +123,22 @@
             <a href="https://wa.me/14352146939" target="_blank" style="background:#25d366;color:#fff;"><i class="bi bi-whatsapp"></i> WhatsApp Us</a>
         </div>
     </div>
+
+    {% if related %}
+    <div style="margin-top:48px;padding-top:32px;border-top:1px solid var(--border);">
+        <h2 style="font-size:22px;margin-bottom:18px;">Related Services</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;">
+            {% for r in related %}
+            <a href="/s/{{ r.slug }}" style="display:block;padding:14px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--t1);text-decoration:none;font-size:14px;font-weight:600;transition:all .2s;">
+                <i class="bi bi-arrow-right-circle" style="color:var(--gold);margin-right:6px;"></i>{{ r.title }}
+            </a>
+            {% endfor %}
+        </div>
+        <div style="margin-top:18px;font-size:13px;color:var(--t3);">
+            See also: <a href="/blog" style="color:var(--gold);">Park City Blog</a> · <a href="/weather" style="color:var(--gold);">Live Mountain Conditions</a> · <a href="/fleet" style="color:var(--gold);">Our Fleet</a> · <a href="/about" style="color:var(--gold);">About Us</a>
+        </div>
+    </div>
+    {% endif %}
 </section>
 
 <footer>
