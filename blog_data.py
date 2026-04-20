@@ -79,7 +79,7 @@ POSTS = [
         'date': '2026-04-10',
         'author': 'Hudson Valeriano',
         'category': 'Travel Guide',
-        'image': 'https://images.unsplash.com/photo-1436491865332-7a61a109db05?w=1200&h=600&fit=crop',
+        'image': 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&h=600&fit=crop',
         'read_time': '9 min read',
         'content': """
 <p>Landing at <strong>Salt Lake City International Airport (SLC)</strong> and need to get to <strong>Park City</strong>? The 36-mile drive takes about 45 minutes through the stunning Wasatch Mountains via I-80 and SR-224. Here's everything you need to know about your transportation options, winter conditions, and how to avoid the most common rookie mistakes.</p>
