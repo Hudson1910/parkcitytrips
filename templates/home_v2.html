@@ -337,7 +337,7 @@ body.light .mobile-menu-btn{color:#000;}
 <div id="app-wrapper" style="width:100%;max-width:100vw;overflow-x:hidden;position:relative;">
 
 <!-- OLYMPICS SPLASH -->
-<div class="splash" id="splash">
+<div class="splash" id="splash" onclick="if(event.target===this||event.target.closest('.splash-inner')){closeSplash();}">
     <canvas id="splashSnow"></canvas>
     <div class="splash-inner">
         <svg class="splash-rings" viewBox="0 0 500 230">
@@ -722,8 +722,8 @@ t.addEventListener('touchend',()=>setTimeout(()=>t.style.animationPlayState='run
         if(dd){dd.textContent=Math.floor(diff/864e5);hh.textContent=String(Math.floor(diff%864e5/36e5)).padStart(2,'0');mm.textContent=String(Math.floor(diff%36e5/6e4)).padStart(2,'0');ss2.textContent=String(Math.floor(diff%6e4/1e3)).padStart(2,'0');}
     }
     tick();setInterval(tick,1000);
-    window.closeSplash=function(){s.classList.add('out');setTimeout(()=>{on=false;s.remove();},600);};
-    setTimeout(closeSplash,5000);
+    window.closeSplash=function(){s.classList.add('out');setTimeout(()=>{on=false;s.remove();},400);};
+    setTimeout(closeSplash,2500);
 })();
 
 // Nav scroll
@@ -865,7 +865,7 @@ document.querySelectorAll('[data-count]').forEach(e=>cObs.observe(e));
 (function(){const base=9000,perDay=5,since=new Date(2026,3,16);const days=Math.max(0,Math.floor((Date.now()-since)/864e5));const total=base+days*perDay;document.querySelectorAll('[data-count]').forEach(el=>{if(el.textContent==='0'&&el.closest('.stat-item'))el.dataset.count=total;});})();
 
 </script>
-<script src="/static/no-zoom.js"></script>
+<script src="/static/no-zoom.js?v=2"></script>
 </div><!-- /app-wrapper -->
 </body>
 </html>
