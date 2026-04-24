@@ -75,7 +75,7 @@
 
 <section class="seo-hero">
     <h1>{{ page.h1 | replace('Park City', '<b>Park City</b>') | safe }}</h1>
-    <p>{{ page.content }}</p>
+    <p>{{ page.content | safe }}</p>
     <div class="trust">
         <div class="trust-item"><i class="bi bi-star-fill"></i> 4.7 Star Rating</div>
         <div class="trust-item"><i class="bi bi-car-front-fill"></i> 9,000+ Rides</div>
@@ -88,6 +88,33 @@
         <a href="tel:+14352146939" style="background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0e17;"><i class="bi bi-telephone-fill"></i> Call (435) 214-6939</a>
     </div>
 </section>
+
+{% if page.long_content %}
+<section class="seo-content" style="padding-bottom:20px;">
+    {{ page.long_content | safe }}
+</section>
+{% endif %}
+
+{% if page.faqs %}
+<section class="seo-content" style="padding-top:20px;padding-bottom:20px;">
+    <h2>Frequently Asked Questions</h2>
+    <div style="margin-top:24px;">
+        {% for faq in page.faqs %}
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:22px 24px;margin-bottom:14px;">
+            <h3 style="font-size:17px;font-weight:800;color:var(--w);margin-bottom:10px;">{{ faq.q }}</h3>
+            <p style="font-size:15px;color:var(--t2);line-height:1.75;margin:0;">{{ faq.a | safe }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+        {% for faq in page.faqs %}
+        {"@type":"Question","name":{{ faq.q | tojson }},"acceptedAnswer":{"@type":"Answer","text":{{ faq.a | tojson }}}}{% if not loop.last %},{% endif %}
+        {% endfor %}
+    ]}
+    </script>
+</section>
+{% endif %}
 
 <section class="seo-content">
     <h2>Our Fleet — Choose Your Ride</h2>
