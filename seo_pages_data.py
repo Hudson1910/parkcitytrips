@@ -158,9 +158,9 @@ SEO_PAGES = {
         ],
     },
     'slc-to-park-city-car-service': {
-        'title': 'SLC to Park City Car Service | Private Luxury SUV from $109',
+        'title': 'SLC to Park City Car Service | Private Luxury SUV from $100',
         'h1': 'Private Car Service: SLC Airport to Park City',
-        'desc': 'Premium private car service from Salt Lake City to Park City. Lincoln Navigator, GMC Yukon, Cadillac Escalade. From $109 all-inclusive. 9,000+ rides. (435) 214-6939',
+        'desc': 'Premium private car service from Salt Lake City to Park City. Lincoln Navigator, GMC Yukon, Cadillac Escalade. From $100 all-inclusive. 9,000+ rides. (435) 214-6939',
         'keywords': 'SLC to Park City car service, private car Park City, luxury car service Salt Lake City to Park City, black car service Park City',
         'content': 'Looking for a premium car service from Salt Lake City to Park City? Rio Transportation provides luxury private SUV service with professional drivers. With over 9,000 rides completed and a 4.7-star Google rating, we\'re Park City\'s most trusted private transportation service.',
         'long_content': '''
@@ -172,8 +172,8 @@ SEO_PAGES = {
 <p>Since 2019, we\'ve completed over 9,000 rides on the SLC-Park City route. Our drivers include Utah locals with 10+ years of mountain driving experience, former Park City ski patrol members, and certified commercial chauffeurs. Google reviews (4.7 stars, 300+ reviews) highlight punctuality, professional presentation, vehicle cleanliness, and driver knowledge of Park City destinations. We\'re the highest-rated private car service in Park City on Google.</p>
 ''',
         'faqs': [
-            {'q': 'What\'s included in the $109 price?', 'a': 'Everything except gratuity: private luxury SUV, professional chauffeur, all fuel and tolls, flight tracking, bottled water, in-vehicle Wi-Fi, and up to 2 car seats if needed. No hidden fees. Gratuity is at your discretion.'},
-            {'q': 'Why are you cheaper than Uber Black or Lyft Lux?', 'a': 'Uber Black and Lyft Lux use surge pricing during ski season, weekends, and storms — rides that "should" be $90 often show up at $180-$400. We lock in $109 flat, no matter the time or conditions. For airport transfers specifically, we\'re usually 30-50% cheaper than premium rideshare.'},
+            {'q': 'What\'s included in the $100 price?', 'a': 'Everything except gratuity: private luxury SUV, professional chauffeur, all fuel and tolls, flight tracking, bottled water, in-vehicle Wi-Fi, and up to 2 car seats if needed. No hidden fees. Gratuity is at your discretion.'},
+            {'q': 'Why are you cheaper than Uber Black or Lyft Lux?', 'a': 'Uber Black and Lyft Lux use surge pricing during ski season, weekends, and storms — rides that "should" be $90 often show up at $180-$400. We lock in $100 flat, no matter the time or conditions. For airport transfers specifically, we\'re usually 30-50% cheaper than premium rideshare.'},
             {'q': 'Can I book for a group of 6 adults with luggage?', 'a': 'Yes — any of our 7-passenger SUVs accommodates 6 adults with standard luggage. If your group has unusual gear (skis, golf clubs, musical instruments), mention it when booking to ensure the right vehicle is assigned.'},
             {'q': 'Do you offer black-car (sedan) service, or only SUVs?', 'a': 'We\'re SUV-only. For the SLC-Park City route, SUVs make sense (winter conditions, luggage capacity). If you specifically need a black sedan, we can refer you to a partner, but 95% of our airport transfer clients prefer our SUVs.'},
             {'q': 'Can I book for someone else (gift or business)?', 'a': 'Yes — enter the passenger\'s name/phone in the booking so our driver contacts them directly. You can pay with your card without disclosing billing details to the passenger.'},
@@ -182,7 +182,7 @@ SEO_PAGES = {
     'deer-valley-airport-transfer': {
         'title': 'Deer Valley Airport Transfer | Private SUV Shuttle from SLC',
         'h1': 'Deer Valley Airport Transfer Service',
-        'desc': 'Private airport transfer to Deer Valley Resort from SLC Airport. Luxury SUV, 45 min direct. Ski gear welcome. From $109. No shared rides. Book now!',
+        'desc': 'Private airport transfer to Deer Valley Resort from SLC Airport. Luxury SUV, 45 min direct. Ski gear welcome. From $100. No shared rides. Book now!',
         'keywords': 'Deer Valley airport transfer, Deer Valley shuttle from airport, SLC to Deer Valley, Deer Valley private transfer, Deer Valley car service',
         'content': 'Arriving at Salt Lake City Airport and heading to Deer Valley Resort? Rio Transportation provides the most comfortable private transfer service. Our luxury SUVs take you directly to your Deer Valley hotel, lodge, or condo in just 45 minutes.',
         'long_content': '''
@@ -204,12 +204,12 @@ SEO_PAGES = {
     'park-city-uber-alternative': {
         'title': 'Park City Uber Alternative | Private SUV No Surge Pricing',
         'h1': 'Better Than Uber in Park City',
-        'desc': 'Skip Uber surge pricing in Park City. Private luxury SUV from $109, fixed price, no surge. Professional drivers, flight tracking, car seats available.',
+        'desc': 'Skip Uber surge pricing in Park City. Private luxury SUV from $100, fixed price, no surge. Professional drivers, flight tracking, car seats available.',
         'keywords': 'Park City Uber alternative, Uber Park City, Lyft Park City, rideshare Park City, Park City ride service no surge',
-        'content': 'Tired of Uber surge pricing in Park City? During ski season and events, Uber and Lyft prices can surge to $150-300+ for a single ride from SLC Airport. Rio Transportation offers a fixed-price alternative starting at just $109 — no surge, no surprises.',
+        'content': 'Tired of Uber surge pricing in Park City? During ski season and events, Uber and Lyft prices can surge to $150-300+ for a single ride from SLC Airport. Rio Transportation offers a fixed-price alternative starting at just $100 — no surge, no surprises.',
         'long_content': '''
 <h2>Real Uber Surge Prices We\'ve Seen in Park City</h2>
-<p>Our clients forward us screenshots of Uber/Lyft prices when they switch to our service. A sample of what we\'ve seen from SLC to Park City: <strong>Sunday 5 PM during ski season: Uber $287 (our price $109). Friday 7 PM during Sundance Film Festival: Uber $412. Saturday 2 AM Main Street to hotel: Uber $38 surge pricing (our local rate $25). During a 2026 February snowstorm: Uber $520, zero availability after 6 PM.</strong> The lower Uber prices ($90-120) exist only during non-peak hours.</p>
+<p>Our clients forward us screenshots of Uber/Lyft prices when they switch to our service. A sample of what we\'ve seen from SLC to Park City: <strong>Sunday 5 PM during ski season: Uber $287 (our price $100). Friday 7 PM during Sundance Film Festival: Uber $412. Saturday 2 AM Main Street to hotel: Uber $38 surge pricing (our local rate $25). During a 2026 February snowstorm: Uber $520, zero availability after 6 PM.</strong> The lower Uber prices ($90-120) exist only during non-peak hours.</p>
 <h2>What Rideshare Gets Wrong in Mountain Towns</h2>
 <p>Rideshare works well in dense urban areas with many drivers. Park City has few full-time rideshare drivers and high demand swings: ski season, Sundance, 4th of July, Arts Festival weekends, etc. Drivers surge away to Salt Lake City when demand is low, then prices spike 2-5x when demand returns. Professional car services like ours have committed schedules and fleet availability — we plan our week around Park City demand.</p>
 <h2>Side-by-Side Comparison</h2>
@@ -219,7 +219,7 @@ SEO_PAGES = {
 <p><strong>Rio Transportation cons:</strong> Requires advance booking (at least 2 hrs for guaranteed availability). Higher base price than Uber\'s lowest non-surge rate.</p>
 ''',
         'faqs': [
-            {'q': 'What\'s the biggest Uber surge price you\'ve heard of to Park City?', 'a': 'We\'ve seen screenshots up to $520 for a single SLC-Park City ride during a February snowstorm. Routine surges during ski season weekends hit $250-350. At our flat $109, we\'re often 3-5x cheaper during peak demand.'},
+            {'q': 'What\'s the biggest Uber surge price you\'ve heard of to Park City?', 'a': 'We\'ve seen screenshots up to $520 for a single SLC-Park City ride during a February snowstorm. Routine surges during ski season weekends hit $250-350. At our flat $100, we\'re often 3-5x cheaper during peak demand.'},
             {'q': 'Do I have to book in advance or can I call you immediately?', 'a': 'Both work. For guaranteed same-day service, call (435) 214-6939 to check availability. For peak-time bookings (Friday PM, Sunday AM during ski season), we recommend 48-hour advance booking to lock in your slot and price.'},
             {'q': 'Is your driver going to be waiting for me like an Uber?', 'a': 'Better — your driver is pre-assigned and tracks your flight. They\'re at the airport 15 minutes before you land, so you walk out of baggage claim and your driver is already there waving. No app-poking or "where are you?" texts needed.'},
             {'q': 'Do you offer a mobile app like Uber?', 'a': 'Not currently. We use a web booking form plus SMS/phone communication. Most of our clients prefer this — they book the ride once, get a confirmation with driver details, and don\'t need to manage an app for each trip.'},
@@ -227,9 +227,9 @@ SEO_PAGES = {
         ],
     },
     'park-city-private-shuttle': {
-        'title': 'Park City Private Shuttle | Door-to-Door SUV Service from $109',
+        'title': 'Park City Private Shuttle | Door-to-Door SUV Service from $100',
         'h1': 'Private Shuttle to Park City',
-        'desc': 'Private shuttle from SLC Airport to Park City. No shared rides. Luxury SUV, professional driver. Families, groups, ski trips. From $109. Book online.',
+        'desc': 'Private shuttle from SLC Airport to Park City. No shared rides. Luxury SUV, professional driver. Families, groups, ski trips. From $100. Book online.',
         'keywords': 'Park City private shuttle, private shuttle to Park City, Park City shuttle service, private van Park City, Park City shuttle from airport',
         'content': 'Why share a shuttle van with strangers when you can have a private luxury SUV? Rio Transportation\'s private shuttle service takes you directly from Salt Lake City Airport to your Park City destination — no waiting for other passengers, no extra stops, no crowded vans.',
         'long_content': '''
@@ -316,7 +316,7 @@ SEO_PAGES = {
 <h2>Common Winter Closures</h2>
 <p>Parley\'s Canyon closes for: major storms dropping 12+ inches in short time, accidents (surprisingly common due to tourist drivers), avalanche risk (rare, handled by avalanche control at Parleys Summit), and UDOT chain-up operations. Closures typically last 30 min to 3 hours; occasionally overnight. During I-80 closures, US-40 via Heber handles all traffic and becomes very slow.</p>
 <h2>Driving Yourself vs. Hiring a Driver</h2>
-<p>If you\'re experienced with winter mountain driving and your rental car has AWD + winter tires, driving yourself is fine. If you\'re from a warm-weather state, consider: airport car rentals are mostly 2WD (some charge $300+ for AWD upgrades), you\'ll pay $80-150 per day for rental + insurance + parking at Park City hotels ($30-50/day valet), and you\'ll do the winter mountain drive yourself. For many visitors, our $109 one-way professional driver is cheaper and far less stressful.</p>
+<p>If you\'re experienced with winter mountain driving and your rental car has AWD + winter tires, driving yourself is fine. If you\'re from a warm-weather state, consider: airport car rentals are mostly 2WD (some charge $300+ for AWD upgrades), you\'ll pay $80-150 per day for rental + insurance + parking at Park City hotels ($30-50/day valet), and you\'ll do the winter mountain drive yourself. For many visitors, our $100 one-way professional driver is cheaper and far less stressful.</p>
 ''',
         'faqs': [
             {'q': 'How do I know if Parley\'s Canyon is open right now?', 'a': 'Check UDOT Traffic (udottraffic.utah.gov) or our live road conditions page. UDOT updates within 1-2 minutes of any closure or restriction. During storms, check before leaving your hotel or airport.'},
@@ -366,14 +366,14 @@ SEO_PAGES = {
             {'q': 'How far apart are Canyons Village and Old Town Park City?', 'a': 'About 6-7 miles by road (SR-224), or 12-15 minutes driving in normal conditions. They\'re connected on the mountain via the Quicksilver Gondola, so you can also ski between them without driving.'},
             {'q': 'Is there a free shuttle between the two sides?', 'a': 'Yes — the High Valley Transit "Purple Line" runs free every 15-20 minutes between both base areas. It\'s reliable but slower than private transport (35-45 min end-to-end with stops). Our service is for when you need speed, comfort, or guaranteed availability.'},
             {'q': 'Can I ski between the two sides instead of shuttling?', 'a': 'Yes — the Quicksilver Gondola connects the two base areas mid-mountain. If your lift ticket covers both bases (most do) and lifts are open, you can ski from Park City Mountain side to Canyons side in about 30-45 minutes of skiing.'},
-            {'q': 'How much does a one-way Old Town to Canyons ride cost?', 'a': '$89 flat rate, all-inclusive. This is our local ride pricing — different from the $109+ airport transfer pricing due to shorter distance.'},
+            {'q': 'How much does a one-way Old Town to Canyons ride cost?', 'a': '$89 flat rate, all-inclusive. This is our local ride pricing — different from the $100+ airport transfer pricing due to shorter distance.'},
             {'q': 'Do I need to book in advance for local Park City rides?', 'a': 'Ideally yes, 2-3 hours minimum. Same-day requests are usually accommodated if we have drivers free, but peak ski-weekend evenings (Saturday dinner time) may require 24+ hours.'},
         ],
     },
     'slc-airport-car-service-24-7': {
         'title': 'SLC Airport Car Service 24/7 | Overnight & Red-Eye Transfers',
         'h1': '24/7 SLC Airport Car Service to Park City',
-        'desc': 'Round-the-clock private car service from Salt Lake City Airport to Park City. Red-eye arrivals, early morning departures, overnight transfers. From $109.',
+        'desc': 'Round-the-clock private car service from Salt Lake City Airport to Park City. Red-eye arrivals, early morning departures, overnight transfers. From $100.',
         'keywords': 'SLC airport 24 hour car service, Park City late night airport, overnight Park City shuttle, red eye SLC Park City, 2 AM airport shuttle Park City',
         'content': 'Arriving at Salt Lake City Airport at 2 AM? Departing on a 5 AM flight? Rio Transportation operates 24/7 — no surcharges for red-eye arrivals or early-morning departures.',
         'long_content': '''
@@ -388,7 +388,7 @@ SEO_PAGES = {
 <p>Our drivers on overnight shifts are specifically trained for night mountain driving — fatigue management protocols, reduced-visibility handling, and mountain-road-at-night familiarity. We never dispatch a driver who\'s worked more than 10 consecutive hours. Unlike Uber/Lyft drivers who might moonlight after their day job, our overnight chauffeurs are rested and focused.</p>
 ''',
         'faqs': [
-            {'q': 'Is there a surcharge for overnight (red-eye) service?', 'a': 'No — we charge the same $109 base rate at 3 AM as at 3 PM. No overnight surcharge, no holiday surcharge, no weather surcharge.'},
+            {'q': 'Is there a surcharge for overnight (red-eye) service?', 'a': 'No — we charge the same $100 base rate at 3 AM as at 3 PM. No overnight surcharge, no holiday surcharge, no weather surcharge.'},
             {'q': 'How early can you pick me up in Park City for an early flight?', 'a': 'We operate as early as needed — 2 AM, 3 AM, 4 AM pickups are routine during holiday travel periods. Book 24 hours ahead to guarantee your specific early-morning slot.'},
             {'q': 'What if my flight is delayed and arrives at 2 AM instead of 10 PM?', 'a': 'Our system automatically tracks your flight and adjusts the driver\'s departure. You don\'t need to call us; our driver will be at baggage claim when you arrive regardless of actual landing time.'},
             {'q': 'Do Uber/Lyft work at 2 AM from SLC airport?', 'a': 'They\'re available but often have 15-30 minute wait times at late hours, and surge pricing can hit 2-3x. For red-eye arrivals, pre-booked service eliminates the surprise factor.'},
@@ -436,7 +436,7 @@ SEO_PAGES = {
         'faqs': [
             {'q': 'Which Deer Valley base area should I arrive at?', 'a': 'Whichever your lodging is at — Snow Park if staying at a lower-mountain hotel, Silver Lake if staying at Stein/Chateaux/Goldener Hirsch, Empire if staying at Montage. Our drivers take you directly to your specific property, not just "Deer Valley."'},
             {'q': 'Can you handle drop-off at Stein Eriksen Lodge\'s ski valet directly?', 'a': 'Yes — we pull up to Stein\'s ski valet tent so your ski bags transfer directly to their storage, not the hotel lobby. The driver coordinates with Stein\'s bellman during the drive.'},
-            {'q': 'Is it more expensive to go to Empire Canyon vs. Snow Park?', 'a': 'Pricing is the same ($109 base airport transfer) regardless of which Deer Valley base area. The few extra minutes of driving don\'t affect cost. Within-resort local shuttles (Snow Park to Empire, for instance) are $35-50.'},
+            {'q': 'Is it more expensive to go to Empire Canyon vs. Snow Park?', 'a': 'Pricing is the same ($100 base airport transfer) regardless of which Deer Valley base area. The few extra minutes of driving don\'t affect cost. Within-resort local shuttles (Snow Park to Empire, for instance) are $35-50.'},
             {'q': 'Does your driver understand Deer Valley\'s skier-only policy?', 'a': 'Yes — we\'ve transported many guests with mixed ski/snowboard groups where snowboarders stay at Deer Valley lodging but ride at Park City Mountain. Our drivers handle the logistics (drop you at Deer Valley, then shuttle the snowboarders to Park City base).'},
             {'q': 'Can you provide day-long hourly service at Deer Valley?', 'a': 'Yes — $125/hour (3-hour minimum) for hourly service in Park City. Great for guests who want on-call transportation between Deer Valley lodging, Main Street restaurants, and resort events.'},
         ],
@@ -490,9 +490,9 @@ SEO_PAGES = {
         ],
     },
     'park-city-ski-trip-transportation': {
-        'title': 'Park City Ski Trip Transportation | Complete Package from $109',
+        'title': 'Park City Ski Trip Transportation | Complete Package from $100',
         'h1': 'Park City Ski Trip Transportation Package',
-        'desc': 'Complete ski trip transportation: SLC airport transfer, resort shuttles, equipment stops, après-ski returns. All-inclusive Park City ski package from $109.',
+        'desc': 'Complete ski trip transportation: SLC airport transfer, resort shuttles, equipment stops, après-ski returns. All-inclusive Park City ski package from $100.',
         'keywords': 'Park City ski trip transportation, ski trip shuttle Park City, Park City ski package transportation, ski vacation Park City shuttle, ski transfer Utah',
         'content': 'Planning a ski trip to Park City? Make transportation the easiest part. Rio Transportation offers complete ski-trip packages: round-trip SLC airport transfers with ski gear capacity, optional ski equipment rental stops, daily resort shuttle service, and late-day pickup at the slopes.',
         'long_content': '''

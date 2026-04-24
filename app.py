@@ -12,7 +12,7 @@ def _send_quick_email(booking):
     if not config.RESEND_API_KEY:
         print("[Email] No RESEND_API_KEY configured")
         return
-    vehicle_names = {'small':'Small SUV','midsize':'Midsize SUV','premier':'Premier SUV','luxury':'Luxury SUV'}
+    vehicle_names = {'small':'Comfort Electric','midsize':'Midsize SUV','premier':'Premier SUV','luxury':'Luxury SUV'}
     c = booking['customer']
     t = booking['trip']
     bid = booking['id'].upper()
@@ -97,7 +97,7 @@ def send_booking_email(booking):
     if not config.SMTP_USER:
         print("[Email] SMTP not configured, skipping")
         return
-    vehicle_names = {'small':'Small SUV (Eclipse Cross)','midsize':'Midsize SUV (Pathfinder)',
+    vehicle_names = {'small':'Comfort Electric (Tesla Model Y)','midsize':'Midsize SUV (Pathfinder)',
                      'premier':'Premier SUV (GMC Yukon)','luxury':'Luxury SUV (Lincoln Navigator)'}
     v = vehicle_names.get(booking['vehicle'], booking['vehicle'])
     c = booking['customer']
@@ -388,7 +388,7 @@ def admin_new_booking():
 
         # Send confirmation email to client
         if data.get('email') and config.RESEND_API_KEY:
-            vehicle_names = {'small':'Small SUV','midsize':'Midsize SUV','premier':'Premier SUV','luxury':'Luxury SUV'}
+            vehicle_names = {'small':'Comfort Electric','midsize':'Midsize SUV','premier':'Premier SUV','luxury':'Luxury SUV'}
             v = vehicle_names.get(vehicle, vehicle)
             bid = booking_id.upper()
             c = booking['customer']

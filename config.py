@@ -68,7 +68,7 @@ SQUARE_JS_URL = 'https://web.squarecdn.com/v1/square.js' if SQUARE_ENVIRONMENT =
 MAPBOX_TOKEN = os.getenv('MAPBOX_TOKEN', '')
 
 # Pricing
-VEHICLE_PRICES = {'small': 109, 'midsize': 129, 'premier': 189, 'luxury': 220, 'hourly': 120, 'group': 0}
+VEHICLE_PRICES = {'small': 100, 'midsize': 129, 'premier': 189, 'luxury': 220, 'hourly': 120, 'group': 0}
 PREMIUM_STOP_PRICE = 60
 
 # Email notifications

@@ -68,7 +68,7 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);mi
 
     <!-- Booking Summary -->
     <div class="summary">
-        <div class="sum-row"><span class="k">Vehicle</span><span class="v">{{ {'small':'Small SUV','midsize':'Midsize SUV','premier':'Premier SUV','luxury':'Luxury SUV','hourly':'Hourly Driver','group':'Group Quote'}.get(booking.vehicle, booking.vehicle) }}</span></div>
+        <div class="sum-row"><span class="k">Vehicle</span><span class="v">{{ {'small':'Comfort Electric','midsize':'Midsize SUV','premier':'Premier SUV','luxury':'Luxury SUV','hourly':'Hourly Driver','group':'Group Quote'}.get(booking.vehicle, booking.vehicle) }}</span></div>
         <div class="sum-row"><span class="k">Date</span><span class="v">{{ booking.trip.date }}</span></div>
         <div class="sum-row"><span class="k">Direction</span><span class="v">{{ booking.trip.direction }}</span></div>
         <div class="sum-row"><span class="k">Customer</span><span class="v">{{ booking.customer.name }}</span></div>

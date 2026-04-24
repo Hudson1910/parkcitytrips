@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="description" content="Book a private luxury SUV from Salt Lake City Airport to Park City. Choose your vehicle, select date, enter flight number. All-inclusive pricing.">
-    <meta property="og:title" content="Book Your Ride — SLC Airport to Park City from $109 | Rio Transportation">
+    <meta property="og:title" content="Book Your Ride — SLC Airport to Park City from $100 | Rio Transportation">
     <meta property="og:description" content="Book a private luxury SUV from Salt Lake City Airport to Park City. Choose your vehicle, select date, enter flight number. All-inclusive pricing.">
     <meta property="og:url" content="https://parkcitytrips.com/book">
     <meta property="og:type" content="website">
     <link rel="canonical" href="https://parkcitytrips.com/book">
-    <title>Book Your Ride — SLC Airport to Park City from $109 | Rio Transportation</title>
+    <title>Book Your Ride — SLC Airport to Park City from $100 | Rio Transportation</title>
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"Service","name":"Private SUV Transfer — SLC Airport to Park City","serviceType":"Airport Shuttle","provider":{"@type":"LocalBusiness","name":"Rio Transportation LLC","telephone":"+14352146939","url":"https://parkcitytrips.com","address":{"@type":"PostalAddress","streetAddress":"1776 Kearns Blvd","addressLocality":"Park City","addressRegion":"UT","postalCode":"84060","addressCountry":"US"},"geo":{"@type":"GeoCoordinates","latitude":40.6653,"longitude":-111.4987},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","reviewCount":"25"}},"areaServed":[{"@type":"City","name":"Park City"},{"@type":"City","name":"Salt Lake City"},{"@type":"AdministrativeArea","name":"Deer Valley"}],"offers":{"@type":"AggregateOffer","priceCurrency":"USD","lowPrice":"109","highPrice":"220","offerCount":"4","offers":[
-      {"@type":"Offer","name":"Small SUV","price":"109","priceCurrency":"USD","availability":"https://schema.org/InStock"},
+    {"@context":"https://schema.org","@type":"Service","name":"Private SUV Transfer — SLC Airport to Park City","serviceType":"Airport Shuttle","provider":{"@type":"LocalBusiness","name":"Rio Transportation LLC","telephone":"+14352146939","url":"https://parkcitytrips.com","address":{"@type":"PostalAddress","streetAddress":"1776 Kearns Blvd","addressLocality":"Park City","addressRegion":"UT","postalCode":"84060","addressCountry":"US"},"geo":{"@type":"GeoCoordinates","latitude":40.6653,"longitude":-111.4987},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","reviewCount":"25"}},"areaServed":[{"@type":"City","name":"Park City"},{"@type":"City","name":"Salt Lake City"},{"@type":"AdministrativeArea","name":"Deer Valley"}],"offers":{"@type":"AggregateOffer","priceCurrency":"USD","lowPrice":"100","highPrice":"220","offerCount":"4","offers":[
+      {"@type":"Offer","name":"Comfort Electric","price":"100","priceCurrency":"USD","availability":"https://schema.org/InStock"},
       {"@type":"Offer","name":"Midsize SUV","price":"129","priceCurrency":"USD","availability":"https://schema.org/InStock"},
       {"@type":"Offer","name":"Premier SUV","price":"189","priceCurrency":"USD","availability":"https://schema.org/InStock"},
       {"@type":"Offer","name":"Luxury SUV","price":"220","priceCurrency":"USD","availability":"https://schema.org/InStock"}
@@ -102,10 +102,10 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);mi
         <div class="step-label">1 — Choose Your Vehicle</div>
         <div class="vehicles">
             <div class="v-option {{ 'selected' if request.args.get('vehicle')=='small' }}" onclick="pickVehicle(this,'small')">
-                <div class="v-img" style="background-image:url('https://static.wixstatic.com/media/55a398_cb5c7d2583204805ab6e961e3daf4140~mv2.webp');" title="Small SUV"></div>
-                <h4>Small SUV</h4>
-                <div class="v-model">Eclipse Cross AWD</div>
-                <div class="v-price">$109</div>
+                <div class="v-img" style="background-image:url('/static/images/comfort-electric.png');background-size:contain;background-repeat:no-repeat;background-position:center;" title="Comfort Electric"></div>
+                <h4>Comfort Electric</h4>
+                <div class="v-model">Tesla Model Y or similar</div>
+                <div class="v-price">$100</div>
             </div>
             <div class="v-option {{ 'selected' if request.args.get('vehicle')=='midsize' }}" onclick="pickVehicle(this,'midsize')">
                 <div class="v-img" style="background-image:url('/static/pathfinder.avif');" title="Midsize SUV"></div>

@@ -93,11 +93,11 @@ POSTS = [
 <h2>Transportation Options Compared</h2>
 
 <h3>1. Private SUV Service (Recommended)</h3>
-<p>A <strong>private luxury SUV</strong> is the most comfortable and stress-free way to get to Park City. Companies like <a href="/"><strong>Rio Transportation</strong></a> offer door-to-door service in GMC Yukons, Lincoln Navigators, Cadillac Escalades, and Nissan Pathfinders. Your driver monitors your flight in real-time, adjusts pickup for delays, and meets you at baggage claim with a sign. Prices start at <strong>$109</strong> with all-inclusive pricing — no hidden fees and no surge pricing. Gratuity is at your discretion.</p>
+<p>A <strong>private luxury SUV</strong> is the most comfortable and stress-free way to get to Park City. Companies like <a href="/"><strong>Rio Transportation</strong></a> offer door-to-door service in GMC Yukons, Lincoln Navigators, Cadillac Escalades, and Nissan Pathfinders. Your driver monitors your flight in real-time, adjusts pickup for delays, and meets you at baggage claim with a sign. Prices start at <strong>$100</strong> with all-inclusive pricing — no hidden fees and no surge pricing. Gratuity is at your discretion.</p>
 <ul>
 <li><strong>Pros:</strong> Private, comfortable, flight tracking, free car seats, ski gear storage, AWD for winter roads, 45-minute door-to-door time</li>
 <li><strong>Cons:</strong> Costs more than a shared shuttle</li>
-<li><strong>Price:</strong> $109–$220 depending on vehicle and season</li>
+<li><strong>Price:</strong> $100–$220 depending on vehicle and season</li>
 <li><strong>Best for:</strong> Families, ski trips, groups, business travelers, anyone prioritizing reliability</li>
 </ul>
 
@@ -238,7 +238,7 @@ POSTS = [
 
 <p>Check our <strong><a href="/weather">live mountain conditions</a></strong> page for real-time snow reports, webcams, and road status before you fly. Our <a href="/s/park-city-snow-report">snow report</a> shows both resorts side-by-side so you can decide which mountain has the better day.</p>
 
-<p><strong><a href="/book">Book your ski transfer now</a></strong> — from $109 all-inclusive, no surge pricing, free car seats for families.</p>
+<p><strong><a href="/book">Book your ski transfer now</a></strong> — from $100 all-inclusive, no surge pricing, free car seats for families.</p>
 """,
     },
     {

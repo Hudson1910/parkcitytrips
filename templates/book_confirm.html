@@ -44,7 +44,7 @@ h1{font-family:'Onest',sans-serif;font-size:clamp(24px,5vw,32px);font-weight:800
         {% if booking %}
         <div class="order-num">Order #{{ booking.id|upper }}</div>
         <div class="detail">
-            <div class="row"><span class="k">Vehicle</span><span class="v">{{ {'small':'Small SUV','midsize':'Midsize SUV','premier':'Premier SUV','luxury':'Luxury SUV'}.get(booking.vehicle, booking.vehicle) }}</span></div>
+            <div class="row"><span class="k">Vehicle</span><span class="v">{{ {'small':'Comfort Electric','midsize':'Midsize SUV','premier':'Premier SUV','luxury':'Luxury SUV'}.get(booking.vehicle, booking.vehicle) }}</span></div>
             <div class="row"><span class="k">Date</span><span class="v">{{ booking.trip.date }}</span></div>
             {% if booking.trip.pickup %}<div class="row"><span class="k">Pickup</span><span class="v">{{ booking.trip.pickup }}</span></div>{% endif %}
             {% if booking.trip.dropoff %}<div class="row"><span class="k">Dropoff</span><span class="v">{{ booking.trip.dropoff }}</span></div>{% endif %}
