@@ -33,8 +33,6 @@ SEO_PAGES = {
         'keywords': 'Park City taxi, taxi near me Park City, Park City cab, Park City car service, taxi Park City Utah',
         'content': 'Skip the wait for a traditional taxi. Rio Transportation provides private luxury SUV service throughout Park City, Utah. Whether you need a ride to the airport, a restaurant on Main Street, or a ski resort, our professional drivers are available 24/7.',
         'long_content': '''
-<h2>Park City Doesn\'t Have Traditional Taxis — Here\'s Why We\'re the Alternative</h2>
-<p>Unlike big cities, Park City doesn\'t have street-hail taxicabs. Rideshare apps (Uber, Lyft) work here but suffer from long wait times in winter, surge pricing during storms and events, and drivers who may not be familiar with the mountain roads. Rio Transportation fills the gap with <strong>pre-booked private SUV service</strong> — think of us as a premium, reservation-based local taxi that never surges and always has a driver available.</p>
 <h2>Popular Rides We Handle Daily</h2>
 <p>Locals and visitors book us for: dinner reservations on Main Street (we wait or return at a scheduled time), concerts at DeJoria Center or Canyons Village, medical appointments in Salt Lake City, hockey games at Vivint Arena, Tanger Outlet shopping trips, Red Butte Gardens concerts, Sundance Film Festival events, and late-night rides home when Main Street bars close at 1 AM. We also handle hourly service — book us for 3 hours and use the SUV and driver for multiple stops.</p>
 <h2>Booking vs. Calling Uber</h2>
