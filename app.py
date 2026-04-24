@@ -197,11 +197,41 @@ app = Flask(__name__)
 app.secret_key = config.SECRET_KEY
 
 
+# Legacy Wix paths — 301 redirect to the equivalent new page so Google
+# transfers any remaining PageRank and stops showing them as ghosts.
+LEGACY_WIX_REDIRECTS = {
+    '/about-us': '/about',
+    '/our-rates': '/fleet',
+    '/blank': '/',
+    '/blank-3': '/',
+    '/blank-1': '/',
+    '/blank-2': '/',
+    '/home': '/',
+    '/contact': '/book',
+    '/contact-us': '/book',
+    '/services': '/fleet',
+    '/service': '/fleet',
+    '/book-now': '/book',
+    '/rates': '/fleet',
+    '/pricing': '/fleet',
+    '/fleet-1': '/fleet',
+}
+
+
 @app.before_request
 def canonicalize_host():
     """301 redirect www.parkcitytrips.com → parkcitytrips.com so Google
-    treats the site as a single canonical host. Matches sitemap.xml."""
+    treats the site as a single canonical host. Matches sitemap.xml.
+    Also maps legacy Wix paths to their current equivalents."""
     host = (request.host or '').lower()
+    path = request.path or '/'
+    # Map Wix placeholder /zh/product-page/* and similar old junk to /
+    if path.startswith('/zh/') or path.startswith('/ar/') or path.startswith('/product-page/'):
+        return redirect('https://parkcitytrips.com/', code=301)
+    # Map known legacy paths
+    if path in LEGACY_WIX_REDIRECTS:
+        return redirect(f'https://parkcitytrips.com{LEGACY_WIX_REDIRECTS[path]}', code=301)
+    # Canonicalize host
     if host.startswith('www.parkcitytrips.com'):
         new_url = request.url.replace('://www.parkcitytrips.com', '://parkcitytrips.com', 1)
         return redirect(new_url, code=301)
