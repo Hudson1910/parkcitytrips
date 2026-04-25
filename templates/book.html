@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="description" content="Book a private luxury SUV from Salt Lake City Airport to Park City. Choose your vehicle, select date, enter flight number. All-inclusive pricing.">
     <meta property="og:title" content="Book Your Ride — SLC Airport to Park City from $100 | Rio Transportation">
@@ -102,7 +105,7 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);mi
         <div class="step-label">1 — Choose Your Vehicle</div>
         <div class="vehicles">
             <div class="v-option {{ 'selected' if request.args.get('vehicle')=='small' }}" onclick="pickVehicle(this,'small')">
-                <div class="v-img" style="background-image:url('/static/images/comfort-electric.png');background-size:contain;background-repeat:no-repeat;background-position:center;" title="Comfort Electric"></div>
+                <div class="v-img" style="background-image:url('/static/images/comfort-electric.webp');background-size:contain;background-repeat:no-repeat;background-position:center;" title="Comfort Electric"></div>
                 <h4>Comfort Electric</h4>
                 <div class="v-model">Tesla Model Y or similar</div>
                 <div class="v-price">$100</div>
@@ -685,6 +688,6 @@ if (v) {
     if (opt) { document.querySelectorAll('.v-option').forEach(o=>o.classList.remove('selected')); opt.classList.add('selected'); }
 }
 </script>
-<script src="/static/no-zoom.js?v=2"></script>
+<script defer src="/static/no-zoom.js?v=2"></script>
 </body>
 </html>
