@@ -326,4 +326,274 @@ POSTS = [
 <p><strong><a href="/book">Book your Olympic transfer now</a></strong> and secure your spot. For 2034 group bookings, corporate hospitality transportation, and athlete/team services, contact us directly at (435) 214-6939. We're planning capacity 8 years in advance so you don't have to.</p>
 """,
     },
+    {
+        'slug': 'winter-driving-park-city-guide',
+        'title': 'Winter Driving in Park City: The Complete 2026 Guide',
+        'subtitle': 'Everything you need to know about driving I-80 through Parley\'s Canyon, chain laws, AWD requirements, and when to hire a professional driver instead.',
+        'date': '2026-04-25',
+        'author': 'Hudson Valeriano',
+        'category': 'Travel Tips',
+        'image': 'https://images.unsplash.com/photo-1542435503-956c469947f6?w=1200&h=600&fit=crop',
+        'read_time': '9 min read',
+        'content': """
+<p>Park City sits at 7,000 feet of elevation, accessed primarily via I-80 East through Parley's Canyon — a 22-mile climb from Salt Lake City that gains 2,720 feet of altitude. For visitors used to driving in flat, warm climates, this drive in winter conditions can be genuinely intimidating. This guide covers everything you need to know to drive yourself safely, and when it makes sense to hire a professional driver instead.</p>
+
+<h2>The Parley's Canyon Drive — What to Expect</h2>
+
+<p>I-80 from Salt Lake City to Park City is a 4-lane interstate highway with a posted speed limit of 65-75 mph. In good summer conditions, the drive takes 32 minutes. In winter, expect 45-90 minutes depending on weather. The road climbs steadily through the canyon with grades up to 6%, passes Parleys Summit at 7,020 feet, then descends into the Snyderville Basin and Park City proper.</p>
+
+<p>The canyon creates its own weather. Salt Lake City might be 50°F and clear while Parley's Canyon is in a snowstorm. The temperature difference can exceed 20°F. This means a "rain in SLC" forecast often translates to "snow in Parleys" — surprising drivers who didn't check the higher-elevation forecast.</p>
+
+<h2>Utah's Traction Laws Explained</h2>
+
+<p>UDOT (Utah Department of Transportation) implements two levels of winter traction law on I-80:</p>
+
+<p><strong>Level 1 Traction Law:</strong> Activates during light winter conditions. Requires all 2WD vehicles to have M+S (mud + snow) rated tires. Most all-season tires meet this standard. AWD/4WD vehicles meet this requirement automatically. Penalty for violation: $500 fine.</p>
+
+<p><strong>Level 2 Traction Law:</strong> Activates during moderate-to-heavy storms. Requires chains on all 2WD vehicles, plus AWD/4WD with M+S tires (or chains). Most rental cars do not meet Level 2 requirements without chains. Penalty: $750 fine plus mandatory chain installation before you can continue.</p>
+
+<p>Beyond Level 2, UDOT can close I-80 entirely during severe storms or for avalanche control. These closures last 30 minutes to 6+ hours. There is no advance warning — closures happen reactively.</p>
+
+<h2>Vehicle Recommendations for Park City Driving</h2>
+
+<p><strong>What works well:</strong> AWD or 4WD vehicles (Subaru Outback, Honda CR-V, Toyota RAV4, any SUV) with all-season or dedicated winter tires. Front-wheel-drive cars with winter tires also handle most conditions, though they'll struggle on the steepest grades during heavy snow.</p>
+
+<p><strong>What to avoid:</strong> Rear-wheel-drive sports cars (rear-wheel drive on snow is dangerous), low-clearance vehicles (any unplowed road becomes impassable), and rental cars with worn or non-M+S tires. Standard rental sedans (Ford Focus, Toyota Corolla, Nissan Versa) are not recommended for ski-season Park City visits.</p>
+
+<p><strong>The rental car upgrade question:</strong> Most rental car companies at SLC offer "AWD upgrade" for $25-50/day. This is usually worth it for ski-season trips. However, even AWD rentals come with all-season tires, not dedicated winter tires — which means they're better than 2WD but not ideal for storm days.</p>
+
+<h2>When to Drive Yourself vs. Hire a Driver</h2>
+
+<p><strong>Drive yourself if:</strong> You have winter driving experience, your rental has AWD with M+S tires, weather forecast is clear, you're traveling outside ski-season weekends. The drive is enjoyable and gives you transportation freedom.</p>
+
+<p><strong>Hire a professional driver if:</strong> You're from a warm-weather state and have minimal snow-driving experience, you'll be arriving during a storm, you have a tight schedule (e.g., wedding, important meeting), you're traveling with kids or elderly passengers who need extra safety, or you simply don't want to deal with parking and winter conditions.</p>
+
+<p>The math also matters. A typical 5-day Park City trip in a rental car costs: $80-150/day rental ($400-750 total) + $20-50/day insurance ($100-250) + $30-50/day hotel parking ($150-250) + gas ($60-100) = roughly <strong>$700-1,350 total</strong>. A round-trip private SUV transfer with Rio Transportation costs $200-300 total. If you don't need a car for daily Park City activities (most ski trips don't — resorts have shuttles, Main Street is walkable), the math heavily favors hiring transportation.</p>
+
+<h2>Storm Day Driving Tips</h2>
+
+<p>If you decide to drive yourself during winter storm conditions:</p>
+
+<p><strong>Slow down dramatically.</strong> The legal speed limit during storms drops to 35-45 mph. UDOT will post variable message signs with current safe speeds. Tailgaters are the leading cause of canyon accidents — give yourself 4-6 seconds of following distance.</p>
+
+<p><strong>Stay in the right lane.</strong> Trucks and chained-up vehicles use the right lane. The left lane has more compaction and is better for cars with good winter tires. If you're not confident, the right lane is the safer choice — even if slower.</p>
+
+<p><strong>Don't stop on the canyon's grade.</strong> Pulling over on Parley's Canyon shoulders is dangerous (limited visibility, sliding cars). If you need to stop, exit at Parleys Summit (Exit 134) where there's a parking area.</p>
+
+<p><strong>Carry emergency supplies.</strong> Blankets, water, snacks, phone charger, flashlight. If I-80 closes for 4-6 hours during avalanche control or accidents, you might be stuck in your car. Cell service is reliable on I-80 but limited on side roads.</p>
+
+<p><strong>Check UDOT before leaving.</strong> The UDOT Traffic app or 511.utah.gov shows real-time canyon status, traction laws in effect, and any closures. Don't start the drive without checking. If conditions are bad, consider waiting 2-3 hours for the storm to pass.</p>
+
+<h2>The Alternative Route: US-40 via Heber Valley</h2>
+
+<p>When I-80 is closed or extremely slow, US-40 via Heber Valley becomes the backup route from SLC. Total drive: 55-70 minutes vs. I-80's normal 35-45 minutes. The route avoids Parley's Canyon entirely. Important: only use US-40 if I-80 is genuinely closed; otherwise, you're adding 20+ minutes of unnecessary driving.</p>
+
+<h2>Final Thoughts</h2>
+
+<p>Winter driving in Park City is manageable for prepared visitors but unforgiving of mistakes. If you're confident in your skills and vehicle, the drive itself is one of the most beautiful in the West — Wasatch peaks, snow-covered evergreens, and dramatic mountain vistas. If you're uncertain, professional drivers exist for exactly this reason. <a href="/book">Book a private SUV with Rio Transportation</a> for any segment of your trip and let the experts handle the canyon.</p>
+""",
+    },
+    {
+        'slug': 'park-city-where-to-stay-guide',
+        'title': 'Where to Stay in Park City: A Complete Lodging Guide',
+        'subtitle': 'Old Town vs. Deer Valley vs. Canyons Village vs. Promontory — comparing every Park City neighborhood with hotel and condo recommendations.',
+        'date': '2026-04-26',
+        'author': 'Hudson Valeriano',
+        'category': 'Travel Guide',
+        'image': 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1200&h=600&fit=crop',
+        'read_time': '11 min read',
+        'content': """
+<p>Choosing where to stay in Park City matters more than most visitors realize. The town has five distinct lodging zones, each with its own character, price point, and proximity to specific activities. Picking the wrong zone for your trip type can mean 20-minute drives every time you want dinner, frustrating ski-resort logistics, or simply paying double what you needed to.</p>
+
+<p>This guide breaks down each zone with specific hotel/condo recommendations, ideal use cases, and the trade-offs that matter.</p>
+
+<h2>Zone 1: Old Town / Main Street</h2>
+
+<p>Park City's historic downtown — Main Street is a 6-block stretch of restaurants, bars, art galleries, and boutiques in 1880s-era Mining Era buildings. Old Town extends a few blocks east, west, and south of Main Street, dotted with historic homes converted to vacation rentals, plus several boutique hotels.</p>
+
+<p><strong>Best for:</strong> Couples and small groups prioritizing dining, nightlife, and walkability. Anyone visiting for non-ski reasons (concerts, art festivals, food tours, summer stays).</p>
+
+<p><strong>Trade-off:</strong> Not ski-in/ski-out. To reach Park City Mountain Resort, you'll need a 5-min drive or use the free city bus. Deer Valley is 10 minutes by car. Old Town's nightlife means street noise on weekend evenings.</p>
+
+<p><strong>Recommended stays:</strong></p>
+<ul>
+<li><strong>Washington School House Hotel</strong> — 12-room boutique in a restored 1889 schoolhouse. Adults-only, walking distance to everything on Main Street. From $400/night.</li>
+<li><strong>Treasure Mountain Inn</strong> — 50-room hotel directly on Main Street with a heated outdoor pool. From $250/night.</li>
+<li><strong>Caledonian / Marriott's Mountain Side</strong> — Larger hotels at the base of Park City Mountain (a 10-min walk to Main Street). From $300/night.</li>
+<li><strong>Vacation rentals on Norfolk, Park, Empire, or Daly Ave</strong> — 1880s miner cabins beautifully restored. Best Old Town value for groups of 6-10.</li>
+</ul>
+
+<h2>Zone 2: Deer Valley Resort</h2>
+
+<p>The skier-only luxury resort split across three base areas (Snow Park, Silver Lake, Empire Canyon). Lodging here ranges from condos to ultra-luxury 5-star hotels. Deer Valley is famous for white-glove service, perfectly groomed runs, and high prices.</p>
+
+<p><strong>Best for:</strong> Ski-focused trips where Deer Valley is the chosen mountain. Romantic luxury getaways. Visitors who value resort amenities (ski-in/ski-out, ski valet, private dining) over Main Street walkability.</p>
+
+<p><strong>Trade-off:</strong> Most expensive zone in Park City. No snowboarding allowed at Deer Valley (a constraint for mixed groups). 8-10 minutes from Main Street by car. Very few bars or non-resort restaurants within walking distance.</p>
+
+<p><strong>Recommended stays:</strong></p>
+<ul>
+<li><strong>Stein Eriksen Lodge</strong> — Iconic European-luxury chalet at Silver Lake. The most photographed lodge in Park City. From $800-1,500/night winter.</li>
+<li><strong>Montage Deer Valley</strong> — Modern 5-star resort at Empire Canyon with spa, multiple restaurants, and ski-in/ski-out. From $1,000-2,000/night.</li>
+<li><strong>The St. Regis Deer Valley</strong> — High-end resort with the famous funicular ride to/from your room. From $900-1,800/night.</li>
+<li><strong>The Chateaux Deer Valley</strong> — Slope-side condos at Silver Lake, larger units for families. From $600-1,200/night.</li>
+<li><strong>Black Diamond Lodge / The Lodges at Deer Valley</strong> — Mid-tier ski-in/ski-out condos. From $400-700/night.</li>
+</ul>
+
+<h2>Zone 3: Canyons Village</h2>
+
+<p>The northern base area of Park City Mountain Resort, anchored by Canyons Resort Plaza. Canyons feels more "ski village" than "historic town" — purpose-built for resort visitors with hotels, condos, and restaurants clustered together.</p>
+
+<p><strong>Best for:</strong> Ski-focused families and groups, especially those who want ski-in/ski-out with no need to drive during the trip. Snowboarders (Park City Mountain allows them; Deer Valley doesn't).</p>
+
+<p><strong>Trade-off:</strong> 12-15 minutes from Main Street. Restaurant options are mostly resort-level (good but expensive). The "village" itself is very pedestrian-friendly but small.</p>
+
+<p><strong>Recommended stays:</strong></p>
+<ul>
+<li><strong>Waldorf Astoria Park City</strong> — Luxury anchor of Canyons Village with ski-in/ski-out access. From $700-1,400/night.</li>
+<li><strong>Hyatt Centric Park City</strong> — Modern hotel right at the base of the Orange Bubble lift. From $350-600/night.</li>
+<li><strong>Pendry Park City</strong> — Newer luxury hotel, similar service tier to Waldorf. From $700-1,300/night.</li>
+<li><strong>Sundial Lodge / Grand Summit / Silverado Lodge</strong> — Traditional ski-resort condos at varying price points. From $300-700/night.</li>
+</ul>
+
+<h2>Zone 4: Promontory / Outlying Communities</h2>
+
+<p>Promontory is a private golf and ski club community 10-15 minutes east of Park City. Lodging includes private vacation rentals at the Promontory Club and homes in surrounding subdivisions like Pinebrook, Summit Park, and Silver Springs.</p>
+
+<p><strong>Best for:</strong> Large families and groups (6-15 people) wanting a full house with private outdoor space, hot tubs, and amenities. Multi-generational trips.</p>
+
+<p><strong>Trade-off:</strong> Requires a car (or our shuttle service) for everything. 15-20 minutes from both ski resorts and Main Street. The "Park City experience" is more about the rental house than walking out for activities.</p>
+
+<p><strong>Where to find rentals:</strong> Vrbo, Airbnb, and Park City-specific rental managers like Stay Park City, Resort Lodging Company, and All Seasons Resort Lodging. Expect $800-2,500/night for 4-6 bedroom homes.</p>
+
+<h2>Zone 5: Heber City / Midway (Nearby Towns)</h2>
+
+<p>For budget-conscious travelers, Heber City (15 minutes east) and Midway (20 minutes east) offer significantly cheaper lodging while still being close enough to Park City for skiing. These are real working towns, not resort areas.</p>
+
+<p><strong>Best for:</strong> Budget travelers, families wanting a "small-town Utah" experience, visitors planning to ski Soldier Hollow (Nordic skiing) in addition to Park City alpine.</p>
+
+<p><strong>Trade-off:</strong> 15-25 minute drive to Park City Mountain or Deer Valley. The drive on US-40 is straightforward, but in winter conditions adds time. Less Park City "vibe" — these are quieter, more residential.</p>
+
+<p><strong>Recommended stays:</strong></p>
+<ul>
+<li><strong>Homestead Resort</strong> (Midway) — Historic resort with the famous Homestead Crater hot springs. From $200-350/night.</li>
+<li><strong>Zermatt Utah Resort</strong> (Midway) — Swiss-themed resort with multiple restaurants. From $250-450/night.</li>
+<li><strong>SpringHill Suites Heber City</strong> — Reliable mid-tier hotel. From $150-250/night.</li>
+</ul>
+
+<h2>Quick Decision Framework</h2>
+
+<p><strong>I want to ski every day and value convenience:</strong> Canyons Village (Park City Mountain ski-in/ski-out) or Deer Valley.</p>
+
+<p><strong>I want a vibrant town experience with restaurants and nightlife:</strong> Old Town / Main Street.</p>
+
+<p><strong>I'm traveling with 8+ people and want a private house:</strong> Promontory or Old Town vacation rental.</p>
+
+<p><strong>I'm on a budget but still want Park City access:</strong> Heber City or Midway.</p>
+
+<p><strong>I'm having a romantic luxury getaway:</strong> Stein Eriksen Lodge, Montage, or Waldorf Astoria.</p>
+
+<h2>Transportation Considerations by Zone</h2>
+
+<p>Lodging zone affects how much transportation you'll need. Old Town visitors barely need a car — Main Street is walkable, free buses serve both ski resorts. Canyons Village stays are similar — most lifts are walkable, restaurants on-site. Deer Valley requires more transportation since restaurants outside the resort require a drive. Promontory and Heber/Midway require transportation for nearly everything.</p>
+
+<p>For all zones, our airport transfer service handles your arrival and departure. For daily ski-day shuttles, dinner runs, and sightseeing, we offer hourly chauffeur service ($89/hour, 2-hour minimum) or per-trip pricing. <a href="/book">Book your Park City transportation here</a> or call (435) 214-6939.</p>
+""",
+    },
+    {
+        'slug': 'tipping-guide-park-city-utah',
+        'title': 'Tipping in Park City: A Practical Guide for Visitors',
+        'subtitle': 'Who to tip, how much, and when. Tipping etiquette for ski resorts, restaurants, drivers, and lodging in Park City.',
+        'date': '2026-04-27',
+        'author': 'Hudson Valeriano',
+        'category': 'Travel Tips',
+        'image': 'https://images.unsplash.com/photo-1556742044-3c52d6e88c62?w=1200&h=600&fit=crop',
+        'read_time': '7 min read',
+        'content': """
+<p>Tipping in Park City confuses many visitors — especially international travelers from countries where tipping is uncommon. This guide covers the full landscape: who to tip, expected amounts, and when tipping is genuinely optional vs. expected.</p>
+
+<p>The short version: <strong>tipping is at your discretion in nearly all cases</strong>, but service workers in Park City genuinely depend on tips to make a living wage. The federal tipped minimum wage is $2.13/hour, with restaurant servers and many service workers earning the bulk of their income through tips. This isn't true everywhere in the world, but in the U.S. — and especially in resort towns like Park City — tipping is the social norm for service interactions.</p>
+
+<h2>Restaurants</h2>
+
+<p><strong>Servers at sit-down restaurants:</strong> 15-20% of pre-tax bill is standard. 18% is the median. 20-22% indicates excellent service. Below 15% signals dissatisfaction (and many servers will follow up to ensure nothing was wrong). Some restaurants in resort towns add an "automatic gratuity" for parties of 6+ — this replaces tip, you don't double-tip.</p>
+
+<p><strong>Bartenders:</strong> $1-2 per drink for simple drinks (beer, wine, basic cocktails). 15-20% on tab if running a tab for the night. Cocktail bars with elaborate drinks ($15+ each) often warrant 20%.</p>
+
+<p><strong>Counter service / fast casual:</strong> 10-15% if there's a tip option on the credit card screen, otherwise nothing required. This applies to coffee shops, sandwich shops, ski-resort cafeterias.</p>
+
+<p><strong>Buffet / breakfast included:</strong> Even at "free" hotel breakfast buffets where servers refill drinks and clear plates, $1-2 per person is appreciated. Hot breakfast buffets at resorts often include a service charge built in — check your bill.</p>
+
+<h2>Ski Industry Tipping</h2>
+
+<p><strong>Ski instructors:</strong> Group lessons: $10-20 per lesson per student. Private lessons: 10-15% of lesson cost (a $700 private lesson would tip $70-105). Multi-day lessons with the same instructor warrant more — these instructors often become friends and helpers throughout your trip.</p>
+
+<p><strong>Ski valets:</strong> $2-5 per use (handing over your skis in the morning, returning them in the evening). Many high-end Deer Valley properties include this in the lodging price — check your hotel's policy.</p>
+
+<p><strong>Ski rental shop staff:</strong> $5-10 if they spent extra time fitting boots, recommending equipment, or making adjustments mid-trip. Not required for standard rentals.</p>
+
+<p><strong>Lift operators / patrol:</strong> Not tipped. Their wages are full salary.</p>
+
+<h2>Hotels and Lodging</h2>
+
+<p><strong>Bellhops:</strong> $2-5 per bag for delivery from car to room. $5-10 minimum for full luggage assistance.</p>
+
+<p><strong>Housekeeping:</strong> $3-5 per night, left in an envelope or with a clear "Thank You — Housekeeping" note. Don't leave a single tip at the end of your stay; daily tips reach the actual person who cleaned (different staff on different days).</p>
+
+<p><strong>Concierge:</strong> $10-30 for special help (restaurant reservations, event tickets, troubleshooting). Higher for hard-to-get reservations or last-minute logistics.</p>
+
+<p><strong>Valet parking:</strong> $3-5 each time the car is delivered to you (not when dropped off). $5-10 for difficult parking situations.</p>
+
+<p><strong>Doormen:</strong> $1-2 for hailing taxis or holding doors. $5+ for assistance with multiple bags.</p>
+
+<h2>Transportation</h2>
+
+<p><strong>Private SUV transfer drivers (us!):</strong> 15-20% is the median tip among our clients. Some tip 10%, some tip 25%+. Tips are at your discretion — never mandatory, never automatic. We don't suggest tip amounts at booking. Drivers genuinely appreciate tips because they reflect direct service quality.</p>
+
+<p><strong>Uber/Lyft:</strong> The app suggests 10-20%. Tips go directly to the driver. Tipping in cash or via the app are both fine. Drivers see your rating and tip decisions in their app.</p>
+
+<p><strong>Taxi (rare in Park City):</strong> 10-15% standard. Round up to nearest $5 for short rides.</p>
+
+<p><strong>Hotel shuttle:</strong> $2-5 per ride if it's a free hotel shuttle. Not required but appreciated.</p>
+
+<h2>Spa and Wellness Services</h2>
+
+<p><strong>Massage / spa treatments:</strong> 18-22% of treatment cost. Many resort spas add automatic 18% gratuity — check the bill. If automatic gratuity is added, no additional tip needed unless service exceeded expectations.</p>
+
+<p><strong>Hair stylists / barbers:</strong> 15-20%. Round up for excellent service.</p>
+
+<h2>What NOT to Tip</h2>
+
+<p>Some service workers should NOT be tipped — it can be inappropriate or even refused:</p>
+
+<ul>
+<li><strong>Business owners</strong> who provide the service themselves (e.g., a private chef who owns the restaurant). Tipping is not standard; instead, leave a great review.</li>
+<li><strong>Government employees:</strong> National park rangers, DMV workers, etc. Tipping is generally prohibited.</li>
+<li><strong>Healthcare workers:</strong> Doctors, nurses, EMTs. Not tipped culturally.</li>
+<li><strong>Police, firefighters:</strong> Definitely no.</li>
+</ul>
+
+<h2>Tipping Internationally — Park City Edition</h2>
+
+<p>For international visitors: U.S. tipping culture is more aggressive than most other countries. If you're from Japan or Korea, where tipping is rare or insulting, the "must tip everything" American approach feels strange. If you're from Europe (where 5-10% is standard), expect to tip more here. If you're from Brazil or Australia, the systems are similar to the U.S. but expect 15-20% as standard rather than the 10% common in those countries.</p>
+
+<p>The cultural norm is: <strong>visible service worker who interacted with you = tip.</strong> Cleaning staff, food prep workers, and others behind the scenes are typically not directly tipped (their wages should reflect their work, in theory).</p>
+
+<h2>Practical Tips</h2>
+
+<p><strong>Carry small bills.</strong> $1, $5, and $10 bills make tipping easier. ATMs at SLC airport and Park City banks dispense $20s by default — break them at coffee shops or grocery stores.</p>
+
+<p><strong>Apple Pay tips work.</strong> Most Park City restaurants and shops accept Apple Pay or contactless payment with tip. The tip option appears after you pay.</p>
+
+<p><strong>Leave tips in person when possible.</strong> Tips left in hotel rooms (housekeeping) should have a clear note. Tips for ski instructors should be handed directly. Tips left at restaurant tables in cash should be visible.</p>
+
+<p><strong>Tipping multiple staff at one venue:</strong> At a high-end restaurant, you might tip the server, sommelier, and coat check separately. Most American venues have an "automatic split" system — your single 18-20% tip on the bill gets distributed among the team. You don't need to tip each person individually unless service was specifically exceptional.</p>
+
+<h2>Final Word</h2>
+
+<p>Tipping is part of the U.S. service economy. While it can feel awkward (especially for international visitors), service workers in resort towns like Park City genuinely rely on tips to make a living. When in doubt: tip 15-20% on service-based interactions, and if a service worker explicitly says "no tip needed," respect that.</p>
+
+<p>For Rio Transportation specifically: gratuity is at your discretion, never automatic, and never required. We charge a flat all-inclusive rate. Our drivers appreciate cash or Venmo tips when service was good, but won't expect or pressure for them. <a href="/book">Book your Park City transfer</a> with confidence — no hidden fees, no auto-gratuity, no surprises.</p>
+""",
+    },
 ]
