@@ -538,4 +538,193 @@ SEO_PAGES = {
             {'q': 'What about returning with exhausted kids after skiing?', 'a': 'Afternoon slope pickup is one of our most popular services. We meet your family at a specific lodge (Canyons Resort Plaza, Snow Park Lodge, etc.) at a pre-agreed time, load tired kids + ski gear, and have you at lodging in 15 minutes for dinner/bath/bed.'},
         ],
     },
+    # --- New long-tail expansion (2026-04-25) ---
+    'park-city-to-salt-lake-city': {
+        'title': 'Park City to Salt Lake City Transportation | Private SUV $109',
+        'h1': 'Park City to Salt Lake City Transportation',
+        'desc': 'Private SUV from Park City to Salt Lake City — airport (SLC), downtown, hospitals, Vivint Arena, Delta Center. Flat $109, no surge. Book online.',
+        'keywords': 'Park City to Salt Lake City, Park City to SLC, ride from Park City to SLC, Park City to downtown SLC, Park City to Salt Lake hospital',
+        'content': 'Heading from Park City to Salt Lake City? Whether you\'re catching a flight at SLC Airport, going to a Jazz game at Delta Center, attending a medical appointment at the University of Utah Hospital, or visiting downtown SLC, Rio Transportation provides flat-rate private SUV service starting at $100.',
+        'long_content': '''
+<h2>Common Park City → SLC Destinations</h2>
+<p>The most-requested reverse-direction destinations: <strong>Salt Lake City International Airport (SLC)</strong> for flights home, <strong>downtown Salt Lake City</strong> for business meetings or shopping at City Creek Center, <strong>Vivint Arena / Delta Center</strong> for Utah Jazz games and concerts, <strong>University of Utah Hospital</strong> for specialty medical care, <strong>Salt Lake Temple</strong> and Temple Square for visitors interested in LDS history, and <strong>Salt Lake Convention Center</strong> for trade shows and corporate events. Most trips take 35-50 minutes via I-80 westbound (the same Parley\'s Canyon route, in reverse).</p>
+<h2>Why Pre-Book Park City → SLC Rides</h2>
+<p>Uber/Lyft pickup times in Park City average 10-25 minutes during ski season — not great when you have a flight to catch. Pre-booking with Rio Transportation locks in: a guaranteed pickup time (we\'re there 5 min early), a fixed price (no surge no matter the weather or time), and a driver who knows the fastest exits from your specific Park City lodging onto I-80 (some streets are blocked off in winter). For 5 AM medical or 6 AM flight pickups, our pre-booking eliminates the stress of "will an Uber actually come?"</p>
+<h2>Same-Day vs. Advance Booking</h2>
+<p>For non-airport rides (Jazz games, downtown dinners, hospital), 4-hour advance booking is usually fine. For airport departures, we recommend booking 24+ hours ahead to lock in your specific pickup time. During Sundance, ski-season weekends, and major events, book 48-72 hours ahead. Same-day calls work if we have drivers available — call (435) 214-6939.</p>
+''',
+        'faqs': [
+            {'q': 'How long does Park City to Salt Lake City take?', 'a': 'Typically 35-50 minutes to the airport or downtown SLC. Rush hour (4-6 PM weekdays westbound) and ski-season Friday afternoons can push it to 60+ minutes due to I-80 traffic.'},
+            {'q': 'Is the price the same as the airport-to-Park City direction?', 'a': 'Yes — $100 flat one-way regardless of direction (Park City → SLC or SLC → Park City). Round-trip booking gives you a 10% discount.'},
+            {'q': 'Can you wait while I attend a Jazz game or appointment?', 'a': 'Yes — we offer hourly chauffeur service starting at $89/hour with a 2-hour minimum. Driver waits at the venue, ready to take you home immediately when you\'re done. Cheaper and more reliable than a one-way + return Uber.'},
+            {'q': 'What about pre-dawn pickups for early flights?', 'a': '4 AM and 5 AM Park City pickups for 6-7 AM SLC departures are routine for us. Book 24+ hours ahead. No overnight surcharge — same $100 rate as daytime.'},
+            {'q': 'Do you do round-trip Park City to SLC?', 'a': 'Yes — same-day round trips (e.g., morning Jazz game travel out, evening return) and multi-day round trips (e.g., overnight in SLC for an event). 10% discount on round-trip vs. two one-ways.'},
+        ],
+    },
+    'park-city-to-solitude-shuttle': {
+        'title': 'Park City to Solitude Shuttle | Private SUV Day Trip from $189',
+        'h1': 'Park City to Solitude Mountain Resort Shuttle',
+        'desc': 'Private day-trip shuttle from Park City to Solitude Mountain Resort. Big Cottonwood Canyon, ski equipment welcome, professional driver. From $189 round-trip.',
+        'keywords': 'Park City to Solitude, Solitude shuttle, Park City to Big Cottonwood Canyon, Solitude ski day trip, Park City to Solitude Mountain',
+        'content': 'Want to ski Solitude or Brighton from your Park City home base? Rio Transportation runs private day-trip shuttles from any Park City address to Solitude Mountain Resort in Big Cottonwood Canyon — about 50 miles and 60-75 minutes each way.',
+        'long_content': '''
+<h2>The Park City → Big Cottonwood Canyon Drive</h2>
+<p>Solitude Mountain Resort (and Brighton next door) sit at the top of Big Cottonwood Canyon — one of two world-famous canyons feeding ski terrain off Salt Lake\'s eastern bench. The drive from Park City takes 60-75 minutes via I-80 west, then I-215 south, then up Big Cottonwood Canyon (UT-190). The canyon road climbs from 5,000 ft to 8,700 ft at Solitude\'s base — your driver handles all the canyon switchbacks while you sip coffee and prep your ski day.</p>
+<h2>Why Day-Trip Solitude vs. Stay There</h2>
+<p>Many Park City visitors want to experience the deeper Wasatch powder of Big Cottonwood Canyon (Solitude and Brighton each get 500+ inches per year — more than Park City\'s 350-400) without changing lodging. A day-trip shuttle makes this practical: leave Park City at 7-8 AM, ski Solitude or Brighton until 4 PM, return to Park City for dinner. We can even split the day (Solitude AM, Brighton PM since they\'re ski-connected with the SolBright pass).</p>
+<h2>Group Day Trips</h2>
+<p>Most popular for groups of 4-7: rent a 7-passenger SUV for the day at $549 (round-trip + 8 hours waiting). Cheaper than 7 individual lift-tickets-and-Uber combos. Driver drops at Solitude\'s base, parks at the day-skier lot, and is on standby for any midday pickups (e.g., one of the group\'s tired and wants to go back early).</p>
+''',
+        'faqs': [
+            {'q': 'How long is the drive from Park City to Solitude?', 'a': '60-75 minutes one way (about 50 miles). The drive includes I-80 west, I-215 south, and the climb up Big Cottonwood Canyon (UT-190). In winter conditions, allow 90 minutes.'},
+            {'q': 'Why not just drive myself?', 'a': 'Big Cottonwood Canyon often requires chains or AWD with snow tires. The drive includes 14 miles of switchbacks gaining 4,000 ft elevation — challenging in storms. Plus you\'d pay for ski-resort parking ($30-50). Our shuttle handles the driving and parking — you focus on skiing.'},
+            {'q': 'Can you split between Solitude and Brighton in one day?', 'a': 'Yes — Solitude and Brighton are ski-connected via the SolBright pass. We can drop you at Solitude in the morning, you ski over to Brighton, and we pick you up from Brighton\'s base in the afternoon. Same flat rate.'},
+            {'q': 'What\'s the round-trip price?', 'a': 'Standard round-trip with up to 8 hours of waiting time at the resort: $189 for 1-4 passengers, $249 for 5-7 passengers. Add hours beyond 8 are billed at $89/hour.'},
+            {'q': 'Can I do a one-way to Solitude (overnight there)?', 'a': 'Yes — one-way Park City to Solitude is $129. Useful if you\'re booking a 1-2 night stay at Solitude\'s base village.'},
+        ],
+    },
+    'park-city-to-snowbird-shuttle': {
+        'title': 'Park City to Snowbird Shuttle | Little Cottonwood Canyon Day Trip',
+        'h1': 'Park City to Snowbird & Alta Shuttle',
+        'desc': 'Private day-trip shuttle from Park City to Snowbird and Alta in Little Cottonwood Canyon. World-famous powder, ski equipment welcome. From $209 round-trip.',
+        'keywords': 'Park City to Snowbird, Snowbird shuttle, Park City to Alta, Little Cottonwood Canyon shuttle, Snowbird day trip Park City',
+        'content': 'Snowbird and Alta in Little Cottonwood Canyon receive over 500 inches of legendary powder per year — the snowiest ski destinations in the Lower 48. From Park City lodging, we run private day-trip shuttles 60-90 minutes each way so you can experience these resorts without relocating.',
+        'long_content': '''
+<h2>Why Snowbird & Alta Are Worth the Drive</h2>
+<p>Snowbird and Alta in Little Cottonwood Canyon are widely considered the best powder skiing in North America. Both resorts sit at 8,000-11,000 ft elevation in a steep, narrow canyon that traps cold storms — the result is consistently dry, light powder snow ("Greatest Snow on Earth"). Snowbird allows snowboarders; Alta is ski-only. Together they form the Alta-Snowbird interconnect with 4,700 acres of skiable terrain. The drive from Park City is 50 miles and 60-90 minutes — long enough to be inconvenient but worth it on powder days.</p>
+<h2>The Drive: Through Two Canyons</h2>
+<p>From Park City, we take I-80 west, I-215 south, and turn into Little Cottonwood Canyon (UT-210). Little Cottonwood is steeper and narrower than Big Cottonwood — it climbs from 5,200 ft to 8,000 ft at Snowbird\'s base in just 10 miles. UDOT often closes Little Cottonwood for avalanche control during storms (that\'s how serious the powder is). Our drivers monitor closures via UDOT\'s real-time alerts and can reroute to Solitude/Brighton if Little Cottonwood is closed.</p>
+<h2>Coordinated Logistics</h2>
+<p>Snowbird Tram parking fills early on powder days. Our shuttle drops you right at the Tram building — no parking hassle. We then park at the Cliff Lodge or Wasatch Ski Resort lot and stay on standby. End of day, text us 30 min before you\'re ready to leave; we pull up to the same drop-off point. Total: zero time wasted on parking, walking from cars, or waiting for resort buses.</p>
+''',
+        'faqs': [
+            {'q': 'Can I ski Snowbird and Alta in the same day?', 'a': 'Yes — the Alta-Snowbird One-Day Connect Pass lets you ski both resorts. They\'re connected on the mountain via the Mineral Basin lift system. We can drop you at either base; you ski over and ride back to wherever your driver is parked.'},
+            {'q': 'What if Little Cottonwood Canyon is closed for avalanche control?', 'a': 'Little Cottonwood closes 5-15 days per season for "Interlodge" avalanche control. If your day is affected, we\'ll: reroute to Solitude/Brighton in Big Cottonwood (next canyon over, often open), reschedule for the next day, or refund. Real-time decision based on UDOT updates.'},
+            {'q': 'Is Snowbird ski-only or can snowboarders go?', 'a': 'Snowbird allows snowboarders. Alta is ski-only. If your group has both, both resorts work since you can split: skiers ride either, snowboarders stay on Snowbird side.'},
+            {'q': 'What\'s the price for round-trip shuttle?', 'a': '$209 for 1-4 passengers round-trip with up to 8 hours of waiting. $279 for 5-7 passengers. Slightly higher than Solitude due to longer drive and more parking complexity in Little Cottonwood.'},
+            {'q': 'Why not just drive myself in a rental car?', 'a': 'Little Cottonwood Canyon enforces strict traction laws — 4WD/AWD with winter tires required Nov-Apr, chains during heavier storms. Many rental cars don\'t qualify. Plus parking at Snowbird/Alta fills by 7:30 AM on powder days; you might end up parking 2 miles down-canyon and taking a shuttle bus anyway.'},
+        ],
+    },
+    'provo-airport-to-park-city': {
+        'title': 'Provo Airport (PVU) to Park City | Private SUV Transfer',
+        'h1': 'Provo Airport to Park City Transfer',
+        'desc': 'Private SUV from Provo Municipal Airport (PVU) to Park City. Allegiant flights welcome. 75 minute drive via US-40, ski gear welcome. Flat-rate $189.',
+        'keywords': 'Provo airport to Park City, PVU to Park City, Provo PVU shuttle, Allegiant Provo Park City, Provo airport transfer Park City',
+        'content': 'Flying into Provo Municipal Airport (PVU) instead of Salt Lake City? Rio Transportation provides private SUV transfers from PVU to Park City — about 60 miles and 75-90 minutes via US-40 through Heber Valley.',
+        'long_content': '''
+<h2>Provo Airport: A Growing Alternative to SLC</h2>
+<p>Provo Municipal Airport (PVU) has expanded rapidly since 2024, with Allegiant Air and Breeze Airways now flying to/from Phoenix, Las Vegas, San Diego, Orange County, Austin, Tampa, and other markets. For visitors heading to Park City, PVU offers smaller crowds, faster security, and sometimes cheaper fares than SLC. The drive to Park City is longer (60 miles vs. 32 miles from SLC) but goes through scenic Heber Valley — a different and beautiful route.</p>
+<h2>The Route: PVU → Heber → Park City</h2>
+<p>From Provo Airport, we take I-15 north briefly, then US-189 east through Provo Canyon (along the Provo River and past Bridal Veil Falls), then US-40 north through Heber Valley and into Park City via the Quinn\'s Junction entrance. Total drive: 60 miles, 75-90 minutes in normal conditions. The drive avoids Parley\'s Canyon entirely, which can be useful when I-80 is closed for storms or accidents.</p>
+<h2>When PVU Beats SLC</h2>
+<p>Use Provo if: you live in/near a city with Allegiant or Breeze service to PVU (e.g., LAX, Phoenix, Vegas, Tampa), the fare savings are worth the longer drive (~$50+ cheaper), you\'re flying during a SLC ground stop or storm closure, or you specifically prefer smaller airports. Use SLC if: you have a connecting flight on a major carrier (Delta, United, American), you\'re prioritizing minimum drive time to Park City, or you\'re traveling from cities Provo doesn\'t serve.</p>
+''',
+        'faqs': [
+            {'q': 'How long is the drive from Provo Airport to Park City?', 'a': '75-90 minutes typically (60 miles). Slightly longer in winter conditions or during construction on US-189 in Provo Canyon.'},
+            {'q': 'Why is the price higher than SLC airport ($189 vs $100)?', 'a': 'Provo is 2x the distance from Park City compared to SLC (60 miles vs. 32 miles). The drive takes about 75 min vs. 45 min. Pricing reflects the longer trip plus the driver\'s fuel and time.'},
+            {'q': 'Do you track Provo flights too?', 'a': 'Yes — we track all flights regardless of which Utah airport. PVU flight data updates with the same real-time accuracy as SLC.'},
+            {'q': 'What airlines fly into PVU?', 'a': 'Primarily Allegiant Air and Breeze Airways. Routes vary seasonally but include Phoenix, Las Vegas, San Diego, Orange County, Austin, Tampa, and other secondary markets.'},
+            {'q': 'Can I do a one-way SLC arrival, PVU departure (or vice versa)?', 'a': 'Yes — we handle mixed airport itineraries. Common scenario: arrive at SLC on Delta, depart from PVU on Allegiant a week later (or vice versa). We bill each leg separately.'},
+        ],
+    },
+    'park-city-restaurant-shuttle': {
+        'title': 'Park City Restaurant Shuttle | Main Street Dinner Transportation',
+        'h1': 'Park City Restaurant & Dinner Shuttle',
+        'desc': 'Private SUV for Park City Main Street dinners. Round-trip from your hotel, driver waits during dinner. From $89 — cheaper than two surge Ubers.',
+        'keywords': 'Park City restaurant shuttle, Park City dinner transportation, Main Street Park City taxi, Park City Main Street shuttle, Park City restaurant ride',
+        'content': 'Heading to dinner on Park City\'s historic Main Street? Don\'t mess with surge-priced Uber rides or trying to find parking. Rio Transportation provides round-trip private SUV service to and from any Main Street restaurant.',
+        'long_content': '''
+<h2>The Main Street Dinner Problem</h2>
+<p>Park City\'s Main Street has 30+ excellent restaurants but limited parking, especially weekend evenings. The free city bus runs every 15-20 minutes but doesn\'t come to most lodging directly. Uber works but: pickup time often 15-25 min after a 9 PM dinner ends (when ski-day Ubers are surging), surge pricing 2-3x base, and getting a 4-passenger group home requires multiple cars or a 7-seater that\'s rare on the app. A pre-booked round-trip private SUV solves all of this for one flat price.</p>
+<h2>How the Restaurant Shuttle Works</h2>
+<p>Book online with: your hotel/condo address, the restaurant name, dinner reservation time, and party size. Driver picks you up 15 min before dinner, drops you at the restaurant\'s entrance (no parking walk in winter cold), and either: <strong>(A) Waits</strong> in our lounge area on Park Avenue while you eat (4-hour packages start at $189), or <strong>(B) Returns at a pre-agreed pickup time</strong> (e.g., "back at 9:30 PM" — round-trip with no waiting starts at $89).</p>
+<h2>Top Park City Restaurants We Drive To</h2>
+<p>Our drivers know the entrances and valet specifics for: <strong>Riverhorse on Main</strong> (fine dining, requires reservations), <strong>Yuki Yama</strong> (sushi), <strong>Wasatch Brew Pub</strong> (casual, family-friendly), <strong>The Eating Establishment</strong> (breakfast/lunch institution), <strong>High West Saloon</strong> (cocktails + small plates from local distillery), <strong>Handle</strong> (modern New American), <strong>Tupelo</strong> (Southern cuisine), <strong>No Name Saloon</strong> (legendary après-ski), <strong>Adolph\'s</strong> (mid-mountain Swiss), and many more.</p>
+''',
+        'faqs': [
+            {'q': 'Is round-trip cheaper than two Ubers?', 'a': 'Almost always. Two Ubers from Deer Valley to Main Street and back during 6-9 PM ski-season dinner hours often total $50-80 with surge — and you wait 15-20 min for each pickup. Our round-trip flat rate is $89 with no surge and guaranteed pickup times.'},
+            {'q': 'Does the driver wait during dinner or come back later?', 'a': 'Both options. "Waiting" service: driver stays on Park Avenue ready to come back instantly when you text, $189 for up to 4 hours. "Pre-scheduled return": driver leaves and comes back at the time you specify, $89 round-trip — slightly cheaper but you commit to a specific return time.'},
+            {'q': 'What if dinner runs longer than expected?', 'a': 'For "waiting" service: no problem, driver continues to wait. For "pre-scheduled return": call/text us to push the return time; we\'ll do our best to accommodate, possibly with a small surcharge if the new time conflicts with another booking.'},
+            {'q': 'Can I do a multi-restaurant evening (drinks, then dinner, then dessert)?', 'a': 'Yes — book hourly chauffeur service ($89/hour, 2-hour minimum). Driver moves you between venues all evening. Common pattern: 6 PM cocktails at High West, 7:30 PM dinner at Riverhorse, 10 PM dessert at Versante Bistro = 4 hours = $356.'},
+            {'q': 'Are pickups available late night after Main Street bars close?', 'a': 'Yes, 24/7. Many clients book a "pickup at 12:30 AM after No Name Saloon" return ride. No late-night surcharge.'},
+        ],
+    },
+    'park-city-concert-transportation': {
+        'title': 'Park City Concert Transportation | DeJoria, Sundance, Snow Park',
+        'h1': 'Park City Concert & Event Transportation',
+        'desc': 'Private SUV transportation for Park City concerts and events. DeJoria Center, Sundance Resort amphitheater, Snow Park summer concerts. From $89 round-trip.',
+        'keywords': 'Park City concert transportation, DeJoria Center shuttle, Park City concert shuttle, Snow Park concert transportation, Park City event shuttle',
+        'content': 'Got tickets to a Park City concert or event? Skip the parking nightmare and Uber surge pricing. Rio Transportation provides round-trip private SUV service to all major Park City venues including DeJoria Center, Snow Park amphitheater, Canyons Village events, and Sundance Resort shows.',
+        'long_content': '''
+<h2>Park City Concert Venues We Serve</h2>
+<p><strong>DeJoria Center</strong> (Kamas, 15 min east of Park City) — 1,000-capacity multi-purpose venue hosting national touring acts (Wilco, Father John Misty, indie/folk circuit) plus weddings and corporate events. Limited parking (200 spots) for 1,000 attendees means parking is brutal. Our private SUV drops you at the front door.</p>
+<p><strong>Snow Park Amphitheater (Deer Valley)</strong> — Outdoor summer concert series at the base of Deer Valley\'s Snow Park lodge. Hosts the Utah Symphony, summer concert series, and special events. Beautiful mountain setting, very limited parking. We drop at the amphitheater entrance.</p>
+<p><strong>Canyons Village events</strong> — Summer concert series and winter holiday events at the Canyons base. Easy drop-off zone but evening parking is paid and fills early.</p>
+<p><strong>Sundance Resort amphitheater</strong> (40 min south in Provo Canyon) — Robert Redford\'s outdoor venue hosting summer concerts and Bluegrass at Sundance. Very rural setting; rideshare drivers rarely venture out there. Our drivers know the route.</p>
+<p><strong>Egyptian Theatre on Main Street</strong> — Historic 300-seat venue hosting indie films, plays, and small concerts. Drop at Main Street; we wait for late evening pickup.</p>
+<h2>The Concert Logistics Problem</h2>
+<p>Concerts in Park City have three issues: limited parking (most venues have 200-500 spots for 800-2,000 attendees), winter snow making outdoor parking lots even worse, and post-concert rideshare surge (everyone leaving at the same time = 30-60 min Uber wait at 2-3x surge price). Pre-booking eliminates all three. Driver drops you at the venue, parks elsewhere, and is waiting 5 min before show end.</p>
+<h2>Group Concert Transportation</h2>
+<p>For groups of 8+ attending the same show: book multiple SUVs that all arrive together at the same time, dropping at the venue entrance in sequence. Cleaner than coordinating multiple Ubers, often cheaper for the group. We\'ve done corporate concert outings (employee appreciation events at DeJoria), bachelor/bachelorette concert weekends, and family reunions to summer Symphony shows.</p>
+''',
+        'faqs': [
+            {'q': 'Will my driver wait during the entire concert?', 'a': 'Yes for hourly bookings. Driver is on standby in a nearby parking area, ready to return when you text. Average concert is 2.5-3 hours; book a 4-hour block ($356) to cover dinner before + show + travel time.'},
+            {'q': 'Are concerts at DeJoria worth the drive from downtown Park City?', 'a': 'DeJoria is in Kamas, 15 min east of Park City. The drive is short and scenic. The venue\'s acoustics and intimacy are excellent — many call it the best small-venue concert experience in Utah.'},
+            {'q': 'Can you handle group concert transport (10+ people)?', 'a': 'Yes — multiple SUVs coordinated to arrive and leave together. For 10 people, 2 SUVs ($178 round-trip total). For 20 people, 3 SUVs running in coordination. Single point of contact for the booking.'},
+            {'q': 'What about the post-concert traffic/Uber crush?', 'a': 'Pre-booked rides skip this entirely. While other concertgoers wait 30-45 min for surge-priced Ubers, you walk to your driver who\'s parked nearby and arrives within 5 min of show end. Often you\'re home before the parking lot empties.'},
+            {'q': 'Do you go to Sundance Resort for concerts there?', 'a': 'Yes — Sundance Resort is 40 min south of Park City in Provo Canyon. Round-trip with concert waiting starts at $249. Hourly chauffeur service at $89/hour for 6+ hour blocks (covers dinner at Tree Room + concert).'},
+        ],
+    },
+    'park-city-olympics-2034-transportation': {
+        'title': 'Park City 2034 Winter Olympics Transportation | VIP & Group Service',
+        'h1': '2034 Winter Olympics Park City Transportation',
+        'desc': 'Plan ahead for the 2034 Salt Lake City Winter Olympics. Park City will host multiple events. Private SUV transportation, group shuttles, VIP service.',
+        'keywords': 'Park City Olympics 2034 transportation, 2034 Winter Olympics shuttle, Salt Lake Olympics Park City, Olympic transportation Park City Utah',
+        'content': 'The 2034 Winter Olympics are coming to Salt Lake City and Park City. With multiple Olympic venues at Park City Mountain Resort, Utah Olympic Park, and Deer Valley, demand for private transportation will be unprecedented. Rio Transportation is taking advance bookings for the February 2034 games.',
+        'long_content': '''
+<h2>Park City\'s Olympic Venues</h2>
+<p>The 2034 Salt Lake City Winter Olympics (February 2-19, 2034) will host events at several Park City-area venues:</p>
+<p><strong>Utah Olympic Park</strong> (just outside Park City) — Bobsled, luge, skeleton, ski jumping, and Nordic combined. Already a working Olympic training facility from the 2002 games.</p>
+<p><strong>Park City Mountain Resort</strong> — Snowboarding (halfpipe, slopestyle, big air, parallel slalom) on the same terrain features used in 2002.</p>
+<p><strong>Deer Valley Resort</strong> — Freestyle skiing (moguls, aerials) on the resort\'s trademark perfectly groomed runs.</p>
+<p><strong>Soldier Hollow</strong> (40 min south in Heber Valley) — Cross-country skiing and biathlon events.</p>
+<h2>Why Pre-Book Now (8 Years Out)</h2>
+<p>Olympic Games create the most extreme transportation demand surge possible — 1+ million additional visitors flood Salt Lake City and Park City over a 2-3 week period. Local rideshare and rental car capacity will be overwhelmed. Hotel/condo prices triple. Surface road traffic is significantly heavier. Pre-booking your transportation 6-24 months in advance locks in: a reserved vehicle for your dates (we add fleet capacity for the games), a fixed price (no surge), and a driver familiar with Olympic-area access controls (some routes require credentials).</p>
+<h2>Transportation Tiers Available</h2>
+<p><strong>Standard service</strong> ($150-250/trip during Olympics, vs. $100 normally) — same private SUV experience, just pricing reflects increased demand and complexity.</p>
+<p><strong>Olympic VIP packages</strong> — Multi-day private chauffeur service, dedicated vehicle for your stay, 24/7 driver availability, advance route planning around event schedules. Pricing customized.</p>
+<p><strong>Group transport for delegations / corporate hospitality</strong> — Multiple SUVs coordinated with single point-of-contact, expense reporting, and event-specific logistics. We worked Olympic-style events at Sundance for years and understand the protocols.</p>
+''',
+        'faqs': [
+            {'q': 'When are the 2034 Salt Lake City Olympics?', 'a': 'February 2-19, 2034 (Winter Olympics) followed by Paralympics March 1-10, 2034. Both will use Salt Lake City and Park City venues. Park City\'s primary events run roughly Feb 5-15.'},
+            {'q': 'Can I book Olympic-period transportation now (8 years ahead)?', 'a': 'Yes — we accept advance reservations. A non-refundable deposit holds your dates and locks the price. Final pricing structures will be set 12 months before the games.'},
+            {'q': 'How much will Olympic-period rates be?', 'a': 'Approximately 50-100% above standard rates due to increased demand, longer drive times from traffic, and dedicated fleet allocation. Standard $100 ride likely $150-250 during the 2-week games. We\'ll publish definitive pricing in 2033.'},
+            {'q': 'Will rental cars and Uber work during the Olympics?', 'a': 'They\'ll exist but be unreliable. 2002 Salt Lake Olympics saw rental car prices spike 5-10x normal, with vehicles unavailable. Uber surge will hit 5-10x. Pre-booked private transportation is the only reliable option.'},
+            {'q': 'Do I need to be a credentialed Olympic attendee to book?', 'a': 'No — we serve all visitors during the games: official credentialed athletes/coaches/media, ticket-holding spectators, and visitors enjoying the broader Park City scene during the games. Different access levels apply to specific venues, which we navigate based on your credential type.'},
+        ],
+    },
+    'park-city-new-years-eve-transportation': {
+        'title': 'Park City New Year\'s Eve Transportation | Private SUV NYE Service',
+        'h1': 'New Year\'s Eve Transportation in Park City',
+        'desc': 'Beat NYE surge pricing in Park City. Private SUV for New Year\'s Eve dinner, parties, fireworks, and ringing in 2027. Pre-book to lock in flat rate.',
+        'keywords': 'Park City New Years Eve transportation, NYE Park City shuttle, Park City New Years party transportation, Park City NYE Uber alternative',
+        'content': 'New Year\'s Eve in Park City is one of the busiest nights of the year — torchlight ski parades, fireworks at Park City Mountain, Main Street celebrations, and exclusive resort parties. Pre-book your transportation now to avoid the brutal NYE Uber surge.',
+        'long_content': '''
+<h2>What Happens in Park City on NYE</h2>
+<p>Park City throws one of the West\'s most iconic New Year\'s Eve celebrations. Major events include the <strong>Park City Mountain Torchlight Parade</strong> (skiers descending Lower Payday with lit torches at sunset), <strong>fireworks at Park City Mountain Village</strong> (10 PM family show + midnight fireworks), <strong>Main Street block party</strong> (food trucks, live music, ball drop), <strong>private resort parties</strong> at Stein Eriksen, Montage, and Waldorf Astoria, and <strong>NYE concerts</strong> at DeJoria Center and other venues. Hotels are 100% booked, Main Street is closed to traffic 6 PM - 1 AM, and parking is impossible.</p>
+<h2>Why Pre-Book NYE Transportation</h2>
+<p>NYE is the single worst night for Uber/Lyft surge in Park City. Standard 10-min Main Street rides cost $80-150 between 8 PM and 1 AM. Trying to leave Main Street after midnight means 45-90 min wait for any rideshare. Pre-booked transportation: <strong>locks in your price</strong> (no NYE surcharge from us), <strong>guarantees a vehicle</strong> at your specified pickup time (vs. "we\'ll send a driver if any are available"), and <strong>handles the closed Main Street logistics</strong> (we drop at Park Avenue, the closest open road).</p>
+<h2>Common NYE Booking Patterns</h2>
+<p><strong>Pattern 1: Dinner + Main Street + Home</strong> — Pickup at hotel 6 PM, drop at restaurant for dinner, walk to Main Street ball drop, pickup back at Park Avenue 12:30 AM. Round-trip $169 with intermediate flexibility.</p>
+<p><strong>Pattern 2: Resort Party</strong> — Pickup at hotel 8 PM, drop at Stein Eriksen / Montage / etc., return pickup 1-2 AM. $189 round-trip plus optional waiting service.</p>
+<p><strong>Pattern 3: Hourly all-night service</strong> — Driver/SUV reserved 8 PM to 2 AM (6 hours = $534), use as needed for multi-stop nights, multiple destinations, party-hopping.</p>
+''',
+        'faqs': [
+            {'q': 'When should I book NYE transportation?', 'a': 'As early as October. November is OK. By mid-December our NYE schedule is fully booked. The earlier the better.'},
+            {'q': 'Is there a NYE surcharge?', 'a': 'No — we charge the same rates on December 31 as any other date. No NYE surcharge, no surge pricing, no minimum booking. Compare to Uber NYE pricing which routinely hits 5-10x normal.'},
+            {'q': 'Can you drop us right on Main Street for the ball drop?', 'a': 'Main Street is closed to all vehicle traffic 6 PM to 1 AM on Dec 31. We drop at Park Avenue (the closest open street, 1-block walk to Main Street) or at the Old Town transit center. Same destinations as the public bus stops.'},
+            {'q': 'What if I drink too much and want to leave earlier than planned?', 'a': 'For waiting service: just text your driver and they\'ll come immediately. For round-trip with scheduled return: text us and we\'ll dispatch the closest available driver — usually 10-15 min wait. Always priority for our existing clients.'},
+            {'q': 'Will roads be slow due to NYE traffic?', 'a': 'Expect 50-100% longer drive times between 8 PM and 1 AM. A normally 10-min ride from Deer Valley to Main Street can take 25 min on NYE. Build in extra time for restaurant reservations.'},
+        ],
+    },
 }
