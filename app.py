@@ -505,9 +505,11 @@ def admin_email_preview():
 
 
 @app.route('/admin/crm')
+@app.route('/crm')
+@app.route('/sales')
 def admin_crm():
     """CRM moved to LimoFleet. Permanent redirect for old bookmarks."""
-    return redirect('https://limofleet-production.up.railway.app/app/customers', code=301)
+    return redirect('https://limofleet-production.up.railway.app/app/sales', code=301)
 
 
 @app.route('/experiences')
