@@ -48,25 +48,105 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);mi
     .row,.row-3{grid-template-columns:1fr;}
     .book-page{padding:24px 16px 60px;}
     .book-page h1{font-size:24px;}
-    .vehicles{grid-template-columns:repeat(2,1fr);}
-    .v-option{padding:12px 8px;}
-    .v-img{height:60px;}
-    .v-option h4{font-size:12px;}
-    .v-option .v-price{font-size:16px;}
     .field input,.field select,.field textarea{font-size:16px !important;} /* prevent iOS zoom */
     .book-nav{padding:14px 16px;}
 }
 
-/* Vehicle selector */
-.vehicles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:32px;}
-@media(max-width:768px){.vehicles{grid-template-columns:repeat(2,1fr);}}
-.v-option{background:var(--card);border:2px solid var(--border);border-radius:12px;padding:16px 12px;text-align:center;cursor:pointer;transition:all .2s;}
-.v-option:hover{border-color:rgba(255,255,255,.2);}
-.v-option.selected{border-color:var(--accent);background:rgba(201,168,76,.06);}
-.v-img{height:80px;margin-bottom:8px;border-radius:8px;background:#0a0c10;padding:4px;background-size:contain;background-repeat:no-repeat;background-position:center;}
-.v-option h4{font-family:'Onest',sans-serif;font-size:14px;font-weight:700;margin-bottom:2px;}
-.v-option .v-model{font-size:11px;color:var(--muted);}
-.v-option .v-price{font-family:'Onest',sans-serif;font-size:18px;font-weight:800;color:var(--accent);margin-top:8px;}
+/* === Vehicle selector — premium card with hero-style photo === */
+.vehicles{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:32px;}
+@media(max-width:900px){.vehicles{grid-template-columns:repeat(2,1fr);gap:10px;}}
+.v-option{
+    position:relative;
+    background:linear-gradient(180deg,#15171f 0%,#0d0f15 100%);
+    border:1.5px solid var(--border);
+    border-radius:14px;
+    overflow:hidden;
+    cursor:pointer;
+    transition:transform .25s cubic-bezier(.22,1,.36,1), border-color .2s, box-shadow .2s;
+}
+.v-option:hover{
+    border-color:rgba(255,255,255,.18);
+    transform:translateY(-2px);
+    box-shadow:0 12px 32px -8px rgba(0,0,0,.6);
+}
+.v-option.selected{
+    border-color:var(--accent);
+    box-shadow:0 0 0 1.5px var(--accent), 0 18px 40px -10px rgba(201,168,76,.35);
+    transform:translateY(-3px);
+}
+.v-option.selected::before{
+    content:'\F26B';
+    font-family:'bootstrap-icons';
+    position:absolute;top:10px;right:10px;
+    width:24px;height:24px;border-radius:50%;
+    background:var(--accent);color:#000;
+    display:flex;align-items:center;justify-content:center;
+    font-size:12px;font-weight:900;
+    z-index:3;
+    box-shadow:0 4px 10px rgba(201,168,76,.4);
+}
+
+/* Photo hero — larger, full-bleed, with radial light glow + bottom fade */
+.v-img{
+    position:relative;
+    height:130px;
+    background-size:contain;background-repeat:no-repeat;background-position:center 56%;
+    background-color:transparent;
+}
+.v-img::before{
+    content:'';position:absolute;inset:0;
+    background:
+        radial-gradient(ellipse 80% 60% at 50% 45%, rgba(201,168,76,0.06), transparent 70%),
+        radial-gradient(ellipse 60% 40% at 50% 100%, rgba(0,0,0,.45), transparent);
+    pointer-events:none;z-index:0;
+}
+.v-img > *{position:relative;z-index:1;}
+
+/* Price badge — top-left of card, gold pill */
+.v-price-badge{
+    position:absolute;top:10px;left:10px;
+    font-family:'Onest',sans-serif;
+    font-size:13px;font-weight:800;
+    color:#000;
+    background:linear-gradient(135deg,#e8c65a,#c9a84c);
+    padding:5px 11px;border-radius:50px;
+    letter-spacing:.02em;
+    box-shadow:0 4px 10px rgba(201,168,76,.3);
+    z-index:2;
+}
+.v-price-badge::before{content:'$';margin-right:1px;opacity:.85;font-weight:700;}
+
+/* Info block beneath the photo */
+.v-info{
+    padding:12px 14px 14px;
+    border-top:1px solid rgba(255,255,255,.04);
+    background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(0,0,0,.15));
+}
+.v-info h4{
+    font-family:'Onest',sans-serif;
+    font-size:14.5px;font-weight:700;
+    letter-spacing:-0.2px;color:#fff;
+    margin-bottom:3px;line-height:1.2;
+}
+.v-info .v-model{
+    font-size:11px;color:rgba(255,255,255,.5);
+    line-height:1.3;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.v-meta{
+    display:flex;gap:10px;margin-top:8px;
+    font-size:11px;color:rgba(255,255,255,.55);font-weight:600;
+}
+.v-meta span{display:inline-flex;align-items:center;gap:4px;}
+.v-meta i{color:var(--accent);font-size:12px;}
+
+@media(max-width:640px){
+    .v-img{height:100px;}
+    .v-info{padding:10px 12px 12px;}
+    .v-info h4{font-size:13px;}
+    .v-price-badge{font-size:12px;padding:4px 9px;}
+    .v-meta{font-size:10px;}
+}
 
 /* Flight lookup */
 .flight-found{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:14px 16px;margin-top:8px;font-size:13px;display:none;}
@@ -105,28 +185,52 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);mi
         <div class="step-label">1 — Choose Your Vehicle</div>
         <div class="vehicles">
             <div class="v-option {{ 'selected' if request.args.get('vehicle')=='small' }}" onclick="pickVehicle(this,'small')">
-                <div class="v-img" style="background-image:url('/static/images/comfort-electric.webp');background-size:contain;background-repeat:no-repeat;background-position:center;" title="Comfort Electric"></div>
-                <h4>Comfort Electric</h4>
-                <div class="v-model">Tesla Model Y or similar</div>
-                <div class="v-price">$100</div>
+                <div class="v-price-badge">100</div>
+                <div class="v-img" style="background-image:url('/static/images/comfort-electric.webp');" title="Comfort Electric"></div>
+                <div class="v-info">
+                    <h4>Comfort Electric</h4>
+                    <div class="v-model">Tesla Model Y or similar</div>
+                    <div class="v-meta">
+                        <span><i class="bi bi-people-fill"></i> 4</span>
+                        <span><i class="bi bi-luggage-fill"></i> 3</span>
+                    </div>
+                </div>
             </div>
             <div class="v-option {{ 'selected' if request.args.get('vehicle')=='midsize' }}" onclick="pickVehicle(this,'midsize')">
+                <div class="v-price-badge">129</div>
                 <div class="v-img" style="background-image:url('/static/pathfinder.avif');" title="Midsize SUV"></div>
-                <h4>Midsize SUV</h4>
-                <div class="v-model">Nissan Pathfinder</div>
-                <div class="v-price">$129</div>
+                <div class="v-info">
+                    <h4>Midsize SUV</h4>
+                    <div class="v-model">Nissan Pathfinder</div>
+                    <div class="v-meta">
+                        <span><i class="bi bi-people-fill"></i> 6</span>
+                        <span><i class="bi bi-luggage-fill"></i> 5</span>
+                    </div>
+                </div>
             </div>
             <div class="v-option {{ 'selected' if request.args.get('vehicle')=='premier' or not request.args.get('vehicle') }}" onclick="pickVehicle(this,'premier')">
+                <div class="v-price-badge">189</div>
                 <div class="v-img" style="background-image:url('/static/images/premier-suv.webp');" title="Premier SUV"></div>
-                <h4>Premier SUV</h4>
-                <div class="v-model">GMC Yukon</div>
-                <div class="v-price">$189</div>
+                <div class="v-info">
+                    <h4>Premier SUV</h4>
+                    <div class="v-model">GMC Yukon</div>
+                    <div class="v-meta">
+                        <span><i class="bi bi-people-fill"></i> 6</span>
+                        <span><i class="bi bi-luggage-fill"></i> 6</span>
+                    </div>
+                </div>
             </div>
             <div class="v-option {{ 'selected' if request.args.get('vehicle')=='luxury' }}" onclick="pickVehicle(this,'luxury')">
+                <div class="v-price-badge">220</div>
                 <div class="v-img" style="background-image:url('/static/images/luxury-suv.webp');" title="Luxury SUV"></div>
-                <h4>Luxury SUV</h4>
-                <div class="v-model">Lincoln Navigator</div>
-                <div class="v-price">$220</div>
+                <div class="v-info">
+                    <h4>Luxury SUV</h4>
+                    <div class="v-model">Lincoln Navigator</div>
+                    <div class="v-meta">
+                        <span><i class="bi bi-people-fill"></i> 7</span>
+                        <span><i class="bi bi-luggage-fill"></i> 7</span>
+                    </div>
+                </div>
             </div>
         </div>
         <input type="hidden" name="vehicle" id="vehicleInput" value="{{ request.args.get('vehicle','premier') }}">
