@@ -130,8 +130,15 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);mi
 }
 .v-info .v-model{
     font-size:11px;color:rgba(255,255,255,.5);
-    line-height:1.3;
-    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+    line-height:1.35;
+    /* Allow wrapping to 2 lines so "Lincoln Navigator or similar" /
+       "Nissan Pathfinder or similar" don't get cut off. Clamped at 2
+       lines so cards stay the same height. */
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+    min-height:30px;
 }
 .v-meta{
     display:flex;gap:10px;margin-top:8px;
