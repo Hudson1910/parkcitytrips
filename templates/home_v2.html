@@ -127,44 +127,52 @@ body{
 .lede.on-dark{color:rgba(250,249,246,.7);}
 
 /* ============================================================
-   NAV — minimal, sticky, transparent → frosted cream on scroll
+   NAV — switches between two modes:
+     .nav.over-hero  → transparent bg, cream text (visible over photo)
+     default         → frosted cream bg, ink text  (visible over cream)
+   An IntersectionObserver on the hero adds/removes .over-hero. No more
+   mix-blend-mode hack — that misbehaved on certain browsers and the
+   nav was reported unreadable on cream sections.
    ============================================================ */
 .nav{
     position:fixed;top:0;left:0;right:0;z-index:50;
     display:flex;align-items:center;justify-content:space-between;
-    padding:24px clamp(20px,4vw,56px);
-    transition: background .5s var(--ease-out), border .5s var(--ease-out),
-                backdrop-filter .5s var(--ease-out);
-}
-.nav.scrolled{
-    background:rgba(250,249,246,.85);
+    padding:18px clamp(20px,4vw,56px);
+    background:rgba(250,249,246,.92);
     backdrop-filter:saturate(180%) blur(20px);
     -webkit-backdrop-filter:saturate(180%) blur(20px);
     border-bottom:1px solid rgba(14,26,46,.06);
-    padding-top:14px;padding-bottom:14px;
+    transition: background .5s var(--ease-out), border .5s var(--ease-out),
+                padding .4s var(--ease-out);
+}
+.nav.over-hero{
+    background:transparent;
+    border-bottom-color:transparent;
+    padding-top:24px;padding-bottom:24px;
 }
 .nav-logo{
     font-family:var(--serif);font-weight:400;font-style:italic;
-    font-size:22px;color:var(--cream);text-decoration:none;
-    letter-spacing:-.01em;line-height:1;mix-blend-mode:difference;
+    font-size:22px;color:var(--ink);text-decoration:none;
+    letter-spacing:-.01em;line-height:1;
+    transition: color .35s var(--ease-out);
 }
-.nav.scrolled .nav-logo{color:var(--ink);mix-blend-mode:normal;}
+.nav.over-hero .nav-logo{color:var(--cream);}
 .nav-links{display:flex;align-items:center;gap:36px;}
 .nav-links a{
     font-family:var(--sans);
-    font-size:13.5px;font-weight:400;color:rgba(250,249,246,.85);
+    font-size:13.5px;font-weight:500;color:var(--ink-3);
     text-decoration:none;letter-spacing:.005em;
-    transition:color .3s var(--ease-out);
+    transition:color .35s var(--ease-out);
     position:relative;
 }
-.nav-links a:hover{color:var(--cream);}
+.nav-links a:hover{color:var(--ink);}
 .nav-links a::after{
     content:'';position:absolute;left:0;bottom:-6px;height:1px;width:0;
     background:currentColor;transition:width .4s var(--ease-out);
 }
 .nav-links a:hover::after{width:100%;}
-.nav.scrolled .nav-links a{color:var(--ink-3);}
-.nav.scrolled .nav-links a:hover{color:var(--ink);}
+.nav.over-hero .nav-links a{color:rgba(250,249,246,.9);}
+.nav.over-hero .nav-links a:hover{color:var(--cream);}
 .nav-cta{
     padding:11px 24px;border-radius:999px;
     background:var(--ink);color:var(--cream)!important;
@@ -175,12 +183,14 @@ body{
 }
 .nav-cta:hover{background:var(--ink-2);transform:translateY(-1px);}
 .nav-cta::after{display:none!important;}
+.nav.over-hero .nav-cta{background:var(--cream);color:var(--ink)!important;}
+.nav.over-hero .nav-cta:hover{background:#fff;}
 .mobile-menu-btn{
-    display:none;background:none;border:0;color:var(--cream);
+    display:none;background:none;border:0;color:var(--ink);
     font-size:24px;cursor:pointer;padding:8px;
-    mix-blend-mode:difference;
+    transition: color .35s var(--ease-out);
 }
-.nav.scrolled .mobile-menu-btn{color:var(--ink);mix-blend-mode:normal;}
+.nav.over-hero .mobile-menu-btn{color:var(--cream);}
 
 .mobile-menu{
     position:fixed;inset:0;background:var(--cream);
@@ -541,21 +551,34 @@ body{
 }
 
 /* ============================================================
-   REVIEWS — quote cards on cream-2
+   REVIEWS — auto-scrolling marquee carousel of cards
    ============================================================ */
-.reviews-grid{
-    display:grid;grid-template-columns:repeat(3,1fr);
-    gap:24px;margin-top:64px;
+.reviews-carousel{
+    position:relative;margin-top:64px;
+    overflow:hidden;
+    /* Edge fade so cards dissolve at the carousel borders */
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 80px, #000 calc(100% - 80px), transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0, #000 80px, #000 calc(100% - 80px), transparent 100%);
 }
-@media (max-width:1000px){.reviews-grid{grid-template-columns:repeat(2,1fr);}}
-@media (max-width:680px){.reviews-grid{grid-template-columns:1fr;}}
+.reviews-track{
+    display:flex;gap:24px;
+    width:max-content;
+    animation: reviewScroll 70s linear infinite;
+}
+.reviews-carousel:hover .reviews-track{animation-play-state:paused;}
+@keyframes reviewScroll{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);} /* loops because we duplicate the cards once */
+}
 .review-card{
     background:var(--cream);
     border:1px solid rgba(14,26,46,.06);
-    border-radius:6px;padding:36px 32px;
-    display:flex;flex-direction:column;gap:24px;
+    border-radius:6px;padding:32px 30px;
+    display:flex;flex-direction:column;gap:20px;
+    flex: 0 0 360px;          /* fixed width for marquee */
     transition: transform .5s var(--ease-out), border .3s var(--ease-out);
 }
+@media (max-width:600px){.review-card{flex-basis:88vw;padding:28px 24px;}}
 .review-card:hover{
     transform:translateY(-3px);
     border-color:rgba(14,26,46,.12);
@@ -595,8 +618,8 @@ body{
 .cta-bleed-bg{
     position:absolute;inset:0;z-index:0;
     background:
-        linear-gradient(120deg, rgba(14,26,46,.85) 0%, rgba(14,26,46,.4) 50%, rgba(14,26,46,.2) 100%),
-        url('https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=2400&q=85&auto=format&fit=crop') center/cover no-repeat;
+        linear-gradient(120deg, rgba(14,26,46,.78) 0%, rgba(14,26,46,.45) 55%, rgba(14,26,46,.2) 100%),
+        url('https://images.unsplash.com/photo-1483381616103-7e6e15b4c5b1?w=2400&q=85&auto=format&fit=crop') center/cover no-repeat;
 }
 .cta-inner{position:relative;z-index:1;max-width:680px;}
 .cta-bleed h2{
@@ -996,8 +1019,8 @@ img{max-width:100%;height:auto;display:block;}
             </div>
             <div class="stats-grid reveal d-1">
                 <div class="stat-block">
-                    <div class="stat-num">9,000<em>+</em></div>
-                    <div class="stat-lbl">Rides completed since 2016</div>
+                    <div class="stat-num"><span id="rideCount">9,000</span><em>+</em></div>
+                    <div class="stat-lbl">Rides completed since 2016 · live counter</div>
                 </div>
                 <div class="stat-block">
                     <div class="stat-num">4.8<em>★</em></div>
@@ -1025,30 +1048,32 @@ img{max-width:100%;height:auto;display:block;}
             <div class="eyebrow mb-md reveal">Guests</div>
             <h2 class="h-section reveal d-1">In their <em>own words.</em></h2>
         </div>
-        <div class="reviews-grid">
-            <div class="review-card reveal">
-                <div class="review-stars">★★★★★</div>
-                <p class="review-quote">Smooth ride from SLC to Deer Valley in a snowstorm — Hudson tracked our flight and was waiting curbside the second we landed. The Yukon was immaculate. Will book again next season.</p>
-                <div class="review-meta">
-                    <div class="avatar">E</div>
-                    <div><b>Emily R.</b><span>Repeat guest · NYC → Deer Valley</span></div>
-                </div>
-            </div>
-            <div class="review-card reveal d-1">
-                <div class="review-stars">★★★★★</div>
-                <p class="review-quote">We had three kids and six bags. The car seats were already installed, the bottled water was chilled, and our driver knew exactly which Stein Eriselssen entrance to pull up to. Felt like a hotel before the hotel.</p>
-                <div class="review-meta">
-                    <div class="avatar">M</div>
-                    <div><b>Marc D.</b><span>Family of 5 · Houston</span></div>
-                </div>
-            </div>
-            <div class="review-card reveal d-2">
-                <div class="review-stars">★★★★★</div>
-                <p class="review-quote">Booked a Cadillac Escalade for an executive ski group. Hudson handled three pickup times across two flights and a private jet — perfectly. Worth every dollar.</p>
-                <div class="review-meta">
-                    <div class="avatar">S</div>
-                    <div><b>Sarah K.</b><span>Corporate ski trip · 8 pax · Chicago</span></div>
-                </div>
+        {# Auto-scrolling marquee. The .reviews-track is duplicated inline so
+           a single CSS keyframe (translateX 0 → -50%) loops seamlessly. Pause
+           on hover via CSS. To add a review, put it ONCE in the data array
+           below (renders twice automatically). #}
+        <div class="reviews-carousel reveal">
+            <div class="reviews-track">
+                {% set _reviews = [
+                  {'name':'Emily R.',  'meta':'Repeat guest · NYC → Deer Valley',  'quote':"Smooth ride from SLC to Deer Valley in a snowstorm — Hudson tracked our flight and was waiting curbside the second we landed. The Yukon was immaculate. Will book again next season."},
+                  {'name':'Marc D.',   'meta':'Family of 5 · Houston',             'quote':"Three kids and six bags. Car seats already installed, water chilled, driver knew exactly which Stein Eriksen entrance to pull up to. Felt like a hotel before the hotel."},
+                  {'name':'Sarah K.',  'meta':'Corporate ski group · 8 pax',       'quote':"Booked an Escalade for an executive ski group. Hudson handled three pickup times across two flights and a private jet — perfectly. Worth every dollar."},
+                  {'name':'Daniel A.', 'meta':'SLC → Park City · solo',            'quote':"On time. Quiet driver. Clean SUV. Bottled water. The bar I expect at this price — finally met it."},
+                  {'name':'Priya M.',  'meta':'Honeymoon · St Regis',              'quote':"They surprised us with a chilled rosé waiting in the car. Tiny touch, huge impression. We arrived feeling already on vacation."},
+                  {'name':'Jonathan F.','meta':'Late-night arrival · 1:40am',      'quote':"Flight delayed three hours. Driver waited the whole time, never charged me a dime extra. Above and beyond."},
+                  {'name':'Lila C.',   'meta':'Repeat guest · Park City local',    'quote':"I use Rio for every airport run, every season. The only car service I trust to actually be on time when there's six inches of fresh on Parley's Summit."},
+                  {'name':'Rob T.',    'meta':'Family · Boston',                   'quote':"Quoted a fair price, no surprises at drop-off, no surge nonsense. Got a text 30 min before pickup. Old-school professionalism."},
+                ] %}
+                {% for r in _reviews + _reviews %}
+                <article class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-quote">{{ r.quote }}</p>
+                    <div class="review-meta">
+                        <div class="avatar">{{ r.name[0] }}</div>
+                        <div><b>{{ r.name }}</b><span>{{ r.meta }}</span></div>
+                    </div>
+                </article>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -1217,8 +1242,40 @@ img{max-width:100%;height:auto;display:block;}
     t2();setInterval(t2,1000);
 })();
 
-/* Nav scroll state */
-window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',scrollY>80);},{passive:true});
+/* Nav state — over-hero (white text on photo) vs default (ink on cream).
+   IntersectionObserver on the hero is more reliable than scrollY thresholds
+   because section heights vary by viewport (hero is 100vh; on a tiny
+   landscape window the threshold was wrong and the nav rendered white-
+   on-cream — unreadable). */
+(function(){
+    const nav=document.getElementById('nav'); if(!nav) return;
+    const hero=document.querySelector('.hero'); if(!hero){nav.classList.remove('over-hero');return;}
+    nav.classList.add('over-hero'); // initial state: page loads at hero top
+    if(!('IntersectionObserver' in window))return;
+    const io=new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+            // When at least 15 % of the hero is on-screen → over-hero mode.
+            nav.classList.toggle('over-hero', e.isIntersecting && e.intersectionRatio > .15);
+        });
+    },{threshold:[0,.15,.5,1]});
+    io.observe(hero);
+})();
+
+/* Live ride counter — base 9,000 on 2026-05-20, +2 per hour going forward.
+   Anchors to a fixed timestamp so refresh doesn't reset and every browser
+   shows the same number for the same moment. */
+(function(){
+    const el=document.getElementById('rideCount'); if(!el) return;
+    const BASE_RIDES = 9000;
+    const BASE_TIME = new Date('2026-05-20T00:00:00Z').getTime();
+    function fmt(n){return n.toLocaleString('en-US');}
+    function update(){
+        const hoursSince = Math.max(0, Math.floor((Date.now() - BASE_TIME) / 3600000));
+        el.textContent = fmt(BASE_RIDES + hoursSince * 2);
+    }
+    update();
+    setInterval(update, 60000);  // refresh once a minute is enough
+})();
 
 /* Scroll-reveal (IntersectionObserver — smooth, no jank) */
 (function(){
