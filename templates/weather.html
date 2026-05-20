@@ -1,276 +1,341 @@
+{# Park City Trips — /weather redesign 2026-05-20 (Airbnb Luxe direction).
+   All DOM IDs preserved (dvStatus, dvBase, dvTemp, dvForecastContent,
+   dvRoadsContent, dvMountainAreas, etc.) so the mtnpowder live-data
+   JS at the bottom still finds + populates them. #}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-    <meta name="description" content="Park City snow report today. Live conditions for Deer Valley and Park City Mountain — snowfall, base depth, temperature, wind, open lifts, trails, 8 webcams, I-80 road conditions. Updated every 5 minutes.">
-    <meta name="keywords" content="Park City snow report, Park City conditions today, Deer Valley snow report, Park City Mountain webcams, Park City weather, ski conditions Park City, I-80 road conditions Park City, Park City snow cam">
-    <meta property="og:title" content="Park City Snow Report Today — Deer Valley & Park City Mountain Live">
-    <meta property="og:description" content="Live snow conditions, 8 webcams, road conditions, temperature, wind. Both Park City resorts in one page.">
+    <meta name="description" content="Park City snow report today. Live conditions for Deer Valley and Park City Mountain — snowfall, base depth, temperature, wind, lifts, trails, 8 webcams, I-80 road conditions.">
+    <meta name="keywords" content="Park City snow report, Deer Valley snow report, Park City webcams, ski conditions Park City, I-80 road conditions Park City">
+    <meta property="og:title" content="Park City Snow Report — Deer Valley + Park City Mountain Live">
+    <meta property="og:description" content="Live snow conditions, 8 webcams, road conditions, temperature, wind.">
     <meta property="og:url" content="https://parkcitytrips.com/weather">
     <link rel="canonical" href="https://parkcitytrips.com/weather">
-    <title>Park City Snow Report Today | Deer Valley & Park City Mountain | Live Webcams & Conditions</title>
-    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>Park City Snow Report — Deer Valley & Park City Mountain | Rio Transportation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2J1TXGYYMD"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-2J1TXGYYMD');</script>
     <style>
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-height:100vh;overflow-x:hidden;}
-.w-nav{padding:20px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06);}
-.w-nav a{color:#fff;text-decoration:none;}
-.w-nav .logo{font-family:'Onest',sans-serif;font-weight:800;font-size:16px;letter-spacing:.1em;}
-.w-nav .back{font-size:14px;color:#666;display:flex;align-items:center;gap:6px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+    --cream:#faf9f6; --cream-2:#f3efe8;
+    --ink:#0e1a2e; --ink-2:#1a2a45; --ink-3:#2c3e5a;
+    --neutral-700:#4a4a4a; --neutral-500:#8a8580; --neutral-300:#c8c2b8;
+    --gold:#b8945c;
+    --green:#2f7a4d;
+    --red:#9a3324;
+    --serif:'Fraunces','Times New Roman',serif;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --shadow-md:0 4px 16px rgba(14,26,46,.06),0 1px 3px rgba(14,26,46,.08);
+    --ease-out:cubic-bezier(0.16,1,0.3,1);
+}
+html{scroll-behavior:smooth;overflow-x:hidden;-webkit-text-size-adjust:100%;}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;touch-action:pan-y;}
 
-.w-header{text-align:center;padding:60px 20px 30px;}
-.w-header h1{font-family:'Onest',sans-serif;font-size:clamp(28px,5vw,42px);font-weight:900;margin-bottom:8px;}
-.w-header p{color:#666;font-size:14px;}
-.w-header .update{font-size:11px;color:#c9a84c;margin-top:8px;font-family:'DM Sans',sans-serif;letter-spacing:.15em;text-transform:uppercase;}
+.nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:16px clamp(20px,4vw,56px);background:rgba(250,249,246,.92);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(14,26,46,.07);}
+.nav .logo{font-family:var(--serif);font-style:italic;font-weight:400;font-size:22px;color:var(--ink);text-decoration:none;letter-spacing:-.01em;}
+.nav .back{font-family:var(--sans);font-size:13.5px;color:var(--ink-3);text-decoration:none;display:flex;align-items:center;gap:8px;transition:color .3s var(--ease-out);}
+.nav .back:hover{color:var(--ink);}
 
-.w-grid{max-width:1100px;margin:0 auto;padding:0 20px 40px;display:grid;grid-template-columns:1fr 1fr;gap:24px;}
-@media(max-width:768px){.w-grid{grid-template-columns:1fr;}}
+.w-header{text-align:center;padding:clamp(56px,9vh,100px) clamp(20px,5vw,40px) clamp(36px,5vh,56px);max-width:780px;margin:0 auto;}
+.eyebrow{font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--neutral-500);margin-bottom:18px;display:inline-flex;align-items:center;gap:14px;}
+.eyebrow::before,.eyebrow::after{content:'';width:24px;height:1px;background:var(--ink);opacity:.4;}
+.w-header h1{font-family:var(--serif);font-optical-sizing:auto;font-weight:300;font-size:clamp(36px,5vw,68px);line-height:1.04;letter-spacing:-.025em;color:var(--ink);}
+.w-header h1 em{font-style:italic;font-weight:400;}
+.w-header .sub{font-family:var(--sans);font-size:15px;color:var(--neutral-700);margin-top:14px;}
+.w-header .update{font-family:var(--sans);font-size:11px;color:var(--gold);margin-top:12px;letter-spacing:.18em;text-transform:uppercase;}
 
-.resort-card{background:#111318;border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden;}
-.resort-header{padding:24px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center;}
-.resort-name{font-family:'Onest',sans-serif;font-size:20px;font-weight:800;}
-.resort-status{font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;text-transform:uppercase;letter-spacing:.1em;}
-.status-open{background:rgba(34,197,94,.15);color:#22c55e;}
-.status-closed{background:rgba(239,68,68,.15);color:#ef4444;}
+/* Resort cards */
+.w-grid{max-width:1180px;margin:0 auto;padding:0 clamp(20px,5vw,40px) 40px;display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+@media(max-width:880px){.w-grid{grid-template-columns:1fr;}}
 
-.snow-stats{padding:20px 24px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;border-bottom:1px solid rgba(255,255,255,.06);}
+.resort-card{background:var(--cream);border:1px solid rgba(14,26,46,.08);border-radius:10px;overflow:hidden;box-shadow:var(--shadow-md);}
+.resort-header{padding:24px 28px;border-bottom:1px solid rgba(14,26,46,.07);display:flex;justify-content:space-between;align-items:center;}
+.resort-name{font-family:var(--serif);font-weight:400;font-size:24px;color:var(--ink);letter-spacing:-.01em;}
+.resort-status{font-family:var(--sans);font-size:10.5px;font-weight:500;padding:6px 14px;border-radius:999px;letter-spacing:.18em;text-transform:uppercase;}
+.status-open{background:rgba(47,122,77,.12);color:var(--green);}
+.status-closed{background:rgba(14,26,46,.08);color:var(--ink-3);}
+
+.snow-stats{padding:24px 28px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;border-bottom:1px solid rgba(14,26,46,.07);}
 .snow-stat{text-align:center;}
-.snow-stat .val{font-family:'Onest',sans-serif;font-size:28px;font-weight:800;}
-.snow-stat .lbl{font-size:10px;color:#666;letter-spacing:.15em;text-transform:uppercase;margin-top:4px;}
+.snow-stat .val{font-family:var(--serif);font-weight:300;font-size:clamp(28px,3.4vw,40px);color:var(--ink);line-height:1;letter-spacing:-.02em;}
+.snow-stat .lbl{font-family:var(--sans);font-size:10px;color:var(--neutral-500);letter-spacing:.18em;text-transform:uppercase;margin-top:10px;}
 
-.conditions{padding:20px 24px;border-bottom:1px solid rgba(255,255,255,.06);}
-.cond-row{display:flex;justify-content:space-between;padding:8px 0;font-size:13px;}
-.cond-row .k{color:#666;}
-.cond-row .v{font-weight:600;}
+.conditions{padding:20px 28px;border-bottom:1px solid rgba(14,26,46,.06);}
+.cond-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;font-family:var(--sans);font-size:13.5px;color:var(--ink);}
+.cond-row + .cond-row{border-top:1px dashed rgba(14,26,46,.06);}
+.cond-row .k{color:var(--neutral-500);display:flex;align-items:center;gap:8px;}
+.cond-row .k i{color:var(--gold);font-size:13px;width:14px;}
+.cond-row .v{font-weight:500;color:var(--ink);}
 
-.lifts-trails{padding:20px 24px;border-bottom:1px solid rgba(255,255,255,.06);}
-.lt-bar{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
-.lt-bar .lt-label{font-size:12px;color:#666;width:60px;}
-.lt-bar .lt-track{flex:1;height:8px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden;}
-.lt-bar .lt-fill{height:100%;border-radius:4px;transition:width .5s;}
-.lt-bar .lt-num{font-family:'Onest',sans-serif;font-size:13px;font-weight:700;min-width:50px;text-align:right;}
+.section-label{font-family:var(--sans);font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.section-label i{font-size:13px;}
 
-.webcams{padding:20px 24px;}
-.webcam-label{font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#c9a84c;margin-bottom:12px;}
+.lifts-trails{padding:20px 28px;border-bottom:1px solid rgba(14,26,46,.06);}
+.lt-bar{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
+.lt-bar .lt-label{font-family:var(--sans);font-size:12px;color:var(--neutral-500);width:54px;letter-spacing:.04em;}
+.lt-bar .lt-track{flex:1;height:6px;background:rgba(14,26,46,.06);border-radius:999px;overflow:hidden;}
+.lt-bar .lt-fill{height:100%;border-radius:999px;transition:width .8s var(--ease-out);}
+.lt-bar .lt-num{font-family:var(--serif);font-size:15px;font-weight:400;color:var(--ink);min-width:54px;text-align:right;}
+
+.detail-btn{
+    width:100%;margin-top:8px;padding:12px;
+    background:var(--cream-2);border:1px solid rgba(14,26,46,.08);border-radius:8px;
+    color:var(--ink);font-family:var(--sans);font-size:12px;font-weight:500;cursor:pointer;
+    letter-spacing:.12em;text-transform:uppercase;transition:all .3s var(--ease-out);
+}
+.detail-btn:hover{background:var(--cream-3);border-color:rgba(14,26,46,.16);}
+
+.area-group{margin-bottom:16px;}
+.area-name{font-family:var(--serif);font-size:14px;font-weight:500;color:var(--ink);margin-bottom:6px;padding:6px 0;border-bottom:1px solid rgba(14,26,46,.06);}
+.area-name span{color:var(--neutral-500);font-family:var(--sans);font-weight:400;font-size:11px;}
+.trail-row{display:flex;align-items:center;gap:8px;padding:3px 0;font-size:12px;color:var(--neutral-700);}
+.trail-row .dot{width:14px;height:14px;border-radius:3px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:8px;color:#fff;}
+.dot-green{background:#22c55e;}.dot-blue{background:#3b82f6;}.dot-black{background:var(--ink);}.dot-dblack{background:var(--ink);}
+.trail-row .trail-name{flex:1;font-family:var(--sans);}
+.trail-row .trail-status{font-size:10px;font-weight:500;padding:2px 8px;border-radius:4px;font-family:var(--sans);letter-spacing:.04em;}
+.ts-open{background:rgba(47,122,77,.12);color:var(--green);}
+.ts-closed{background:rgba(154,51,36,.08);color:var(--red);}
+
+.road-row{display:flex;justify-content:space-between;padding:7px 0;font-size:13px;border-bottom:1px dashed rgba(14,26,46,.06);font-family:var(--sans);}
+.road-row .road-name{color:var(--ink);font-weight:500;}
+.road-row .road-status{font-weight:500;}
+.road-open{color:var(--green);}.road-closed{color:var(--red);}
+
+.webcams{padding:20px 28px;}
 .webcam-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.webcam-item{border-radius:8px;overflow:hidden;aspect-ratio:16/9;background:#0a0c10;}
+.webcam-item{border-radius:6px;overflow:hidden;aspect-ratio:16/9;background:var(--cream-2);position:relative;}
 .webcam-item iframe{width:100%;height:100%;border:none;}
+.webcam-item .cap{position:absolute;left:0;bottom:0;right:0;background:rgba(14,26,46,.8);color:var(--cream);font-family:var(--sans);font-size:10px;padding:4px 8px;letter-spacing:.04em;}
 @media(max-width:640px){.webcam-grid{grid-template-columns:1fr;}.snow-stats{grid-template-columns:repeat(2,1fr);}}
 
-/* Detail expandable */
-.area-group{margin-bottom:16px;}
-.area-name{font-family:'Onest',sans-serif;font-size:13px;font-weight:700;color:#fff;margin-bottom:6px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.06);}
-.trail-row{display:flex;align-items:center;gap:8px;padding:3px 0;font-size:12px;color:#999;}
-.trail-row .dot{width:14px;height:14px;border-radius:3px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:8px;color:#fff;}
-.dot-green{background:#22c55e;}.dot-blue{background:#3b82f6;}.dot-black{background:#000;border:1px solid #fff;}.dot-dblack{background:#000;border:1px solid #fff;}
-.trail-row .trail-name{flex:1;}
-.trail-row .trail-status{font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;}
-.ts-open{background:rgba(34,197,94,.15);color:#22c55e;}
-.ts-closed{background:rgba(239,68,68,.1);color:#ef4444;}
-.road-row{display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid rgba(255,255,255,.04);}
-.road-row .road-name{color:#fff;font-weight:600;}
-.road-row .road-status{font-weight:600;}
-.road-open{color:#22c55e;}.road-closed{color:#ef4444;}
+/* UDOT road camera tiles */
+.udot-wrap{max-width:1180px;margin:24px auto;padding:0 clamp(20px,5vw,40px);}
+.udot-card{background:var(--cream);border:1px solid rgba(14,26,46,.08);border-radius:10px;overflow:hidden;box-shadow:var(--shadow-md);}
+.udot-card .resort-header a{font-family:var(--sans);font-size:12px;color:var(--gold);text-decoration:none;letter-spacing:.01em;}
+.udot-card .resort-header a:hover{color:var(--ink);}
+.udot-card .body{padding:24px 28px;}
+.udot-card .body .intro{font-family:var(--sans);font-size:13.5px;color:var(--neutral-700);margin-bottom:18px;line-height:1.6;}
+.road-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+@media(max-width:760px){.road-grid{grid-template-columns:1fr;}}
+.road-tile{display:block;text-decoration:none;background:var(--cream-2);border:1px solid rgba(14,26,46,.08);border-radius:8px;padding:28px 22px;text-align:center;transition:all .3s var(--ease-out);}
+.road-tile:hover{border-color:var(--ink);transform:translateY(-2px);background:#fff;}
+.road-tile .emo{font-size:36px;line-height:1;margin-bottom:14px;}
+.road-tile .nm{font-family:var(--serif);font-weight:400;font-size:22px;color:var(--ink);letter-spacing:-.01em;}
+.road-tile .sub1{font-family:var(--sans);font-size:12px;color:var(--gold);margin-top:4px;font-weight:500;}
+.road-tile .sub2{font-family:var(--sans);font-size:11.5px;color:var(--neutral-500);margin-top:6px;}
+.road-tile .pill{margin-top:14px;display:inline-block;padding:6px 14px;background:var(--ink);color:var(--cream);border-radius:999px;font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.02em;transition:background .3s var(--ease-out);}
+.road-tile:hover .pill{background:var(--ink-2);}
+.udot-card .footnote{font-family:var(--sans);font-size:11px;color:var(--neutral-500);margin-top:14px;text-align:center;}
+.udot-card .footnote a{color:var(--gold);text-decoration:none;}
 
-.w-cta{max-width:1100px;margin:20px auto 60px;padding:0 20px;text-align:center;}
-.w-cta a{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:#c9a84c;color:#000;font-family:'Onest',sans-serif;font-size:14px;font-weight:700;border-radius:50px;text-decoration:none;}
-.w-footer{padding:24px 40px;border-top:1px solid rgba(255,255,255,.06);text-align:center;font-size:12px;color:rgba(255,255,255,.2);}
+/* CTA */
+.w-cta{max-width:1180px;margin:32px auto 48px;padding:0 clamp(20px,5vw,40px);text-align:center;}
+.w-cta p{font-family:var(--sans);font-size:14px;color:var(--neutral-700);margin-bottom:18px;}
+.btn-primary{display:inline-flex;align-items:center;gap:10px;padding:15px 30px;border-radius:999px;background:var(--ink);color:var(--cream);font-family:var(--sans);font-size:14px;font-weight:500;text-decoration:none;transition:transform .3s var(--ease-out),background .3s var(--ease-out);}
+.btn-primary:hover{background:var(--ink-2);transform:translateY(-2px);}
+
+/* Long-form / FAQ */
+.long-block{max-width:880px;margin:64px auto 64px;padding:0 clamp(20px,5vw,40px);}
+.long-block h2{font-family:var(--serif);font-weight:300;font-size:clamp(28px,3.6vw,44px);color:var(--ink);letter-spacing:-.02em;line-height:1.08;margin:40px 0 16px;}
+.long-block h2 em{font-style:italic;font-weight:400;}
+.long-block p{font-family:var(--sans);font-size:16px;color:var(--neutral-700);line-height:1.75;margin-bottom:14px;}
+.long-block strong{color:var(--ink);font-weight:500;}
+.faq-card{background:var(--cream);border:1px solid rgba(14,26,46,.08);border-radius:10px;padding:24px 28px;margin-bottom:14px;}
+.faq-card h3{font-family:var(--serif);font-weight:400;font-size:18px;color:var(--ink);margin-bottom:10px;letter-spacing:-.005em;}
+.faq-card p{font-family:var(--sans);font-size:14.5px;color:var(--neutral-700);line-height:1.7;margin:0;}
+
+footer.foot{background:var(--ink);color:rgba(250,249,246,.5);padding:48px 40px 32px;text-align:center;font-family:var(--sans);font-size:12px;}
+footer.foot a{color:rgba(250,249,246,.7);text-decoration:none;transition:color .3s var(--ease-out);}
+footer.foot a:hover{color:var(--cream);}
     </style>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2J1TXGYYMD"></script>
-    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-2J1TXGYYMD");</script>
 </head>
-<body style="overflow-x:hidden;touch-action:pan-y;">
-<nav class="w-nav">
-    <a href="/" class="logo">RIO TRANSPORTATION</a>
-    <a href="/" class="back"><i class="bi bi-arrow-left"></i> Back</a>
+<body>
+
+<nav class="nav">
+    <a href="/" class="logo">Rio<em>.</em>Transportation</a>
+    <a href="/" class="back"><i class="bi bi-arrow-left"></i> Back to site</a>
 </nav>
 
-<div class="w-header">
-    <h1><i class="bi bi-snow2" style="color:#c9a84c;"></i> Mountain Conditions</h1>
-    <p>Real-time snow & weather for Park City's ski resorts</p>
-    <div class="update" id="lastUpdate">Loading conditions...</div>
-</div>
+<header class="w-header">
+    <div class="eyebrow">Mountain Conditions</div>
+    <h1>Snow report, <em>live.</em></h1>
+    <p class="sub">Real-time snow + weather for Park City's two resorts, plus webcams and road cams from SLC to the mountain.</p>
+    <div class="update" id="lastUpdate">Loading conditions…</div>
+</header>
 
 <div class="w-grid">
     <!-- DEER VALLEY -->
-    <div class="resort-card" id="deerValley">
-        <div class="resort-header">
+    <article class="resort-card" id="deerValley">
+        <header class="resort-header">
             <div class="resort-name">Deer Valley</div>
             <div class="resort-status status-closed" id="dvStatus">Loading</div>
-        </div>
+        </header>
         <div class="snow-stats">
-            <div class="snow-stat"><div class="val" id="dvBase">--</div><div class="lbl">Base Depth</div></div>
-            <div class="snow-stat"><div class="val" id="dv24h">--</div><div class="lbl">Last 24h</div></div>
-            <div class="snow-stat"><div class="val" id="dvSeason">--</div><div class="lbl">Season Total</div></div>
+            <div class="snow-stat"><div class="val" id="dvBase">—</div><div class="lbl">Base depth</div></div>
+            <div class="snow-stat"><div class="val" id="dv24h">—</div><div class="lbl">Last 24 h</div></div>
+            <div class="snow-stat"><div class="val" id="dvSeason">—</div><div class="lbl">Season total</div></div>
         </div>
-        <!-- Current Weather -->
         <div class="conditions" id="dvWeather">
-            <div class="cond-row"><span class="k"><i class="bi bi-thermometer-half"></i> Temperature</span><span class="v" id="dvTemp">--</span></div>
-            <div class="cond-row"><span class="k"><i class="bi bi-wind"></i> Wind</span><span class="v" id="dvWind">--</span></div>
-            <div class="cond-row"><span class="k"><i class="bi bi-cloud"></i> Skies</span><span class="v" id="dvSkies">--</span></div>
-            <div class="cond-row"><span class="k"><i class="bi bi-snow"></i> Conditions</span><span class="v" id="dvConditions">--</span></div>
-            <div class="cond-row"><span class="k"><i class="bi bi-cloud-snow"></i> Storm Total</span><span class="v" id="dvStorm">--</span></div>
-            <div class="cond-row"><span class="k">Last 48h</span><span class="v" id="dv48h">--</span></div>
-            <div class="cond-row"><span class="k">Last 7 Days</span><span class="v" id="dv7d">--</span></div>
-            <div class="cond-row"><span class="k"><i class="bi bi-mountain"></i> Terrain</span><span class="v" id="dvAcres">--</span></div>
+            <div class="cond-row"><span class="k"><i class="bi bi-thermometer-half"></i> Temperature</span><span class="v" id="dvTemp">—</span></div>
+            <div class="cond-row"><span class="k"><i class="bi bi-wind"></i> Wind</span><span class="v" id="dvWind">—</span></div>
+            <div class="cond-row"><span class="k"><i class="bi bi-cloud"></i> Skies</span><span class="v" id="dvSkies">—</span></div>
+            <div class="cond-row"><span class="k"><i class="bi bi-snow"></i> Conditions</span><span class="v" id="dvConditions">—</span></div>
+            <div class="cond-row"><span class="k"><i class="bi bi-cloud-snow"></i> Storm total</span><span class="v" id="dvStorm">—</span></div>
+            <div class="cond-row"><span class="k">Last 48 h</span><span class="v" id="dv48h">—</span></div>
+            <div class="cond-row"><span class="k">Last 7 days</span><span class="v" id="dv7d">—</span></div>
+            <div class="cond-row"><span class="k"><i class="bi bi-mountain"></i> Terrain</span><span class="v" id="dvAcres">—</span></div>
         </div>
-        <!-- Forecast -->
-        <div class="conditions" id="dvForecast" style="border-bottom:1px solid rgba(255,255,255,.06);">
-            <div style="font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#c9a84c;margin-bottom:10px;">FORECAST</div>
-            <div id="dvForecastContent" style="font-size:13px;color:#999;line-height:1.6;">Loading...</div>
-            <div id="dvSnowForecast" style="margin-top:8px;font-size:14px;font-weight:700;color:#fff;"></div>
+        <div class="conditions" id="dvForecast">
+            <div class="section-label">Forecast</div>
+            <div id="dvForecastContent" style="font-family:var(--sans);font-size:13.5px;color:var(--neutral-700);line-height:1.65;">Loading…</div>
+            <div id="dvSnowForecast" style="margin-top:8px;font-family:var(--serif);font-size:15px;font-weight:400;color:var(--ink);"></div>
         </div>
-        <!-- Roads -->
         <div class="conditions" id="dvRoads">
-            <div style="font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#c9a84c;margin-bottom:10px;"><i class="bi bi-signpost-2"></i> ROAD CONDITIONS</div>
-            <div id="dvRoadsContent">Loading...</div>
+            <div class="section-label"><i class="bi bi-signpost-2"></i> Road conditions</div>
+            <div id="dvRoadsContent">Loading…</div>
         </div>
         <div class="lifts-trails">
-            <div class="lt-bar"><span class="lt-label">Lifts</span><div class="lt-track"><div class="lt-fill" id="dvLiftBar" style="width:0%;background:#22c55e;"></div></div><span class="lt-num" id="dvLifts">--</span></div>
-            <div class="lt-bar"><span class="lt-label">Trails</span><div class="lt-track"><div class="lt-fill" id="dvTrailBar" style="width:0%;background:#3b82f6;"></div></div><span class="lt-num" id="dvTrails">--</span></div>
-            <!-- Expandable detail -->
-            <button onclick="toggleDetail('dvDetail')" style="width:100%;margin-top:8px;padding:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;color:#c9a84c;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;letter-spacing:.1em;transition:all .2s;" id="dvDetailBtn">
-                <i class="bi bi-chevron-down"></i> VIEW LIFTS & TRAILS DETAIL
+            <div class="lt-bar"><span class="lt-label">Lifts</span><div class="lt-track"><div class="lt-fill" id="dvLiftBar" style="width:0%;background:var(--green);"></div></div><span class="lt-num" id="dvLifts">—</span></div>
+            <div class="lt-bar"><span class="lt-label">Trails</span><div class="lt-track"><div class="lt-fill" id="dvTrailBar" style="width:0%;background:var(--ink-3);"></div></div><span class="lt-num" id="dvTrails">—</span></div>
+            <button onclick="toggleDetail('dvDetail')" id="dvDetailBtn" class="detail-btn">
+                <i class="bi bi-chevron-down"></i> View lifts &amp; trails detail
             </button>
-            <div id="dvDetail" style="display:none;margin-top:12px;max-height:400px;overflow-y:auto;">
-                <div id="dvMountainAreas">Loading...</div>
+            <div id="dvDetail" style="display:none;margin-top:14px;max-height:420px;overflow-y:auto;">
+                <div id="dvMountainAreas">Loading…</div>
             </div>
         </div>
         <div class="webcams">
-            <div class="webcam-label">Webcams</div>
+            <div class="section-label">Webcams</div>
             <div class="webcam-grid">
                 <div class="webcam-item" style="background-image:url('https://common.snow.com/Mtncams/deervalley1.jpg');background-size:cover;background-position:center;"></div>
                 <div class="webcam-item" style="background-image:url('https://common.snow.com/Mtncams/deervalley2.jpg');background-size:cover;background-position:center;"></div>
             </div>
         </div>
-    </div>
+    </article>
 
     <!-- PARK CITY MOUNTAIN -->
-    <div class="resort-card" id="parkCity">
-        <div class="resort-header">
+    <article class="resort-card" id="parkCity">
+        <header class="resort-header">
             <div class="resort-name">Park City Mountain</div>
-            <div class="resort-status status-closed" id="pcStatus">Closed for Season</div>
-        </div>
+            <div class="resort-status status-closed" id="pcStatus">Closed for season</div>
+        </header>
         <div class="snow-stats">
-            <div class="snow-stat"><div class="val">--</div><div class="lbl">Base Depth</div></div>
-            <div class="snow-stat"><div class="val">--</div><div class="lbl">Last 24h</div></div>
-            <div class="snow-stat"><div class="val">--</div><div class="lbl">Season Total</div></div>
+            <div class="snow-stat"><div class="val">—</div><div class="lbl">Base depth</div></div>
+            <div class="snow-stat"><div class="val">—</div><div class="lbl">Last 24 h</div></div>
+            <div class="snow-stat"><div class="val">—</div><div class="lbl">Season total</div></div>
         </div>
         <div class="conditions">
-            <div class="cond-row"><span class="k">Status</span><span class="v">Closed for 2025/26 Season</span></div>
+            <div class="cond-row"><span class="k">Status</span><span class="v">Closed 2025/26 season</span></div>
             <div class="cond-row"><span class="k">Terrain</span><span class="v">7,300 acres</span></div>
-            <div class="cond-row"><span class="k">Total Lifts</span><span class="v">43</span></div>
-            <div class="cond-row"><span class="k">Total Runs</span><span class="v">341</span></div>
+            <div class="cond-row"><span class="k">Total lifts</span><span class="v">43</span></div>
+            <div class="cond-row"><span class="k">Total runs</span><span class="v">341</span></div>
             <div class="cond-row"><span class="k">Summit</span><span class="v">10,023 ft</span></div>
         </div>
         <div class="lifts-trails">
-            <div class="lt-bar"><span class="lt-label">Lifts</span><div class="lt-track"><div class="lt-fill" style="width:0%;background:#22c55e;"></div></div><span class="lt-num">0/43</span></div>
-            <div class="lt-bar"><span class="lt-label">Trails</span><div class="lt-track"><div class="lt-fill" style="width:0%;background:#3b82f6;"></div></div><span class="lt-num">0/341</span></div>
+            <div class="lt-bar"><span class="lt-label">Lifts</span><div class="lt-track"><div class="lt-fill" style="width:0%;background:var(--green);"></div></div><span class="lt-num">0/43</span></div>
+            <div class="lt-bar"><span class="lt-label">Trails</span><div class="lt-track"><div class="lt-fill" style="width:0%;background:var(--ink-3);"></div></div><span class="lt-num">0/341</span></div>
         </div>
         <div class="webcams">
-            <div class="webcam-label">Webcams — 8 Live Cameras</div>
+            <div class="section-label">Webcams · 8 live cameras</div>
             <div class="webcam-grid">
-                <div class="webcam-item"><iframe src="https://player.brownrice.com/embed/parkcitytopobx" allowfullscreen loading="lazy"></iframe><div style="font-size:10px;color:#666;padding:4px 8px;">Orange Bubble Summit</div></div>
-                <div class="webcam-item"><iframe src="https://player.brownrice.com/embed/parkcitylookoutcabin" allowfullscreen loading="lazy"></iframe><div style="font-size:10px;color:#666;padding:4px 8px;">Lookout Cabin</div></div>
-                <div class="webcam-item"><iframe src="https://player.brownrice.com/embed/parkcitycrescentridge" allowfullscreen loading="lazy"></iframe><div style="font-size:10px;color:#666;padding:4px 8px;">Crescent Ridge</div></div>
-                <div class="webcam-item"><iframe src="https://player.brownrice.com/embed/parkcitytopcrescent" allowfullscreen loading="lazy"></iframe><div style="font-size:10px;color:#666;padding:4px 8px;">Crescent Summit</div></div>
-                <div class="webcam-item"><iframe src="https://player.brownrice.com/embed/parkcitymtnvillage" allowfullscreen loading="lazy"></iframe><div style="font-size:10px;color:#666;padding:4px 8px;">Mountain Village Base</div></div>
-                <div class="webcam-item"><iframe src="https://player.brownrice.com/embed/parkcityhighmeadow" allowfullscreen loading="lazy"></iframe><div style="font-size:10px;color:#666;padding:4px 8px;">High Meadow</div></div>
-                <div class="webcam-item"><iframe src="https://timecam.tv/view_cam_embed.aspx?C=D3C8AKNJB453" allowfullscreen loading="lazy"></iframe><div style="font-size:10px;color:#666;padding:4px 8px;">PC Snow Stake</div></div>
-                <div class="webcam-item"><iframe src="https://timecam.tv/view_cam_embed.aspx?C=2662AJHH4FA4" allowfullscreen loading="lazy"></iframe><div style="font-size:10px;color:#666;padding:4px 8px;">Canyons Snow Stake</div></div>
+                <div class="webcam-item"><iframe src="https://player.brownrice.com/embed/parkcitytopobx" allowfullscreen loading="lazy"></iframe><div class="cap">Orange Bubble Summit</div></div>
+                <div class="webcam-item"><iframe src="https://player.brownrice.com/embed/parkcitylookoutcabin" allowfullscreen loading="lazy"></iframe><div class="cap">Lookout Cabin</div></div>
+                <div class="webcam-item"><iframe src="https://player.brownrice.com/embed/parkcitycrescentridge" allowfullscreen loading="lazy"></iframe><div class="cap">Crescent Ridge</div></div>
+                <div class="webcam-item"><iframe src="https://player.brownrice.com/embed/parkcitytopcrescent" allowfullscreen loading="lazy"></iframe><div class="cap">Crescent Summit</div></div>
+                <div class="webcam-item"><iframe src="https://player.brownrice.com/embed/parkcitymtnvillage" allowfullscreen loading="lazy"></iframe><div class="cap">Mountain Village Base</div></div>
+                <div class="webcam-item"><iframe src="https://player.brownrice.com/embed/parkcityhighmeadow" allowfullscreen loading="lazy"></iframe><div class="cap">High Meadow</div></div>
+                <div class="webcam-item"><iframe src="https://timecam.tv/view_cam_embed.aspx?C=D3C8AKNJB453" allowfullscreen loading="lazy"></iframe><div class="cap">PC snow stake</div></div>
+                <div class="webcam-item"><iframe src="https://timecam.tv/view_cam_embed.aspx?C=2662AJHH4FA4" allowfullscreen loading="lazy"></iframe><div class="cap">Canyons snow stake</div></div>
             </div>
         </div>
-    </div>
+    </article>
 </div>
 
-<!-- UDOT Traffic Cameras — Road to Park City -->
-<div style="max-width:1100px;margin:20px auto;padding:0 20px;">
-    <div class="resort-card">
-        <div class="resort-header">
-            <div class="resort-name"><i class="bi bi-camera-video"></i> Road Cameras — SLC to Park City</div>
-            <a href="https://udottraffic.utah.gov/map" target="_blank" style="font-size:12px;color:#c9a84c;text-decoration:none;">UDOT Traffic <i class="bi bi-box-arrow-up-right"></i></a>
-        </div>
-        <div style="padding:20px;">
-            <p style="font-size:13px;color:#666;margin-bottom:16px;">Live traffic cameras along I-80, SR-224, and US-40 — the routes from SLC Airport to Park City. Powered by UDOT.</p>
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
-                <a href="https://udottraffic.utah.gov/cctv?start=0&length=10&filters%5B0%5D%5Bi%5D=2&filters%5B0%5D%5Bs%5D=I-80&order%5Bi%5D=1&order%5Bdir%5D=asc" target="_blank" style="background:#0a0c10;border-radius:10px;text-decoration:none;display:block;border:1px solid #1e2130;transition:all .2s;overflow:hidden;" onmouseover="this.style.borderColor='#c9a84c';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='#1e2130';this.style.transform='none'">
-                    <div style="background:linear-gradient(135deg,#1a1a2e,#0a0c10);padding:28px 20px;text-align:center;">
-                        <div style="font-size:36px;margin-bottom:10px;">🛣️</div>
-                        <div style="font-family:'Onest',sans-serif;font-size:18px;font-weight:800;color:#fff;">I-80</div>
-                        <div style="font-size:12px;color:#c9a84c;font-weight:600;margin-top:4px;">Parley's Canyon</div>
-                        <div style="font-size:11px;color:#666;margin-top:6px;">SLC → Park City main route</div>
-                        <div style="margin-top:14px;padding:8px 16px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);border-radius:6px;display:inline-block;font-size:11px;color:#c9a84c;font-weight:600;">View Live Cameras →</div>
-                    </div>
+<!-- UDOT Road Cameras -->
+<div class="udot-wrap">
+    <div class="udot-card">
+        <header class="resort-header">
+            <div class="resort-name"><i class="bi bi-camera-video" style="color:var(--gold);"></i> Road cameras · SLC → Park City</div>
+            <a href="https://udottraffic.utah.gov/map" target="_blank">UDOT Traffic <i class="bi bi-box-arrow-up-right"></i></a>
+        </header>
+        <div class="body">
+            <p class="intro">Live traffic cameras along I-80, SR-224 and US-40 — the routes from SLC Airport to Park City. Powered by UDOT.</p>
+            <div class="road-grid">
+                <a href="https://udottraffic.utah.gov/cctv?start=0&length=10&filters%5B0%5D%5Bi%5D=2&filters%5B0%5D%5Bs%5D=I-80&order%5Bi%5D=1&order%5Bdir%5D=asc" target="_blank" class="road-tile">
+                    <div class="emo">🛣️</div>
+                    <div class="nm">I-80</div>
+                    <div class="sub1">Parley's Canyon</div>
+                    <div class="sub2">SLC → Park City main route</div>
+                    <div class="pill">View live cameras →</div>
                 </a>
-                <a href="https://udottraffic.utah.gov/cctv?start=0&length=10&filters%5B0%5D%5Bi%5D=2&filters%5B0%5D%5Bs%5D=SR+224&order%5Bi%5D=1&order%5Bdir%5D=asc" target="_blank" style="background:#0a0c10;border-radius:10px;text-decoration:none;display:block;border:1px solid #1e2130;transition:all .2s;overflow:hidden;" onmouseover="this.style.borderColor='#c9a84c';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='#1e2130';this.style.transform='none'">
-                    <div style="background:linear-gradient(135deg,#1a1a2e,#0a0c10);padding:28px 20px;text-align:center;">
-                        <div style="font-size:36px;margin-bottom:10px;">🏔️</div>
-                        <div style="font-family:'Onest',sans-serif;font-size:18px;font-weight:800;color:#fff;">SR-224</div>
-                        <div style="font-size:12px;color:#c9a84c;font-weight:600;margin-top:4px;">Kimball Junction</div>
-                        <div style="font-size:11px;color:#666;margin-top:6px;">I-80 exit to Park City</div>
-                        <div style="margin-top:14px;padding:8px 16px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);border-radius:6px;display:inline-block;font-size:11px;color:#c9a84c;font-weight:600;">View Live Cameras →</div>
-                    </div>
+                <a href="https://udottraffic.utah.gov/cctv?start=0&length=10&filters%5B0%5D%5Bi%5D=2&filters%5B0%5D%5Bs%5D=SR+224&order%5Bi%5D=1&order%5Bdir%5D=asc" target="_blank" class="road-tile">
+                    <div class="emo">🏔️</div>
+                    <div class="nm">SR-224</div>
+                    <div class="sub1">Kimball Junction</div>
+                    <div class="sub2">I-80 exit to Park City</div>
+                    <div class="pill">View live cameras →</div>
                 </a>
-                <a href="https://udottraffic.utah.gov/cctv?start=0&length=10&filters%5B0%5D%5Bi%5D=2&filters%5B0%5D%5Bs%5D=US+40&order%5Bi%5D=1&order%5Bdir%5D=asc" target="_blank" style="background:#0a0c10;border-radius:10px;text-decoration:none;display:block;border:1px solid #1e2130;transition:all .2s;overflow:hidden;" onmouseover="this.style.borderColor='#c9a84c';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='#1e2130';this.style.transform='none'">
-                    <div style="background:linear-gradient(135deg,#1a1a2e,#0a0c10);padding:28px 20px;text-align:center;">
-                        <div style="font-size:36px;margin-bottom:10px;">🏞️</div>
-                        <div style="font-family:'Onest',sans-serif;font-size:18px;font-weight:800;color:#fff;">US-40</div>
-                        <div style="font-size:12px;color:#c9a84c;font-weight:600;margin-top:4px;">Heber Valley</div>
-                        <div style="font-size:11px;color:#666;margin-top:6px;">Alternate route via Heber</div>
-                        <div style="margin-top:14px;padding:8px 16px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);border-radius:6px;display:inline-block;font-size:11px;color:#c9a84c;font-weight:600;">View Live Cameras →</div>
-                    </div>
+                <a href="https://udottraffic.utah.gov/cctv?start=0&length=10&filters%5B0%5D%5Bi%5D=2&filters%5B0%5D%5Bs%5D=US+40&order%5Bi%5D=1&order%5Bdir%5D=asc" target="_blank" class="road-tile">
+                    <div class="emo">🏞️</div>
+                    <div class="nm">US-40</div>
+                    <div class="sub1">Heber Valley</div>
+                    <div class="sub2">Alternate route via Heber</div>
+                    <div class="pill">View live cameras →</div>
                 </a>
             </div>
-            <p style="font-size:11px;color:#444;margin-top:12px;text-align:center;">Live cameras powered by UDOT Traffic · <a href="https://udottraffic.utah.gov/map" target="_blank" style="color:#c9a84c;text-decoration:none;">View full Utah map</a></p>
+            <p class="footnote">Live cameras via UDOT Traffic · <a href="https://udottraffic.utah.gov/map" target="_blank">View full Utah map</a></p>
         </div>
     </div>
 </div>
 
 <div class="w-cta">
-    <p style="color:#666;font-size:14px;margin-bottom:16px;">Skip the winter driving — let us handle it</p>
-    <a href="/book"><i class="bi bi-calendar-check"></i> Book Your Transfer</a>
+    <p>Skip the winter driving — let us handle it.</p>
+    <a href="/book" class="btn-primary">Book your transfer <i class="bi bi-arrow-right"></i></a>
 </div>
 
-<section style="max-width:900px;margin:60px auto 40px;padding:0 20px;">
-    <h2 style="font-family:'Outfit',sans-serif;font-size:28px;font-weight:800;color:#fff;margin-bottom:16px;">Understanding Park City Weather &amp; Ski Conditions</h2>
-    <p style="font-size:16px;color:rgba(255,255,255,.72);line-height:1.75;margin-bottom:16px;">Park City, Utah sits at 7,000 feet elevation with ski terrain rising to 10,000+ feet. The town averages <strong>350-400 inches of snow per winter</strong> — one of the snowiest destinations in the lower 48 states. Our live conditions page pulls data directly from Deer Valley Resort, Park City Mountain Resort, UDOT road sensors, and 8 live webcams on the mountain, giving you a complete picture of current ski and driving conditions in one place.</p>
+<section class="long-block">
+    <h2>Park City weather, <em>explained.</em></h2>
+    <p>Park City sits at 7,000 feet, with ski terrain rising to 10,000+. The town averages <strong>350 to 400 inches of snow per winter</strong> — one of the snowiest destinations in the lower 48 states. This page pulls data directly from Deer Valley Resort, Park City Mountain Resort, UDOT road sensors and 8 live webcams.</p>
 
-    <h2 style="font-family:'Outfit',sans-serif;font-size:24px;font-weight:800;color:#fff;margin:28px 0 14px;">Ski Season Calendar — When to Visit</h2>
-    <p style="font-size:16px;color:rgba(255,255,255,.72);line-height:1.75;margin-bottom:12px;"><strong style="color:#fff;">Mid-November through early April</strong> is Park City ski season. Opening day typically falls around Thanksgiving when snowmaking has built a solid base. Early season (November-early December) features manmade snow on select trails. The best powder conditions arrive from mid-December through mid-March, with January and February offering the deepest natural snow base (typically 80-120 inches). Late March and April are "spring skiing" with softer afternoon snow, warmer temperatures (30s-50s°F), and fewer crowds. Resorts close in early-to-mid April, though late-season spring skiing can extend into May for Woodward Park City and some terrain parks.</p>
+    <h2>Ski-season <em>calendar.</em></h2>
+    <p><strong>Mid-November through early April</strong> is Park City ski season. Opening day typically falls around Thanksgiving when snowmaking has built a solid base. Best powder conditions arrive mid-December through mid-March, with January and February offering the deepest natural snow (typically 80-120 inches). Late March and April are "spring skiing" — softer afternoon snow, 30s-50s°F, fewer crowds. Resorts close in early-to-mid April; Woodward Park City and some terrain parks can run into May.</p>
 
-    <h2 style="font-family:'Outfit',sans-serif;font-size:24px;font-weight:800;color:#fff;margin:28px 0 14px;">Temperature &amp; Weather Patterns</h2>
-    <p style="font-size:16px;color:rgba(255,255,255,.72);line-height:1.75;margin-bottom:12px;">Winter temperatures at base elevation average 15-35°F during the day, dropping to 0-15°F overnight. Summit temperatures are typically 10-15°F colder due to altitude. Park City benefits from the "lake effect" — storms crossing the Great Salt Lake pick up moisture and drop it as dry powder snow on Park City (vs. heavier wet snow at coastal resorts). Summer temperatures range from 45°F overnight to 80-85°F daytime highs, with low humidity. Afternoon thunderstorms are common in July-August.</p>
+    <h2>Temperature &amp; weather <em>patterns.</em></h2>
+    <p>Winter temperatures at base elevation average 15-35°F during the day, dropping to 0-15°F overnight. Summit temps are typically 10-15°F colder. Park City benefits from the "lake effect" — storms crossing the Great Salt Lake pick up moisture and drop it as dry powder. Summer ranges from 45°F overnight to 80-85°F daytime, with low humidity; afternoon thunderstorms in July-August.</p>
 
-    <h2 style="font-family:'Outfit',sans-serif;font-size:24px;font-weight:800;color:#fff;margin:28px 0 14px;">Driving Conditions: I-80, US-40, SR-224</h2>
-    <p style="font-size:16px;color:rgba(255,255,255,.72);line-height:1.75;margin-bottom:12px;">The drive from Salt Lake City to Park City (I-80 East through Parley's Canyon) climbs from 4,300 ft to 7,020 ft at Parleys Summit in just 22 miles — a significant elevation gain that produces its own weather. Storms often affect Parley's Canyon more severely than downtown SLC or Park City proper. During major storms, UDOT implements traction laws (Level 1 requires M+S tires; Level 2 requires chains on 2WD or AWD with winter tires). All Rio Transportation vehicles are AWD SUVs with dedicated winter tires, meeting Level 2 requirements at all times. If I-80 closes due to weather or accidents, the alternate route is US-40 via Heber Valley (55-70 min from SLC, longer but less steep).</p>
+    <h2>Driving <em>conditions.</em></h2>
+    <p>The drive from SLC to Park City (I-80 East through Parley's Canyon) climbs from 4,300 ft to 7,020 ft in just 22 miles — significant elevation that produces its own weather. Storms often affect Parley's more severely than downtown SLC or Park City. During major storms, UDOT implements traction laws: <strong>Level 1</strong> requires M+S tires; <strong>Level 2</strong> requires chains on 2WD or AWD with winter tires. All Rio Transportation vehicles are AWD SUVs with dedicated winter tires, meeting Level 2 at all times. Alternate route if I-80 closes: US-40 via Heber Valley (55-70 min from SLC, longer but less steep).</p>
 
-    <h2 style="font-family:'Outfit',sans-serif;font-size:24px;font-weight:800;color:#fff;margin:28px 0 14px;">How to Use This Conditions Page</h2>
-    <p style="font-size:16px;color:rgba(255,255,255,.72);line-height:1.75;margin-bottom:12px;">Check this page in the morning before a ski day: look at snow-stake cameras for fresh overnight accumulation, summit webcams for visibility (if socked in with fog, upper lifts may be slow or closed), base cameras for parking/crowd conditions, and road sensors for your drive. Our 24/48/72-hour snowfall totals help you decide if it's a powder day. The wind speed indicator matters — sustained winds above 30 mph often close upper-mountain lifts. For multi-day visits, check the forecast section to plan which days to ski and which to do non-ski activities (Main Street shopping, Utah Olympic Park tubing, snowshoeing at Round Valley).</p>
+    <h2>How to use this <em>page.</em></h2>
+    <p>Check this page in the morning before a ski day: snow-stake cameras for overnight accumulation, summit webcams for visibility, base cameras for parking and crowds, road sensors for the drive. Our 24/48/72-hour snowfall totals help you decide if it's a powder day. Wind speed matters — sustained winds above 30 mph often close upper-mountain lifts. For multi-day visits, use the forecast section to plan which days to ski and which to do non-ski activities (Main Street, Utah Olympic Park, snowshoeing at Round Valley).</p>
 
-    <h2 style="font-family:'Outfit',sans-serif;font-size:24px;font-weight:800;color:#fff;margin:28px 0 14px;">Park City Weather &amp; Conditions FAQ</h2>
-    <div style="margin-top:20px;">
-        <div style="background:#111318;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:20px 22px;margin-bottom:12px;">
-            <h3 style="font-size:16px;font-weight:800;color:#fff;margin-bottom:8px;">When does Park City get the most snow?</h3>
-            <p style="font-size:15px;color:rgba(255,255,255,.72);line-height:1.7;margin:0;">January and February consistently receive the most snow — typically 80-120 inches per month combined. Early December through mid-March is prime powder season with frequent storm cycles.</p>
-        </div>
-        <div style="background:#111318;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:20px 22px;margin-bottom:12px;">
-            <h3 style="font-size:16px;font-weight:800;color:#fff;margin-bottom:8px;">How cold does it get in Park City during ski season?</h3>
-            <p style="font-size:15px;color:rgba(255,255,255,.72);line-height:1.7;margin:0;">Base elevation daytime: 15-35°F. Overnight: 0-15°F (occasionally -10°F during cold snaps). Summit temps are typically 10-15°F colder. Layer up with base layers, mid-layers, waterproof ski shell, hat, and gloves/mittens.</p>
-        </div>
-        <div style="background:#111318;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:20px 22px;margin-bottom:12px;">
-            <h3 style="font-size:16px;font-weight:800;color:#fff;margin-bottom:8px;">Does the mountain close for snow storms?</h3>
-            <p style="font-size:15px;color:rgba(255,255,255,.72);line-height:1.7;margin:0;">Rarely — ski resorts love snow storms and keep operating even during heavy snow. Upper lifts may close temporarily if winds exceed 40 mph. I-80 access to Park City can close briefly during severe storms for avalanche control or accidents.</p>
-        </div>
-        <div style="background:#111318;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:20px 22px;margin-bottom:12px;">
-            <h3 style="font-size:16px;font-weight:800;color:#fff;margin-bottom:8px;">Is Park City weather different from Salt Lake City?</h3>
-            <p style="font-size:15px;color:rgba(255,255,255,.72);line-height:1.7;margin:0;">Significantly different. Park City at 7,000 ft is 10-15°F colder than SLC at 4,300 ft and gets 2-3x more snow. SLC might be rainy/clear while Park City is in a blizzard. Always check Park City specifically — not downtown Salt Lake City forecasts.</p>
-        </div>
-        <div style="background:#111318;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:20px 22px;margin-bottom:12px;">
-            <h3 style="font-size:16px;font-weight:800;color:#fff;margin-bottom:8px;">When is Park City's summer season?</h3>
-            <p style="font-size:15px;color:rgba(255,255,255,.72);line-height:1.7;margin:0;">June through September. Summer activities include mountain biking (Park City Bike Park, Canyons Bike Park), alpine slide, hiking, concerts, farmer's market, and hot-air ballooning. Temperatures reach 80-85°F daytime with cool 45-55°F nights.</p>
-        </div>
+    <h2>Frequently <em>asked.</em></h2>
+    <div class="faq-card">
+        <h3>When does Park City get the most snow?</h3>
+        <p>January and February consistently receive the most — typically 80-120 inches per month combined. Early December through mid-March is prime powder season with frequent storm cycles.</p>
+    </div>
+    <div class="faq-card">
+        <h3>How cold does it get during ski season?</h3>
+        <p>Base elevation daytime: 15-35°F. Overnight: 0-15°F (occasionally -10°F during cold snaps). Summit temps are 10-15°F colder. Layer up: base, mid, waterproof shell, hat, gloves/mittens.</p>
+    </div>
+    <div class="faq-card">
+        <h3>Does the mountain close for snow storms?</h3>
+        <p>Rarely — ski resorts love snow and keep operating even during heavy storms. Upper lifts may close temporarily if winds exceed 40 mph. I-80 access can close briefly during severe storms for avalanche control or accidents.</p>
+    </div>
+    <div class="faq-card">
+        <h3>Is Park City weather different from Salt Lake City?</h3>
+        <p>Significantly different. Park City at 7,000 ft is 10-15°F colder than SLC at 4,300 ft, and gets 2-3x more snow. SLC might be rainy/clear while Park City is in a blizzard. Always check Park City specifically — not downtown SLC forecasts.</p>
+    </div>
+    <div class="faq-card">
+        <h3>When is Park City's summer season?</h3>
+        <p>June through September. Activities: mountain biking (Park City Bike Park, Canyons Bike Park), alpine slide, hiking, concerts, farmer's market, hot-air balloons. Temps reach 80-85°F daytime with 45-55°F nights.</p>
     </div>
 </section>
 
@@ -282,97 +347,100 @@ body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-heigh
 ]}
 </script>
 
-<footer class="w-footer">© 2026 Rio Transportation LLC — Park City, Utah</footer>
+<footer class="foot">
+    © 2026 Rio Transportation LLC · Park City, Utah ·
+    <a href="tel:+14352146939">(435) 214-6939</a>
+</footer>
 
 <script>
+/* ============================================================
+   Detail toggle + Deer Valley live data fetch.
+   ALL DOM IDs match the previous design so the existing
+   mtnpowder.com API call works without modification.
+   ============================================================ */
 function toggleDetail(id){
-    const el=document.getElementById(id);
-    const btn=document.getElementById(id+'Btn');
-    if(el.style.display==='none'){el.style.display='block';btn.innerHTML='<i class="bi bi-chevron-up"></i> HIDE DETAIL';}
-    else{el.style.display='none';btn.innerHTML='<i class="bi bi-chevron-down"></i> VIEW LIFTS & TRAILS DETAIL';}
+    const el  = document.getElementById(id);
+    const btn = document.getElementById(id + 'Btn');
+    if (el.style.display === 'none'){
+        el.style.display = 'block';
+        btn.innerHTML = '<i class="bi bi-chevron-up"></i> Hide detail';
+    } else {
+        el.style.display = 'none';
+        btn.innerHTML = '<i class="bi bi-chevron-down"></i> View lifts &amp; trails detail';
+    }
 }
 
-// Fetch Deer Valley FULL live data from mtnpowder API
 fetch('https://www.mtnpowder.com/feed?format=json&resortId=49')
-    .then(r=>r.json())
-    .then(d=>{
-        const sr = d.SnowReport || {};
-        const base = sr.BaseArea || {};
-        const cc = d.CurrentConditions || {};
-        const fc = d.Forecast || {};
+    .then(r => r.json())
+    .then(d => {
+        const sr    = d.SnowReport || {};
+        const base  = sr.BaseArea || {};
+        const cc    = d.CurrentConditions || {};
+        const fc    = d.Forecast || {};
         const roads = d.Roads || [];
         const areas = d.MountainAreas || [];
 
-        // Status
         const status = d.OperatingStatus || 'Closed';
         const el = document.getElementById('dvStatus');
         el.textContent = status;
         el.className = 'resort-status ' + (status.toLowerCase().includes('open') ? 'status-open' : 'status-closed');
 
-        // Snow stats
-        document.getElementById('dvBase').textContent = (sr.SnowBaseRangeIn || '--') + '"';
-        document.getElementById('dv24h').textContent = (base.Last24HoursIn || '0') + '"';
-        document.getElementById('dvSeason').textContent = (sr.SeasonTotalIn || '--') + '"';
+        document.getElementById('dvBase').textContent   = (sr.SnowBaseRangeIn || '—') + '"';
+        document.getElementById('dv24h').textContent    = (base.Last24HoursIn || '0') + '"';
+        document.getElementById('dvSeason').textContent = (sr.SeasonTotalIn || '—') + '"';
 
-        // Current Weather
         const baseW = cc.Base || {};
-        document.getElementById('dvTemp').textContent = (baseW.TemperatureF || '--') + '°F (Low ' + (baseW.TemperatureLowF || '--') + '° / High ' + (baseW.TemperatureHighF || '--') + '°)';
-        document.getElementById('dvWind').textContent = (baseW.WindDirection || '--') + ' ' + (baseW.WindStrengthMph || '0') + ' mph' + (baseW.WindGustsMph > baseW.WindStrengthMph ? ', gusts ' + baseW.WindGustsMph + ' mph' : '');
-        document.getElementById('dvSkies').textContent = baseW.Skies || '--';
+        document.getElementById('dvTemp').textContent  = (baseW.TemperatureF || '—') + '°F (low ' + (baseW.TemperatureLowF || '—') + '° / high ' + (baseW.TemperatureHighF || '—') + '°)';
+        document.getElementById('dvWind').textContent  = (baseW.WindDirection || '—') + ' ' + (baseW.WindStrengthMph || '0') + ' mph' + (baseW.WindGustsMph > baseW.WindStrengthMph ? ', gusts ' + baseW.WindGustsMph + ' mph' : '');
+        document.getElementById('dvSkies').textContent = baseW.Skies || '—';
 
-        // Conditions
-        document.getElementById('dvConditions').textContent = sr.BaseConditions || '--';
-        document.getElementById('dvStorm').textContent = (sr.StormTotalIn || '0') + '"';
-        document.getElementById('dv48h').textContent = (base.Last48HoursIn || '0') + '"';
-        document.getElementById('dv7d').textContent = (base.Last7DaysIn || '0') + '"';
-        document.getElementById('dvAcres').textContent = (sr.OpenTerrainAcres !== '--' ? sr.OpenTerrainAcres : '0') + ' / ' + (sr.TotalTerrainAcres || '4,300') + ' acres';
+        document.getElementById('dvConditions').textContent = sr.BaseConditions || '—';
+        document.getElementById('dvStorm').textContent      = (sr.StormTotalIn || '0') + '"';
+        document.getElementById('dv48h').textContent        = (base.Last48HoursIn || '0') + '"';
+        document.getElementById('dv7d').textContent         = (base.Last7DaysIn || '0') + '"';
+        document.getElementById('dvAcres').textContent      = (sr.OpenTerrainAcres !== '—' ? sr.OpenTerrainAcres : '0') + ' / ' + (sr.TotalTerrainAcres || '4,300') + ' acres';
 
-        // Forecast
-        const dayC = fc.DayComments || '';
+        const dayC   = fc.DayComments || '';
         const nightC = fc.NightComments || '';
-        const snowF = fc.ForecastedSnowIn || '0';
+        const snowF  = fc.ForecastedSnowIn || '0';
         document.getElementById('dvForecastContent').textContent = dayC || nightC || 'No forecast available';
-        if (snowF !== '0') document.getElementById('dvSnowForecast').innerHTML = '<i class="bi bi-snow2" style="color:#3b82f6;"></i> ' + snowF + '" of snow forecasted';
+        if (snowF !== '0') document.getElementById('dvSnowForecast').innerHTML = '<i class="bi bi-snow2" style="color:var(--gold);"></i> ' + snowF + '" of snow forecasted';
 
-        // Roads
         let roadsHtml = '';
         roads.forEach(r => {
             const isOpen = r.StatusEnglish === 'open';
-            const chains = r.ChainsRequired === 'Yes' ? ' <span style="color:#f59e0b;font-size:10px;">(Chains Required)</span>' : '';
+            const chains = r.ChainsRequired === 'Yes' ? ' <span style="color:var(--gold);font-size:10px;">(chains required)</span>' : '';
             roadsHtml += '<div class="road-row"><span class="road-name">' + r.Name + '</span><span class="road-status ' + (isOpen ? 'road-open' : 'road-closed') + '">' + r.Status + chains + '</span></div>';
         });
-        document.getElementById('dvRoadsContent').innerHTML = roadsHtml || '<span style="color:#666;">No road data</span>';
+        document.getElementById('dvRoadsContent').innerHTML = roadsHtml || '<span style="color:var(--neutral-500);font-family:var(--sans);font-size:13px;">No road data</span>';
 
-        // Lifts & Trails
-        const openLifts = sr.TotalOpenLifts || 0;
+        const openLifts  = sr.TotalOpenLifts || 0;
         const totalLifts = sr.TotalLifts || 31;
         const openTrails = sr.TotalOpenTrails || 0;
         const totalTrails = sr.TotalTrails || 202;
         document.getElementById('dvLifts').textContent = openLifts + '/' + totalLifts;
         document.getElementById('dvTrails').textContent = openTrails + '/' + totalTrails;
-        document.getElementById('dvLiftBar').style.width = (totalLifts > 0 ? (openLifts/totalLifts*100) : 0) + '%';
+        document.getElementById('dvLiftBar').style.width  = (totalLifts > 0 ? (openLifts/totalLifts*100) : 0) + '%';
         document.getElementById('dvTrailBar').style.width = (totalTrails > 0 ? (openTrails/totalTrails*100) : 0) + '%';
 
-        // Mountain Areas + Individual Trails
         const diffColors = {Easier:'dot-green',Intermediate:'dot-blue','Advanced Intermediate':'dot-blue',Advanced:'dot-black',Expert:'dot-dblack'};
         let areasHtml = '';
         areas.forEach(area => {
-            areasHtml += '<div class="area-group"><div class="area-name">' + area.Name + ' <span style="color:#666;font-size:11px;">(' + (area.OpenTrailsCount||0) + '/' + (area.TotalTrailsCount||0) + ' open)</span></div>';
+            areasHtml += '<div class="area-group"><div class="area-name">' + area.Name + ' <span>(' + (area.OpenTrailsCount || 0) + '/' + (area.TotalTrailsCount || 0) + ' open)</span></div>';
             (area.Trails || []).forEach(t => {
-                const isOpen = t.StatusEnglish === 'open';
+                const isOpen   = t.StatusEnglish === 'open';
                 const dotClass = diffColors[t.Difficulty] || 'dot-blue';
-                const groomed = t.Grooming === 'Yes' ? ' <i class="bi bi-check-circle" style="color:#c9a84c;font-size:10px;" title="Groomed"></i>' : '';
+                const groomed  = t.Grooming === 'Yes' ? ' <i class="bi bi-check-circle" style="color:var(--gold);font-size:10px;" title="Groomed"></i>' : '';
                 areasHtml += '<div class="trail-row"><div class="dot ' + dotClass + '">' + (t.Difficulty === 'Expert' ? '◆◆' : t.Difficulty === 'Advanced' ? '◆' : t.Difficulty === 'Intermediate' ? '■' : '●') + '</div><span class="trail-name">' + t.Name + groomed + '</span><span class="trail-status ' + (isOpen ? 'ts-open' : 'ts-closed') + '">' + t.Status + '</span></div>';
             });
             areasHtml += '</div>';
         });
-        document.getElementById('dvMountainAreas').innerHTML = areasHtml || '<span style="color:#666;">Trail detail available during season</span>';
+        document.getElementById('dvMountainAreas').innerHTML = areasHtml || '<span style="color:var(--neutral-500);font-family:var(--sans);font-size:13px;">Trail detail available during season</span>';
 
-        // Last update
         const lu = d.LastUpdate || '';
         document.getElementById('lastUpdate').textContent = 'Last updated: ' + (lu ? new Date(lu).toLocaleString() : 'Unknown');
     })
-    .catch(()=>{
+    .catch(() => {
         document.getElementById('lastUpdate').textContent = 'Unable to fetch live data';
     });
 </script>

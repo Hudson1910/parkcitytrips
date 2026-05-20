@@ -1,62 +1,112 @@
+{# Park City Trips — /blog redesign 2026-05-20 (Airbnb Luxe direction). #}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-    <title>Blog — Rio Transportation | Park City Travel Guide</title>
-    <meta name="description" content="Travel guide to Park City — ski, dining, airport transfers, local tips from the Rio Transportation team.">
+    <title>Journal — Park City Travel Guide | Rio Transportation</title>
+    <meta name="description" content="Park City travel notes from the Rio Transportation team — written by drivers who live on the mountain.">
     <link rel="canonical" href="https://parkcitytrips.com/blog">
-    <meta property="og:title" content="Blog — Rio Transportation | Park City Travel Guide">
-    <meta property="og:description" content="Park City travel guide from the Rio Transportation team.">
+    <meta property="og:title" content="Journal — Park City Travel Guide">
+    <meta property="og:description" content="Park City travel notes from the Rio Transportation team.">
     <meta property="og:url" content="https://parkcitytrips.com/blog">
     <meta property="og:type" content="website">
-    <meta name="theme-color" content="#0a0e17">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2J1TXGYYMD"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-2J1TXGYYMD');</script>
     <style>
-        :root{--bg:#0a0e17;--bg2:#0f1420;--bg3:#151c2e;--gold:#c9a84c;--gold2:#e8c65a;--w:#fff;--t1:#e2e8f0;--t2:#94a3b8;--t3:#64748b;--t4:#475569;--border:rgba(201,168,76,.08);}
-        *{margin:0;padding:0;box-sizing:border-box;}
-        body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);-webkit-font-smoothing:antialiased;}
-        h1,h2,h3{font-family:'Outfit',sans-serif;}
-        nav{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;background:rgba(10,14,23,.95);border-bottom:1px solid var(--border);}
-        .logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
-        .logo img{height:56px;width:auto;}
-        nav a.back{color:var(--t2);text-decoration:none;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px;}
-        nav a.back:hover{color:var(--gold);}
-        .blog-hero{padding:80px 20px 40px;text-align:center;max-width:800px;margin:0 auto;}
-        .blog-hero h1{font-size:42px;font-weight:900;color:var(--w);letter-spacing:-1.5px;margin-bottom:10px;}
-        .blog-hero p{font-size:16px;color:var(--t3);}
-        .posts{max-width:900px;margin:0 auto;padding:0 20px 80px;display:grid;gap:20px;}
-        .post-card{display:flex;gap:0;background:var(--bg2);border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:all .3s;text-decoration:none;}
-        .post-card:hover{border-color:rgba(201,168,76,.2);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.3);}
-        .post-card:hover .post-img{background-size:110%;}
-        .post-img{width:280px;min-height:200px;flex-shrink:0;overflow:hidden;background-size:cover;background-position:center;transition:background-size .5s;}
-        
-        
-        .post-info{padding:24px 28px;display:flex;flex-direction:column;gap:10px;flex:1;}
-        .post-cat{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:50px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:rgba(201,168,76,.08);color:var(--gold);border:1px solid rgba(201,168,76,.12);width:fit-content;}
-        .post-title{font-family:Outfit;font-size:22px;font-weight:800;color:var(--w);line-height:1.3;}
-        .post-excerpt{font-size:14px;color:var(--t3);line-height:1.6;}
-        .post-meta{display:flex;align-items:center;gap:14px;font-size:12px;color:var(--t4);margin-top:auto;}
-        .post-meta i{color:var(--gold);}
-        @media(max-width:640px){nav{padding:0 16px;}.post-card{flex-direction:column;}.post-img{width:100%;min-height:180px;max-height:200px;}.blog-hero h1{font-size:28px;}}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+    --cream:#faf9f6; --cream-2:#f3efe8;
+    --ink:#0e1a2e; --ink-2:#1a2a45; --ink-3:#2c3e5a;
+    --neutral-700:#4a4a4a; --neutral-500:#8a8580;
+    --gold:#b8945c;
+    --serif:'Fraunces','Times New Roman',serif;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --shadow-md:0 4px 16px rgba(14,26,46,.06),0 1px 3px rgba(14,26,46,.08);
+    --ease-out:cubic-bezier(0.16,1,0.3,1);
+}
+html{scroll-behavior:smooth;overflow-x:hidden;-webkit-text-size-adjust:100%;}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;touch-action:pan-y;}
+
+.nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:16px clamp(20px,4vw,56px);background:rgba(250,249,246,.92);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(14,26,46,.07);}
+.nav .logo{font-family:var(--serif);font-style:italic;font-weight:400;font-size:22px;color:var(--ink);text-decoration:none;letter-spacing:-.01em;}
+.nav .back{font-family:var(--sans);font-size:13.5px;color:var(--ink-3);text-decoration:none;display:flex;align-items:center;gap:8px;transition:color .3s var(--ease-out);}
+.nav .back:hover{color:var(--ink);}
+
+.blog-header{text-align:center;padding:clamp(56px,9vh,120px) clamp(20px,5vw,40px) clamp(36px,5vh,60px);max-width:780px;margin:0 auto;}
+.eyebrow{font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--neutral-500);margin-bottom:18px;display:inline-flex;align-items:center;gap:14px;}
+.eyebrow::before,.eyebrow::after{content:'';width:24px;height:1px;background:var(--ink);opacity:.4;}
+.blog-header h1{font-family:var(--serif);font-optical-sizing:auto;font-weight:300;font-size:clamp(40px,6vw,80px);line-height:1.05;letter-spacing:-.025em;color:var(--ink);}
+.blog-header h1 em{font-style:italic;font-weight:400;}
+.blog-header .sub{font-family:var(--sans);font-size:16px;color:var(--neutral-700);line-height:1.7;margin-top:18px;max-width:54ch;margin-left:auto;margin-right:auto;}
+
+.intro-block{max-width:780px;margin:0 auto;padding:0 clamp(20px,5vw,40px) clamp(48px,8vh,80px);}
+.intro-block p{font-family:var(--serif);font-weight:300;font-size:18px;color:var(--ink-3);line-height:1.75;margin-bottom:22px;letter-spacing:-.003em;}
+.intro-block p a{color:var(--gold);text-decoration:none;border-bottom:1px solid currentColor;}
+.intro-block p a:hover{color:var(--ink);}
+
+.posts{max-width:1100px;margin:0 auto;padding:0 clamp(20px,5vw,40px) 96px;display:grid;gap:20px;}
+.post-card{display:grid;grid-template-columns:340px 1fr;background:var(--cream);border:1px solid rgba(14,26,46,.07);border-radius:8px;overflow:hidden;text-decoration:none;color:var(--ink);transition:transform .35s var(--ease-out),border .3s var(--ease-out),box-shadow .35s var(--ease-out);}
+.post-card:hover{transform:translateY(-3px);border-color:rgba(14,26,46,.15);box-shadow:var(--shadow-md);}
+.post-img{min-height:240px;background-size:cover;background-position:center;transition:transform .6s var(--ease-out);background-color:var(--cream-2);}
+.post-card:hover .post-img{transform:scale(1.04);}
+.post-info{padding:32px 36px;display:flex;flex-direction:column;gap:12px;}
+.post-cat{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:999px;font-family:var(--sans);font-size:10.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;background:var(--cream-2);color:var(--ink-3);width:fit-content;}
+.post-title{font-family:var(--serif);font-weight:400;font-size:clamp(22px,2.2vw,28px);color:var(--ink);line-height:1.2;letter-spacing:-.01em;}
+.post-card:hover .post-title{color:var(--ink-2);}
+.post-excerpt{font-family:var(--sans);font-size:14.5px;color:var(--neutral-700);line-height:1.6;}
+.post-meta{display:flex;align-items:center;gap:16px;font-family:var(--sans);font-size:12px;color:var(--neutral-500);margin-top:auto;padding-top:8px;letter-spacing:.005em;}
+.post-meta i{font-size:12px;color:var(--gold);}
+
+@media(max-width:760px){
+    .post-card{grid-template-columns:1fr;}
+    .post-img{min-height:200px;max-height:220px;}
+    .post-info{padding:24px 24px;}
+}
+
+footer.foot{background:var(--ink);color:rgba(250,249,246,.5);padding:48px 40px 32px;text-align:center;font-family:var(--sans);font-size:12px;}
+footer.foot a{color:rgba(250,249,246,.7);text-decoration:none;transition:color .3s var(--ease-out);}
+footer.foot a:hover{color:var(--cream);}
     </style>
 </head>
-<body style="overflow-x:hidden;touch-action:pan-y;">
-<nav>
-    <a href="/" class="logo"><img src="https://static.wixstatic.com/media/55a398_1d427b4af5334f1ca3d0edd76f254f4a~mv2.png" alt="Rio Transportation"></a>
-    <a href="/" class="back"><i class="bi bi-arrow-left"></i> Back to Home</a>
+<body>
+
+<nav class="nav">
+    <a href="/" class="logo">Rio<em>.</em>Transportation</a>
+    <a href="/" class="back"><i class="bi bi-arrow-left"></i> Back to site</a>
 </nav>
 
-<div class="blog-hero">
-    <h1>Park City Travel Guide</h1>
-    <p>Tips, events, and insider knowledge about Park City, Utah</p>
-</div>
+<header class="blog-header">
+    <div class="eyebrow">The Journal</div>
+    <h1>Park City, <em>read in.</em></h1>
+    <p class="sub">Notes, tips and insider knowledge from the Rio Transportation team — written by drivers who log thousands of miles a year on these mountain roads.</p>
+</header>
 
-<section style="max-width:900px;margin:0 auto 40px;padding:0 20px;color:#94a3b8;line-height:1.8;">
-    <p style="font-size:17px;margin-bottom:16px;">Welcome to the Park City Travel Guide — a curated collection of insider knowledge from Rio Transportation\'s drivers, who log thousands of miles per year on Park City\'s roads and talk to visitors from around the world. Whether you\'re planning a first ski trip, a summer mountain biking weekend, or a Sundance Film Festival visit, you\'ll find practical advice here from people who live and work in Park City every day.</p>
-    <p style="font-size:16px;margin-bottom:16px;">Our articles cover seasonal topics (when to visit, what to pack, how weather affects your trip), ski resort comparisons (Park City Mountain vs. Deer Valley — which is right for your group?), dining and nightlife recommendations on Main Street, event coverage (Sundance logistics, summer festivals, Kimball Arts Festival), and practical transportation guidance (how to get around without renting a car, ski-day logistics, airport transfer tips). Every post is written by our team, not AI-generated or scraped from other sites.</p>
-    <p style="font-size:16px;">New posts are published monthly. If you have a specific question about Park City that isn\'t covered here, <a href="/book" style="color:#c9a84c;">contact us</a> — our drivers answer questions all day long and are happy to share local knowledge by phone, text, or during your ride.</p>
+<section class="intro-block">
+    <p>Welcome to the Park City Travel Guide — a curated collection of
+    insider knowledge from our drivers, who log thousands of miles a
+    year on Park City's roads and talk to visitors from around the
+    world. Whether you're planning a first ski trip, a summer
+    mountain-biking weekend, or a Sundance Film Festival visit, you'll
+    find practical advice here from people who live and work in Park
+    City every day.</p>
+    <p>Our articles cover seasonal topics (when to visit, what to pack,
+    how weather affects your trip), ski-resort comparisons (Park City
+    Mountain vs Deer Valley — which is right for your group?), dining
+    and nightlife on Main Street, event coverage (Sundance logistics,
+    summer festivals), and practical transportation guidance. Every
+    post is written by our team, not AI-generated or scraped from
+    other sites.</p>
+    <p>New posts are published monthly. If you have a specific Park
+    City question that isn't covered here,
+    <a href="/book">contact us</a> — our drivers answer questions all
+    day long and are happy to share local knowledge by phone, text, or
+    during your ride.</p>
 </section>
 
 <div class="posts">
@@ -64,7 +114,7 @@
     <a href="/blog/{{ post.slug }}" class="post-card">
         <div class="post-img" style="background-image:url('{{ post.image }}');"></div>
         <div class="post-info">
-            <div class="post-cat"><i class="bi bi-tag-fill"></i> {{ post.category }}</div>
+            <div class="post-cat"><i class="bi bi-bookmark"></i> {{ post.category }}</div>
             <div class="post-title">{{ post.title }}</div>
             <div class="post-excerpt">{{ post.subtitle }}</div>
             <div class="post-meta">
@@ -76,6 +126,11 @@
     </a>
     {% endfor %}
 </div>
+
+<footer class="foot">
+    © 2026 Rio Transportation LLC · Park City, Utah ·
+    <a href="tel:+14352146939">(435) 214-6939</a>
+</footer>
 <script defer src="/static/no-zoom.js?v=2"></script>
 </body>
 </html>
