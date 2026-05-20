@@ -1,115 +1,146 @@
+{# Park City Trips — /admin/seo redesign 2026-05-20 (Airbnb Luxe admin). #}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="robots" content="noindex,nofollow">
-    <title>SEO & Analytics — Rio Transportation</title>
-    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>SEO &amp; analytics · Rio Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
     <style>
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-height:100vh;}
-.admin-nav{padding:16px 24px;border-bottom:1px solid #1e2130;display:flex;align-items:center;justify-content:space-between;}
-.admin-nav .logo{font-family:'Onest',sans-serif;font-weight:800;font-size:14px;letter-spacing:.1em;color:#fff;text-decoration:none;}
-.admin-nav .links{display:flex;gap:20px;align-items:center;}
-.admin-nav .links a{font-size:13px;color:#666;text-decoration:none;}
-.admin-nav .links a:hover,.admin-nav .links a.active{color:#c9a84c;}
-.page{max-width:1200px;margin:0 auto;padding:24px 20px;}
-h1{font-family:'Onest',sans-serif;font-size:24px;font-weight:800;margin-bottom:20px;}
-.card{background:#111318;border:1px solid #1e2130;border-radius:12px;padding:24px;margin-bottom:20px;}
-.card h3{font-family:'Onest',sans-serif;font-size:15px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
-.card h3 i{color:#c9a84c;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+    --cream:#faf9f6; --cream-2:#f3efe8;
+    --ink:#0e1a2e; --ink-2:#1a2a45; --ink-3:#2c3e5a;
+    --neutral-700:#4a4a4a; --neutral-500:#8a8580;
+    --gold:#b8945c; --green:#2f7a4d; --amber:#a87633; --red:#9a3324;
+    --serif:'Fraunces',serif; --sans:'Inter',sans-serif;
+    --ease-out:cubic-bezier(0.16,1,0.3,1);
+}
+html{scroll-behavior:smooth;overflow-x:hidden;-webkit-text-size-adjust:100%;}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;touch-action:pan-y;}
+
+.admin-nav{position:sticky;top:0;z-index:50;padding:12px clamp(16px,3vw,32px);background:rgba(250,249,246,.92);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(14,26,46,.08);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.admin-nav .logo{font-family:var(--serif);font-style:italic;font-weight:400;font-size:20px;color:var(--ink);text-decoration:none;letter-spacing:-.01em;display:flex;align-items:center;gap:8px;}
+.admin-nav .logo::after{content:'Admin';font-family:var(--sans);font-style:normal;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);background:rgba(184,148,92,.12);padding:3px 8px;border-radius:999px;font-weight:500;}
+.admin-nav .links{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+.admin-nav .links a{padding:7px 12px;border-radius:6px;font-family:var(--sans);font-size:12.5px;font-weight:500;color:var(--ink-3);text-decoration:none;transition:all .25s var(--ease-out);display:inline-flex;align-items:center;gap:5px;}
+.admin-nav .links a i{font-size:13px;color:var(--neutral-500);}
+.admin-nav .links a:hover{background:var(--cream-2);color:var(--ink);}
+.admin-nav .links a.active{background:var(--ink);color:var(--cream);}
+.admin-nav .links a.active i{color:var(--gold);}
+.admin-nav .links a.logout{color:var(--red);}
+
+.page{max-width:1280px;margin:0 auto;padding:32px clamp(16px,3vw,32px) 72px;}
+.h-page{font-family:var(--serif);font-weight:300;font-size:clamp(28px,3.6vw,44px);color:var(--ink);letter-spacing:-.02em;line-height:1.05;margin-bottom:8px;}
+.h-page em{font-style:italic;font-weight:400;}
+.h-sub{font-family:var(--sans);font-size:13px;color:var(--neutral-500);margin-bottom:28px;}
+
+.card{background:var(--cream);border:1px solid rgba(14,26,46,.08);border-radius:10px;padding:24px;margin-bottom:20px;}
+.card h3{font-family:var(--sans);font-size:13px;font-weight:600;color:var(--ink);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.card h3 i{color:var(--gold);font-size:14px;}
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-@media(max-width:768px){.grid-2{grid-template-columns:1fr;}}
+@media(max-width:880px){.grid-2{grid-template-columns:1fr;}}
 
-/* Quick links */
-.qlink{display:flex;align-items:center;gap:12px;padding:14px 16px;background:rgba(255,255,255,.03);border:1px solid #1e2130;border-radius:10px;margin-bottom:10px;text-decoration:none;color:#fff;transition:all .2s;}
-.qlink:hover{border-color:#c9a84c;background:rgba(201,168,76,.04);}
-.qlink .icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
-.qlink .info{flex:1;}
-.qlink .info .title{font-weight:700;font-size:14px;}
-.qlink .info .desc{font-size:11px;color:#666;margin-top:2px;}
-.qlink .arrow{color:#666;font-size:16px;}
+/* Visitor stat tiles */
+.v-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:24px;}
+@media(max-width:880px){.v-stats{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:520px){.v-stats{grid-template-columns:repeat(2,1fr);}}
+.v-stat{text-align:center;padding:20px 16px;background:var(--cream);border:1px solid rgba(14,26,46,.08);border-radius:10px;}
+.v-stat .num{font-family:var(--serif);font-weight:300;font-size:clamp(26px,3vw,36px);color:var(--ink);line-height:1;letter-spacing:-.02em;}
+.v-stat .label{font-family:var(--sans);font-size:10px;color:var(--neutral-500);letter-spacing:.18em;text-transform:uppercase;margin-top:10px;}
 
-/* SEO checklist */
-.check-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:13px;}
-.check-item:last-child{border:none;}
-.check-icon{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;}
-.check-ok{background:rgba(34,197,94,.15);color:#22c55e;}
-.check-warn{background:rgba(245,158,11,.15);color:#f59e0b;}
-.check-info{background:rgba(99,102,241,.15);color:#818cf8;}
+/* Rank rows */
+.rank-item{display:flex;align-items:center;gap:12px;padding:9px 0;font-family:var(--sans);font-size:13px;}
+.rank-item + .rank-item{border-top:1px dashed rgba(14,26,46,.06);}
+.rank-num{font-family:var(--serif);font-weight:400;color:var(--gold);width:22px;text-align:center;font-size:16px;}
+.rank-name{flex:1;color:var(--ink);font-weight:500;}
+.rank-bar{flex:0 0 90px;height:5px;background:var(--cream-2);border-radius:999px;overflow:hidden;}
+.rank-fill{height:100%;border-radius:999px;transition:width .8s var(--ease-out);}
+.rank-count{font-family:var(--serif);font-weight:400;color:var(--ink);min-width:36px;text-align:right;font-size:15px;}
 
-/* Page list */
-.page-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:13px;}
-.page-row:last-child{border:none;}
-.page-url{color:#c9a84c;font-weight:600;text-decoration:none;}
-.page-status{font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;}
+/* Checklist */
+.check-item{display:flex;align-items:center;gap:12px;padding:9px 0;font-family:var(--sans);font-size:13.5px;color:var(--ink);}
+.check-item + .check-item{border-top:1px dashed rgba(14,26,46,.06);}
+.check-icon{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;}
+.check-ok{background:rgba(47,122,77,.15);color:var(--green);}
+.check-warn{background:rgba(168,118,51,.15);color:var(--amber);}
 
-/* Visitor stats */
-.v-stat{text-align:center;padding:16px;background:rgba(255,255,255,.02);border-radius:10px;}
-.v-stat .num{font-family:'Onest',sans-serif;font-size:32px;font-weight:800;}
-.v-stat .label{font-size:10px;color:#666;letter-spacing:.15em;text-transform:uppercase;margin-top:4px;}
-.v-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px;}
-@media(max-width:768px){.v-stats{grid-template-columns:repeat(3,1fr);}}
+/* Quick-access link tiles */
+.qlink{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--cream-2);border:1px solid rgba(14,26,46,.06);border-radius:10px;margin-bottom:10px;text-decoration:none;color:var(--ink);transition:all .25s var(--ease-out);}
+.qlink:hover{background:#fff;border-color:rgba(14,26,46,.18);transform:translateY(-1px);}
+.qlink .icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.qlink .info{flex:1;min-width:0;}
+.qlink .info .title{font-family:var(--sans);font-weight:600;font-size:14px;color:var(--ink);}
+.qlink .info .desc{font-family:var(--sans);font-size:11.5px;color:var(--neutral-500);margin-top:2px;line-height:1.45;}
+.qlink .arrow{color:var(--neutral-500);font-size:14px;}
 
-/* Top pages / sources */
-.rank-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:13px;}
-.rank-item:last-child{border:none;}
-.rank-num{font-family:'Onest',sans-serif;font-weight:800;color:#c9a84c;width:24px;text-align:center;}
-.rank-bar{flex:1;height:6px;background:#1e2130;border-radius:3px;overflow:hidden;}
-.rank-fill{height:100%;border-radius:3px;}
-.rank-count{font-weight:700;min-width:30px;text-align:right;}
+/* Indexed pages list */
+.page-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:9px 0;font-family:var(--sans);font-size:13px;flex-wrap:wrap;}
+.page-row + .page-row{border-top:1px dashed rgba(14,26,46,.06);}
+.page-url{color:var(--gold);font-weight:500;text-decoration:none;}
+.page-url:hover{color:var(--ink);}
+.page-row .title{flex:1;color:var(--ink);min-width:0;}
+.page-status{font-family:var(--sans);font-size:10px;font-weight:500;padding:3px 9px;border-radius:999px;letter-spacing:.18em;text-transform:uppercase;background:rgba(47,122,77,.12);color:var(--green);}
+
+.country-row{display:flex;align-items:center;gap:12px;padding:9px 0;font-family:var(--sans);font-size:13.5px;}
+.country-row + .country-row{border-top:1px dashed rgba(14,26,46,.06);}
+.country-row .flag{font-size:20px;}
+.country-row .name{flex:1;color:var(--ink);font-weight:500;}
+.country-row .count{font-family:var(--serif);font-weight:400;color:var(--ink);font-size:15px;}
     </style>
 </head>
-<body style="overflow-x:hidden;touch-action:pan-y;">
+<body>
+
 <nav class="admin-nav">
-    <a href="/admin" class="logo">RIO ADMIN</a>
+    <a href="/admin" class="logo">Rio<em>.</em>Transportation</a>
     <div class="links">
         <a href="/admin"><i class="bi bi-grid"></i> Dashboard</a>
-        <a href="https://limofleet-production.up.railway.app/app" target="_blank"><i class="bi bi-briefcase"></i> CRM (LimoFleet) ↗</a>
-        <a href="/admin/bookings?pin={{ session.get('admin_pin','') }}"><i class="bi bi-calendar-check"></i> Bookings</a>
+        <a href="https://limofleet-production.up.railway.app/app" target="_blank"><i class="bi bi-briefcase"></i> CRM</a>
+        <a href="/admin/bookings"><i class="bi bi-calendar-check"></i> Bookings</a>
         <a href="/admin/visitors"><i class="bi bi-people"></i> Visitors</a>
         <a href="/admin/seo" class="active"><i class="bi bi-graph-up-arrow"></i> SEO</a>
         <a href="/" target="_blank"><i class="bi bi-box-arrow-up-right"></i> Site</a>
-        <a href="/signout" style="color:#ef4444;"><i class="bi bi-box-arrow-right"></i></a>
+        <a href="/signout" class="logout"><i class="bi bi-box-arrow-right"></i></a>
     </div>
 </nav>
 
 <div class="page">
-    <h1><i class="bi bi-graph-up-arrow" style="color:#c9a84c;"></i> SEO & Analytics</h1>
+    <h1 class="h-page">SEO &amp; <em>analytics.</em></h1>
+    <div class="h-sub">Visitor breakdown, top pages, traffic sources, indexed URLs.</div>
 
-    <!-- Visitor Stats -->
     <div class="v-stats">
         <div class="v-stat"><div class="num">{{ visitors_today }}</div><div class="label">Today</div></div>
-        <div class="v-stat"><div class="num">{{ visitors_7d }}</div><div class="label">7 Days</div></div>
-        <div class="v-stat"><div class="num">{{ visitors_30d }}</div><div class="label">30 Days</div></div>
+        <div class="v-stat"><div class="num">{{ visitors_7d }}</div><div class="label">7 days</div></div>
+        <div class="v-stat"><div class="num">{{ visitors_30d }}</div><div class="label">30 days</div></div>
         <div class="v-stat"><div class="num">{{ pct_mobile }}%</div><div class="label">Mobile</div></div>
         <div class="v-stat"><div class="num">{{ unique_countries }}</div><div class="label">Countries</div></div>
     </div>
 
     <div class="grid-2">
-        <!-- Top Pages -->
         <div class="card">
-            <h3><i class="bi bi-file-earmark"></i> Top Pages</h3>
+            <h3><i class="bi bi-file-earmark"></i> Top pages</h3>
             {% for p in top_pages %}
             <div class="rank-item">
                 <span class="rank-num">{{ loop.index }}</span>
-                <span style="flex:1;">{{ p.name }}</span>
-                <div class="rank-bar" style="max-width:100px;"><div class="rank-fill" style="width:{{ p.pct }}%;background:#c9a84c;"></div></div>
+                <span class="rank-name">{{ p.name }}</span>
+                <div class="rank-bar"><div class="rank-fill" style="width:{{ p.pct }}%;background:var(--gold);"></div></div>
                 <span class="rank-count">{{ p.count }}</span>
             </div>
             {% endfor %}
         </div>
 
-        <!-- Top Sources -->
         <div class="card">
-            <h3><i class="bi bi-funnel"></i> Traffic Sources</h3>
+            <h3><i class="bi bi-funnel"></i> Traffic sources</h3>
             {% for s in top_sources %}
             <div class="rank-item">
                 <span class="rank-num">{{ loop.index }}</span>
-                <span style="flex:1;">{{ s.name }}</span>
-                <div class="rank-bar" style="max-width:100px;"><div class="rank-fill" style="width:{{ s.pct }}%;background:{{ s.color }};"></div></div>
+                <span class="rank-name">{{ s.name }}</span>
+                <div class="rank-bar"><div class="rank-fill" style="width:{{ s.pct }}%;background:{{ s.color }};"></div></div>
                 <span class="rank-count">{{ s.count }}</span>
             </div>
             {% endfor %}
@@ -117,21 +148,19 @@ h1{font-family:'Onest',sans-serif;font-size:24px;font-weight:800;margin-bottom:2
     </div>
 
     <div class="grid-2">
-        <!-- Top Countries -->
         <div class="card">
-            <h3><i class="bi bi-globe"></i> Top Countries</h3>
+            <h3><i class="bi bi-globe"></i> Top countries</h3>
             {% for c in top_countries %}
-            <div class="rank-item">
-                <span style="font-size:18px;">{{ c.flag }}</span>
-                <span style="flex:1;">{{ c.name }}</span>
-                <span class="rank-count">{{ c.count }}</span>
+            <div class="country-row">
+                <span class="flag">{{ c.flag }}</span>
+                <span class="name">{{ c.name }}</span>
+                <span class="count">{{ c.count }}</span>
             </div>
             {% endfor %}
         </div>
 
-        <!-- SEO Checklist -->
         <div class="card">
-            <h3><i class="bi bi-check-circle"></i> SEO Status</h3>
+            <h3><i class="bi bi-check-circle"></i> SEO status</h3>
             <div class="check-item"><div class="check-icon check-ok"><i class="bi bi-check"></i></div> Google Analytics (G-2J1TXGYYMD)</div>
             <div class="check-item"><div class="check-icon check-ok"><i class="bi bi-check"></i></div> Google Search Console</div>
             <div class="check-item"><div class="check-icon check-ok"><i class="bi bi-check"></i></div> Sitemap.xml submitted</div>
@@ -143,9 +172,8 @@ h1{font-family:'Onest',sans-serif;font-size:24px;font-weight:800;margin-bottom:2
         </div>
     </div>
 
-    <!-- Quick Access Links -->
     <div class="card">
-        <h3><i class="bi bi-link-45deg"></i> Quick Access</h3>
+        <h3><i class="bi bi-link-45deg"></i> Quick access</h3>
         <div class="grid-2">
             <a href="https://analytics.google.com/analytics/web/#/p441561666/reports/intelligenthome" target="_blank" class="qlink">
                 <div class="icon" style="background:rgba(66,133,244,.1);color:#4285f4;"><i class="bi bi-bar-chart-line"></i></div>
@@ -158,36 +186,35 @@ h1{font-family:'Onest',sans-serif;font-size:24px;font-weight:800;margin-bottom:2
                 <i class="bi bi-box-arrow-up-right arrow"></i>
             </a>
             <a href="https://dash.cloudflare.com" target="_blank" class="qlink">
-                <div class="icon" style="background:rgba(245,158,11,.1);color:#f59e0b;"><i class="bi bi-cloud"></i></div>
+                <div class="icon" style="background:rgba(245,158,11,.12);color:#f59e0b;"><i class="bi bi-cloud"></i></div>
                 <div class="info"><div class="title">Cloudflare</div><div class="desc">DNS, SSL, caching, DDoS protection</div></div>
                 <i class="bi bi-box-arrow-up-right arrow"></i>
             </a>
             <a href="https://squareup.com/dashboard" target="_blank" class="qlink">
-                <div class="icon" style="background:rgba(34,197,94,.1);color:#22c55e;"><i class="bi bi-credit-card"></i></div>
-                <div class="info"><div class="title">Square Dashboard</div><div class="desc">Payments, cards on file, transactions</div></div>
+                <div class="icon" style="background:rgba(47,122,77,.14);color:var(--green);"><i class="bi bi-credit-card"></i></div>
+                <div class="info"><div class="title">Square dashboard</div><div class="desc">Payments, cards on file, transactions</div></div>
                 <i class="bi bi-box-arrow-up-right arrow"></i>
             </a>
             <a href="https://resend.com/emails" target="_blank" class="qlink">
-                <div class="icon" style="background:rgba(139,92,246,.1);color:#8b5cf6;"><i class="bi bi-envelope"></i></div>
+                <div class="icon" style="background:rgba(139,92,246,.12);color:#8b5cf6;"><i class="bi bi-envelope"></i></div>
                 <div class="info"><div class="title">Resend</div><div class="desc">Email delivery, logs, domain verification</div></div>
                 <i class="bi bi-box-arrow-up-right arrow"></i>
             </a>
             <a href="https://parkcitytrips.com/sitemap.xml" target="_blank" class="qlink">
-                <div class="icon" style="background:rgba(6,182,212,.1);color:#06b6d4;"><i class="bi bi-diagram-3"></i></div>
+                <div class="icon" style="background:rgba(6,182,212,.12);color:#06b6d4;"><i class="bi bi-diagram-3"></i></div>
                 <div class="info"><div class="title">Sitemap.xml</div><div class="desc">All indexed pages</div></div>
                 <i class="bi bi-box-arrow-up-right arrow"></i>
             </a>
         </div>
     </div>
 
-    <!-- Indexed Pages -->
     <div class="card">
-        <h3><i class="bi bi-file-earmark-code"></i> Site Pages</h3>
+        <h3><i class="bi bi-file-earmark-code"></i> Site pages</h3>
         {% for p in site_pages %}
         <div class="page-row">
             <a href="{{ p.url }}" target="_blank" class="page-url">{{ p.url }}</a>
-            <span>{{ p.title }}</span>
-            <span class="page-status" style="background:rgba(34,197,94,.1);color:#22c55e;">Indexed</span>
+            <span class="title">{{ p.title }}</span>
+            <span class="page-status">Indexed</span>
         </div>
         {% endfor %}
     </div>

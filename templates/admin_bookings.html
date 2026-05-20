@@ -1,86 +1,162 @@
+{# Park City Trips — /admin/bookings redesign 2026-05-20 (Airbnb Luxe).
+   Charge form + CSRF token preserved verbatim. #}
 <!DOCTYPE html>
-<html><head><meta charset=utf-8><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Bookings — Admin</title>
-<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;600;700;800&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
-<style>
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-height:100vh;padding:20px;}
-h1{font-family:'Onest',sans-serif;font-size:24px;margin-bottom:8px;}
-.msg{background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);border-radius:8px;padding:12px;margin-bottom:20px;color:#c9a84c;font-size:13px;}
-.card{background:#111318;border:1px solid #1e2130;border-radius:12px;padding:20px;margin-bottom:16px;}
-.card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
-.card-head h3{font-family:'Onest',sans-serif;font-size:16px;}
-.badge{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;}
-.badge-pending{background:rgba(245,158,11,.15);color:#f59e0b;}
-.badge-charged{background:rgba(34,197,94,.15);color:#22c55e;}
-.badge-payment{background:rgba(99,102,241,.15);color:#818cf8;}
-.row{display:flex;justify-content:space-between;padding:4px 0;font-size:13px;}
-.row .k{color:#666;}.row .v{font-weight:600;}
-.charge-btn{margin-top:12px;padding:12px 24px;background:#22c55e;color:#000;border:none;border-radius:8px;font-family:'Onest',sans-serif;font-size:14px;font-weight:700;cursor:pointer;width:100%;}
-.charge-btn:hover{background:#16a34a;}
-.empty{text-align:center;color:#666;padding:40px;font-size:15px;}
-.back{color:#c9a84c;text-decoration:none;font-size:13px;display:inline-flex;align-items:center;gap:4px;margin-bottom:20px;}
-</style></head>
-<body style="overflow-x:hidden;touch-action:pan-y;">
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-    <div>
-        <a href="/admin" style="color:#c9a84c;text-decoration:none;font-size:13px;"><i class="bi bi-arrow-left"></i> Dashboard</a>
-        <h1 style="margin-top:8px;"><i class="bi bi-clipboard-check" style="color:#c9a84c;"></i> Booking Requests</h1>
-        <p style="color:#666;font-size:13px;">{{ bookings|length }} total bookings</p>
-    </div>
-    <a href="/admin/new-booking" style="padding:12px 24px;background:#c9a84c;color:#000;border-radius:10px;font-family:'Onest',sans-serif;font-size:14px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px;"><i class="bi bi-plus-circle"></i> New Booking</a>
-</div>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="robots" content="noindex,nofollow">
+    <title>Bookings · Rio Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+    --cream:#faf9f6; --cream-2:#f3efe8;
+    --ink:#0e1a2e; --ink-2:#1a2a45; --ink-3:#2c3e5a;
+    --neutral-700:#4a4a4a; --neutral-500:#8a8580;
+    --gold:#b8945c; --green:#2f7a4d; --amber:#a87633; --red:#9a3324;
+    --serif:'Fraunces',serif; --sans:'Inter',sans-serif;
+    --ease-out:cubic-bezier(0.16,1,0.3,1);
+}
+html{scroll-behavior:smooth;overflow-x:hidden;-webkit-text-size-adjust:100%;}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;touch-action:pan-y;}
 
-{% if request.args.get('msg') %}
-<div class="msg"><i class="bi bi-check-circle"></i> {{ request.args.get('msg') }}</div>
-{% endif %}
+.admin-nav{position:sticky;top:0;z-index:50;padding:12px clamp(16px,3vw,32px);background:rgba(250,249,246,.92);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(14,26,46,.08);display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.admin-nav .logo{font-family:var(--serif);font-style:italic;font-weight:400;font-size:20px;color:var(--ink);text-decoration:none;letter-spacing:-.01em;display:flex;align-items:center;gap:8px;}
+.admin-nav .logo::after{content:'Admin';font-family:var(--sans);font-style:normal;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);background:rgba(184,148,92,.12);padding:3px 8px;border-radius:999px;font-weight:500;}
+.admin-nav .back{font-family:var(--sans);font-size:13px;color:var(--ink-3);text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:color .3s var(--ease-out);}
+.admin-nav .back:hover{color:var(--ink);}
 
-{% if not bookings %}
-<div class="empty"><i class="bi bi-inbox" style="font-size:40px;display:block;margin-bottom:12px;"></i>No bookings yet</div>
-{% endif %}
+.page{max-width:1100px;margin:0 auto;padding:32px clamp(16px,3vw,32px) 72px;}
+.page-head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:18px;margin-bottom:28px;}
+.h-page{font-family:var(--serif);font-weight:300;font-size:clamp(28px,3.6vw,44px);color:var(--ink);letter-spacing:-.02em;line-height:1.05;}
+.h-page em{font-style:italic;font-weight:400;}
+.h-sub{font-family:var(--sans);font-size:13px;color:var(--neutral-500);margin-top:6px;}
+.btn-new{padding:11px 22px;background:var(--ink);color:var(--cream);border-radius:999px;font-family:var(--sans);font-size:13px;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:background .3s var(--ease-out),transform .3s var(--ease-out);}
+.btn-new:hover{background:var(--ink-2);transform:translateY(-1px);}
 
-{% for b in bookings %}
-<div class="card">
-    <div class="card-head">
-        <h3>#{{ b.id }} — {{ b.customer.name }}</h3>
-        <span class="badge {% if b.status == 'charged' %}badge-charged{% elif b.status == 'pending_approval' %}badge-pending{% else %}badge-payment{% endif %}">
-            {{ b.status|replace('_',' ') }}
-        </span>
+.msg{background:rgba(184,148,92,.12);border:1px solid rgba(184,148,92,.3);border-radius:8px;padding:12px 16px;margin-bottom:24px;font-family:var(--sans);font-size:13.5px;color:var(--ink);display:flex;align-items:center;gap:8px;}
+.msg i{color:var(--gold);}
+
+.card{background:var(--cream);border:1px solid rgba(14,26,46,.08);border-radius:10px;padding:24px;margin-bottom:16px;}
+.card-head{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:16px;}
+.card-head h3{font-family:var(--serif);font-weight:400;font-size:20px;color:var(--ink);letter-spacing:-.005em;}
+.card-head h3 span{color:var(--neutral-500);font-family:var(--sans);font-size:13px;font-weight:400;}
+
+.badge{padding:4px 12px;border-radius:999px;font-family:var(--sans);font-size:10.5px;font-weight:500;text-transform:uppercase;letter-spacing:.18em;}
+.badge-pending{background:rgba(168,118,51,.12);color:var(--amber);}
+.badge-charged{background:rgba(47,122,77,.12);color:var(--green);}
+.badge-payment{background:rgba(14,26,46,.08);color:var(--ink-3);}
+.badge-other{background:rgba(14,26,46,.06);color:var(--neutral-500);}
+
+.row{display:flex;justify-content:space-between;padding:5px 0;font-family:var(--sans);font-size:13.5px;}
+.row .k{color:var(--neutral-500);}
+.row .v{font-weight:500;color:var(--ink);text-align:right;max-width:65%;}
+.row .v a{color:var(--gold);text-decoration:none;}
+.row .v a:hover{color:var(--ink);}
+.row .v.green{color:var(--green);}
+.row .v.red{color:var(--red);}
+
+.totals{margin-top:14px;padding-top:14px;border-top:1px solid rgba(14,26,46,.08);}
+.totals .row-total{display:flex;justify-content:space-between;align-items:baseline;padding-top:8px;margin-top:6px;border-top:1px dashed rgba(14,26,46,.1);}
+.totals .row-total span:first-child{font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--neutral-500);}
+.totals .row-total .v{font-family:var(--serif);font-weight:400;font-size:24px;color:var(--ink);letter-spacing:-.01em;}
+
+.card-foot{margin-top:14px;font-family:var(--sans);font-size:12px;color:var(--neutral-500);display:flex;align-items:center;gap:8px;}
+.card-foot i{color:var(--ink-3);}
+
+.charge-btn{
+    margin-top:18px;width:100%;padding:15px 28px;
+    background:var(--green);color:#fff;border:none;border-radius:999px;
+    font-family:var(--sans);font-size:14px;font-weight:500;cursor:pointer;
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    transition:background .3s var(--ease-out),transform .3s var(--ease-out);
+}
+.charge-btn:hover{background:#266a40;transform:translateY(-1px);}
+.charged-line{margin-top:18px;text-align:center;color:var(--green);font-family:var(--sans);font-size:13.5px;font-weight:500;display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;}
+
+.created{margin-top:10px;font-family:var(--sans);font-size:11px;color:var(--neutral-500);letter-spacing:.005em;text-align:right;}
+
+.empty{text-align:center;color:var(--neutral-500);padding:64px 32px;font-family:var(--sans);font-size:14.5px;background:var(--cream);border:1px dashed rgba(14,26,46,.12);border-radius:10px;}
+.empty i{font-size:40px;display:block;margin-bottom:14px;color:var(--gold);}
+    </style>
+</head>
+<body>
+
+<nav class="admin-nav">
+    <a href="/admin" class="logo">Rio<em>.</em>Transportation</a>
+    <a href="/admin" class="back"><i class="bi bi-arrow-left"></i> Dashboard</a>
+</nav>
+
+<div class="page">
+    <div class="page-head">
+        <div>
+            <h1 class="h-page">Booking <em>requests.</em></h1>
+            <div class="h-sub">{{ bookings|length }} total bookings</div>
+        </div>
+        <a href="/admin/new-booking" class="btn-new"><i class="bi bi-plus-circle"></i> New booking</a>
     </div>
-    <div class="row"><span class="k">Vehicle</span><span class="v">{{ b.vehicle }}</span></div>
-    <div class="row"><span class="k">Date</span><span class="v">{{ b.trip.date }}</span></div>
-    <div class="row"><span class="k">Direction</span><span class="v">{{ b.trip.direction }}</span></div>
-    <div class="row"><span class="k">Flight</span><span class="v">{{ b.trip.flight_number or 'N/A' }}</span></div>
-    <div class="row"><span class="k">Arrival</span><span class="v">{{ b.trip.arrival_time or 'N/A' }}</span></div>
-    <div class="row"><span class="k">Passengers</span><span class="v">{{ b.trip.adults }} adults, {{ b.trip.children }} children, {{ b.trip.infants }} infants</span></div>
-    <div class="row"><span class="k">Bags</span><span class="v">{{ b.trip.bags }} regular, {{ b.trip.ski_bags }} ski</span></div>
-    <div class="row"><span class="k">Car Seats</span><span class="v">{{ b.trip.car_seats }}</span></div>
-    {% if b.trip.pickup %}<div class="row"><span class="k">Pickup</span><span class="v" style="color:#22c55e;">{{ b.trip.pickup }}</span></div>{% endif %}
-    {% if b.trip.dropoff %}<div class="row"><span class="k">Dropoff</span><span class="v" style="color:#ef4444;">{{ b.trip.dropoff }}</span></div>{% endif %}
-    <div class="row"><span class="k">Hotel/Address</span><span class="v">{{ b.trip.destination or 'N/A' }}</span></div>
-    {% if b.trip.notes %}<div class="row"><span class="k">Notes</span><span class="v">{{ b.trip.notes }}</span></div>{% endif %}
-    <div class="row"><span class="k">Phone</span><span class="v"><a href="tel:{{ b.customer.phone }}" style="color:#c9a84c;text-decoration:none;">{{ b.customer.phone }}</a></span></div>
-    <div class="row"><span class="k">Email</span><span class="v">{{ b.customer.email or 'N/A' }}</span></div>
-    <div style="margin-top:12px;padding-top:12px;border-top:1px solid #1e2130;">
-        <div class="row"><span class="k">Base Price</span><span class="v">${{ b.base_price }}</span></div>
-        {% if b.premium_stop %}<div class="row"><span class="k">Premium Stop</span><span class="v">+${{ b.premium_stop }}</span></div>{% endif %}
-        <div class="row"><span class="k">Tip ({{ b.tip_percent }}%)</span><span class="v">${{ b.tip_amount }}</span></div>
-        <div class="row" style="font-size:16px;font-weight:800;padding-top:8px;"><span class="k" style="color:#fff;">TOTAL</span><span class="v" style="color:#c9a84c;">${{ b.total }}</span></div>
-    </div>
-    {% if b.card_id %}
-    <div style="margin-top:8px;font-size:12px;color:#666;"><i class="bi bi-credit-card"></i> {{ b.card_brand }} ****{{ b.card_last4 }}</div>
+
+    {% if request.args.get('msg') %}
+    <div class="msg"><i class="bi bi-check-circle"></i> {{ request.args.get('msg') }}</div>
     {% endif %}
-    {% if b.status == 'pending_approval' %}
-    <form action="/admin/bookings/{{ b.id }}/charge" method="post" onsubmit="return confirm('Charge ${{ b.total }} to {{ b.card_brand }} ****{{ b.card_last4 }}?')">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-        <button type="submit" class="charge-btn"><i class="bi bi-check-circle"></i> Approve & Charge ${{ b.total }}</button>
-    </form>
-    {% elif b.status == 'charged' %}
-    <div style="margin-top:12px;text-align:center;color:#22c55e;font-weight:700;font-size:14px;"><i class="bi bi-check-circle-fill"></i> Charged {{ b.charged_at[:16] if b.charged_at else '' }}</div>
+
+    {% if not bookings %}
+    <div class="empty"><i class="bi bi-inbox"></i> No bookings yet.</div>
     {% endif %}
-    <div style="margin-top:8px;font-size:10px;color:#444;">Created: {{ b.created_at[:16] if b.created_at else '' }}</div>
+
+    {% for b in bookings %}
+    <article class="card">
+        <div class="card-head">
+            <h3>#{{ b.id }} <span>· {{ b.customer.name }}</span></h3>
+            <span class="badge {% if b.status == 'charged' %}badge-charged{% elif b.status == 'pending_approval' %}badge-pending{% elif b.status == 'pending_payment' %}badge-payment{% else %}badge-other{% endif %}">
+                {{ (b.status or 'pending')|replace('_',' ') }}
+            </span>
+        </div>
+
+        <div class="row"><span class="k">Vehicle</span><span class="v">{{ b.vehicle }}</span></div>
+        <div class="row"><span class="k">Date</span><span class="v">{{ b.trip.date }}</span></div>
+        <div class="row"><span class="k">Direction</span><span class="v">{{ b.trip.direction or '—' }}</span></div>
+        <div class="row"><span class="k">Flight</span><span class="v">{{ b.trip.flight_number or '—' }}</span></div>
+        <div class="row"><span class="k">Arrival</span><span class="v">{{ b.trip.arrival_time or '—' }}</span></div>
+        <div class="row"><span class="k">Passengers</span><span class="v">{{ b.trip.adults }} adults · {{ b.trip.children }} children · {{ b.trip.infants }} infants</span></div>
+        <div class="row"><span class="k">Bags</span><span class="v">{{ b.trip.bags }} regular · {{ b.trip.ski_bags }} ski</span></div>
+        <div class="row"><span class="k">Car seats</span><span class="v">{{ b.trip.car_seats }}</span></div>
+        {% if b.trip.pickup %}<div class="row"><span class="k">Pickup</span><span class="v green">{{ b.trip.pickup }}</span></div>{% endif %}
+        {% if b.trip.dropoff %}<div class="row"><span class="k">Dropoff</span><span class="v red">{{ b.trip.dropoff }}</span></div>{% endif %}
+        {% if b.trip.destination %}<div class="row"><span class="k">Hotel / address</span><span class="v">{{ b.trip.destination }}</span></div>{% endif %}
+        {% if b.trip.notes %}<div class="row"><span class="k">Notes</span><span class="v">{{ b.trip.notes }}</span></div>{% endif %}
+        <div class="row"><span class="k">Phone</span><span class="v"><a href="tel:{{ b.customer.phone }}">{{ b.customer.phone }}</a></span></div>
+        <div class="row"><span class="k">Email</span><span class="v">{{ b.customer.email or '—' }}</span></div>
+
+        <div class="totals">
+            <div class="row"><span class="k">Base price</span><span class="v">${{ b.base_price }}</span></div>
+            {% if b.premium_stop %}<div class="row"><span class="k">Premium stop</span><span class="v">+${{ b.premium_stop }}</span></div>{% endif %}
+            <div class="row"><span class="k">Tip ({{ b.tip_percent }} %)</span><span class="v">${{ b.tip_amount }}</span></div>
+            <div class="row-total"><span>Total</span><span class="v">${{ b.total }}</span></div>
+        </div>
+
+        {% if b.card_id %}
+        <div class="card-foot"><i class="bi bi-credit-card"></i> {{ b.card_brand }} ****{{ b.card_last4 }}</div>
+        {% endif %}
+
+        {% if b.status == 'pending_approval' %}
+        <form action="/admin/bookings/{{ b.id }}/charge" method="post" onsubmit="return confirm('Charge ${{ b.total }} to {{ b.card_brand }} ****{{ b.card_last4 }}?')">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit" class="charge-btn"><i class="bi bi-check-circle"></i> Approve &amp; charge ${{ b.total }}</button>
+        </form>
+        {% elif b.status == 'charged' %}
+        <div class="charged-line"><i class="bi bi-check-circle-fill"></i> Charged {{ b.charged_at[:16] if b.charged_at else '' }}</div>
+        {% endif %}
+
+        <div class="created">Created · {{ b.created_at[:16] if b.created_at else '' }}</div>
+    </article>
+    {% endfor %}
 </div>
-{% endfor %}
 <script defer src="/static/no-zoom.js?v=2"></script>
-</body></html>
+</body>
+</html>
