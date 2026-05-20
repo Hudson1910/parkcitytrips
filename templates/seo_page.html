@@ -1,3 +1,6 @@
+{# Park City Trips — /s/<slug> SEO page redesign 2026-05-20 (Airbnb Luxe direction).
+   Same template renders 30+ programmatic pages. All {{ page.* }} / {{ vehicles }} /
+   {{ related }} variables preserved; WhatsApp removed per Hudson's rule. #}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,100 +15,152 @@
     <meta property="og:title" content="{{ page.title }}">
     <meta property="og:description" content="{{ page.desc }}">
     <meta property="og:type" content="website">
+    <meta property="og:image" content="/static/gallery/rio-10.jpg">
     <link rel="canonical" href="https://parkcitytrips.com/s/{{ page.slug if page.slug is defined else '' }}">
-    <meta name="theme-color" content="#0a0e17">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script type="application/ld+json">
     {"@context":"https://schema.org","@type":"Service","serviceType":"{{ page.h1 }}","provider":{"@type":"LocalBusiness","name":"Rio Transportation LLC","telephone":"+14352146939","address":{"@type":"PostalAddress","addressLocality":"Park City","addressRegion":"UT","postalCode":"84060","addressCountry":"US"}},"areaServed":{"@type":"City","name":"Park City, Utah"},"description":"{{ page.desc }}"}
     </script>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2J1TXGYYMD"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-2J1TXGYYMD');</script>
     <style>
-        :root{--bg:#0a0e17;--bg2:#0f1420;--bg3:#151c2e;--gold:#c9a84c;--gold2:#e8c65a;--w:#fff;--t1:#e2e8f0;--t2:#94a3b8;--t3:#64748b;--t4:#475569;--border:rgba(201,168,76,.08);}
-        *{margin:0;padding:0;box-sizing:border-box;}
-        body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);-webkit-font-smoothing:antialiased;}
-        h1,h2,h3{font-family:'Outfit',sans-serif;}
-        nav{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;background:rgba(10,14,23,.95);border-bottom:1px solid var(--border);}
-        .logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
-        .logo img{height:56px;width:auto;}
-        .nav-r{display:flex;gap:16px;align-items:center;}
-        .nav-r a{color:var(--t2);text-decoration:none;font-size:13px;font-weight:600;}
-        .nav-r a:hover{color:var(--gold);}
-        .btn-gold{padding:10px 24px;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0e17;font-size:13px;font-weight:800;text-decoration:none;font-family:Inter;}
-        /* Hero */
-        .seo-hero{padding:100px 20px 60px;text-align:center;position:relative;overflow:hidden;}
-        .seo-hero::before{content:'';position:absolute;top:-30%;right:-15%;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.05),transparent 70%);}
-        .seo-hero h1{font-size:44px;font-weight:900;color:var(--w);letter-spacing:-2px;margin-bottom:16px;max-width:700px;margin-left:auto;margin-right:auto;}
-        .seo-hero h1 b{background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-        .seo-hero p{font-size:17px;color:var(--t3);max-width:600px;margin:0 auto 30px;line-height:1.7;}
-        .seo-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
-        .seo-btns a{padding:14px 28px;border-radius:12px;font-size:14px;font-weight:800;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s;}
-        /* Content */
-        .seo-content{max-width:900px;margin:0 auto;padding:60px 20px 80px;}
-        .seo-content p{font-size:16px;color:var(--t2);line-height:1.8;margin-bottom:20px;}
-        .seo-content h2{font-size:28px;font-weight:800;color:var(--w);margin:36px 0 16px;letter-spacing:-.5px;}
-        /* Vehicles */
-        .seo-vehicles{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:40px 0;}
-        .seo-v{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:24px;text-align:center;transition:all .3s;}
-        .seo-v:hover{border-color:rgba(201,168,76,.2);transform:translateY(-3px);}
-        .seo-v h3{font-size:18px;font-weight:800;color:var(--w);margin-bottom:4px;}
-        .seo-v .model{font-size:12px;color:var(--t3);margin-bottom:12px;}
-        .seo-v .specs{display:flex;justify-content:center;gap:12px;margin-bottom:14px;}
-        .seo-v .spec{font-size:11px;color:var(--gold);display:flex;align-items:center;gap:4px;}
-        .seo-v .price{font-family:Outfit;font-size:32px;font-weight:900;color:var(--gold);}
-        .seo-v .trip{font-size:12px;color:var(--t3);}
-        /* CTA */
-        .seo-cta{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:40px;text-align:center;margin-top:40px;}
-        .seo-cta h2{font-size:28px;font-weight:800;color:var(--w);margin-bottom:10px;}
-        .seo-cta p{font-size:14px;color:var(--t3);margin-bottom:20px;}
-        /* Trust */
-        .trust{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin:30px 0;padding:20px;border-radius:14px;background:rgba(201,168,76,.03);border:1px solid rgba(201,168,76,.06);}
-        .trust-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--t2);}
-        .trust-item i{color:var(--gold);font-size:16px;}
-        /* Footer */
-        footer{padding:30px 20px;border-top:1px solid var(--border);text-align:center;font-size:11px;color:var(--t4);}
-        footer a{color:var(--gold);text-decoration:none;}
-        @media(max-width:640px){nav{padding:0 16px;}.seo-hero h1{font-size:28px;}.seo-vehicles{grid-template-columns:1fr;}}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+    --cream:#faf9f6; --cream-2:#f3efe8;
+    --ink:#0e1a2e; --ink-2:#1a2a45; --ink-3:#2c3e5a;
+    --neutral-700:#4a4a4a; --neutral-500:#8a8580;
+    --gold:#b8945c;
+    --serif:'Fraunces','Times New Roman',serif;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --shadow-md:0 4px 16px rgba(14,26,46,.06),0 1px 3px rgba(14,26,46,.08);
+    --ease-out:cubic-bezier(0.16,1,0.3,1);
+}
+html{scroll-behavior:smooth;overflow-x:hidden;-webkit-text-size-adjust:100%;}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;touch-action:pan-y;}
+
+.nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:14px clamp(20px,4vw,56px);background:rgba(250,249,246,.92);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(14,26,46,.07);}
+.nav .logo{font-family:var(--serif);font-style:italic;font-weight:400;font-size:22px;color:var(--ink);text-decoration:none;letter-spacing:-.01em;}
+.nav-r{display:flex;gap:18px;align-items:center;}
+.nav-r a{font-family:var(--sans);font-size:13.5px;color:var(--ink-3);text-decoration:none;font-weight:500;transition:color .3s var(--ease-out);}
+.nav-r a:hover{color:var(--ink);}
+.nav-r a.btn-cta{padding:11px 22px;border-radius:999px;background:var(--ink);color:var(--cream)!important;font-size:13px;font-weight:500;}
+.nav-r a.btn-cta:hover{background:var(--ink-2);}
+@media(max-width:640px){.nav-r a:not(.btn-cta){display:none;}}
+
+/* Hero */
+.hero{position:relative;padding:clamp(72px,11vh,140px) clamp(20px,5vw,40px) clamp(48px,7vh,80px);text-align:center;background:var(--cream);}
+.eyebrow{font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--neutral-500);margin-bottom:20px;display:inline-flex;align-items:center;gap:14px;}
+.eyebrow::before,.eyebrow::after{content:'';width:24px;height:1px;background:var(--ink);opacity:.4;}
+.hero h1{font-family:var(--serif);font-optical-sizing:auto;font-weight:300;font-size:clamp(36px,5.5vw,72px);line-height:1.04;letter-spacing:-.025em;color:var(--ink);max-width:18ch;margin:0 auto;}
+.hero h1 em,.hero h1 b{font-style:italic;font-weight:400;color:var(--ink);}
+.hero .lede{font-family:var(--sans);font-size:16px;color:var(--neutral-700);max-width:54ch;margin:22px auto 0;line-height:1.7;}
+
+.trust{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin:36px auto 28px;max-width:920px;}
+.trust-item{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-size:12px;color:var(--ink-3);font-weight:500;}
+.trust-item i{color:var(--gold);font-size:14px;}
+
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:12px;}
+.btn-primary{display:inline-flex;align-items:center;gap:10px;padding:15px 28px;border-radius:999px;background:var(--ink);color:var(--cream);font-family:var(--sans);font-size:14px;font-weight:500;text-decoration:none;transition:transform .3s var(--ease-out),background .3s var(--ease-out);}
+.btn-primary:hover{background:var(--ink-2);transform:translateY(-2px);}
+.btn-ghost{display:inline-flex;align-items:center;gap:10px;padding:15px 28px;border-radius:999px;background:transparent;color:var(--ink);border:1px solid rgba(14,26,46,.18);font-family:var(--sans);font-size:14px;font-weight:500;text-decoration:none;transition:all .3s var(--ease-out);}
+.btn-ghost:hover{background:var(--ink);color:var(--cream);border-color:var(--ink);}
+
+/* Content blocks */
+.content{max-width:760px;margin:0 auto;padding:clamp(48px,7vh,80px) clamp(20px,5vw,40px);}
+.content p{font-family:var(--sans);font-size:16.5px;color:var(--neutral-700);line-height:1.8;margin-bottom:18px;}
+.content p strong{color:var(--ink);font-weight:500;}
+.content h2{font-family:var(--serif);font-weight:300;font-size:clamp(28px,3.6vw,44px);color:var(--ink);letter-spacing:-.02em;line-height:1.08;margin:40px 0 16px;}
+.content h2 em{font-style:italic;font-weight:400;}
+
+/* Vehicles grid */
+.v-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:32px 0;}
+@media(max-width:760px){.v-grid{grid-template-columns:1fr;}}
+.v-card{background:var(--cream);border:1px solid rgba(14,26,46,.08);border-radius:8px;padding:28px 24px;text-align:center;transition:transform .35s var(--ease-out),border .3s var(--ease-out),box-shadow .35s var(--ease-out);}
+.v-card:hover{transform:translateY(-3px);border-color:rgba(14,26,46,.16);box-shadow:var(--shadow-md);}
+.v-card h3{font-family:var(--serif);font-weight:400;font-size:20px;color:var(--ink);letter-spacing:-.005em;}
+.v-card .model{font-family:var(--sans);font-size:12px;color:var(--neutral-500);margin-top:4px;}
+.v-card .specs{display:flex;justify-content:center;gap:14px;margin:14px 0;}
+.v-card .spec{font-family:var(--sans);font-size:11.5px;color:var(--ink-3);display:inline-flex;align-items:center;gap:5px;}
+.v-card .spec i{color:var(--gold);font-size:12px;}
+.v-card .price{font-family:var(--serif);font-size:36px;font-weight:300;color:var(--ink);line-height:1;margin-top:8px;letter-spacing:-.02em;}
+.v-card .price::before{content:'$';margin-right:1px;}
+.v-card .trip{font-family:var(--sans);font-size:11px;color:var(--neutral-500);margin-top:4px;letter-spacing:.04em;text-transform:uppercase;}
+
+/* FAQ */
+.faq-card{background:var(--cream);border:1px solid rgba(14,26,46,.08);border-radius:10px;padding:24px 28px;margin-bottom:14px;transition:border .3s var(--ease-out);}
+.faq-card:hover{border-color:rgba(14,26,46,.16);}
+.faq-card h3{font-family:var(--serif);font-weight:400;font-size:18px;color:var(--ink);margin-bottom:10px;letter-spacing:-.005em;}
+.faq-card p{font-family:var(--sans);font-size:14.5px;color:var(--neutral-700);line-height:1.7;margin:0;}
+
+/* End-of-page CTA */
+.end-cta{background:var(--ink);color:var(--cream);border-radius:12px;padding:clamp(36px,5vw,60px);text-align:center;margin-top:48px;box-shadow:var(--shadow-md);}
+.end-cta .eyebrow-dark{font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:rgba(250,249,246,.55);margin-bottom:16px;}
+.end-cta h2{font-family:var(--serif);font-weight:300;font-size:clamp(28px,3.6vw,44px);color:var(--cream);letter-spacing:-.02em;line-height:1.05;}
+.end-cta h2 em{font-style:italic;font-weight:400;}
+.end-cta p{font-family:var(--sans);font-size:14.5px;color:rgba(250,249,246,.7);margin:14px auto 28px;max-width:44ch;line-height:1.65;}
+.end-cta .btn-primary{background:var(--cream);color:var(--ink);}
+.end-cta .btn-primary:hover{background:#fff;}
+.end-cta .btn-ghost{color:var(--cream);border-color:rgba(250,249,246,.3);}
+.end-cta .btn-ghost:hover{background:rgba(250,249,246,.08);border-color:var(--cream);}
+
+/* Related links */
+.related{margin-top:64px;padding-top:36px;border-top:1px solid rgba(14,26,46,.08);}
+.related h2{font-family:var(--serif);font-weight:400;font-size:22px;color:var(--ink);margin-bottom:18px;letter-spacing:-.005em;}
+.related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;}
+.related-grid a{display:block;padding:14px 18px;background:var(--cream-2);border:1px solid rgba(14,26,46,.06);border-radius:8px;color:var(--ink);text-decoration:none;font-family:var(--sans);font-size:13.5px;font-weight:500;transition:all .3s var(--ease-out);}
+.related-grid a:hover{background:#fff;border-color:rgba(14,26,46,.18);transform:translateY(-1px);}
+.related-grid a i{color:var(--gold);margin-right:6px;}
+.see-also{margin-top:20px;font-family:var(--sans);font-size:13px;color:var(--neutral-500);}
+.see-also a{color:var(--gold);text-decoration:none;border-bottom:1px solid currentColor;}
+.see-also a:hover{color:var(--ink);}
+
+footer.foot{background:var(--ink);color:rgba(250,249,246,.5);padding:40px 32px 28px;text-align:center;font-family:var(--sans);font-size:12px;border-top:1px solid rgba(250,249,246,.06);}
+footer.foot a{color:rgba(250,249,246,.75);text-decoration:none;transition:color .3s var(--ease-out);}
+footer.foot a:hover{color:var(--cream);}
     </style>
 </head>
-<body style="overflow-x:hidden;touch-action:pan-y;">
-<nav>
-    <a href="/" class="logo"><img src="https://static.wixstatic.com/media/55a398_1d427b4af5334f1ca3d0edd76f254f4a~mv2.png" alt="Rio Transportation"></a>
+<body>
+
+<nav class="nav">
+    <a href="/" class="logo">Rio<em>.</em>Transportation</a>
     <div class="nav-r">
-        <a href="tel:+14352146939"><i class="bi bi-telephone-fill"></i> (435) 214-6939</a>
-        <a href="/" class="btn-gold">Book Now</a>
+        <a href="tel:+14352146939"><i class="bi bi-telephone"></i> (435) 214-6939</a>
+        <a href="/book" class="btn-cta">Book a Ride</a>
     </div>
 </nav>
 
-<section class="seo-hero">
-    <h1>{{ page.h1 | replace('Park City', '<b>Park City</b>') | safe }}</h1>
-    <p>{{ page.content | safe }}</p>
+<section class="hero">
+    <div class="eyebrow">Park City · Private SUV</div>
+    <h1>{{ page.h1 | replace('Park City', '<em>Park City</em>') | safe }}</h1>
+    <p class="lede">{{ page.content | safe }}</p>
     <div class="trust">
-        <div class="trust-item"><i class="bi bi-star-fill"></i> 4.7 Star Rating</div>
+        <div class="trust-item"><i class="bi bi-star-fill"></i> 4.8 Star Rating</div>
         <div class="trust-item"><i class="bi bi-car-front-fill"></i> 9,000+ Rides</div>
-        <div class="trust-item"><i class="bi bi-shield-check"></i> Licensed & Insured</div>
+        <div class="trust-item"><i class="bi bi-shield-check"></i> Licensed &amp; Insured</div>
         <div class="trust-item"><i class="bi bi-clock-fill"></i> 24/7 Available</div>
-        <div class="trust-item"><i class="bi bi-droplet-fill"></i> Bottled Water Included</div>
+        <div class="trust-item"><i class="bi bi-droplet-half"></i> Bottled Water Included</div>
     </div>
-    <div class="seo-btns">
-        <a href="https://wa.me/14352146939?text=Hi!%20I%20need%20transportation%20in%20Park%20City." target="_blank" style="background:#25d366;color:#fff;"><i class="bi bi-whatsapp"></i> WhatsApp</a>
-        <a href="tel:+14352146939" style="background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0e17;"><i class="bi bi-telephone-fill"></i> Call (435) 214-6939</a>
+    <div class="hero-btns">
+        <a href="/book" class="btn-primary">Reserve your transfer <i class="bi bi-arrow-right"></i></a>
+        <a href="tel:+14352146939" class="btn-ghost"><i class="bi bi-telephone"></i> (435) 214-6939</a>
     </div>
 </section>
 
 {% if page.long_content %}
-<section class="seo-content" style="padding-bottom:20px;">
+<section class="content">
     {{ page.long_content | safe }}
 </section>
 {% endif %}
 
 {% if page.faqs %}
-<section class="seo-content" style="padding-top:20px;padding-bottom:20px;">
-    <h2>Frequently Asked Questions</h2>
+<section class="content" style="padding-top:0;">
+    <h2>Frequently <em>asked.</em></h2>
     <div style="margin-top:24px;">
         {% for faq in page.faqs %}
-        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:22px 24px;margin-bottom:14px;">
-            <h3 style="font-size:17px;font-weight:800;color:var(--w);margin-bottom:10px;">{{ faq.q }}</h3>
-            <p style="font-size:15px;color:var(--t2);line-height:1.75;margin:0;">{{ faq.a | safe }}</p>
+        <div class="faq-card">
+            <h3>{{ faq.q }}</h3>
+            <p>{{ faq.a | safe }}</p>
         </div>
         {% endfor %}
     </div>
@@ -119,58 +174,59 @@
 </section>
 {% endif %}
 
-<section class="seo-content">
-    <h2>Our Fleet — Choose Your Ride</h2>
-    <div class="seo-vehicles">
+<section class="content">
+    <h2>Our <em>fleet.</em></h2>
+    <div class="v-grid">
         {% for v in vehicles %}
-        <div class="seo-v">
+        <div class="v-card">
             <h3>{{ v.name }}</h3>
             <div class="model">{{ v.model }}</div>
             <div class="specs">
-                <span class="spec"><i class="bi bi-people-fill"></i> {{ v.passengers }} pax</span>
-                <span class="spec"><i class="bi bi-luggage-fill"></i> {{ v.bags }} bags</span>
+                <span class="spec"><i class="bi bi-people"></i> {{ v.passengers }} pax</span>
+                <span class="spec"><i class="bi bi-suitcase2"></i> {{ v.bags }} bags</span>
             </div>
-            <div class="price">${{ v.price }}</div>
-            <div class="trip">per trip, all-inclusive</div>
+            <div class="price">{{ v.price }}</div>
+            <div class="trip">Per trip · all-inclusive</div>
         </div>
         {% endfor %}
     </div>
 
-    <h2>Why Choose Rio Transportation?</h2>
-    <p><strong>Private, door-to-door service</strong> — Unlike shared shuttles that make multiple stops, your ride is direct from the airport to your exact destination in Park City. No waiting, no detours.</p>
-    <p><strong>Flight monitoring</strong> — Your driver tracks your flight in real-time and adjusts pickup accordingly. We text you before landing so you know exactly where to meet us.</p>
-    <p><strong>All-inclusive pricing</strong> — Our rates include everything: private luxury vehicle, professional driver, all taxes and fees, and complimentary bottled water. Gratuity is always at your discretion.</p>
-    <p><strong>Luxury vehicles</strong> — Travel in style in our GMC Yukon, Nissan Pathfinder, or Cadillac Escalade — all maintained to the highest standards with leather seats, climate control, and ample luggage space.</p>
-    <p><strong>9,000+ rides completed</strong> — With years of experience serving Park City visitors, we know every route, every resort, and every shortcut. Your safety and comfort are our top priority.</p>
+    <h2>Why Rio <em>Transportation.</em></h2>
+    <p><strong>Private, door-to-door service.</strong> Unlike shared shuttles that make multiple stops, your ride is direct from the airport to your exact destination in Park City. No waiting, no detours.</p>
+    <p><strong>Flight monitoring.</strong> Your driver tracks your flight in real time and adjusts pickup accordingly. We text you before landing so you know exactly where to meet us.</p>
+    <p><strong>All-inclusive pricing.</strong> Our rates include everything — private luxury vehicle, professional driver, taxes and fees, complimentary bottled water. Gratuity is at your discretion.</p>
+    <p><strong>Luxury vehicles.</strong> Travel in our GMC Yukon, Nissan Pathfinder, or Cadillac Escalade — all maintained to the highest standards with leather seats, climate control and ample luggage space.</p>
+    <p><strong>9,000+ rides completed.</strong> Years of experience serving Park City visitors. We know every route, every resort, every shortcut. Your safety and comfort are our top priority.</p>
 
-    <div class="seo-cta">
-        <h2>Ready to Book Your Ride?</h2>
-        <p>Private luxury SUV service starting from $129. Available 24/7.</p>
-        <div class="seo-btns">
-            <a href="/" style="background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0e17;"><i class="bi bi-calendar-check"></i> Book Online</a>
-            <a href="https://wa.me/14352146939" target="_blank" style="background:#25d366;color:#fff;"><i class="bi bi-whatsapp"></i> WhatsApp Us</a>
+    <div class="end-cta">
+        <div class="eyebrow-dark">Reserve your transfer</div>
+        <h2>Ready to <em>book?</em></h2>
+        <p>Private luxury SUV service from $100. Available 24/7.</p>
+        <div class="hero-btns">
+            <a href="/book" class="btn-primary">Reserve online <i class="bi bi-arrow-right"></i></a>
+            <a href="tel:+14352146939" class="btn-ghost"><i class="bi bi-telephone"></i> (435) 214-6939</a>
         </div>
     </div>
 
     {% if related %}
-    <div style="margin-top:48px;padding-top:32px;border-top:1px solid var(--border);">
-        <h2 style="font-size:22px;margin-bottom:18px;">Related Services</h2>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;">
+    <div class="related">
+        <h2>Related <em>services.</em></h2>
+        <div class="related-grid">
             {% for r in related %}
-            <a href="/s/{{ r.slug }}" style="display:block;padding:14px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--t1);text-decoration:none;font-size:14px;font-weight:600;transition:all .2s;">
-                <i class="bi bi-arrow-right-circle" style="color:var(--gold);margin-right:6px;"></i>{{ r.title }}
-            </a>
+            <a href="/s/{{ r.slug }}"><i class="bi bi-arrow-right-circle"></i>{{ r.title }}</a>
             {% endfor %}
         </div>
-        <div style="margin-top:18px;font-size:13px;color:var(--t3);">
-            See also: <a href="/blog" style="color:var(--gold);">Park City Blog</a> · <a href="/weather" style="color:var(--gold);">Live Mountain Conditions</a> · <a href="/fleet" style="color:var(--gold);">Our Fleet</a> · <a href="/about" style="color:var(--gold);">About Us</a>
+        <div class="see-also">
+            See also: <a href="/blog">Park City journal</a> · <a href="/weather">Live mountain conditions</a> · <a href="/fleet">Our fleet</a> · <a href="/about">About us</a>
         </div>
     </div>
     {% endif %}
 </section>
 
-<footer>
-    <p>&copy; 2026 Rio Transportation LLC · Park City, Utah · <a href="tel:+14352146939">(435) 214-6939</a> · <a href="/">Home</a> · <a href="/blog">Blog</a></p>
+<footer class="foot">
+    © 2026 Rio Transportation LLC · Park City, Utah ·
+    <a href="tel:+14352146939">(435) 214-6939</a> ·
+    <a href="/">Home</a> · <a href="/blog">Journal</a>
 </footer>
 <script defer src="/static/no-zoom.js?v=2"></script>
 </body>

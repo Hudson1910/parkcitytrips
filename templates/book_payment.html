@@ -1,111 +1,140 @@
+{# Park City Trips — /book/payment/<id> redesign 2026-05-20 (Airbnb Luxe direction).
+   Square form + tip selector + save-card POST all preserved verbatim. #}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-    <title>Payment — Rio Transportation</title>
+    <title>Payment · Rio Transportation</title>
     <meta name="robots" content="noindex,nofollow">
-    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
-    <style>
-*{box-sizing:border-box;margin:0;padding:0;}
-:root{--bg:#080a0f;--card:#111318;--border:#1e2130;--accent:#c9a84c;--fg:#fff;--muted:#666;}
-body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);min-height:100vh;overflow-x:hidden;}
-.pay-nav{padding:20px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);}
-.pay-nav a{color:var(--fg);text-decoration:none;font-family:'Onest',sans-serif;font-weight:700;}
-.pay-page{max-width:520px;margin:0 auto;padding:40px 20px 80px;}
-.pay-page h1{font-family:'Onest',sans-serif;font-size:28px;font-weight:800;margin-bottom:24px;}
-
-.summary{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:24px;}
-.sum-row{display:flex;justify-content:space-between;padding:8px 0;font-size:14px;border-bottom:1px solid rgba(255,255,255,.04);}
-.sum-row:last-child{border:none;}
-.sum-row .k{color:var(--muted);}
-.sum-row .v{font-weight:600;}
-.sum-total{display:flex;justify-content:space-between;padding:14px 0 0;margin-top:8px;border-top:1px solid var(--border);font-size:18px;font-weight:800;}
-.sum-total .v{color:var(--accent);}
-
-.tip-section{margin-bottom:24px;}
-.tip-label{font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
-.tip-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
-.tip-btn{padding:14px 8px;background:var(--card);border:1.5px solid var(--border);border-radius:10px;color:#fff;font-family:'Onest',sans-serif;font-size:15px;font-weight:700;cursor:pointer;text-align:center;transition:all .2s;}
-.tip-btn:hover{border-color:rgba(255,255,255,.2);}
-.tip-btn.active{border-color:var(--accent);background:rgba(201,168,76,.08);color:var(--accent);}
-.tip-btn small{display:block;font-size:10px;font-weight:400;color:var(--muted);margin-top:2px;}
-.tip-custom{margin-top:8px;display:none;}
-.tip-custom input{width:100%;padding:12px;background:var(--card);border:1.5px solid var(--border);border-radius:10px;color:#fff;font-size:16px;font-family:'Onest',sans-serif;text-align:center;outline:none;}
-.tip-custom input:focus{border-color:var(--accent);}
-
-.card-section{margin-bottom:24px;}
-.card-label{font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
-#card-container{min-height:90px;background:var(--card);border:1.5px solid var(--border);border-radius:10px;padding:16px;}
-
-.pay-btn{width:100%;padding:18px;background:var(--accent);color:#000;font-family:'Onest',sans-serif;font-size:16px;font-weight:800;border:none;border-radius:12px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;}
-.pay-btn:hover{background:#e8c65a;}
-.pay-btn:disabled{opacity:.5;cursor:not-allowed;}
-.pay-error{color:#ef4444;font-size:13px;text-align:center;margin-top:12px;display:none;}
-.pay-note{text-align:center;font-size:12px;color:var(--muted);margin-top:12px;line-height:1.6;}
-.pay-note i{color:var(--accent);}
-.spinner{width:20px;height:20px;border:2.5px solid rgba(0,0,0,.2);border-top-color:#000;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;}
-@keyframes spin{to{transform:rotate(360deg);}}
-@media(max-width:480px){
-    .tip-grid{grid-template-columns:repeat(3,1fr);}
-    .pay-page{padding:24px 16px 60px;}
-    .pay-page h1{font-size:22px;}
-    .tip-btn{padding:10px 6px;font-size:14px;}
-    .pay-nav{padding:14px 16px;}
-}
-    </style>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2J1TXGYYMD"></script>
-    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-2J1TXGYYMD");</script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-2J1TXGYYMD');</script>
+    <style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+    --cream:#faf9f6; --cream-2:#f3efe8;
+    --ink:#0e1a2e; --ink-2:#1a2a45; --ink-3:#2c3e5a;
+    --neutral-700:#4a4a4a; --neutral-500:#8a8580; --neutral-300:#c8c2b8;
+    --gold:#b8945c;
+    --red:#9a3324;
+    --serif:'Fraunces','Times New Roman',serif;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --shadow-md:0 4px 16px rgba(14,26,46,.06),0 1px 3px rgba(14,26,46,.08);
+    --ease-out:cubic-bezier(0.16,1,0.3,1);
+}
+html{scroll-behavior:smooth;overflow-x:hidden;-webkit-text-size-adjust:100%;}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;touch-action:pan-y;}
+
+.nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:14px clamp(20px,4vw,56px);background:rgba(250,249,246,.92);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(14,26,46,.07);}
+.nav .logo{font-family:var(--serif);font-style:italic;font-weight:400;font-size:22px;color:var(--ink);text-decoration:none;letter-spacing:-.01em;}
+.nav .secure{font-family:var(--sans);font-size:12px;color:var(--neutral-500);display:flex;align-items:center;gap:6px;}
+.nav .secure i{color:var(--gold);}
+
+.pay-page{max-width:560px;margin:0 auto;padding:clamp(40px,7vh,80px) clamp(20px,5vw,32px) 80px;}
+.eyebrow{font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--neutral-500);margin-bottom:18px;display:flex;align-items:center;gap:14px;}
+.eyebrow::before{content:'';width:32px;height:1px;background:var(--ink);opacity:.4;}
+.pay-page h1{font-family:var(--serif);font-optical-sizing:auto;font-weight:300;font-size:clamp(36px,4.5vw,56px);line-height:1.05;letter-spacing:-.025em;color:var(--ink);margin-bottom:36px;}
+.pay-page h1 em{font-style:italic;font-weight:400;}
+
+/* Booking summary card */
+.summary{background:var(--cream);border:1px solid rgba(14,26,46,.08);border-radius:10px;padding:28px;margin-bottom:32px;box-shadow:var(--shadow-md);}
+.sum-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;font-family:var(--sans);font-size:14px;color:var(--ink);}
+.sum-row + .sum-row{border-top:1px dashed rgba(14,26,46,.07);}
+.sum-row .k{color:var(--neutral-500);}
+.sum-row .v{font-weight:500;color:var(--ink);}
+.sum-total{display:flex;justify-content:space-between;align-items:baseline;padding-top:18px;margin-top:14px;border-top:1px solid rgba(14,26,46,.12);}
+.sum-total span:first-child{font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--neutral-500);}
+.sum-total .v{font-family:var(--serif);font-weight:400;font-size:32px;color:var(--ink);letter-spacing:-.02em;}
+
+/* Tip selector */
+.tip-section{margin-bottom:32px;}
+.section-label{font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.section-label i{color:var(--gold);font-size:12px;}
+.tip-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
+.tip-btn{padding:14px 6px;background:var(--cream);border:1.5px solid rgba(14,26,46,.12);border-radius:8px;color:var(--ink);font-family:var(--serif);font-size:16px;font-weight:400;cursor:pointer;text-align:center;transition:all .25s var(--ease-out);}
+.tip-btn:hover{border-color:rgba(14,26,46,.28);}
+.tip-btn.active{border-color:var(--ink);background:var(--ink);color:var(--cream);box-shadow:0 0 0 2px rgba(14,26,46,.06);}
+.tip-btn small{display:block;font-family:var(--sans);font-size:11px;font-weight:400;color:var(--neutral-500);margin-top:3px;}
+.tip-btn.active small{color:rgba(250,249,246,.65);}
+@media(max-width:480px){.tip-grid{grid-template-columns:repeat(3,1fr);}.tip-btn{padding:12px 4px;font-size:14px;}}
+
+/* Square card container — minimal frame */
+.card-section{margin-bottom:32px;}
+#card-container{
+    min-height:96px;background:var(--cream);
+    border:1px solid rgba(14,26,46,.18);border-radius:8px;
+    padding:18px;
+}
+
+/* Submit */
+.pay-btn{width:100%;padding:18px 32px;background:var(--ink);color:var(--cream);font-family:var(--sans);font-size:14.5px;font-weight:500;border:none;border-radius:999px;cursor:pointer;transition:all .3s var(--ease-out);display:flex;align-items:center;justify-content:center;gap:10px;letter-spacing:.005em;}
+.pay-btn:hover:not(:disabled){background:var(--ink-2);transform:translateY(-2px);}
+.pay-btn:disabled{opacity:.45;cursor:not-allowed;}
+.pay-btn i{font-size:14px;}
+.pay-error{color:var(--red);font-family:var(--sans);font-size:13px;text-align:center;margin-top:14px;display:none;line-height:1.5;}
+.pay-note{text-align:center;font-family:var(--sans);font-size:12.5px;color:var(--neutral-500);margin-top:16px;line-height:1.7;}
+.pay-note strong{color:var(--ink);font-weight:500;}
+.pay-note i{color:var(--gold);}
+.spinner{width:18px;height:18px;border:2px solid rgba(250,249,246,.25);border-top-color:var(--cream);border-radius:50%;animation:spin .7s linear infinite;display:inline-block;}
+@keyframes spin{to{transform:rotate(360deg);}}
+    </style>
 </head>
-<body style="overflow-x:hidden;touch-action:pan-y;">
-<nav class="pay-nav">
-    <a href="/">RIO TRANSPORTATION</a>
+<body>
+
+<nav class="nav">
+    <a href="/" class="logo">Rio<em>.</em>Transportation</a>
+    <div class="secure"><i class="bi bi-lock-fill"></i> Secure · Square</div>
 </nav>
 
 <div class="pay-page">
-    <h1><i class="bi bi-credit-card" style="color:var(--accent);"></i> Payment</h1>
+    <div class="eyebrow">Step 6 of 6 · Card on file</div>
+    <h1>Save your <em>card.</em></h1>
 
-    <!-- Booking Summary -->
+    <!-- Booking summary -->
     <div class="summary">
         <div class="sum-row"><span class="k">Vehicle</span><span class="v">{{ {'small':'Comfort Electric','midsize':'Midsize SUV','premier':'Premier SUV','luxury':'Luxury SUV','hourly':'Hourly Driver','group':'Group Quote'}.get(booking.vehicle, booking.vehicle) }}</span></div>
         <div class="sum-row"><span class="k">Date</span><span class="v">{{ booking.trip.date }}</span></div>
         <div class="sum-row"><span class="k">Direction</span><span class="v">{{ booking.trip.direction }}</span></div>
         <div class="sum-row"><span class="k">Customer</span><span class="v">{{ booking.customer.name }}</span></div>
-        <div class="sum-row"><span class="k">Base Price</span><span class="v">${{ booking.base_price }}</span></div>
+        <div class="sum-row"><span class="k">Base price</span><span class="v">${{ booking.base_price }}</span></div>
         {% if booking.premium_stop %}
-        <div class="sum-row"><span class="k">Premium Stop</span><span class="v">+${{ booking.premium_stop }}</span></div>
+        <div class="sum-row"><span class="k">Premium stop</span><span class="v">+${{ booking.premium_stop }}</span></div>
         {% endif %}
         <div class="sum-row"><span class="k">Subtotal</span><span class="v">${{ booking.subtotal }}</span></div>
         <div class="sum-row"><span class="k">Tip</span><span class="v" id="tipDisplay">$0</span></div>
         <div class="sum-total"><span>Total</span><span class="v" id="totalDisplay">${{ booking.subtotal }}</span></div>
     </div>
 
-    <!-- Tip Selection -->
+    <!-- Tip selector -->
     <div class="tip-section">
-        <div class="tip-label">Add a Tip for Your Driver</div>
+        <div class="section-label"><i class="bi bi-heart"></i> Tip for your driver</div>
         <div class="tip-grid">
             <button class="tip-btn" onclick="setTip(15)" data-pct="15">15%<small id="tip15">${{ (booking.subtotal * 0.15)|round|int }}</small></button>
             <button class="tip-btn active" onclick="setTip(18)" data-pct="18">18%<small id="tip18">${{ (booking.subtotal * 0.18)|round|int }}</small></button>
             <button class="tip-btn" onclick="setTip(20)" data-pct="20">20%<small id="tip20">${{ (booking.subtotal * 0.20)|round|int }}</small></button>
             <button class="tip-btn" onclick="setTip(25)" data-pct="25">25%<small id="tip25">${{ (booking.subtotal * 0.25)|round|int }}</small></button>
-            <button class="tip-btn" onclick="setTip(0)" data-pct="0">No Tip<small>&nbsp;</small></button>
+            <button class="tip-btn" onclick="setTip(0)" data-pct="0">None<small>&nbsp;</small></button>
         </div>
     </div>
 
-    <!-- Card Form -->
+    <!-- Card form -->
     <div class="card-section">
-        <div class="card-label"><i class="bi bi-lock-fill"></i> Card Details</div>
+        <div class="section-label"><i class="bi bi-credit-card"></i> Card details</div>
         <div id="card-container"></div>
     </div>
 
     <button class="pay-btn" id="payBtn" onclick="submitPayment()" disabled>
-        <i class="bi bi-lock-fill"></i> Save Card & Confirm Booking
+        <i class="bi bi-lock-fill"></i> Save card &amp; confirm booking
     </button>
     <div class="pay-error" id="payError"></div>
     <p class="pay-note">
-        <i class="bi bi-shield-check"></i> Your card will NOT be charged now.<br>
-        We'll only charge after confirming your ride. Secure payment via Square.
+        <i class="bi bi-shield-check"></i> Your card will <strong>not</strong> be charged now.
+        We charge only after confirming your ride. Secure payment via Square.
     </p>
 </div>
 
@@ -115,71 +144,64 @@ const SUBTOTAL = {{ booking.subtotal }};
 const BOOKING_ID = '{{ booking.id }}';
 let tipPercent = 18;
 let card = null;
-
-// Initialize tip at 18%
 setTip(18);
 
-async function initSquare() {
-    if (!window.Square) {
-        console.error('Square SDK not loaded');
-        document.getElementById('card-container').innerHTML = '<p style="color:#ef4444;font-size:13px;text-align:center;padding:20px;">Payment form failed to load. Please refresh the page.</p>';
+async function initSquare(){
+    if(!window.Square){
+        document.getElementById('card-container').innerHTML = '<p style="color:var(--red);font-size:13px;text-align:center;padding:20px;">Payment form failed to load. Please refresh.</p>';
         return;
     }
-    try {
+    try{
         const payments = window.Square.payments('{{ square_app_id }}', '{{ config.SQUARE_ENVIRONMENT }}');
-        card = await payments.card();
+        card = await payments.card({
+            style: {
+                input: {
+                    backgroundColor: '#faf9f6',
+                    color: '#0e1a2e',
+                    fontFamily: 'Inter, -apple-system, sans-serif',
+                    fontSize: '15px',
+                },
+                'input::placeholder': { color: '#c8c2b8' },
+            }
+        });
         await card.attach('#card-container');
         document.getElementById('payBtn').disabled = false;
-    } catch(e) {
-        console.error('Square init error:', e);
-        document.getElementById('card-container').innerHTML = '<p style="color:#ef4444;font-size:13px;text-align:center;padding:20px;">Error: ' + e.message + '</p>';
+    }catch(e){
+        document.getElementById('card-container').innerHTML = '<p style="color:var(--red);font-size:13px;text-align:center;padding:20px;">' + e.message + '</p>';
     }
 }
 initSquare();
 
-function setTip(pct) {
+function setTip(pct){
     tipPercent = pct;
     document.querySelectorAll('.tip-btn').forEach(b => b.classList.toggle('active', parseInt(b.dataset.pct) === pct));
     const tipAmt = Math.round(SUBTOTAL * pct / 100);
-    const total = SUBTOTAL + tipAmt;
     document.getElementById('tipDisplay').textContent = '$' + tipAmt;
-    document.getElementById('totalDisplay').textContent = '$' + total;
+    document.getElementById('totalDisplay').textContent = '$' + (SUBTOTAL + tipAmt);
 }
 
-async function submitPayment() {
+async function submitPayment(){
     const btn = document.getElementById('payBtn');
     const err = document.getElementById('payError');
     err.style.display = 'none';
     btn.disabled = true;
-    btn.innerHTML = '<div class="spinner"></div> Processing payment...';
-
-    try {
+    btn.innerHTML = '<div class="spinner"></div> Processing…';
+    try{
         const result = await card.tokenize();
-        if (result.status !== 'OK') {
-            throw new Error(result.errors?.[0]?.message || 'Card tokenization failed');
-        }
-
+        if(result.status !== 'OK') throw new Error(result.errors?.[0]?.message || 'Card tokenization failed');
         const resp = await fetch('/book/save-card', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                booking_id: BOOKING_ID,
-                nonce: result.token,
-                tip_percent: tipPercent,
-            })
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({booking_id: BOOKING_ID, nonce: result.token, tip_percent: tipPercent})
         });
         const data = await resp.json();
-
-        if (data.success) {
-            window.location.href = '/book/confirm/' + BOOKING_ID;
-        } else {
-            throw new Error(data.error || 'Failed to save card');
-        }
-    } catch (e) {
+        if(data.success) window.location.href = '/book/confirm/' + BOOKING_ID;
+        else throw new Error(data.error || 'Failed to save card');
+    }catch(e){
         err.textContent = e.message;
         err.style.display = 'block';
         btn.disabled = false;
-        btn.innerHTML = '<i class="bi bi-lock-fill"></i> Save Card & Confirm Booking';
+        btn.innerHTML = '<i class="bi bi-lock-fill"></i> Save card &amp; confirm booking';
     }
 }
 </script>

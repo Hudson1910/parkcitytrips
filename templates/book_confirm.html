@@ -1,152 +1,235 @@
+{# Park City Trips — /book/confirm/<id> redesign 2026-05-20 (Airbnb Luxe direction).
+   Same data + animation entry, fireworks restyled to luxe palette. #}
 <!DOCTYPE html>
-<html><head><meta charset=utf-8><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Trip Request Received — Rio Transportation</title>
-<meta name="robots" content="noindex,nofollow">
-<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;600;700;800&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
-<style>
-*{box-sizing:border-box;margin:0;padding:0;}
-body{background:#080a0f;color:#fff;font-family:'Montserrat',sans-serif;min-height:100vh;overflow:hidden;}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <title>Trip request received · Rio Transportation</title>
+    <meta name="robots" content="noindex,nofollow">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2J1TXGYYMD"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-2J1TXGYYMD');</script>
+    <style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+    --cream:#faf9f6; --cream-2:#f3efe8;
+    --ink:#0e1a2e; --ink-2:#1a2a45; --ink-3:#2c3e5a;
+    --neutral-700:#4a4a4a; --neutral-500:#8a8580;
+    --gold:#b8945c;
+    --serif:'Fraunces','Times New Roman',serif;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --shadow-md:0 4px 16px rgba(14,26,46,.06),0 1px 3px rgba(14,26,46,.08);
+    --ease-out:cubic-bezier(0.16,1,0.3,1);
+}
+html{scroll-behavior:smooth;overflow-x:hidden;-webkit-text-size-adjust:100%;}
+body{background:var(--cream);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;touch-action:pan-y;min-height:100vh;}
+
+/* Fireworks canvas behind the content card */
 canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
-.content{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;}
-.card{max-width:440px;width:100%;text-align:center;}
-.check{width:90px;height:90px;border-radius:50%;background:rgba(201,168,76,.1);border:3px solid #c9a84c;display:flex;align-items:center;justify-content:center;margin:0 auto 28px;font-size:40px;color:#c9a84c;animation:popIn .6s cubic-bezier(.16,1,.3,1) .5s both;}
+
+.content{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:32px 20px;}
+.card{max-width:520px;width:100%;text-align:center;background:var(--cream);border:1px solid rgba(14,26,46,.08);border-radius:14px;padding:44px 36px 36px;box-shadow:var(--shadow-md);}
+
+.check{
+    width:84px;height:84px;border-radius:50%;
+    background:var(--cream-2);border:1.5px solid var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 28px;font-size:32px;color:var(--gold);
+    animation:popIn .6s var(--ease-out) .35s both;
+}
 @keyframes popIn{0%{transform:scale(0) rotate(-20deg);opacity:0;}100%{transform:scale(1) rotate(0);opacity:1;}}
-.badge{display:inline-block;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);color:#c9a84c;font-family:'Onest',sans-serif;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:6px 16px;border-radius:20px;margin-bottom:16px;animation:fadeUp .8s .7s both;}
-h1{font-family:'Onest',sans-serif;font-size:clamp(24px,5vw,32px);font-weight:800;margin-bottom:12px;animation:fadeUp .8s .8s both;}
-.sub{color:#666;font-size:14px;line-height:1.7;margin-bottom:24px;animation:fadeUp .8s .9s both;}
-.sub strong{color:#c9a84c;}
-.order-num{font-family:'Onest',sans-serif;font-size:20px;font-weight:800;color:#fff;background:#111318;border:1px solid #1e2130;border-radius:10px;padding:14px;margin-bottom:20px;letter-spacing:.1em;animation:fadeUp .8s 1s both;}
-.detail{background:#111318;border:1px solid #1e2130;border-radius:12px;padding:18px;margin-bottom:20px;text-align:left;font-size:13px;animation:fadeUp .8s 1.1s both;}
-.detail .row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);}
-.detail .row:last-child{border:none;}
-.detail .k{color:#666;}.detail .v{font-weight:600;}
-.notice{background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.15);border-radius:10px;padding:14px;margin-bottom:20px;font-size:12px;color:rgba(255,255,255,.6);line-height:1.6;text-align:left;animation:fadeUp .8s 1.2s both;}
-.notice i{color:#3b82f6;margin-right:4px;}
-.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;animation:fadeUp .8s 1.3s both;}
-.actions a{padding:12px 24px;border-radius:50px;font-size:13px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:all .2s;}
-.btn-home{background:#c9a84c;color:#000;}
-.btn-home:hover{background:#e8c65a;}
-.btn-call{background:transparent;border:1.5px solid rgba(255,255,255,.2);color:#fff;}
-.btn-call:hover{border-color:rgba(255,255,255,.4);}
+
+.badge{
+    display:inline-block;
+    font-family:var(--sans);font-size:11px;font-weight:500;
+    letter-spacing:.22em;text-transform:uppercase;
+    color:var(--neutral-500);margin-bottom:18px;
+    animation:fadeUp .8s .55s both;
+}
+
+h1{
+    font-family:var(--serif);font-optical-sizing:auto;font-weight:300;
+    font-size:clamp(28px,4.5vw,44px);line-height:1.06;letter-spacing:-.02em;
+    color:var(--ink);margin-bottom:14px;
+    animation:fadeUp .8s .65s both;
+}
+h1 em{font-style:italic;font-weight:400;}
+
+.sub{
+    font-family:var(--sans);font-size:14.5px;color:var(--neutral-700);
+    line-height:1.7;margin-bottom:28px;
+    animation:fadeUp .8s .75s both;
+}
+.sub strong{color:var(--ink);font-weight:500;}
+
+.order-num{
+    font-family:var(--serif);font-weight:400;font-size:18px;
+    color:var(--ink);background:var(--cream-2);
+    border:1px solid rgba(14,26,46,.06);border-radius:8px;
+    padding:14px;margin-bottom:20px;letter-spacing:-.005em;
+    animation:fadeUp .8s .85s both;
+}
+.order-num small{font-family:var(--sans);font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--neutral-500);display:block;margin-bottom:4px;}
+
+.detail{
+    background:var(--cream-2);border:1px solid rgba(14,26,46,.06);
+    border-radius:10px;padding:18px 22px;margin-bottom:20px;
+    text-align:left;font-family:var(--sans);font-size:13.5px;
+    animation:fadeUp .8s .95s both;
+}
+.detail .row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;}
+.detail .row + .row{border-top:1px dashed rgba(14,26,46,.06);}
+.detail .k{color:var(--neutral-500);}
+.detail .v{color:var(--ink);font-weight:500;}
+.detail .v.total{font-family:var(--serif);font-size:18px;color:var(--ink);letter-spacing:-.01em;}
+
+.notice{
+    background:rgba(184,148,92,.08);border:1px solid rgba(184,148,92,.2);
+    border-radius:8px;padding:14px 18px;margin-bottom:24px;
+    font-family:var(--sans);font-size:12.5px;color:var(--neutral-700);line-height:1.6;
+    text-align:left;animation:fadeUp .8s 1.05s both;
+}
+.notice i{color:var(--gold);margin-right:6px;}
+.notice strong{color:var(--ink);font-weight:500;}
+
+.actions{
+    display:flex;gap:10px;justify-content:center;flex-wrap:wrap;
+    animation:fadeUp .8s 1.15s both;
+}
+.actions a{
+    padding:13px 26px;border-radius:999px;
+    font-family:var(--sans);font-size:13.5px;font-weight:500;
+    text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+    transition:all .3s var(--ease-out);
+}
+.btn-home{background:var(--ink);color:var(--cream);}
+.btn-home:hover{background:var(--ink-2);transform:translateY(-2px);}
+.btn-call{background:transparent;border:1px solid rgba(14,26,46,.18);color:var(--ink);}
+.btn-call:hover{background:var(--ink);color:var(--cream);border-color:var(--ink);}
+
 @keyframes fadeUp{0%{opacity:0;transform:translateY(20px);}100%{opacity:1;transform:translateY(0);}}
-</style>
+@media(prefers-reduced-motion: reduce){
+    .check,.badge,h1,.sub,.order-num,.detail,.notice,.actions{animation:none;}
+}
+    </style>
 </head>
-<body style="overflow-x:hidden;touch-action:pan-y;">
+<body>
+
 <canvas id="fireworks"></canvas>
+
 <div class="content">
     <div class="card">
         <div class="check"><i class="bi bi-check-lg"></i></div>
-        <div class="badge">Trip Request Received</div>
-        <h1>Thank you, {{ name }}!</h1>
-        <p class="sub">This is a <strong>trip request</strong>, not a confirmed booking yet. Our team will review your request and contact you within <strong>30 minutes</strong> via phone, email, or text to confirm your ride.</p>
+        <div class="badge">Trip request received</div>
+        <h1>Thank you, <em>{{ name }}.</em></h1>
+        <p class="sub">This is a <strong>trip request</strong>, not a confirmed booking. Our team will review and contact you within <strong>30 minutes</strong> via phone or text to confirm.</p>
 
         {% if booking %}
-        <div class="order-num">Order #{{ booking.id|upper }}</div>
+        <div class="order-num">
+            <small>Order #</small>
+            {{ booking.id|upper }}
+        </div>
         <div class="detail">
             <div class="row"><span class="k">Vehicle</span><span class="v">{{ {'small':'Comfort Electric','midsize':'Midsize SUV','premier':'Premier SUV','luxury':'Luxury SUV'}.get(booking.vehicle, booking.vehicle) }}</span></div>
             <div class="row"><span class="k">Date</span><span class="v">{{ booking.trip.date }}</span></div>
             {% if booking.trip.pickup %}<div class="row"><span class="k">Pickup</span><span class="v">{{ booking.trip.pickup }}</span></div>{% endif %}
             {% if booking.trip.dropoff %}<div class="row"><span class="k">Dropoff</span><span class="v">{{ booking.trip.dropoff }}</span></div>{% endif %}
-            {% if booking.card_last4 %}<div class="row"><span class="k">Card</span><span class="v">{{ booking.card_brand }} ****{{ booking.card_last4 }}</span></div>{% endif %}
-            <div class="row"><span class="k">Estimated Total</span><span class="v" style="color:#c9a84c;">${{ booking.total }}</span></div>
+            {% if booking.card_last4 %}<div class="row"><span class="k">Card on file</span><span class="v">{{ booking.card_brand }} ****{{ booking.card_last4 }}</span></div>{% endif %}
+            <div class="row"><span class="k">Estimated total</span><span class="v total">${{ booking.total }}</span></div>
         </div>
         {% endif %}
 
         <div class="notice">
             <i class="bi bi-info-circle-fill"></i>
-            <strong>Important:</strong> Your card will NOT be charged until we confirm your ride. This is only a trip request — we'll reach out shortly to finalize the details.
+            <strong>Important.</strong> Your card will not be charged until we confirm the ride. This is only a request — we'll reach out shortly to finalize.
         </div>
 
         <div class="actions">
-            <a href="/" class="btn-home"><i class="bi bi-house"></i> Back to Home</a>
-            <a href="tel:+14352146939" class="btn-call"><i class="bi bi-telephone-fill"></i> (435) 214-6939</a>
+            <a href="/" class="btn-home"><i class="bi bi-house"></i> Back to home</a>
+            <a href="tel:+14352146939" class="btn-call"><i class="bi bi-telephone"></i> (435) 214-6939</a>
         </div>
     </div>
 </div>
 
 <script>
-// 🎆 Fireworks canvas animation
+/* Subtle confetti burst — restyled to the luxe palette (gold + navy + cream
+   sparks on cream) instead of the prior dark-bg fireworks. Honors
+   prefers-reduced-motion. */
 (function(){
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const canvas = document.getElementById('fireworks');
     const ctx = canvas.getContext('2d');
     let W, H, particles = [], rockets = [];
-    const COLORS = ['#c9a84c','#e8c65a','#fff','#f59e0b','#22c55e','#3b82f6','#ec4899'];
+    const COLORS = ['#b8945c','#0e1a2e','#1a2a45','#d4b380','#2c3e5a','#8a8580'];
 
     function resize(){ W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
     resize(); window.addEventListener('resize', resize);
 
-    function Particle(x, y, color) {
-        this.x = x; this.y = y;
-        this.color = color;
+    function Particle(x, y, color){
+        this.x = x; this.y = y; this.color = color;
         const angle = Math.random() * Math.PI * 2;
         const speed = 1 + Math.random() * 4;
         this.vx = Math.cos(angle) * speed;
         this.vy = Math.sin(angle) * speed;
         this.alpha = 1;
-        this.decay = 0.01 + Math.random() * 0.02;
-        this.size = 1.5 + Math.random() * 2;
+        this.decay = 0.012 + Math.random() * 0.018;
+        this.size = 1.2 + Math.random() * 1.8;
     }
-
-    function Rocket(x) {
+    function Rocket(x){
         this.x = x; this.y = H;
         this.vy = -3 - Math.random() * 4;
         this.targetY = H * 0.15 + Math.random() * H * 0.35;
         this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
         this.exploded = false;
-        this.trail = [];
     }
-
-    function explode(rocket) {
-        const count = 40 + Math.floor(Math.random() * 40);
-        for(let i = 0; i < count; i++) {
-            particles.push(new Particle(rocket.x, rocket.y, rocket.color));
-        }
+    function explode(r){
+        const count = 30 + Math.floor(Math.random() * 30);
+        for(let i = 0; i < count; i++) particles.push(new Particle(r.x, r.y, r.color));
     }
+    function launchRocket(){ rockets.push(new Rocket(W*0.1 + Math.random()*W*0.8)); }
 
-    function launchRocket() {
-        rockets.push(new Rocket(W * 0.1 + Math.random() * W * 0.8));
-    }
-
-    // Launch bursts
     let launched = 0;
-    function launchBurst() {
-        if(launched > 25) return; // stop after 25 rockets
-        const count = 1 + Math.floor(Math.random() * 3);
-        for(let i = 0; i < count; i++) setTimeout(launchRocket, i * 200);
+    function launchBurst(){
+        if(launched > 20) return;
+        const count = 1 + Math.floor(Math.random()*3);
+        for(let i = 0; i < count; i++) setTimeout(launchRocket, i*200);
         launched += count;
-        setTimeout(launchBurst, 400 + Math.random() * 800);
+        setTimeout(launchBurst, 500 + Math.random()*900);
     }
-    setTimeout(launchBurst, 300);
+    setTimeout(launchBurst, 400);
 
-    function draw() {
-        ctx.fillStyle = 'rgba(8,10,15,0.15)';
+    function draw(){
+        /* Fade trail in CREAM so spark trails dissolve on the light bg
+           (was rgba(8,10,15,.15) for the old dark theme). */
+        ctx.fillStyle = 'rgba(250,249,246,0.18)';
         ctx.fillRect(0, 0, W, H);
 
-        // Rockets
-        for(let i = rockets.length - 1; i >= 0; i--) {
+        for(let i = rockets.length - 1; i >= 0; i--){
             const r = rockets[i];
             r.y += r.vy;
-            // Trail
             ctx.beginPath();
-            ctx.arc(r.x, r.y, 2, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(255,255,255,0.6)';
+            ctx.arc(r.x, r.y, 1.8, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(14,26,46,0.5)';
             ctx.fill();
-            if(r.y <= r.targetY && !r.exploded) {
+            if(r.y <= r.targetY && !r.exploded){
                 r.exploded = true;
                 explode(r);
                 rockets.splice(i, 1);
             }
         }
 
-        // Particles
-        for(let i = particles.length - 1; i >= 0; i--) {
+        for(let i = particles.length - 1; i >= 0; i--){
             const p = particles[i];
             p.x += p.vx;
             p.y += p.vy;
-            p.vy += 0.04; // gravity
+            p.vy += 0.04;
             p.alpha -= p.decay;
-            if(p.alpha <= 0) { particles.splice(i, 1); continue; }
+            if(p.alpha <= 0){ particles.splice(i,1); continue; }
             ctx.globalAlpha = p.alpha;
             ctx.fillStyle = p.color;
             ctx.beginPath();
