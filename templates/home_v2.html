@@ -127,36 +127,26 @@ body{
 .lede.on-dark{color:rgba(250,249,246,.7);}
 
 /* ============================================================
-   NAV — switches between two modes:
-     .nav.over-hero  → transparent bg, cream text (visible over photo)
-     default         → frosted cream bg, ink text  (visible over cream)
-   An IntersectionObserver on the hero adds/removes .over-hero. No more
-   mix-blend-mode hack — that misbehaved on certain browsers and the
-   nav was reported unreadable on cream sections.
+   NAV — always frosted cream, ink text. Readable on EVERY section
+   (including over the hero photo, because the cream blur covers it).
+   Dropped the over-hero white-text variant — user reported it was
+   illegible on the bright sky of the new hero photo.
    ============================================================ */
 .nav{
     position:fixed;top:0;left:0;right:0;z-index:50;
     display:flex;align-items:center;justify-content:space-between;
-    padding:18px clamp(20px,4vw,56px);
+    padding:14px clamp(20px,4vw,56px);
     background:rgba(250,249,246,.92);
-    backdrop-filter:saturate(180%) blur(20px);
-    -webkit-backdrop-filter:saturate(180%) blur(20px);
-    border-bottom:1px solid rgba(14,26,46,.06);
-    transition: background .5s var(--ease-out), border .5s var(--ease-out),
-                padding .4s var(--ease-out);
-}
-.nav.over-hero{
-    background:transparent;
-    border-bottom-color:transparent;
-    padding-top:24px;padding-bottom:24px;
+    backdrop-filter:saturate(180%) blur(22px);
+    -webkit-backdrop-filter:saturate(180%) blur(22px);
+    border-bottom:1px solid rgba(14,26,46,.07);
+    transition: padding .4s var(--ease-out);
 }
 .nav-logo{
     font-family:var(--serif);font-weight:400;font-style:italic;
     font-size:22px;color:var(--ink);text-decoration:none;
     letter-spacing:-.01em;line-height:1;
-    transition: color .35s var(--ease-out);
 }
-.nav.over-hero .nav-logo{color:var(--cream);}
 .nav-links{display:flex;align-items:center;gap:36px;}
 .nav-links a{
     font-family:var(--sans);
@@ -171,8 +161,6 @@ body{
     background:currentColor;transition:width .4s var(--ease-out);
 }
 .nav-links a:hover::after{width:100%;}
-.nav.over-hero .nav-links a{color:rgba(250,249,246,.9);}
-.nav.over-hero .nav-links a:hover{color:var(--cream);}
 .nav-cta{
     padding:11px 24px;border-radius:999px;
     background:var(--ink);color:var(--cream)!important;
@@ -183,14 +171,10 @@ body{
 }
 .nav-cta:hover{background:var(--ink-2);transform:translateY(-1px);}
 .nav-cta::after{display:none!important;}
-.nav.over-hero .nav-cta{background:var(--cream);color:var(--ink)!important;}
-.nav.over-hero .nav-cta:hover{background:#fff;}
 .mobile-menu-btn{
     display:none;background:none;border:0;color:var(--ink);
     font-size:24px;cursor:pointer;padding:8px;
-    transition: color .35s var(--ease-out);
 }
-.nav.over-hero .mobile-menu-btn{color:var(--cream);}
 
 .mobile-menu{
     position:fixed;inset:0;background:var(--cream);
@@ -250,9 +234,13 @@ body{
 }
 .hero-bg{
     position:absolute;inset:0;
+    /* Strong left-to-right + bottom dark gradient so the headline + lede
+       stay legible regardless of where the photo is lightest. Tested
+       against alpine sky (very bright top) and snow (very bright bottom). */
     background:
-        linear-gradient(180deg, rgba(14,26,46,.15) 0%, rgba(14,26,46,.05) 30%, rgba(14,26,46,.65) 100%),
-        url('https://images.unsplash.com/photo-1551524559-8af4e6624178?w=2400&q=85&auto=format&fit=crop') center 35%/cover no-repeat;
+        linear-gradient(90deg, rgba(14,26,46,.78) 0%, rgba(14,26,46,.45) 45%, rgba(14,26,46,.15) 100%),
+        linear-gradient(180deg, rgba(14,26,46,.15) 0%, rgba(14,26,46,.05) 50%, rgba(14,26,46,.75) 100%),
+        url('https://images.unsplash.com/photo-1483181994120-d75aa83c8e23?w=2400&q=85&auto=format&fit=crop') center 40%/cover no-repeat;
     z-index:0;
     transform: scale(1.05);
     animation: heroParallax 24s ease-in-out infinite alternate;
@@ -475,12 +463,26 @@ body{
     box-shadow: var(--shadow-md);
     border-color:rgba(14,26,46,.12);
 }
-.fleet-img{
-    aspect-ratio: 4/3;
-    background:var(--cream-2) center/contain no-repeat;
+.fleet-img-wrap{
     position:relative;
+    width:100%;
+    height:220px;             /* identical fixed height for all 4 cards */
+    background:var(--cream-2);
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;
 }
-.fleet-card:hover .fleet-img{transform:none;}
+.fleet-img-wrap img{
+    /* Each source image has different padding/aspect, so object-fit:contain
+       + max-height keeps the silhouette intact while normalizing the visual
+       footprint — fixes the "midsize SUV looked tiny next to the others"
+       complaint. */
+    max-width:88%;
+    max-height:88%;
+    width:auto;height:auto;
+    object-fit:contain;
+    transition: transform .8s var(--ease-out);
+}
+.fleet-card:hover .fleet-img-wrap img{transform:scale(1.04);}
 .fleet-tag{
     position:absolute;top:14px;left:14px;
     font-family:var(--sans);font-size:9.5px;font-weight:500;
@@ -928,8 +930,9 @@ img{max-width:100%;height:auto;display:block;}
         </div>
         <div class="fleet-grid">
             <a href="/book?vehicle=small" class="fleet-card reveal">
-                <div class="fleet-img" style="background-image:url('/static/images/comfort-electric.webp');">
+                <div class="fleet-img-wrap">
                     <span class="fleet-tag">Eco</span>
+                    <img src="/static/images/comfort-electric.webp" alt="Tesla Model Y — Comfort Electric SUV" loading="lazy">
                 </div>
                 <div class="fleet-info">
                     <div class="fleet-name">Comfort Electric</div>
@@ -946,8 +949,9 @@ img{max-width:100%;height:auto;display:block;}
                 </div>
             </a>
             <a href="/book?vehicle=midsize" class="fleet-card reveal d-1">
-                <div class="fleet-img" style="background-image:url('/static/pathfinder.avif');">
+                <div class="fleet-img-wrap">
                     <span class="fleet-tag">Popular</span>
+                    <img src="/static/pathfinder.avif" alt="Nissan Pathfinder — Midsize SUV" loading="lazy">
                 </div>
                 <div class="fleet-info">
                     <div class="fleet-name">Midsize SUV</div>
@@ -963,8 +967,9 @@ img{max-width:100%;height:auto;display:block;}
                 </div>
             </a>
             <a href="/book?vehicle=premier" class="fleet-card reveal d-2">
-                <div class="fleet-img" style="background-image:url('/static/images/premier-suv.webp');">
+                <div class="fleet-img-wrap">
                     <span class="fleet-tag" style="background:var(--ink);color:var(--cream);">Most Popular</span>
+                    <img src="/static/images/premier-suv.webp" alt="GMC Yukon — Premier SUV" loading="lazy">
                 </div>
                 <div class="fleet-info">
                     <div class="fleet-name">Premier SUV</div>
@@ -981,8 +986,9 @@ img{max-width:100%;height:auto;display:block;}
                 </div>
             </a>
             <a href="/book?vehicle=luxury" class="fleet-card reveal d-3">
-                <div class="fleet-img" style="background-image:url('/static/images/luxury-suv.webp');">
+                <div class="fleet-img-wrap">
                     <span class="fleet-tag" style="background:var(--gold);color:var(--ink);">Luxury</span>
+                    <img src="/static/images/luxury-suv.webp" alt="Cadillac Escalade — Luxury SUV" loading="lazy">
                 </div>
                 <div class="fleet-info">
                     <div class="fleet-name">Luxury SUV</div>
@@ -1055,14 +1061,22 @@ img{max-width:100%;height:auto;display:block;}
         <div class="reviews-carousel reveal">
             <div class="reviews-track">
                 {% set _reviews = [
-                  {'name':'Emily R.',  'meta':'Repeat guest · NYC → Deer Valley',  'quote':"Smooth ride from SLC to Deer Valley in a snowstorm — Hudson tracked our flight and was waiting curbside the second we landed. The Yukon was immaculate. Will book again next season."},
-                  {'name':'Marc D.',   'meta':'Family of 5 · Houston',             'quote':"Three kids and six bags. Car seats already installed, water chilled, driver knew exactly which Stein Eriksen entrance to pull up to. Felt like a hotel before the hotel."},
-                  {'name':'Sarah K.',  'meta':'Corporate ski group · 8 pax',       'quote':"Booked an Escalade for an executive ski group. Hudson handled three pickup times across two flights and a private jet — perfectly. Worth every dollar."},
-                  {'name':'Daniel A.', 'meta':'SLC → Park City · solo',            'quote':"On time. Quiet driver. Clean SUV. Bottled water. The bar I expect at this price — finally met it."},
-                  {'name':'Priya M.',  'meta':'Honeymoon · St Regis',              'quote':"They surprised us with a chilled rosé waiting in the car. Tiny touch, huge impression. We arrived feeling already on vacation."},
-                  {'name':'Jonathan F.','meta':'Late-night arrival · 1:40am',      'quote':"Flight delayed three hours. Driver waited the whole time, never charged me a dime extra. Above and beyond."},
-                  {'name':'Lila C.',   'meta':'Repeat guest · Park City local',    'quote':"I use Rio for every airport run, every season. The only car service I trust to actually be on time when there's six inches of fresh on Parley's Summit."},
-                  {'name':'Rob T.',    'meta':'Family · Boston',                   'quote':"Quoted a fair price, no surprises at drop-off, no surge nonsense. Got a text 30 min before pickup. Old-school professionalism."},
+                  {'name':'Nasser Len',         'meta':'Google · 2023',                       'quote':"Excellent driving. Excellent service. Very nice Suburbans (GMCs). I highly recommend Rio Transportation for Park City trips."},
+                  {'name':'Daniel Tarasevich',  'meta':'Google · 2024',                       'quote':"Super professional. Premium service, super kind and full transparency! Thank you so much."},
+                  {'name':'Jamie Hedlund',      'meta':'Google · 2023',                       'quote':"These guys are great — reliable and reasonable. Will use them again."},
+                  {'name':'Jeremy Maloney',     'meta':'Google · 2023',                       'quote':"Excellent personality, knows the town very well. Got us there quickly. Highly recommended."},
+                  {'name':'Bill Mohl',          'meta':'Google · 2024',                       'quote':"On time and a great driver. Very professional. Will use them again!"},
+                  {'name':'Mitchell Lyons',     'meta':'Google · 2023',                       'quote':"Safe, clean ride. Friendly staff. 10/10 would book again."},
+                  {'name':'Eduardo Cardoso',    'meta':'Google · 2023',                       'quote':"The best Park City transport company. I recommend it to everyone!"},
+                  {'name':'Jillian Cleveland',  'meta':'Google · 2023',                       'quote':"On time and reliable every day. Thank you!"},
+                  {'name':'Breno Lima',         'meta':'Google · 2023',                       'quote':"Great service and guidance throughout the town. I'll definitely call them again."},
+                  {'name':'Gerardo Bernaldez',  'meta':'Google · 2023',                       'quote':"Yukon car and driver were excellent."},
+                  {'name':'Wendy Franks',       'meta':'Google · 2024',                       'quote':"Awesome job!!"},
+                  {'name':'Allan Thiiago',      'meta':'Google · 2023',                       'quote':"The best experience me and my family had!"},
+                  {'name':'Emily R.',           'meta':'Repeat guest · NYC → Deer Valley',    'quote':"Smooth ride from SLC to Deer Valley in a snowstorm — Hudson tracked our flight and was waiting curbside the second we landed. The Yukon was immaculate."},
+                  {'name':'Marc D.',            'meta':'Family of 5 · Houston',               'quote':"Three kids and six bags. Car seats already installed, water chilled, driver knew exactly which Stein Eriksen entrance to pull up to. Felt like a hotel before the hotel."},
+                  {'name':'Sarah K.',           'meta':'Corporate ski group · 8 pax',         'quote':"Booked an Escalade for an executive ski group. Hudson handled three pickup times across two flights and a private jet — perfectly."},
+                  {'name':'Jonathan F.',        'meta':'Late-night arrival · 1:40 am',        'quote':"Flight delayed three hours. Driver waited the whole time, never charged me a dime extra. Above and beyond."},
                 ] %}
                 {% for r in _reviews + _reviews %}
                 <article class="review-card">
@@ -1170,8 +1184,18 @@ img{max-width:100%;height:auto;display:block;}
         </div>
         <div>
             <div class="foot-tag">Coming Soon</div>
-            <h3 style="font-size:18px;">Rio Rides app</h3>
-            <p style="margin-top:8px;">Real-time tracking. iOS &amp; Android, 2026.</p>
+            <h3 style="font-size:18px;">Rio Rides &amp; Rio Driver</h3>
+            <p style="margin-top:8px;">Two apps. Riders book + track in real time
+                — drivers manage trips, navigate, and accept new pickups.
+                iOS &amp; Android, 2026.</p>
+            <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;">
+                <span style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:rgba(250,249,246,.06);border:1px solid rgba(250,249,246,.12);border-radius:999px;font-family:var(--sans);font-size:11px;color:rgba(250,249,246,.6);">
+                    <i class="bi bi-apple"></i> Rio Rides
+                </span>
+                <span style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:rgba(250,249,246,.06);border:1px solid rgba(250,249,246,.12);border-radius:999px;font-family:var(--sans);font-size:11px;color:rgba(250,249,246,.6);">
+                    <i class="bi bi-steering-wheel"></i> Rio Driver
+                </span>
+            </div>
         </div>
     </div>
     <div class="foot-bot">
@@ -1242,24 +1266,7 @@ img{max-width:100%;height:auto;display:block;}
     t2();setInterval(t2,1000);
 })();
 
-/* Nav state — over-hero (white text on photo) vs default (ink on cream).
-   IntersectionObserver on the hero is more reliable than scrollY thresholds
-   because section heights vary by viewport (hero is 100vh; on a tiny
-   landscape window the threshold was wrong and the nav rendered white-
-   on-cream — unreadable). */
-(function(){
-    const nav=document.getElementById('nav'); if(!nav) return;
-    const hero=document.querySelector('.hero'); if(!hero){nav.classList.remove('over-hero');return;}
-    nav.classList.add('over-hero'); // initial state: page loads at hero top
-    if(!('IntersectionObserver' in window))return;
-    const io=new IntersectionObserver((entries)=>{
-        entries.forEach(e=>{
-            // When at least 15 % of the hero is on-screen → over-hero mode.
-            nav.classList.toggle('over-hero', e.isIntersecting && e.intersectionRatio > .15);
-        });
-    },{threshold:[0,.15,.5,1]});
-    io.observe(hero);
-})();
+/* Nav is always the same frosted-cream variant — no JS state needed. */
 
 /* Live ride counter — base 9,000 on 2026-05-20, +2 per hour going forward.
    Anchors to a fixed timestamp so refresh doesn't reset and every browser
