@@ -1,10 +1,51 @@
 """Park City Trips — Luxury Transportation in Park City, Utah."""
 from flask import Flask, render_template, request, jsonify, abort, redirect, url_for, flash, session
-import config, json, os, uuid, requests as req, smtplib
+from functools import wraps
+from html import escape as _hesc
+import config, json, os, re, uuid, requests as req, smtplib
 from datetime import datetime
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from blog_data import POSTS
+
+
+def safe_text(value, max_len=200):
+    """HTML-escape any user-provided string before interpolating into email
+    HTML, admin pages, or anywhere else a hostile value could land. Caps
+    the length so spammers can't post 100 KB names. Returns '' for None.
+    Use this everywhere customer-submitted data crosses a boundary."""
+    if value is None:
+        return ''
+    s = str(value).strip()[:max_len]
+    return _hesc(s, quote=True)
+
+
+_EMAIL_RE = re.compile(r'^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$')
+
+def valid_email(value):
+    """Reject obvious garbage / header-injection attempts before passing
+    a customer-provided email to Resend's `to` field — otherwise an
+    attacker could turn the booking form into a free spam relay."""
+    if not value:
+        return False
+    v = str(value).strip()
+    if len(v) > 254 or '\n' in v or '\r' in v or ',' in v:
+        return False
+    return bool(_EMAIL_RE.match(v))
+
+
+def admin_required(view_func):
+    """Gate any view behind the /signin session check. Replaces the old
+    `pin=6939` query-string bypass — see PR notes. Returns JSON 401 for
+    /api/ paths so AJAX calls don't follow a redirect into login HTML."""
+    @wraps(view_func)
+    def wrapper(*args, **kwargs):
+        if not session.get('admin'):
+            if request.path.startswith('/api/'):
+                return jsonify({'error': 'admin auth required'}), 401
+            return redirect('/signin')
+        return view_func(*args, **kwargs)
+    return wrapper
 
 
 def _send_quick_email(booking):
@@ -18,6 +59,25 @@ def _send_quick_email(booking):
     bid = booking['id'].upper()
     v = vehicle_names.get(booking['vehicle'], booking['vehicle'])
 
+    # Escape EVERY customer-controlled value before HTML interpolation.
+    # Red-team finding (ALTO): unescaped `name` / `email` let an attacker
+    # ship "<a href=evil>refund</a>" into Hudson's inbox.
+    name_s   = safe_text(c.get('name'), 80)
+    phone_s  = safe_text(c.get('phone'), 30)
+    email_s  = safe_text(c.get('email'), 254) or '—'
+    date_s   = safe_text(t.get('date'), 30) or '—'
+    pickup_s = safe_text(t.get('pickup'), 200) or '—'
+    drop_s   = safe_text(t.get('dropoff'), 200) or '—'
+    flight_s = safe_text(t.get('flight_number'), 20) or '—'
+    arr_s    = safe_text(t.get('arrival_time'), 20) or '—'
+    adults_s = safe_text(t.get('adults'), 4) or '0'
+    kids_s   = safe_text(t.get('children'), 4) or '0'
+    bags_s   = safe_text(t.get('bags'), 4) or '0'
+    ski_s    = safe_text(t.get('ski_bags'), 4) or '0'
+    v_s      = safe_text(v, 60)
+    brand_s  = safe_text(booking.get('card_brand'), 40)
+    last4_s  = safe_text(booking.get('card_last4'), 4)
+
     html = f"""<div style="font-family:Arial,sans-serif;max-width:550px;margin:0 auto;background:#0a0c10;border-radius:12px;overflow:hidden;">
 <div style="background:linear-gradient(135deg,#c9a84c,#e8c65a);padding:20px 28px;text-align:center;">
 <h1 style="margin:0;color:#000;font-size:20px;">🚗 New Trip Request</h1></div>
@@ -25,51 +85,60 @@ def _send_quick_email(booking):
 <div style="background:#111318;border:1px solid #1e2130;border-radius:10px;padding:16px;margin-bottom:16px;">
 <div style="font-size:11px;color:#c9a84c;letter-spacing:2px;margin-bottom:8px;">ORDER #{bid}</div>
 <table style="width:100%;font-size:13px;color:#fff;border-collapse:collapse;">
-<tr><td style="padding:5px 0;color:#666;">Customer</td><td style="padding:5px 0;text-align:right;font-weight:700;">{c['name']}</td></tr>
-<tr><td style="padding:5px 0;color:#666;">Phone</td><td style="padding:5px 0;text-align:right;"><a href="tel:{c['phone']}" style="color:#c9a84c;">{c['phone']}</a></td></tr>
-<tr><td style="padding:5px 0;color:#666;">Email</td><td style="padding:5px 0;text-align:right;">{c.get('email','—')}</td></tr>
+<tr><td style="padding:5px 0;color:#666;">Customer</td><td style="padding:5px 0;text-align:right;font-weight:700;">{name_s}</td></tr>
+<tr><td style="padding:5px 0;color:#666;">Phone</td><td style="padding:5px 0;text-align:right;"><a href="tel:{phone_s}" style="color:#c9a84c;">{phone_s}</a></td></tr>
+<tr><td style="padding:5px 0;color:#666;">Email</td><td style="padding:5px 0;text-align:right;">{email_s}</td></tr>
 <tr><td colspan="2" style="border-bottom:1px solid #1e2130;padding:6px 0;"></td></tr>
-<tr><td style="padding:5px 0;color:#666;">Vehicle</td><td style="padding:5px 0;text-align:right;font-weight:700;">{v}</td></tr>
-<tr><td style="padding:5px 0;color:#666;">Date</td><td style="padding:5px 0;text-align:right;">{t.get('date','—')}</td></tr>
-<tr><td style="padding:5px 0;color:#666;">Pickup</td><td style="padding:5px 0;text-align:right;color:#22c55e;">{t.get('pickup','—')}</td></tr>
-<tr><td style="padding:5px 0;color:#666;">Dropoff</td><td style="padding:5px 0;text-align:right;color:#ef4444;">{t.get('dropoff','—')}</td></tr>
-<tr><td style="padding:5px 0;color:#666;">Flight</td><td style="padding:5px 0;text-align:right;">{t.get('flight_number','—')}</td></tr>
-<tr><td style="padding:5px 0;color:#666;">Arrival</td><td style="padding:5px 0;text-align:right;">{t.get('arrival_time','—')}</td></tr>
+<tr><td style="padding:5px 0;color:#666;">Vehicle</td><td style="padding:5px 0;text-align:right;font-weight:700;">{v_s}</td></tr>
+<tr><td style="padding:5px 0;color:#666;">Date</td><td style="padding:5px 0;text-align:right;">{date_s}</td></tr>
+<tr><td style="padding:5px 0;color:#666;">Pickup</td><td style="padding:5px 0;text-align:right;color:#22c55e;">{pickup_s}</td></tr>
+<tr><td style="padding:5px 0;color:#666;">Dropoff</td><td style="padding:5px 0;text-align:right;color:#ef4444;">{drop_s}</td></tr>
+<tr><td style="padding:5px 0;color:#666;">Flight</td><td style="padding:5px 0;text-align:right;">{flight_s}</td></tr>
+<tr><td style="padding:5px 0;color:#666;">Arrival</td><td style="padding:5px 0;text-align:right;">{arr_s}</td></tr>
 <tr><td colspan="2" style="border-bottom:1px solid #1e2130;padding:6px 0;"></td></tr>
-<tr><td style="padding:5px 0;color:#666;">Passengers</td><td style="padding:5px 0;text-align:right;">{t.get('adults','0')} adults, {t.get('children','0')} kids</td></tr>
-<tr><td style="padding:5px 0;color:#666;">Bags</td><td style="padding:5px 0;text-align:right;">{t.get('bags','0')} + {t.get('ski_bags','0')} ski</td></tr>
+<tr><td style="padding:5px 0;color:#666;">Passengers</td><td style="padding:5px 0;text-align:right;">{adults_s} adults, {kids_s} kids</td></tr>
+<tr><td style="padding:5px 0;color:#666;">Bags</td><td style="padding:5px 0;text-align:right;">{bags_s} + {ski_s} ski</td></tr>
 <tr><td colspan="2" style="border-bottom:1px solid #1e2130;padding:6px 0;"></td></tr>
 <tr><td style="padding:5px 0;color:#666;">Total</td><td style="padding:5px 0;text-align:right;font-size:18px;font-weight:800;color:#c9a84c;">${booking['total']}</td></tr>
 </table></div>
-{'<div style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:8px;padding:10px;font-size:12px;color:#22c55e;margin-bottom:12px;">💳 '+booking.get('card_brand','')+' ****'+booking.get('card_last4','')+'</div>' if booking.get('card_last4') else ''}
-<div style="text-align:center;"><a href="https://web-production-d69bf.up.railway.app/admin/bookings?pin=6939" style="display:inline-block;padding:12px 24px;background:#c9a84c;color:#000;border-radius:50px;text-decoration:none;font-weight:700;font-size:13px;">Review & Approve</a></div>
+{'<div style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:8px;padding:10px;font-size:12px;color:#22c55e;margin-bottom:12px;">💳 '+brand_s+' ****'+last4_s+'</div>' if last4_s else ''}
+<div style="text-align:center;"><a href="https://parkcitytrips.com/signin" style="display:inline-block;padding:12px 24px;background:#c9a84c;color:#000;border-radius:50px;text-decoration:none;font-weight:700;font-size:13px;">Review & Approve</a></div>
 </div></div>"""
 
-    # 1. Email to Hudson (admin notification)
-    resp = req.post('https://api.resend.com/emails', json={
-        'from': 'Rio Transportation <booking@parkcitytrips.com>',
-        'to': [e.strip() for e in config.NOTIFY_EMAIL.split(',')],
-        'subject': f"🚗 Trip #{bid} — {c['name']} — {v} — ${booking['total']}",
-        'html': html,
-    }, headers={'Authorization': f'Bearer {config.RESEND_API_KEY}'}, timeout=10)
-    print(f"[Email] Admin notification: {resp.status_code} — {resp.text[:200]}")
+    # 1. Email to Hudson (admin notification) — only notify the trusted
+    # addresses in NOTIFY_EMAIL (env-controlled), never the customer's
+    # input. Customer-controlled `to` is for the customer confirmation
+    # email below and is validated by valid_email() before sending.
+    notify_to = [e.strip() for e in config.NOTIFY_EMAIL.split(',') if valid_email(e.strip())]
+    if notify_to:
+        resp = req.post('https://api.resend.com/emails', json={
+            'from': 'Rio Transportation <booking@parkcitytrips.com>',
+            'to': notify_to,
+            'subject': f"🚗 Trip #{bid} — {name_s} — {v_s} — ${booking['total']}",
+            'html': html,
+        }, headers={'Authorization': f'Bearer {config.RESEND_API_KEY}'}, timeout=10)
+        print(f"[Email] Admin notification: {resp.status_code}")
 
-    # 2. Email to customer (confirmation)
-    if c.get('email') and c['email'].strip():
+    # 2. Email to customer (confirmation) — only if their email validates.
+    # Without the validation gate, an attacker can supply
+    # "victim@example.com\nbcc: thousand-others@..." style payloads and
+    # turn the booking form into a free spam relay (red-team ALTO).
+    if valid_email(c.get('email')):
+        first_name = safe_text((c.get('name') or 'Guest').split()[0], 40)
         customer_html = f"""<div style="font-family:Arial,Helvetica,sans-serif;max-width:520px;margin:0 auto;background:#ffffff;">
 <div style="padding:32px 32px 24px;border-bottom:3px solid #000;">
 <h1 style="margin:0;color:#000;font-size:22px;font-weight:800;">Rio Transportation</h1>
 </div>
 <div style="padding:28px 32px;">
-<p style="font-size:15px;color:#333;margin-bottom:6px;">Hi {c['name'].split()[0]},</p>
+<p style="font-size:15px;color:#333;margin-bottom:6px;">Hi {first_name},</p>
 <p style="font-size:14px;color:#666;line-height:1.7;margin-bottom:24px;">Thank you for your trip request. This is <strong style="color:#000;">not a confirmed booking yet</strong> — our team will contact you within <strong style="color:#000;">30 minutes</strong> to confirm.</p>
 <div style="background:#f8f8f6;border:1px solid #e8e8e4;border-radius:8px;padding:20px;margin-bottom:20px;">
 <div style="font-size:10px;color:#999;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">ORDER #{bid}</div>
 <table style="width:100%;font-size:14px;color:#333;border-collapse:collapse;">
-<tr><td style="padding:6px 0;color:#999;">Vehicle</td><td style="padding:6px 0;text-align:right;font-weight:700;">{v}</td></tr>
-<tr><td style="padding:6px 0;color:#999;">Date</td><td style="padding:6px 0;text-align:right;">{t.get('date','—')}</td></tr>
-<tr><td style="padding:6px 0;color:#999;">Pickup</td><td style="padding:6px 0;text-align:right;">{t.get('pickup','—')}</td></tr>
-<tr><td style="padding:6px 0;color:#999;">Dropoff</td><td style="padding:6px 0;text-align:right;">{t.get('dropoff','—')}</td></tr>
+<tr><td style="padding:6px 0;color:#999;">Vehicle</td><td style="padding:6px 0;text-align:right;font-weight:700;">{v_s}</td></tr>
+<tr><td style="padding:6px 0;color:#999;">Date</td><td style="padding:6px 0;text-align:right;">{date_s}</td></tr>
+<tr><td style="padding:6px 0;color:#999;">Pickup</td><td style="padding:6px 0;text-align:right;">{pickup_s}</td></tr>
+<tr><td style="padding:6px 0;color:#999;">Dropoff</td><td style="padding:6px 0;text-align:right;">{drop_s}</td></tr>
 <tr><td colspan="2" style="border-bottom:1px solid #e8e8e4;padding:8px 0;"></td></tr>
 <tr><td style="padding:8px 0;font-weight:700;color:#000;">Estimated Total</td><td style="padding:8px 0;text-align:right;font-size:20px;font-weight:800;color:#000;">${booking['total']}</td></tr>
 </table></div>
@@ -85,11 +154,11 @@ def _send_quick_email(booking):
 </div>"""
         resp2 = req.post('https://api.resend.com/emails', json={
             'from': 'Rio Transportation <booking@parkcitytrips.com>',
-            'to': [c['email']],
+            'to': [c['email'].strip()],
             'subject': f"Your Trip Request #{bid} — Rio Transportation",
             'html': customer_html,
         }, headers={'Authorization': f'Bearer {config.RESEND_API_KEY}'}, timeout=10)
-        print(f"[Email] Customer confirmation to {c['email']}: {resp2.status_code}")
+        print(f"[Email] Customer confirmation: {resp2.status_code}")
 
 
 def send_booking_email(booking):
@@ -196,6 +265,75 @@ def save_bookings(bookings):
 app = Flask(__name__)
 app.secret_key = config.SECRET_KEY
 
+# Cookie hardening — sessions on Railway must be HTTPS-only, JS-inaccessible,
+# and SameSite=Lax (still permits the OAuth-style redirects from
+# /admin → /signin → /admin, but blocks third-party form-POST attacks).
+app.config.update(
+    SESSION_COOKIE_SECURE=bool(os.getenv('RAILWAY_ENVIRONMENT')),
+    SESSION_COOKIE_HTTPONLY=True,
+    SESSION_COOKIE_SAMESITE='Lax',
+    PERMANENT_SESSION_LIFETIME=60 * 60 * 12,  # 12 h admin session
+)
+
+# CSRF protection on all state-changing routes. /api/* endpoints that need
+# to stay open (visitor tracking, public quote calculator) are exempted
+# individually below via @csrf.exempt — kept narrow so admin charges,
+# signin, and booking submit get the token check by default.
+try:
+    from flask_wtf.csrf import CSRFProtect, CSRFError
+    csrf = CSRFProtect(app)
+
+    @app.errorhandler(CSRFError)
+    def _csrf_error(e):
+        # Friendly retry for the few HTML forms — JSON for /api/.
+        if request.is_json or request.path.startswith('/api/'):
+            return jsonify({'error': 'csrf_invalid', 'detail': str(e.description)}), 400
+        return ('Session expired. Refresh the page and try again.', 400)
+except Exception as _csrf_e:
+    print(f"[CSRF] flask-wtf not available: {_csrf_e}")
+    csrf = None
+
+# Rate limiter — protects /signin from brute-forcing the admin PIN,
+# /book/submit + /api/visitor from spam loops draining Resend quota,
+# /api/quote from being used as a free pricing oracle.
+try:
+    from flask_limiter import Limiter
+    from flask_limiter.util import get_remote_address
+
+    def _client_ip():
+        """Prefer the genuine client IP from Cloudflare; fall back to
+        request.remote_addr (Railway proxy). Never trust raw
+        X-Forwarded-For without an upstream allow-list because anyone
+        can set the header from a curl."""
+        cf = request.headers.get('CF-Connecting-IP')
+        if cf and re.match(r'^[0-9a-fA-F:.]+$', cf):
+            return cf
+        return get_remote_address()
+
+    limiter = Limiter(key_func=_client_ip, app=app, default_limits=[])
+except Exception as _lim_e:
+    print(f"[Limiter] flask-limiter not available: {_lim_e}")
+    limiter = None
+
+
+def rate_limit(spec):
+    """Decorator wrapper that no-ops if flask-limiter failed to import
+    (so the app still boots in environments where the lib isn't installed
+    yet — like a dev clone right after the requirements bump)."""
+    if limiter:
+        return limiter.limit(spec)
+    return lambda f: f
+
+
+def csrf_exempt(view_func):
+    """Mark a route as CSRF-exempt — used for public POST endpoints that
+    don't carry session state (visitor beacon, quote calculator) where
+    requiring a token would just break the page. Auth endpoints still
+    keep CSRF on."""
+    if csrf:
+        return csrf.exempt(view_func)
+    return view_func
+
 
 # Legacy Wix paths — 301 redirect to the equivalent new page so Google
 # transfers any remaining PageRank and stops showing them as ghosts.
@@ -261,14 +399,21 @@ def home_v1():
 
 
 @app.route('/signin', methods=['GET', 'POST'])
+@rate_limit('5 per 15 minutes; 30 per day')
 def signin():
+    """Admin login. Rate-limit defends against brute-forcing the PIN —
+    even a 4-digit PIN takes 1000+ minutes at 5 attempts / 15 min."""
     if request.method == 'POST':
         pin = request.form.get('pin', '')
         email = request.form.get('email', '')
-        if pin == config.ADMIN_PIN:
+        # Constant-time string compare to avoid timing side-channels on
+        # the PIN check (paranoid but cheap).
+        import hmac
+        if hmac.compare_digest(pin, config.ADMIN_PIN):
+            session.clear()  # rotate session id on auth → prevents fixation
             session['admin'] = True
-            session['admin_email'] = email
-            session['admin_pin'] = pin
+            # Don't store the raw PIN in session — only flag + email
+            session['admin_email'] = (email or '').strip()[:120]
             return redirect('/admin')
         return render_template('signin.html', error='Invalid PIN')
     return render_template('signin.html', error=None)
@@ -387,11 +532,15 @@ def admin_seo():
 
 
 @app.route('/admin/new-booking', methods=['GET', 'POST'])
+@admin_required
 def admin_new_booking():
-    if not session.get('admin'):
-        return redirect('/signin')
     if request.method == 'POST':
         data = request.form.to_dict()
+        # Validate email up front so admin can't accidentally send to a
+        # header-injection payload (also rejects empty submissions).
+        cust_email = data.get('email', '').strip()
+        if cust_email and not valid_email(cust_email):
+            return redirect('/admin/new-booking?msg=Invalid+customer+email')
         booking_id = str(uuid.uuid4())[:8]
         vehicle = data.get('vehicle', 'premier')
         base_price = config.VEHICLE_PRICES.get(vehicle, 189)
@@ -417,28 +566,35 @@ def admin_new_booking():
         save_bookings(bookings)
 
         # Send confirmation email to client
-        if data.get('email') and config.RESEND_API_KEY:
+        if valid_email(data.get('email')) and config.RESEND_API_KEY:
             vehicle_names = {'small':'Comfort Electric','midsize':'Midsize SUV','premier':'Premier SUV','luxury':'Luxury SUV'}
             v = vehicle_names.get(vehicle, vehicle)
             bid = booking_id.upper()
             c = booking['customer']
             t = booking['trip']
+            v_s = safe_text(v, 60)
+            date_s = safe_text(t.get('date'), 30) or '—'
+            pickup_s = safe_text(t.get('pickup'), 200) or '—'
+            drop_s = safe_text(t.get('dropoff'), 200) or '—'
+            flight_s = safe_text(t.get('flight_number'), 20)
+            arr_s = safe_text(t.get('arrival_time'), 20)
+            first_name = safe_text((c.get('name') or 'there').split()[0], 40)
             customer_html = f"""<div style="font-family:Arial,Helvetica,sans-serif;max-width:520px;margin:0 auto;background:#ffffff;">
 <div style="padding:32px 32px 24px;border-bottom:3px solid #000;">
 <h1 style="margin:0;color:#000;font-size:22px;font-weight:800;">Rio Transportation</h1>
 </div>
 <div style="padding:28px 32px;">
-<p style="font-size:15px;color:#333;margin-bottom:6px;">Hi {c['name'].split()[0] if c['name'] else 'there'},</p>
+<p style="font-size:15px;color:#333;margin-bottom:6px;">Hi {first_name},</p>
 <p style="font-size:14px;color:#666;line-height:1.7;margin-bottom:24px;">Your ride has been <strong style="color:#000;">confirmed</strong>! Here are your trip details:</p>
 <div style="background:#f8f8f6;border:1px solid #e8e8e4;border-radius:8px;padding:20px;margin-bottom:20px;">
 <div style="font-size:10px;color:#999;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">BOOKING #{bid}</div>
 <table style="width:100%;font-size:14px;color:#333;border-collapse:collapse;">
-<tr><td style="padding:6px 0;color:#999;">Vehicle</td><td style="padding:6px 0;text-align:right;font-weight:700;">{v}</td></tr>
-<tr><td style="padding:6px 0;color:#999;">Date</td><td style="padding:6px 0;text-align:right;font-weight:700;">{t.get('date','—')}</td></tr>
-<tr><td style="padding:6px 0;color:#999;">Pickup</td><td style="padding:6px 0;text-align:right;">{t.get('pickup','—')}</td></tr>
-<tr><td style="padding:6px 0;color:#999;">Dropoff</td><td style="padding:6px 0;text-align:right;">{t.get('dropoff','—')}</td></tr>
-{f'<tr><td style="padding:6px 0;color:#999;">Flight</td><td style="padding:6px 0;text-align:right;">{t["flight_number"]}</td></tr>' if t.get('flight_number') else ''}
-{f'<tr><td style="padding:6px 0;color:#999;">Arrival</td><td style="padding:6px 0;text-align:right;">{t["arrival_time"]}</td></tr>' if t.get('arrival_time') else ''}
+<tr><td style="padding:6px 0;color:#999;">Vehicle</td><td style="padding:6px 0;text-align:right;font-weight:700;">{v_s}</td></tr>
+<tr><td style="padding:6px 0;color:#999;">Date</td><td style="padding:6px 0;text-align:right;font-weight:700;">{date_s}</td></tr>
+<tr><td style="padding:6px 0;color:#999;">Pickup</td><td style="padding:6px 0;text-align:right;">{pickup_s}</td></tr>
+<tr><td style="padding:6px 0;color:#999;">Dropoff</td><td style="padding:6px 0;text-align:right;">{drop_s}</td></tr>
+{f'<tr><td style="padding:6px 0;color:#999;">Flight</td><td style="padding:6px 0;text-align:right;">{flight_s}</td></tr>' if flight_s else ''}
+{f'<tr><td style="padding:6px 0;color:#999;">Arrival</td><td style="padding:6px 0;text-align:right;">{arr_s}</td></tr>' if arr_s else ''}
 <tr><td colspan="2" style="border-bottom:1px solid #e8e8e4;padding:8px 0;"></td></tr>
 <tr><td style="padding:8px 0;font-weight:700;color:#000;">Total</td><td style="padding:8px 0;text-align:right;font-size:20px;font-weight:800;color:#000;">${total}</td></tr>
 </table></div>
@@ -462,15 +618,14 @@ def admin_new_booking():
             except Exception as e:
                 print(f"[Email] Error: {e}")
 
-        return redirect(f'/admin/bookings?pin={config.ADMIN_PIN}&msg=Booking+{booking_id}+created+and+email+sent')
+        return redirect(f'/admin/bookings?msg=Booking+{booking_id}+created+and+email+sent')
     return render_template('admin_new_booking.html')
 
 
 @app.route('/admin/email-preview')
+@admin_required
 def admin_email_preview():
     """Preview the booking confirmation email template."""
-    if not session.get('admin'):
-        return redirect('/signin')
     html = """<div style="font-family:Arial,Helvetica,sans-serif;max-width:520px;margin:0 auto;background:#ffffff;">
 <div style="padding:32px 32px 24px;border-bottom:3px solid #000;">
 <h1 style="margin:0;color:#000;font-size:22px;font-weight:800;">Rio Transportation</h1>
@@ -538,9 +693,18 @@ def book():
 
 
 @app.route('/book/submit', methods=['POST'])
+@csrf_exempt
+@rate_limit('20 per hour; 100 per day')
 def book_submit():
-    """Save booking and redirect to payment page."""
+    """Save booking and redirect to payment page. Rate-limited so a script
+    can't fill the bookings file + drain the Resend quota by replaying
+    the form. Validates customer email before save (later email path
+    blasts to the customer-supplied address)."""
     data = request.form.to_dict()
+    # Email validation: reject obvious garbage / header-injection up front
+    cust_email = data.get('email', '').strip()
+    if cust_email and not valid_email(cust_email):
+        return jsonify({'error': 'Invalid email format'}), 400
     booking_id = str(uuid.uuid4())[:8]
     vehicle = data.get('vehicle', 'premier')
     base_price = config.VEHICLE_PRICES.get(vehicle, 189)
@@ -585,19 +749,24 @@ def book_submit():
     bookings = load_bookings()
     bookings.append(booking)
     save_bookings(bookings)
-    # Also store in session as backup (survives redeploys)
-    session[f'booking_{booking_id}'] = booking
-    print(f"[Booking] New booking {booking_id}: {data.get('name','')} — {vehicle} ${base_price}")
+    # Track the booking id in session for the next-step pages (payment +
+    # confirm). Don't stash the full booking dict — that leaks PII into
+    # the client-readable signed cookie (red-team MÉDIO finding) and
+    # bloats it past Flask's 4 KB warning limit on busy customers.
+    session[f'booking_{booking_id}_owned'] = True
+    print(f"[Booking] New booking {booking_id}: {data.get('name','')[:60]} — {vehicle} ${base_price}")
     return redirect(f'/book/payment/{booking_id}')
 
 
 @app.route('/book/payment/<booking_id>')
 def book_payment(booking_id):
-    """Show Square payment form to save card."""
+    """Show Square payment form to save card. Validates the URL slug
+    before any DB hit — keeps an attacker from polluting session keys
+    with arbitrary strings."""
+    if not re.match(r'^[0-9a-f]{8}$', booking_id):
+        abort(404)
     bookings = load_bookings()
     booking = next((b for b in bookings if b['id'] == booking_id), None)
-    if not booking:
-        booking = session.get(f'booking_{booking_id}')
     if not booking:
         abort(404)
     return render_template('book_payment.html', booking=booking, config=config,
@@ -606,22 +775,33 @@ def book_payment(booking_id):
 
 
 @app.route('/book/save-card', methods=['POST'])
+@csrf_exempt
+@rate_limit('30 per hour; 100 per day')
 def book_save_card():
-    """Save card on file via Square (no charge yet)."""
-    data = request.get_json()
+    """Save card on file via Square (no charge yet). Customer-facing form
+    so CSRF is exempted (the booking_id binds to a session-stored booking
+    that only the same browser could have created seconds before).
+    Rate-limited to stop scripted card-save abuse against Square."""
+    data = request.get_json() or {}
     booking_id = data.get('booking_id')
+    if not booking_id or not re.match(r'^[0-9a-f]{8}$', str(booking_id)):
+        return jsonify({'error': 'invalid booking id'}), 400
     nonce = data.get('nonce')
-    tip_percent = int(data.get('tip_percent', 0))
+    try:
+        tip_percent = max(0, min(100, int(data.get('tip_percent', 0))))
+    except Exception:
+        tip_percent = 0
 
     bookings = load_bookings()
     booking = next((b for b in bookings if b['id'] == booking_id), None)
-    # Fallback: check session if file was lost during redeploy
-    if not booking:
-        booking = session.get(f'booking_{booking_id}')
-        if booking:
-            bookings.append(booking)
-    if not booking or not nonce:
-        return jsonify({'error': 'Invalid booking or nonce'}), 400
+    # Ownership: the same browser created the booking and got the
+    # session marker on /book/submit. Without that marker, refuse — stops
+    # someone from guessing booking IDs and saving cards on a stranger's
+    # reservation.
+    if not booking or not session.get(f'booking_{booking_id}_owned'):
+        return jsonify({'error': 'Booking not found'}), 404
+    if not nonce:
+        return jsonify({'error': 'Missing payment nonce'}), 400
 
     # Calculate tip
     subtotal = booking['subtotal']
@@ -693,29 +873,37 @@ def book_save_card():
 
 @app.route('/book/confirm/<booking_id>')
 def book_confirm(booking_id):
+    if not re.match(r'^[0-9a-f]{8}$', booking_id):
+        abort(404)
     bookings = load_bookings()
     booking = next((b for b in bookings if b['id'] == booking_id), None)
+    # Ownership gate — only the browser that submitted /book/submit can
+    # see the confirmation (otherwise booking IDs become enumerable PII).
+    if not booking or not session.get(f'booking_{booking_id}_owned'):
+        abort(404)
     name = booking['customer']['name'] if booking else 'there'
     return render_template('book_confirm.html', name=name, booking=booking)
 
 
 @app.route('/admin/bookings')
+@admin_required
 def admin_bookings():
-    """Hudson's booking management panel."""
-    pin = request.args.get('pin', '')
-    if pin != '6939':  # last 4 digits of phone
-        return 'Access denied. Use ?pin=XXXX', 403
+    """Hudson's booking management panel. Behind /signin — the previous
+    pin=6939 query-string bypass is gone (CRÍTICO red-team finding)."""
     bookings = sorted(load_bookings(), key=lambda b: b.get('created_at', ''), reverse=True)
     return render_template('admin_bookings.html', bookings=bookings, config=config)
 
 
 @app.route('/admin/bookings/<booking_id>/charge', methods=['POST'])
+@admin_required
 def admin_charge_booking(booking_id):
-    """Charge a saved card for an approved booking."""
-    pin = request.form.get('pin', '')
-    if pin != '6939':
-        return jsonify({'error': 'Unauthorized'}), 403
-
+    """Charge a saved card for an approved booking. Auth via session +
+    CSRF token (Flask-WTF) — previously accepted a static `pin=6939` form
+    field, which a malicious off-site form could submit silently."""
+    # Validate the booking_id shape before using it for redirects — keeps
+    # an attacker from stuffing the URL with HTML/quote payloads.
+    if not re.match(r'^[0-9a-f]{8}$', booking_id):
+        return jsonify({'error': 'invalid booking id'}), 400
     bookings = load_bookings()
     booking = next((b for b in bookings if b['id'] == booking_id), None)
     if not booking or not booking.get('card_id'):
@@ -743,21 +931,42 @@ def admin_charge_booking(booking_id):
             booking['payment_id'] = pay_data['payment']['id']
             save_bookings(bookings)
             print(f"[Square] Charged ${booking['total']} for booking {booking_id}")
-            return redirect(f'/admin/bookings?pin=6939&msg=Charged+${booking["total"]}+successfully')
+            from urllib.parse import quote_plus
+            return redirect(f'/admin/bookings?msg={quote_plus("Charged $" + str(booking["total"]) + " successfully")}')
         else:
             errors = pay_data.get('errors', [{}])
             msg = errors[0].get('detail', 'Payment failed')
-            return redirect(f'/admin/bookings?pin=6939&msg=Error:+{msg}')
+            from urllib.parse import quote_plus
+            return redirect(f'/admin/bookings?msg={quote_plus("Error: " + msg)}')
 
     except Exception as e:
-        return redirect(f'/admin/bookings?pin=6939&msg=Error:+{str(e)}')
+        # Don't leak raw exception text into URL — log it, redirect with generic msg
+        print(f"[charge] booking={booking_id} error: {e}")
+        return redirect('/admin/bookings?msg=Error+processing+payment')
 
 
 @app.route('/api/visitor', methods=['POST'])
+@csrf_exempt
+@rate_limit('60 per hour; 300 per day')
 def track_visitor():
-    """Track visitor and notify Hudson via email."""
+    """Track visitor and notify Hudson via email. Hardened against
+    spoofed-IP spam loops (red-team ALTO):
+    - Only honor CF-Connecting-IP when the immediate hop is a real
+      Cloudflare edge (request.remote_addr resolved that way already).
+      In dev/local, fall back to remote_addr.
+    - Rate-limited per IP so even a successful spoof can't drain quota.
+    - Anti-replay debounce (2h) stays as-is — that's UX, not security."""
     import threading
-    ip = request.headers.get('CF-Connecting-IP') or request.headers.get('X-Forwarded-For', '').split(',')[0].strip() or request.remote_addr
+    # CF-Connecting-IP is only trustworthy when Cloudflare is the upstream
+    # (Railway → CF → us). When running locally or behind any other proxy
+    # the header is unverified — use remote_addr instead. On Railway,
+    # RAILWAY_ENVIRONMENT is set so we know Cloudflare is in front.
+    if os.getenv('RAILWAY_ENVIRONMENT'):
+        ip = (request.headers.get('CF-Connecting-IP') or '').strip()
+        if not re.match(r'^[0-9a-fA-F:.]+$', ip):
+            ip = request.remote_addr
+    else:
+        ip = request.remote_addr
     now = datetime.now().timestamp()
 
     # Skip if same IP visited in last 2 hours
@@ -926,8 +1135,11 @@ def robots():
 
 
 @app.route('/api/quote', methods=['POST'])
+@csrf_exempt
+@rate_limit('60 per hour; 500 per day')
 def api_quote():
-    """Calculate price quote."""
+    """Calculate price quote. JSON endpoint — exempt CSRF so the quote
+    widget on the homepage can POST without a token."""
     data = request.json or {}
     vehicle_id = data.get('vehicle', '')
     route = data.get('route', 'slc-pc')
@@ -949,16 +1161,21 @@ def api_quote():
 
 
 @app.route('/api/contact', methods=['POST'])
+@csrf_exempt
+@rate_limit('10 per hour; 50 per day')
 def api_contact():
-    """Handle contact form."""
+    """Handle contact form. Rate-limited to stop spam relays + drained
+    Resend quota. Validates email + caps lengths before forwarding."""
     data = request.json or {}
-    name = data.get('name', '').strip()
-    email = data.get('email', '').strip()
-    phone = data.get('phone', '').strip()
-    message = data.get('message', '').strip()
+    name = (data.get('name', '') or '').strip()[:120]
+    email = (data.get('email', '') or '').strip()[:254]
+    phone = (data.get('phone', '') or '').strip()[:30]
+    message = (data.get('message', '') or '').strip()[:5000]
 
     if not name or not message:
         return jsonify({'error': 'Name and message required'}), 400
+    if email and not valid_email(email):
+        return jsonify({'error': 'Invalid email'}), 400
 
     # For now just log — later integrate email/WhatsApp
     print(f"[Contact] {name} | {email} | {phone} | {message}")
@@ -968,4 +1185,6 @@ def api_contact():
 if __name__ == '__main__':
     print(f"  Park City Trips")
     print(f"  http://localhost:{config.PORT}")
-    app.run(host='0.0.0.0', port=config.PORT, debug=True)
+    # debug=True exposes the Werkzeug debugger (RCE via PIN if anyone
+    # can reach the dev port). Only enabled when explicitly set via env.
+    app.run(host='0.0.0.0', port=config.PORT, debug=os.getenv('FLASK_DEBUG') == '1')

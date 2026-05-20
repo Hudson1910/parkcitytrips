@@ -73,7 +73,7 @@ h1{font-family:'Onest',sans-serif;font-size:24px;margin-bottom:8px;}
     {% endif %}
     {% if b.status == 'pending_approval' %}
     <form action="/admin/bookings/{{ b.id }}/charge" method="post" onsubmit="return confirm('Charge ${{ b.total }} to {{ b.card_brand }} ****{{ b.card_last4 }}?')">
-        <input type="hidden" name="pin" value="6939">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <button type="submit" class="charge-btn"><i class="bi bi-check-circle"></i> Approve & Charge ${{ b.total }}</button>
     </form>
     {% elif b.status == 'charged' %}
