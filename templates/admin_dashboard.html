@@ -1,119 +1,152 @@
+{# Park City Trips — /admin redesign 2026-05-20 (Airbnb Luxe direction, admin tool).
+   Admin pages get a slightly tighter, more utilitarian version of the luxe
+   system: serif keeps the H1 only, body + dense data uses Inter sans for
+   readability. Same data + endpoints preserved. #}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="robots" content="noindex,nofollow">
-    <title>Dashboard — Rio Transportation</title>
-    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>Dashboard · Rio Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
     <style>
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-height:100vh;}
-.admin-nav{padding:16px 24px;border-bottom:1px solid #1e2130;display:flex;align-items:center;justify-content:space-between;}
-.admin-nav .logo{font-family:'Onest',sans-serif;font-weight:800;font-size:14px;letter-spacing:.1em;color:#fff;text-decoration:none;}
-.admin-nav .links{display:flex;gap:20px;align-items:center;}
-.admin-nav .links a{font-size:13px;color:#666;text-decoration:none;transition:color .2s;}
-.admin-nav .links a:hover,.admin-nav .links a.active{color:#c9a84c;}
-.admin-nav .logout{font-size:12px;color:#ef4444;text-decoration:none;}
-.page{max-width:1200px;margin:0 auto;padding:24px 20px;}
-h1{font-family:'Onest',sans-serif;font-size:24px;font-weight:800;margin-bottom:20px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+    --cream:#faf9f6; --cream-2:#f3efe8; --cream-3:#e8e2d5;
+    --ink:#0e1a2e; --ink-2:#1a2a45; --ink-3:#2c3e5a;
+    --neutral-700:#4a4a4a; --neutral-500:#8a8580; --neutral-300:#c8c2b8;
+    --gold:#b8945c; --green:#2f7a4d; --amber:#a87633; --red:#9a3324;
+    --serif:'Fraunces',serif; --sans:'Inter',sans-serif;
+    --ease-out:cubic-bezier(0.16,1,0.3,1);
+}
+html{scroll-behavior:smooth;overflow-x:hidden;-webkit-text-size-adjust:100%;}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;touch-action:pan-y;}
+
+/* Admin nav — tighter than public nav, gold "Admin" tag */
+.admin-nav{position:sticky;top:0;z-index:50;padding:12px clamp(16px,3vw,32px);background:rgba(250,249,246,.92);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(14,26,46,.08);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.admin-nav .logo{font-family:var(--serif);font-style:italic;font-weight:400;font-size:20px;color:var(--ink);text-decoration:none;letter-spacing:-.01em;display:flex;align-items:center;gap:8px;}
+.admin-nav .logo::after{content:'Admin';font-family:var(--sans);font-style:normal;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);background:rgba(184,148,92,.12);padding:3px 8px;border-radius:999px;font-weight:500;}
+.admin-nav .links{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+.admin-nav .links a{padding:7px 12px;border-radius:6px;font-family:var(--sans);font-size:12.5px;font-weight:500;color:var(--ink-3);text-decoration:none;transition:all .25s var(--ease-out);display:inline-flex;align-items:center;gap:5px;}
+.admin-nav .links a i{font-size:13px;color:var(--neutral-500);}
+.admin-nav .links a:hover{background:var(--cream-2);color:var(--ink);}
+.admin-nav .links a:hover i{color:var(--gold);}
+.admin-nav .links a.active{background:var(--ink);color:var(--cream);}
+.admin-nav .links a.active i{color:var(--gold);}
+.admin-nav .links a.logout{color:var(--red);}
+.admin-nav .links a.logout:hover{background:rgba(154,51,36,.08);}
+
+.page{max-width:1280px;margin:0 auto;padding:32px clamp(16px,3vw,32px) 72px;}
+.h-page{font-family:var(--serif);font-weight:300;font-size:clamp(28px,3.6vw,44px);color:var(--ink);letter-spacing:-.02em;margin-bottom:8px;line-height:1.05;}
+.h-page em{font-style:italic;font-weight:400;}
+.h-sub{font-family:var(--sans);font-size:13px;color:var(--neutral-500);margin-bottom:28px;letter-spacing:.005em;}
 
 /* Stats grid */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;}
-.stat{background:#111318;border:1px solid #1e2130;border-radius:12px;padding:20px;}
-.stat .num{font-family:'Onest',sans-serif;font-size:28px;font-weight:800;}
-.stat .label{font-size:11px;color:#666;letter-spacing:.15em;text-transform:uppercase;margin-top:4px;}
 @media(max-width:768px){.stats{grid-template-columns:repeat(2,1fr);}}
+.stat{background:var(--cream);border:1px solid rgba(14,26,46,.08);border-radius:10px;padding:20px 22px;}
+.stat .num{font-family:var(--serif);font-weight:300;font-size:clamp(28px,3.2vw,40px);color:var(--ink);line-height:1;letter-spacing:-.02em;}
+.stat .label{font-family:var(--sans);font-size:10.5px;color:var(--neutral-500);letter-spacing:.18em;text-transform:uppercase;margin-top:10px;}
 
 /* Cards */
-.card{background:#111318;border:1px solid #1e2130;border-radius:12px;padding:20px;margin-bottom:20px;}
-.card h3{font-family:'Onest',sans-serif;font-size:15px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
-.card h3 i{color:#c9a84c;}
+.card{background:var(--cream);border:1px solid rgba(14,26,46,.08);border-radius:10px;padding:24px;margin-bottom:20px;}
+.card h3{font-family:var(--sans);font-size:13px;font-weight:600;color:var(--ink);margin-bottom:16px;display:flex;align-items:center;gap:8px;letter-spacing:.005em;}
+.card h3 i{color:var(--gold);font-size:14px;}
+.card h3 .pull-right{margin-left:auto;font-size:11.5px;color:var(--gold);text-decoration:none;font-weight:500;letter-spacing:.005em;}
+.card h3 .pull-right:hover{color:var(--ink);}
 
 /* Visitor table */
-.v-table{width:100%;border-collapse:collapse;font-size:12px;}
-.v-table th{text-align:left;padding:8px 10px;color:#666;font-weight:600;letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid #1e2130;font-size:10px;}
-.v-table td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.03);}
-.v-table tr:hover{background:rgba(201,168,76,.02);}
-.badge-src{padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;}
-.src-google{background:rgba(34,197,94,.1);color:#22c55e;}
-.src-direct{background:rgba(99,102,241,.1);color:#818cf8;}
-.src-social{background:rgba(236,72,153,.1);color:#ec4899;}
-.src-other{background:rgba(245,158,11,.1);color:#f59e0b;}
+.v-table{width:100%;border-collapse:collapse;font-family:var(--sans);font-size:12.5px;}
+.v-table th{text-align:left;padding:8px 10px;color:var(--neutral-500);font-weight:500;letter-spacing:.18em;text-transform:uppercase;border-bottom:1px solid rgba(14,26,46,.08);font-size:10px;}
+.v-table td{padding:9px 10px;border-bottom:1px dashed rgba(14,26,46,.06);}
+.v-table tr:hover td{background:var(--cream-2);}
+
+.badge-src{padding:3px 9px;border-radius:999px;font-size:10.5px;font-weight:500;letter-spacing:.005em;}
+.src-google{background:rgba(47,122,77,.12);color:var(--green);}
+.src-direct{background:rgba(14,26,46,.08);color:var(--ink-3);}
+.src-social{background:rgba(184,148,92,.14);color:var(--amber);}
+.src-other{background:rgba(154,51,36,.08);color:var(--red);}
 
 /* Booking list */
-.booking-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.04);}
-.booking-row:last-child{border:none;}
-.b-customer{font-weight:700;font-size:14px;}
-.b-detail{font-size:12px;color:#666;margin-top:2px;}
-.b-amount{font-family:'Onest',sans-serif;font-weight:800;color:#c9a84c;}
-.b-status{font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;text-transform:uppercase;}
-.status-pending{background:rgba(245,158,11,.1);color:#f59e0b;}
-.status-charged{background:rgba(34,197,94,.1);color:#22c55e;}
+.booking-row{display:flex;align-items:center;justify-content:space-between;padding:13px 0;gap:14px;}
+.booking-row + .booking-row{border-top:1px dashed rgba(14,26,46,.07);}
+.b-customer{font-family:var(--sans);font-weight:600;font-size:14px;color:var(--ink);}
+.b-detail{font-family:var(--sans);font-size:11.5px;color:var(--neutral-500);margin-top:3px;letter-spacing:.005em;}
+.b-amount{font-family:var(--serif);font-weight:400;font-size:18px;color:var(--ink);letter-spacing:-.01em;}
+.b-status{font-family:var(--sans);font-size:9.5px;font-weight:500;padding:3px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:.18em;margin-top:6px;display:inline-block;}
+.status-pending{background:rgba(168,118,51,.12);color:var(--amber);}
+.status-charged{background:rgba(47,122,77,.12);color:var(--green);}
+.status-other{background:rgba(14,26,46,.08);color:var(--ink-3);}
 
-/* Source breakdown */
-.src-bar{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:13px;}
-.src-bar .name{width:100px;color:#999;}
-.src-bar .bar{flex:1;height:8px;background:#1e2130;border-radius:4px;overflow:hidden;}
-.src-bar .fill{height:100%;border-radius:4px;}
-.src-bar .count{width:40px;text-align:right;font-weight:700;font-size:12px;}
+/* Source bars */
+.src-bar{display:flex;align-items:center;gap:12px;margin-bottom:10px;font-family:var(--sans);font-size:13px;}
+.src-bar .name{width:100px;color:var(--ink-3);font-weight:500;}
+.src-bar .bar{flex:1;height:6px;background:var(--cream-2);border-radius:999px;overflow:hidden;}
+.src-bar .fill{height:100%;border-radius:999px;transition:width .8s var(--ease-out);}
+.src-bar .count{width:46px;text-align:right;font-family:var(--serif);font-weight:400;font-size:15px;color:var(--ink);}
 
-/* Two column */
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-@media(max-width:768px){.grid-2{grid-template-columns:1fr;}}
+@media(max-width:880px){.grid-2{grid-template-columns:1fr;}}
+
+.empty{color:var(--neutral-500);font-family:var(--sans);font-size:13px;padding:16px 0;text-align:center;}
     </style>
 </head>
-<body style="overflow-x:hidden;touch-action:pan-y;">
+<body>
+
 <nav class="admin-nav">
-    <a href="/admin" class="logo">RIO ADMIN</a>
+    <a href="/admin" class="logo">Rio<em>.</em>Transportation</a>
     <div class="links">
         <a href="/admin" class="active"><i class="bi bi-grid"></i> Dashboard</a>
-        <a href="https://limofleet-production.up.railway.app/app" target="_blank"><i class="bi bi-briefcase"></i> CRM (LimoFleet) ↗</a>
-        <a href="/admin/bookings?pin={{ session.get('admin_pin','') }}"><i class="bi bi-calendar-check"></i> Bookings</a>
+        <a href="https://limofleet-production.up.railway.app/app" target="_blank"><i class="bi bi-briefcase"></i> CRM</a>
+        <a href="/admin/bookings"><i class="bi bi-calendar-check"></i> Bookings</a>
         <a href="/admin/visitors"><i class="bi bi-people"></i> Visitors</a>
         <a href="/admin/seo"><i class="bi bi-graph-up-arrow"></i> SEO</a>
         <a href="/" target="_blank"><i class="bi bi-box-arrow-up-right"></i> Site</a>
-        <a href="/signout" class="logout"><i class="bi bi-box-arrow-right"></i> Logout</a>
+        <a href="/signout" class="logout"><i class="bi bi-box-arrow-right"></i> Sign out</a>
     </div>
 </nav>
 
 <div class="page">
-    <h1>Dashboard</h1>
+    <h1 class="h-page">Dashboard.</h1>
+    <div class="h-sub">Real-time visitors, recent bookings and traffic sources.</div>
 
-    <!-- Stats -->
     <div class="stats">
-        <div class="stat"><div class="num">{{ visitors_today }}</div><div class="label">Visitors Today</div></div>
-        <div class="stat"><div class="num">{{ visitors_7d }}</div><div class="label">Last 7 Days</div></div>
+        <div class="stat"><div class="num">{{ visitors_today }}</div><div class="label">Visitors today</div></div>
+        <div class="stat"><div class="num">{{ visitors_7d }}</div><div class="label">Last 7 days</div></div>
         <div class="stat"><div class="num">{{ bookings_total }}</div><div class="label">Bookings</div></div>
         <div class="stat"><div class="num">${{ revenue }}</div><div class="label">Revenue</div></div>
     </div>
 
     <div class="grid-2">
-        <!-- Recent Bookings -->
         <div class="card">
-            <h3><i class="bi bi-calendar-check"></i> Recent Bookings <a href="/admin/new-booking" style="margin-left:auto;font-size:12px;color:#c9a84c;text-decoration:none;font-weight:600;"><i class="bi bi-plus-circle"></i> New</a></h3>
+            <h3><i class="bi bi-calendar-check"></i> Recent bookings
+                <a href="/admin/new-booking" class="pull-right"><i class="bi bi-plus-circle"></i> New</a>
+            </h3>
             {% if bookings %}
-            {% for b in bookings[:5] %}
-            <div class="booking-row">
-                <div>
-                    <div class="b-customer">{{ b.customer.name }}</div>
-                    <div class="b-detail">{{ b.vehicle }} · {{ b.trip.date }} · {{ b.trip.pickup[:30] if b.trip.pickup else '—' }}</div>
+                {% for b in bookings[:5] %}
+                <div class="booking-row">
+                    <div>
+                        <div class="b-customer">{{ b.customer.name }}</div>
+                        <div class="b-detail">{{ b.vehicle }} · {{ b.trip.date }} · {{ b.trip.pickup[:30] if b.trip.pickup else '—' }}</div>
+                    </div>
+                    <div style="text-align:right;">
+                        <div class="b-amount">${{ b.total }}</div>
+                        <span class="b-status {{ 'status-charged' if b.status == 'charged' else ('status-pending' if 'pending' in (b.status or '') else 'status-other') }}">{{ (b.status or 'pending')|replace('_',' ') }}</span>
+                    </div>
                 </div>
-                <div style="text-align:right;">
-                    <div class="b-amount">${{ b.total }}</div>
-                    <span class="b-status {{ 'status-charged' if b.status == 'charged' else 'status-pending' }}">{{ b.status|replace('_',' ') }}</span>
-                </div>
-            </div>
-            {% endfor %}
+                {% endfor %}
             {% else %}
-            <p style="color:#666;font-size:13px;">No bookings yet</p>
+                <div class="empty">No bookings yet</div>
             {% endif %}
         </div>
 
-        <!-- Traffic Sources -->
         <div class="card">
-            <h3><i class="bi bi-graph-up"></i> Traffic Sources (7 days)</h3>
+            <h3><i class="bi bi-graph-up"></i> Traffic sources · 7 days</h3>
             {% for src in top_sources %}
             <div class="src-bar">
                 <span class="name">{{ src.name }}</span>
@@ -122,34 +155,31 @@ h1{font-family:'Onest',sans-serif;font-size:24px;font-weight:800;margin-bottom:2
             </div>
             {% endfor %}
             {% if not top_sources %}
-            <p style="color:#666;font-size:13px;">No visitor data yet</p>
+            <div class="empty">No visitor data yet</div>
             {% endif %}
         </div>
     </div>
 
-    <!-- Recent Visitors -->
     <div class="card">
-        <h3><i class="bi bi-people"></i> Recent Visitors</h3>
+        <h3><i class="bi bi-people"></i> Recent visitors</h3>
         <div style="overflow-x:auto;">
-        <table class="v-table">
-            <thead><tr>
-                <th>When</th><th>Location</th><th>Page</th><th>Source</th><th>Device</th>
-            </tr></thead>
-            <tbody>
-            {% for v in recent_visitors %}
-            <tr>
-                <td style="white-space:nowrap;">{{ v.timestamp[11:16] if v.timestamp|length > 16 else v.timestamp[:16] }}</td>
-                <td>{{ v.flag }} {{ v.city }}, {{ v.region }}</td>
-                <td style="font-weight:600;">{{ v.page }}</td>
-                <td><span class="badge-src {{ 'src-google' if v.source=='Google' else 'src-direct' if v.source=='Direct' else 'src-social' if v.source in ('Facebook','Instagram','TikTok') else 'src-other' }}">{{ v.source }}</span></td>
-                <td>{{ v.device }} · {{ v.browser }}</td>
-            </tr>
-            {% endfor %}
-            {% if not recent_visitors %}
-            <tr><td colspan="5" style="color:#666;text-align:center;padding:20px;">No visitors recorded yet</td></tr>
-            {% endif %}
-            </tbody>
-        </table>
+            <table class="v-table">
+                <thead><tr><th>When</th><th>Location</th><th>Page</th><th>Source</th><th>Device</th></tr></thead>
+                <tbody>
+                    {% for v in recent_visitors %}
+                    <tr>
+                        <td style="white-space:nowrap;color:var(--neutral-500);">{{ v.timestamp[11:16] if v.timestamp|length > 16 else v.timestamp[:16] }}</td>
+                        <td>{{ v.flag }} {{ v.city }}, {{ v.region }}</td>
+                        <td style="font-weight:500;">{{ v.page }}</td>
+                        <td><span class="badge-src {{ 'src-google' if v.source=='Google' else ('src-direct' if v.source=='Direct' else ('src-social' if v.source in ('Facebook','Instagram','TikTok') else 'src-other')) }}">{{ v.source }}</span></td>
+                        <td style="color:var(--neutral-500);">{{ v.device }} · {{ v.browser }}</td>
+                    </tr>
+                    {% endfor %}
+                    {% if not recent_visitors %}
+                    <tr><td colspan="5" class="empty">No visitors recorded yet</td></tr>
+                    {% endif %}
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

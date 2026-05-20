@@ -1,56 +1,111 @@
+{# Park City Trips — /admin/new-booking redesign 2026-05-20 (Airbnb Luxe). #}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="robots" content="noindex,nofollow">
-    <title>New Booking — Admin</title>
-    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;600;700;800&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>New booking · Rio Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
     <style>
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-height:100vh;}
-.nav{padding:16px 24px;border-bottom:1px solid #1e2130;display:flex;align-items:center;justify-content:space-between;}
-.nav a{color:#fff;text-decoration:none;font-family:'Onest',sans-serif;font-weight:800;font-size:14px;letter-spacing:.1em;}
-.nav .back{font-size:13px;color:#666;display:flex;align-items:center;gap:6px;}
-.page{max-width:600px;margin:0 auto;padding:32px 20px 80px;}
-h1{font-family:'Onest',sans-serif;font-size:24px;font-weight:800;margin-bottom:24px;}
-.field{margin-bottom:16px;}
-.field label{display:block;font-size:12px;font-weight:600;color:#999;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
-.field input,.field select,.field textarea{width:100%;padding:14px 16px;background:#111318;border:1.5px solid #1e2130;border-radius:10px;color:#fff;font-size:15px;outline:none;font-family:'Montserrat',sans-serif;}
-.field input:focus,.field select:focus{border-color:#c9a84c;}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-.row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
-.vehicles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;}
-.v-opt{padding:14px 8px;background:#111318;border:2px solid #1e2130;border-radius:10px;text-align:center;cursor:pointer;transition:all .2s;}
-.v-opt:hover{border-color:rgba(255,255,255,.2);}
-.v-opt.sel{border-color:#c9a84c;background:rgba(201,168,76,.06);}
-.v-opt h4{font-family:'Onest',sans-serif;font-size:13px;font-weight:700;margin-bottom:2px;}
-.v-opt .price{font-family:'Onest',sans-serif;font-size:18px;font-weight:800;color:#c9a84c;}
-.divider{height:1px;background:#1e2130;margin:24px 0;}
-.step{font-family:'Onest',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#c9a84c;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
-.step::after{content:'';flex:1;height:1px;background:#1e2130;}
-.btn{width:100%;padding:18px;background:#c9a84c;color:#000;font-family:'Onest',sans-serif;font-size:16px;font-weight:800;border:none;border-radius:12px;cursor:pointer;margin-top:8px;}
-.btn:hover{background:#e8c65a;}
-.check-row{display:flex;align-items:center;gap:10px;padding:14px;background:#111318;border:1px solid #1e2130;border-radius:10px;margin-bottom:16px;cursor:pointer;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+    --cream:#faf9f6; --cream-2:#f3efe8;
+    --ink:#0e1a2e; --ink-2:#1a2a45; --ink-3:#2c3e5a;
+    --neutral-700:#4a4a4a; --neutral-500:#8a8580; --neutral-300:#c8c2b8;
+    --gold:#b8945c;
+    --serif:'Fraunces',serif; --sans:'Inter',sans-serif;
+    --ease-out:cubic-bezier(0.16,1,0.3,1);
+}
+html{scroll-behavior:smooth;overflow-x:hidden;-webkit-text-size-adjust:100%;}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;touch-action:pan-y;}
+
+.admin-nav{position:sticky;top:0;z-index:50;padding:12px clamp(16px,3vw,32px);background:rgba(250,249,246,.92);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(14,26,46,.08);display:flex;align-items:center;justify-content:space-between;}
+.admin-nav .logo{font-family:var(--serif);font-style:italic;font-weight:400;font-size:20px;color:var(--ink);text-decoration:none;letter-spacing:-.01em;display:flex;align-items:center;gap:8px;}
+.admin-nav .logo::after{content:'Admin';font-family:var(--sans);font-style:normal;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);background:rgba(184,148,92,.12);padding:3px 8px;border-radius:999px;font-weight:500;}
+.admin-nav .back{font-family:var(--sans);font-size:13px;color:var(--ink-3);text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:color .3s var(--ease-out);}
+.admin-nav .back:hover{color:var(--ink);}
+
+.page{max-width:680px;margin:0 auto;padding:32px clamp(20px,4vw,32px) 80px;}
+.h-page{font-family:var(--serif);font-weight:300;font-size:clamp(28px,3.6vw,44px);color:var(--ink);letter-spacing:-.02em;line-height:1.05;margin-bottom:8px;}
+.h-page em{font-style:italic;font-weight:400;}
+.h-sub{font-family:var(--sans);font-size:13px;color:var(--neutral-500);margin-bottom:32px;}
+
+/* Step heading */
+.step{margin-top:36px;margin-bottom:18px;font-family:var(--serif);font-weight:400;font-size:20px;color:var(--ink);letter-spacing:-.01em;display:flex;align-items:baseline;gap:12px;border-bottom:1px solid rgba(14,26,46,.08);padding-bottom:14px;}
+.step .num{font-family:var(--serif);font-style:italic;font-weight:300;font-size:24px;color:var(--gold);line-height:1;min-width:30px;}
+.step .txt em{font-style:italic;color:var(--neutral-500);}
+
+/* Underline-style fields (same as book.html) */
+.field{margin-bottom:22px;}
+.field label{display:block;font-family:var(--sans);font-size:11px;font-weight:500;color:var(--neutral-500);letter-spacing:.18em;text-transform:uppercase;margin-bottom:8px;}
+.field input,.field select,.field textarea{width:100%;padding:13px 0;background:transparent;border:0;border-bottom:1px solid rgba(14,26,46,.18);color:var(--ink);font-family:var(--sans);font-size:15px;outline:none;border-radius:0;transition:border-bottom-color .3s var(--ease-out);}
+.field input:focus,.field select:focus,.field textarea:focus{border-bottom-color:var(--ink);}
+.field input::placeholder,.field textarea::placeholder{color:var(--neutral-300);}
+.field textarea{min-height:80px;resize:vertical;line-height:1.5;border-bottom:0;border:1px solid rgba(14,26,46,.12);border-radius:8px;padding:12px 14px;}
+.field textarea:focus{border-color:var(--ink);}
+
+.row{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+@media(max-width:600px){.row{grid-template-columns:1fr;gap:8px;}}
+
+/* Vehicle picker — 4 tiles */
+.vehicles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:8px;}
+@media(max-width:600px){.vehicles{grid-template-columns:repeat(2,1fr);}}
+.v-opt{padding:14px 10px;background:var(--cream);border:1.5px solid rgba(14,26,46,.12);border-radius:8px;text-align:center;cursor:pointer;transition:all .25s var(--ease-out);}
+.v-opt:hover{border-color:rgba(14,26,46,.28);}
+.v-opt.sel{border-color:var(--ink);background:var(--ink);color:var(--cream);box-shadow:0 0 0 2px rgba(14,26,46,.06);}
+.v-opt h4{font-family:var(--serif);font-weight:400;font-size:14px;margin-bottom:4px;letter-spacing:-.005em;}
+.v-opt .price{font-family:var(--serif);font-weight:400;font-size:18px;letter-spacing:-.01em;}
+.v-opt.sel .price{color:var(--cream);}
+.v-opt:not(.sel) .price{color:var(--ink);}
+
+/* Premium stop checkbox card */
+.check-row{display:flex;align-items:center;gap:14px;padding:16px 18px;background:var(--cream);border:1.5px solid rgba(14,26,46,.1);border-radius:10px;margin-bottom:16px;cursor:pointer;transition:border-color .3s var(--ease-out),background .3s var(--ease-out);}
+.check-row:hover{border-color:rgba(14,26,46,.22);}
+.check-row.on{border-color:var(--ink);background:var(--cream-2);}
 .check-row input{display:none;}
-.check-box{width:20px;height:20px;border:2px solid #1e2130;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#c9a84c;transition:all .2s;flex-shrink:0;}
-.check-row input:checked ~ .check-box{border-color:#c9a84c;background:rgba(201,168,76,.15);}
-@media(max-width:640px){.row,.row-3{grid-template-columns:1fr;}.vehicles{grid-template-columns:repeat(2,1fr);}}
+.check-row .box{width:22px;height:22px;border:2px solid rgba(14,26,46,.25);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s var(--ease-out);}
+.check-row.on .box{background:var(--ink);border-color:var(--ink);}
+.check-row .box i{color:var(--cream);font-size:13px;opacity:0;transition:opacity .2s;}
+.check-row.on .box i{opacity:1;}
+.check-row .info{flex:1;}
+.check-row .info .t{font-family:var(--sans);font-weight:500;font-size:14px;color:var(--ink);}
+.check-row .info .s{font-family:var(--sans);font-size:12px;color:var(--neutral-500);margin-top:2px;}
+.check-row .pr{font-family:var(--serif);font-size:20px;font-weight:400;color:var(--ink);}
+
+.btn{
+    width:100%;padding:16px 28px;margin-top:32px;
+    background:var(--ink);color:var(--cream);
+    font-family:var(--sans);font-size:14.5px;font-weight:500;
+    border:none;border-radius:999px;cursor:pointer;
+    display:inline-flex;align-items:center;justify-content:center;gap:10px;
+    transition:background .3s var(--ease-out),transform .3s var(--ease-out);
+}
+.btn:hover{background:var(--ink-2);transform:translateY(-2px);}
+.foot-note{text-align:center;font-family:var(--sans);font-size:12px;color:var(--neutral-500);margin-top:12px;}
+.preview-link{display:block;text-align:center;margin-top:36px;font-family:var(--sans);font-size:13px;color:var(--gold);text-decoration:none;transition:color .3s var(--ease-out);}
+.preview-link:hover{color:var(--ink);}
     </style>
 </head>
-<body style="overflow-x:hidden;touch-action:pan-y;">
-<nav class="nav">
-    <a href="/admin">RIO ADMIN</a>
+<body>
+
+<nav class="admin-nav">
+    <a href="/admin" class="logo">Rio<em>.</em>Transportation</a>
     <a href="/admin" class="back"><i class="bi bi-arrow-left"></i> Dashboard</a>
 </nav>
 
 <div class="page">
-    <h1><i class="bi bi-plus-circle" style="color:#c9a84c;"></i> New Manual Booking</h1>
+    <h1 class="h-page">New <em>booking.</em></h1>
+    <div class="h-sub">Manual entry · confirmation email will be sent to the customer automatically.</div>
 
     <form method="POST" action="/admin/new-booking">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-        <div class="step">1 — Vehicle</div>
+
+        <div class="step"><span class="num">i.</span> <span class="txt">Choose the <em>vehicle</em></span></div>
         <div class="vehicles">
             <div class="v-opt" onclick="pickV(this,'small')"><h4>Comfort Electric</h4><div class="price">$100</div></div>
             <div class="v-opt" onclick="pickV(this,'midsize')"><h4>Midsize SUV</h4><div class="price">$129</div></div>
@@ -59,7 +114,7 @@ h1{font-family:'Onest',sans-serif;font-size:24px;font-weight:800;margin-bottom:2
         </div>
         <input type="hidden" name="vehicle" id="vehicleInput" value="premier">
 
-        <div class="step">2 — Trip Details</div>
+        <div class="step"><span class="num">ii.</span> <span class="txt">Trip <em>details</em></span></div>
         <div class="row">
             <div class="field"><label>Date</label><input type="date" name="date" required></div>
             <div class="field"><label>Flight #</label><input type="text" name="flight_number" placeholder="DL1234" style="text-transform:uppercase;"></div>
@@ -69,42 +124,53 @@ h1{font-family:'Onest',sans-serif;font-size:24px;font-weight:800;margin-bottom:2
             <div class="field"><label>Dropoff</label><input type="text" name="dropoff" placeholder="Montage Deer Valley"></div>
         </div>
         <div class="row">
-            <div class="field"><label>Arrival Time</label><input type="time" name="arrival_time"></div>
+            <div class="field"><label>Arrival time</label><input type="time" name="arrival_time"></div>
             <div class="field"><label>Passengers</label><input type="number" name="adults" value="2" min="1" max="7"></div>
         </div>
 
-        <div class="divider"></div>
-        <div class="step">3 — Customer</div>
+        <div class="step"><span class="num">iii.</span> <span class="txt">Customer <em>information</em></span></div>
         <div class="row">
-            <div class="field"><label>Full Name *</label><input type="text" name="name" required placeholder="John Smith"></div>
+            <div class="field"><label>Full name *</label><input type="text" name="name" required placeholder="John Smith"></div>
             <div class="field"><label>Phone *</label><input type="tel" name="phone" required placeholder="+1 435 000 0000"></div>
         </div>
-        <div class="field"><label>Email (confirmation will be sent)</label><input type="email" name="email" placeholder="john@email.com"></div>
+        <div class="field"><label>Email · confirmation sent here</label><input type="email" name="email" placeholder="john@email.com"></div>
 
-        <div class="divider"></div>
-        <div class="step">4 — Extras</div>
-        <label class="check-row">
-            <input type="checkbox" name="premium_stop" value="1" onchange="this.nextElementSibling.querySelector('i').style.opacity=this.checked?1:0">
-            <div class="check-box"><i class="bi bi-check" style="opacity:0;transition:opacity .2s;"></i></div>
-            <div style="flex:1;"><div style="font-weight:700;font-size:14px;">Premium Stop — Grocery/Liquor</div><div style="font-size:12px;color:#666;">+$60</div></div>
+        <div class="step"><span class="num">iv.</span> <span class="txt">Extras</span></div>
+        <label class="check-row" id="stopLabel">
+            <input type="checkbox" name="premium_stop" value="1" id="stopCheck">
+            <span class="box"><i class="bi bi-check"></i></span>
+            <span class="info">
+                <span class="t">Premium stop — grocery / liquor</span>
+                <span class="s">Quick errand stop on the way</span>
+            </span>
+            <span class="pr">+$60</span>
         </label>
-        <div class="field"><label>Notes</label><textarea name="notes" rows="2" placeholder="Special requests..." style="background:#111318;border:1.5px solid #1e2130;border-radius:10px;color:#fff;padding:14px;font-family:'Montserrat',sans-serif;font-size:14px;resize:vertical;width:100%;outline:none;"></textarea></div>
+        <div class="field"><label>Notes</label><textarea name="notes" rows="2" placeholder="Special requests…"></textarea></div>
 
-        <button type="submit" class="btn"><i class="bi bi-check-circle"></i> Create Booking & Send Confirmation</button>
-        <p style="text-align:center;font-size:12px;color:#666;margin-top:10px;">Confirmation email will be sent to the customer automatically</p>
+        <button type="submit" class="btn"><i class="bi bi-check-circle"></i> Create booking &amp; send confirmation</button>
+        <p class="foot-note">Confirmation email will be sent to the customer automatically.</p>
     </form>
 
-    <div style="margin-top:32px;text-align:center;">
-        <a href="/admin/email-preview" target="_blank" style="color:#c9a84c;font-size:13px;text-decoration:none;"><i class="bi bi-eye"></i> Preview email template</a>
-    </div>
+    <a href="/admin/email-preview" target="_blank" class="preview-link"><i class="bi bi-eye"></i> Preview email template</a>
 </div>
 
 <script>
-function pickV(el,id){
-    document.querySelectorAll('.v-opt').forEach(v=>v.classList.remove('sel'));
+function pickV(el, id){
+    document.querySelectorAll('.v-opt').forEach(v => v.classList.remove('sel'));
     el.classList.add('sel');
-    document.getElementById('vehicleInput').value=id;
+    document.getElementById('vehicleInput').value = id;
 }
+/* Premium-stop toggle — same UX as the customer-facing /book page */
+(function(){
+    const card  = document.getElementById('stopLabel');
+    const check = document.getElementById('stopCheck');
+    card.addEventListener('click', e => {
+        if(e.target.tagName !== 'INPUT'){
+            check.checked = !check.checked;
+            card.classList.toggle('on', check.checked);
+        }
+    });
+})();
 </script>
 <script defer src="/static/no-zoom.js?v=2"></script>
 </body>
