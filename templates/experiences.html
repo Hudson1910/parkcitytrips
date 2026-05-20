@@ -1,289 +1,170 @@
+{# Park City Trips — /experiences redesign 2026-05-20 (Airbnb Luxe direction). #}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-    <title>Things to Do in Park City | Activities & Experiences | Rio Transportation</title>
-    <meta name="description" content="Best things to do in Park City, Utah. The Crater hot springs, dog sledding, snowmobile tours, Olympic Park, fine dining, skiing. Book activities + airport transfer from $100.">
-    <meta name="keywords" content="things to do in Park City, Park City activities, Park City experiences, The Crater Midway, dog sledding Park City, snowmobile Park City, Park City winter activities">
-    <meta property="og:title" content="Things to Do in Park City — Activities & Experiences">
-    <meta property="og:description" content="Discover the best Park City activities. Hot springs, skiing, dining, adventure tours. Curated by local experts.">
+    <meta name="description" content="Things to do in Park City — skiing, snowmobiling, hot springs, dining, hot air balloons. Curated by locals. Book your adventure and we'll handle the transfer.">
+    <meta property="og:title" content="Things to Do in Park City — Rio Transportation">
+    <meta property="og:description" content="Curated Park City experiences from the Rio team — skiing, snowmobiling, hot springs, dining, balloons. We handle the transfer.">
+    <meta property="og:url" content="https://parkcitytrips.com/experiences">
+    <meta property="og:type" content="website">
     <link rel="canonical" href="https://parkcitytrips.com/experiences">
-    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>Things to Do in Park City — Curated by Locals | Rio Transportation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2J1TXGYYMD"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-2J1TXGYYMD');</script>
     <style>
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-height:100vh;overflow-x:hidden;}
-.e-nav{padding:20px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06);}
-.e-nav a{color:#fff;text-decoration:none;}
-.e-nav .logo{font-family:'Onest',sans-serif;font-weight:800;font-size:16px;letter-spacing:.1em;}
-.e-nav .back{font-size:14px;color:#666;display:flex;align-items:center;gap:6px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+    --cream:#faf9f6; --cream-2:#f3efe8;
+    --ink:#0e1a2e; --ink-2:#1a2a45; --ink-3:#2c3e5a;
+    --neutral-700:#4a4a4a; --neutral-500:#8a8580;
+    --gold:#b8945c;
+    --serif:'Fraunces','Times New Roman',serif;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --shadow-md:0 4px 16px rgba(14,26,46,.06),0 1px 3px rgba(14,26,46,.08);
+    --ease-out:cubic-bezier(0.16,1,0.3,1);
+}
+html{scroll-behavior:smooth;overflow-x:hidden;-webkit-text-size-adjust:100%;}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;touch-action:pan-y;}
 
-.hero{padding:80px 20px 40px;text-align:center;}
-.hero .tag{font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:#c9a84c;margin-bottom:12px;}
-.hero h1{font-family:'Onest',sans-serif;font-size:clamp(28px,5vw,48px);font-weight:900;margin-bottom:12px;}
-.hero p{color:#666;font-size:15px;max-width:550px;margin:0 auto;}
+.nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:16px clamp(20px,4vw,56px);background:rgba(250,249,246,.92);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(14,26,46,.07);}
+.nav .logo{font-family:var(--serif);font-style:italic;font-weight:400;font-size:22px;color:var(--ink);text-decoration:none;letter-spacing:-.01em;}
+.nav .back{font-family:var(--sans);font-size:13.5px;color:var(--ink-3);text-decoration:none;display:flex;align-items:center;gap:8px;transition:color .3s var(--ease-out);}
+.nav .back:hover{color:var(--ink);}
 
-/* Filter tabs */
-.filters{display:flex;justify-content:center;gap:8px;padding:0 20px;margin-bottom:40px;flex-wrap:wrap;}
-.filter-btn{padding:8px 20px;border-radius:50px;font-size:13px;font-weight:600;border:1.5px solid #1e2130;background:transparent;color:#666;cursor:pointer;transition:all .2s;}
-.filter-btn.active,.filter-btn:hover{border-color:#c9a84c;color:#c9a84c;background:rgba(201,168,76,.06);}
+.exp-header{text-align:center;padding:clamp(56px,9vh,120px) clamp(20px,5vw,40px) clamp(36px,5vh,60px);max-width:780px;margin:0 auto;}
+.eyebrow{font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--neutral-500);margin-bottom:18px;display:inline-flex;align-items:center;gap:14px;}
+.eyebrow::before,.eyebrow::after{content:'';width:24px;height:1px;background:var(--ink);opacity:.4;}
+.exp-header h1{font-family:var(--serif);font-optical-sizing:auto;font-weight:300;font-size:clamp(40px,6vw,80px);line-height:1.04;letter-spacing:-.025em;color:var(--ink);}
+.exp-header h1 em{font-style:italic;font-weight:400;}
+.exp-header p{font-family:var(--sans);font-size:16px;color:var(--neutral-700);line-height:1.7;margin-top:18px;max-width:50ch;margin-left:auto;margin-right:auto;}
 
-/* Activity grid */
-.grid{max-width:1100px;margin:0 auto;padding:0 20px 60px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
-@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr);}}
+/* Filter chips */
+.filters{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;padding:0 clamp(20px,5vw,40px) clamp(40px,5vh,56px);max-width:1100px;margin:0 auto;}
+.filter-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:999px;background:transparent;border:1px solid rgba(14,26,46,.18);color:var(--ink-3);font-family:var(--sans);font-size:13px;font-weight:500;cursor:pointer;transition:all .3s var(--ease-out);}
+.filter-btn i{font-size:13px;}
+.filter-btn:hover{border-color:var(--ink);color:var(--ink);}
+.filter-btn.active{background:var(--ink);color:var(--cream);border-color:var(--ink);}
+
+/* Grid */
+.grid{max-width:1280px;margin:0 auto;padding:0 clamp(20px,5vw,40px) 80px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+@media(max-width:1024px){.grid{grid-template-columns:repeat(2,1fr);}}
 @media(max-width:640px){.grid{grid-template-columns:1fr;}}
 
-.card{background:#111318;border:1px solid #1e2130;border-radius:16px;overflow:hidden;transition:all .3s;}
-.card:hover{border-color:rgba(201,168,76,.3);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.3);}
-.card-img{height:200px;overflow:hidden;position:relative;background-size:cover;background-position:center;transition:background-size .4s;}
-.card:hover .card-img{background-size:110%;}
-.card-badge{position:absolute;top:12px;left:12px;padding:4px 10px;border-radius:6px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;}
-.badge-winter{background:rgba(59,130,246,.9);color:#fff;}
-.badge-summer{background:rgba(34,197,94,.9);color:#fff;}
-.badge-year{background:rgba(201,168,76,.9);color:#000;}
-.card-body{padding:18px 18px 20px;}
-.card-title{font-family:'Onest',sans-serif;font-size:17px;font-weight:700;margin-bottom:4px;}
-.card-loc{font-size:12px;color:#666;margin-bottom:10px;display:flex;align-items:center;gap:4px;}
-.card-desc{font-size:13px;color:#999;line-height:1.6;margin-bottom:14px;}
-.card-footer{display:flex;justify-content:space-between;align-items:center;}
-.card-price{font-family:'Onest',sans-serif;font-weight:800;color:#c9a84c;}
-.card-price span{font-size:11px;color:#666;font-weight:400;}
-.card-btn{padding:8px 18px;background:transparent;border:1.5px solid #c9a84c;color:#c9a84c;border-radius:50px;font-size:12px;font-weight:600;text-decoration:none;transition:all .2s;}
-.card-btn:hover{background:#c9a84c;color:#000;}
+.card{background:var(--cream);border:1px solid rgba(14,26,46,.07);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;transition:transform .35s var(--ease-out),border .3s var(--ease-out),box-shadow .35s var(--ease-out);}
+.card:hover{transform:translateY(-3px);border-color:rgba(14,26,46,.16);box-shadow:var(--shadow-md);}
+.card-img{position:relative;aspect-ratio:4/3;background-size:cover;background-position:center;background-color:var(--cream-2);overflow:hidden;}
+.card-img::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(14,26,46,.25));pointer-events:none;opacity:0;transition:opacity .35s var(--ease-out);}
+.card:hover .card-img::after{opacity:1;}
+.card-badge{position:absolute;top:14px;left:14px;font-family:var(--sans);font-size:10.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;padding:6px 12px;border-radius:999px;background:rgba(250,249,246,.92);backdrop-filter:blur(6px);color:var(--ink);z-index:2;}
+.badge-winter{background:rgba(14,26,46,.85);color:var(--cream);}
+.badge-summer{background:rgba(184,148,92,.92);color:var(--cream);}
+.badge-year{background:rgba(250,249,246,.92);color:var(--ink);}
 
-/* CTA */
-.cta{text-align:center;padding:40px 20px 80px;}
-.cta p{color:#666;font-size:14px;margin-bottom:16px;}
-.cta a{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:#c9a84c;color:#000;font-family:'Onest',sans-serif;font-weight:700;border-radius:50px;text-decoration:none;}
+.card-body{padding:22px 24px 24px;display:flex;flex-direction:column;flex:1;}
+.card-title{font-family:var(--serif);font-weight:400;font-size:20px;color:var(--ink);line-height:1.2;letter-spacing:-.01em;}
+.card-loc{font-family:var(--sans);font-size:12px;color:var(--neutral-500);margin-top:6px;display:flex;align-items:center;gap:6px;}
+.card-loc i{color:var(--gold);font-size:12px;}
+.card-desc{font-family:var(--sans);font-size:13.5px;color:var(--neutral-700);line-height:1.6;margin-top:12px;}
+.card-footer{margin-top:auto;padding-top:18px;display:flex;align-items:flex-end;justify-content:space-between;gap:14px;border-top:1px solid rgba(14,26,46,.07);margin-top:18px;padding-top:16px;}
+.card-price{font-family:var(--serif);font-size:18px;font-weight:400;color:var(--ink);letter-spacing:-.01em;}
+.card-price span{font-family:var(--sans);font-size:11px;font-weight:400;color:var(--neutral-500);display:block;letter-spacing:.04em;margin-top:2px;}
+.card-btn{font-family:var(--sans);font-size:12.5px;font-weight:500;color:var(--ink);text-decoration:none;padding:8px 16px;border:1px solid rgba(14,26,46,.18);border-radius:999px;transition:all .3s var(--ease-out);white-space:nowrap;}
+.card-btn:hover{background:var(--ink);color:var(--cream);border-color:var(--ink);}
 
-.footer{padding:24px 40px;border-top:1px solid rgba(255,255,255,.06);text-align:center;font-size:12px;color:rgba(255,255,255,.2);}
-@media(max-width:640px){.e-nav{padding:14px 16px;}}
+/* Transfer CTA — dark band before footer */
+.transfer-cta{background:var(--ink);color:var(--cream);padding:clamp(64px,9vh,100px) clamp(20px,5vw,40px);text-align:center;}
+.transfer-cta .eyebrow-dark{font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:rgba(250,249,246,.55);margin-bottom:16px;}
+.transfer-cta h2{font-family:var(--serif);font-weight:300;font-size:clamp(28px,4vw,52px);color:var(--cream);letter-spacing:-.02em;line-height:1.05;max-width:18ch;margin:0 auto;}
+.transfer-cta h2 em{font-style:italic;font-weight:400;}
+.transfer-cta .btn-primary{display:inline-flex;align-items:center;gap:10px;margin-top:32px;padding:16px 32px;border-radius:999px;background:var(--cream);color:var(--ink);font-family:var(--sans);font-size:14px;font-weight:500;text-decoration:none;transition:transform .3s var(--ease-out),background .3s var(--ease-out);}
+.transfer-cta .btn-primary:hover{background:#fff;transform:translateY(-2px);}
+
+footer.foot{background:var(--ink);color:rgba(250,249,246,.5);padding:48px 40px 32px;text-align:center;font-family:var(--sans);font-size:12px;border-top:1px solid rgba(250,249,246,.06);}
+footer.foot a{color:rgba(250,249,246,.7);text-decoration:none;transition:color .3s var(--ease-out);}
+footer.foot a:hover{color:var(--cream);}
     </style>
 </head>
-<body style="overflow-x:hidden;touch-action:pan-y;">
-<nav class="e-nav">
-    <a href="/" class="logo">RIO TRANSPORTATION</a>
-    <a href="/" class="back"><i class="bi bi-arrow-left"></i> Back</a>
+<body>
+
+<nav class="nav">
+    <a href="/" class="logo">Rio<em>.</em>Transportation</a>
+    <a href="/" class="back"><i class="bi bi-arrow-left"></i> Back to site</a>
 </nav>
 
-<div class="hero">
-    <div class="tag">PARK CITY CONCIERGE</div>
-    <h1>Things to Do in Park City</h1>
-    <p>The best activities and experiences — curated by locals. Book your adventure + we handle the transfer.</p>
-</div>
+<header class="exp-header">
+    <div class="eyebrow">Park City Concierge</div>
+    <h1>Things to do, <em>curated.</em></h1>
+    <p>Hand-picked experiences from people who live here. Book the activity through us or direct with the operator — we'll handle the transfer either way.</p>
+</header>
 
 <div class="filters">
-    <button class="filter-btn active" onclick="filterCards('all')">All</button>
-    <button class="filter-btn" onclick="filterCards('winter')"><i class="bi bi-snow2"></i> Winter</button>
-    <button class="filter-btn" onclick="filterCards('summer')"><i class="bi bi-sun"></i> Summer</button>
-    <button class="filter-btn" onclick="filterCards('year')"><i class="bi bi-calendar-check"></i> Year-Round</button>
-    <button class="filter-btn" onclick="filterCards('dining')"><i class="bi bi-cup-hot"></i> Dining</button>
-    <button class="filter-btn" onclick="filterCards('adventure')"><i class="bi bi-lightning"></i> Adventure</button>
+    <button class="filter-btn active" onclick="filterCards('all', event)">All</button>
+    <button class="filter-btn" onclick="filterCards('winter', event)"><i class="bi bi-snow2"></i> Winter</button>
+    <button class="filter-btn" onclick="filterCards('summer', event)"><i class="bi bi-sun"></i> Summer</button>
+    <button class="filter-btn" onclick="filterCards('year', event)"><i class="bi bi-calendar-check"></i> Year-round</button>
+    <button class="filter-btn" onclick="filterCards('dining', event)"><i class="bi bi-cup-hot"></i> Dining</button>
+    <button class="filter-btn" onclick="filterCards('adventure', event)"><i class="bi bi-lightning"></i> Adventure</button>
 </div>
 
 <div class="grid" id="actGrid">
-    <!-- YEAR-ROUND -->
-    <div class="card" data-season="year dining">
-        <div class="card-img" style="background-image:url('/static/experiences/gourmet-dining.jpg');">
-            <span class="card-badge badge-year">Year-Round</span>
+    {# Card data inline so it's easy to add/edit. Each card has data-season
+       used by the filter JS. Same images, same booking URLs as before. #}
+    {% set _cards = [
+        {'img':'gourmet-dining.jpg','badge':'Year-round','badgeCls':'badge-year','title':'Gourmet dining experience','loc':'Park City · Main Street','desc':"Park City's finest restaurants on a curated dining tour. Local flavors and award-winning chefs.",'price':'From $215','unit':'/ person','href':'https://www.viator.com/tours/Park-City/Gourmet-Dining-Experience/d22368-5596059P2?pid=P00006875&uid=U00578334&mcid=58086&currency=USD','season':'year dining'},
+        {'img':'crater.jpg','badge':'Year-round','badgeCls':'badge-year','title':'The Crater hot springs','loc':'Midway, UT','desc':"Swim inside a 10,000-year-old volcanic crater. Snorkeling, scuba and paddleboarding available.",'price':'From $125','unit':'/ person','href':'https://travelagents.viator.com/tours/Park-City/Park-City-Heber-Valley-Swiss-Village-Dairy-Farm-Midway-Crater/d22368-16843P7','season':'year'},
+        {'img':'gondola.jpg','badge':'Year-round','badgeCls':'badge-year','title':'Scenic gondola ride','loc':'Park City Mountain','desc':"Up to 9,000+ feet for panoramic Wasatch views. Restaurant at the top, all seasons.",'price':'Varies','unit':'by day','href':'https://www.parkcitymountain.com','season':'year'},
+        {'img':'snowboard.jpg','badge':'Winter','badgeCls':'badge-winter','title':'Premium snowboard package','loc':'Park City Mountain','desc':"Full premium gear rental for the largest ski resort in the US — 7,300 acres of terrain.",'price':'From $254','unit':'/ person','href':'https://travelagents.viator.com/tours/Park-City/Park-City-Premium-Snowboard-Package/d22368-7972P4','season':'winter adventure'},
+        {'img':'dog-sledding.jpg','badge':'Winter','badgeCls':'badge-winter','title':'Dog sledding adventure','loc':'Park City, UT','desc':"Mush your own team of huskies through snow-covered Wasatch trails. Bucket-list winter experience.",'price':'From $200','unit':'/ person','href':'https://www.viator.com/Park-City-tours/Dog-Sledding/d22368-g20-c942','season':'winter adventure'},
+        {'img':'snowmobile.jpg','badge':'Winter','badgeCls':'badge-winter','title':'Snowmobile tours','loc':'Wasatch Mountains','desc':"Guided snowmobile through pristine backcountry. Multiple trails, beginner to expert.",'price':'From $150','unit':'/ person','href':'https://www.viator.com/Park-City-tours/Snowmobiling/d22368-g20-c969','season':'winter adventure'},
+        {'img':'ice-castles.jpg','badge':'Winter','badgeCls':'badge-winter','title':'Ice Castles','loc':'Midway, UT','desc':"Massive ice formations with LED lights — slides, tunnels, fountains and thrones carved from ice. Magical at night.",'price':'From $20','unit':'/ person','href':'https://icecastles.com/utah','season':'winter'},
+        {'img':'atv.jpg','badge':'Winter','badgeCls':'badge-winter','title':'UTV / ATV adventure','loc':'Park City Mountains','desc':"Explore the backcountry in a 4-seater Polaris RZR — 2-hour guided tour, incredible views.",'price':'From $347','unit':'/ vehicle','href':'https://www.viator.com/tours/Park-City/2-Hour-Park-City-UTV-ATV-Rental-4-Seater-RZR/d22368-356932P7','season':'winter adventure'},
+        {'img':'mountain-bike.jpg','badge':'Summer','badgeCls':'badge-summer','title':'Mountain biking','loc':'Park City Trails','desc':"450+ miles of world-class trails. Park City was the first Gold-Level Ride Center named by IMBA.",'price':'From $50','unit':'/ rental','href':'https://www.viator.com/Park-City-tours/Mountain-Biking/d22368-g20-c950','season':'summer adventure'},
+        {'img':'balloon.jpg','badge':'Summer','badgeCls':'badge-summer','title':'Hot air balloon ride','loc':'Park City / Heber','desc':"Soar above the Wasatch at sunrise. Champagne toast included. Unforgettable perspective.",'price':'From $325','unit':'/ person','href':'https://www.viator.com/tours/Park-City/Park-City-Sunrise-Hot-Air-Balloon-Ride/d22368-6746P7','season':'summer adventure'},
+        {'img':'fishing.jpg','badge':'Summer','badgeCls':'badge-summer','title':'Fly fishing','loc':'Provo River','desc':"Guided fly fishing on the world-famous Provo River. Gear included. Beginners and experts welcome.",'price':'From $260','unit':'/ person','href':'https://www.viator.com/tours/Park-City/Guided-Fly-Fishing/d22368-216509P1','season':'summer adventure'},
+        {'img':'spa.avif','badge':'Year-round','badgeCls':'badge-year','title':'Spa & wellness','loc':'Various locations','desc':"World-class spas at Montage, St Regis and Waldorf Astoria. Massage, facials, hot tubs after a day on the mountain.",'price':'From $100','unit':'/ treatment','href':'https://www.viator.com/Park-City-tours/Spa-Tours/d22368-g20-c965','season':'year dining'},
+    ] %}
+    {% for c in _cards %}
+    <article class="card" data-season="{{ c.season }}">
+        <div class="card-img" style="background-image:url('/static/experiences/{{ c.img }}');">
+            <span class="card-badge {{ c.badgeCls }}">{{ c.badge }}</span>
         </div>
         <div class="card-body">
-            <div class="card-title">Gourmet Dining Experience</div>
-            <div class="card-loc"><i class="bi bi-geo-alt"></i> Park City, Main Street</div>
-            <div class="card-desc">Experience Park City's finest restaurants with a curated gourmet dining tour. Taste local flavors and award-winning cuisine.</div>
+            <div class="card-title">{{ c.title }}</div>
+            <div class="card-loc"><i class="bi bi-geo-alt"></i> {{ c.loc }}</div>
+            <p class="card-desc">{{ c.desc }}</p>
             <div class="card-footer">
-                <div class="card-price">From $215 <span>/person</span></div>
-                <a href="https://www.viator.com/tours/Park-City/Gourmet-Dining-Experience/d22368-5596059P2?pid=P00006875&uid=U00578334&mcid=58086&currency=USD" target="_blank" class="card-btn">Book Now →</a>
+                <div class="card-price">{{ c.price }} <span>{{ c.unit }}</span></div>
+                <a href="{{ c.href }}" target="_blank" rel="noopener" class="card-btn">Book →</a>
             </div>
         </div>
-    </div>
-
-    <div class="card" data-season="year">
-        <div class="card-img" style="background-image:url('/static/experiences/crater.jpg');">
-            <span class="card-badge badge-year">Year-Round</span>
-        </div>
-        <div class="card-body">
-            <div class="card-title">The Crater Hot Springs</div>
-            <div class="card-loc"><i class="bi bi-geo-alt"></i> Midway, UT</div>
-            <div class="card-desc">Swim in a natural hot spring inside a 10,000-year-old volcanic crater. Snorkeling, scuba diving, and paddleboarding available.</div>
-            <div class="card-footer">
-                <div class="card-price">From $125 <span>/person</span></div>
-                <a href="https://travelagents.viator.com/tours/Park-City/Park-City-Heber-Valley-Swiss-Village-Dairy-Farm-Midway-Crater/d22368-16843P7" target="_blank" class="card-btn">Book Now →</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="card" data-season="year">
-        <div class="card-img" style="background-image:url('/static/experiences/gondola.jpg');">
-            <span class="card-badge badge-year">Year-Round</span>
-        </div>
-        <div class="card-body">
-            <div class="card-title">Scenic Gondola Ride</div>
-            <div class="card-loc"><i class="bi bi-geo-alt"></i> Park City Mountain</div>
-            <div class="card-desc">Ride the gondola to 9,000+ feet for breathtaking panoramic views of the Wasatch Mountains. Restaurant at the top.</div>
-            <div class="card-footer">
-                <div class="card-price">Varies <span>by day</span></div>
-                <a href="https://www.parkcitymountain.com" target="_blank" class="card-btn">Learn More →</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- WINTER -->
-    <div class="card" data-season="winter adventure">
-        <div class="card-img" style="background-image:url('/static/experiences/snowboard.jpg');">
-            <span class="card-badge badge-winter">Winter</span>
-        </div>
-        <div class="card-body">
-            <div class="card-title">Premium Snowboard Package</div>
-            <div class="card-loc"><i class="bi bi-geo-alt"></i> Park City Mountain</div>
-            <div class="card-desc">Full snowboard rental package with premium gear. Hit the slopes at the largest ski resort in the US with 7,300 acres of terrain.</div>
-            <div class="card-footer">
-                <div class="card-price">From $254 <span>/person</span></div>
-                <a href="https://travelagents.viator.com/tours/Park-City/Park-City-Premium-Snowboard-Package/d22368-7972P4" target="_blank" class="card-btn">Book Now →</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="card" data-season="winter adventure">
-        <div class="card-img" style="background-image:url('/static/experiences/dog-sledding.jpg');">
-            <span class="card-badge badge-winter">Winter</span>
-        </div>
-        <div class="card-body">
-            <div class="card-title">Dog Sledding Adventure</div>
-            <div class="card-loc"><i class="bi bi-geo-alt"></i> Park City, UT</div>
-            <div class="card-desc">Mush your own team of huskies through snow-covered trails in the Wasatch Mountains. An unforgettable Utah winter experience.</div>
-            <div class="card-footer">
-                <div class="card-price">From $200 <span>/person</span></div>
-                <a href="https://www.viator.com/Park-City-tours/Dog-Sledding/d22368-g20-c942" target="_blank" class="card-btn">Book Now →</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="card" data-season="winter adventure">
-        <div class="card-img" style="background-image:url('/static/experiences/snowmobile.jpg');">
-            <span class="card-badge badge-winter">Winter</span>
-        </div>
-        <div class="card-body">
-            <div class="card-title">Snowmobile Tours</div>
-            <div class="card-loc"><i class="bi bi-geo-alt"></i> Wasatch Mountains</div>
-            <div class="card-desc">Ride through pristine backcountry on a guided snowmobile tour. Multiple trail options from beginner to expert.</div>
-            <div class="card-footer">
-                <div class="card-price">From $150 <span>/person</span></div>
-                <a href="https://www.viator.com/Park-City-tours/Snowmobiling/d22368-g20-c969" target="_blank" class="card-btn">Book Now →</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="card" data-season="winter">
-        <div class="card-img" style="background-image:url('/static/experiences/ice-castles.jpg');">
-            <span class="card-badge badge-winter">Winter</span>
-        </div>
-        <div class="card-body">
-            <div class="card-title">Ice Castles</div>
-            <div class="card-loc"><i class="bi bi-geo-alt"></i> Midway, UT</div>
-            <div class="card-desc">Walk through massive ice formations with LED lights. Slides, tunnels, fountains, and thrones carved from ice. Magical at night.</div>
-            <div class="card-footer">
-                <div class="card-price">From $20 <span>/person</span></div>
-                <a href="https://icecastles.com/utah" target="_blank" class="card-btn">Book Now →</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="card" data-season="winter adventure">
-        <div class="card-img" style="background-image:url('/static/experiences/atv.jpg');">
-            <span class="card-badge badge-winter">Winter</span>
-        </div>
-        <div class="card-body">
-            <div class="card-title">UTV/ATV Adventure</div>
-            <div class="card-loc"><i class="bi bi-geo-alt"></i> Park City Mountains</div>
-            <div class="card-desc">Explore Park City's backcountry in a 4-seater Polaris RZR. 2-hour guided tour through mountain trails with incredible views.</div>
-            <div class="card-footer">
-                <div class="card-price">From $347 <span>/vehicle</span></div>
-                <a href="https://www.viator.com/tours/Park-City/2-Hour-Park-City-UTV-ATV-Rental-4-Seater-RZR/d22368-356932P7" target="_blank" class="card-btn">Book Now →</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- SUMMER -->
-    <div class="card" data-season="summer adventure">
-        <div class="card-img" style="background-image:url('/static/experiences/mountain-bike.jpg');">
-            <span class="card-badge badge-summer">Summer</span>
-        </div>
-        <div class="card-body">
-            <div class="card-title">Mountain Biking</div>
-            <div class="card-loc"><i class="bi bi-geo-alt"></i> Park City Trails</div>
-            <div class="card-desc">Over 450 miles of world-class mountain bike trails. Park City was named the first Gold-Level Ride Center by IMBA.</div>
-            <div class="card-footer">
-                <div class="card-price">From $50 <span>/rental</span></div>
-                <a href="https://www.viator.com/Park-City-tours/Mountain-Biking/d22368-g20-c950" target="_blank" class="card-btn">Book Now →</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="card" data-season="summer adventure">
-        <div class="card-img" style="background-image:url('/static/experiences/balloon.jpg');">
-            <span class="card-badge badge-summer">Summer</span>
-        </div>
-        <div class="card-body">
-            <div class="card-title">Hot Air Balloon Ride</div>
-            <div class="card-loc"><i class="bi bi-geo-alt"></i> Park City / Heber</div>
-            <div class="card-desc">Soar above the Wasatch Mountains at sunrise. Champagne toast included. An unforgettable perspective of Utah's beauty.</div>
-            <div class="card-footer">
-                <div class="card-price">From $325 <span>/person</span></div>
-                <a href="https://www.viator.com/tours/Park-City/Park-City-Sunrise-Hot-Air-Balloon-Ride/d22368-6746P7" target="_blank" class="card-btn">Book Now →</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="card" data-season="summer adventure">
-        <div class="card-img" style="background-image:url('/static/experiences/fishing.jpg');">
-            <span class="card-badge badge-summer">Summer</span>
-        </div>
-        <div class="card-body">
-            <div class="card-title">Fly Fishing</div>
-            <div class="card-loc"><i class="bi bi-geo-alt"></i> Provo River</div>
-            <div class="card-desc">Guided fly fishing on the world-famous Provo River. All gear provided. Perfect for beginners and experienced anglers.</div>
-            <div class="card-footer">
-                <div class="card-price">From $260 <span>/person</span></div>
-                <a href="https://www.viator.com/tours/Park-City/Guided-Fly-Fishing/d22368-216509P1" target="_blank" class="card-btn">Book Now →</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="card" data-season="year dining">
-        <div class="card-img" style="background-image:url('/static/experiences/spa.avif');">
-            <span class="card-badge badge-year">Year-Round</span>
-        </div>
-        <div class="card-body">
-            <div class="card-title">Spa & Wellness</div>
-            <div class="card-loc"><i class="bi bi-geo-alt"></i> Various Locations</div>
-            <div class="card-desc">World-class spas at Montage, St. Regis, and Waldorf Astoria. Massages, facials, hot tubs, and relaxation after a day on the mountain.</div>
-            <div class="card-footer">
-                <div class="card-price">From $100 <span>/treatment</span></div>
-                <a href="https://www.viator.com/Park-City-tours/Spa-Tours/d22368-g20-c965" target="_blank" class="card-btn">Explore →</a>
-            </div>
-        </div>
-    </div>
+    </article>
+    {% endfor %}
 </div>
 
-<!-- CTA -->
-<div class="cta">
-    <p>Need a ride to your adventure? We handle the transfer.</p>
-    <a href="/book"><i class="bi bi-calendar-check"></i> Book Your Transfer — From $100</a>
-</div>
+<section class="transfer-cta">
+    <div class="eyebrow-dark">Need a ride?</div>
+    <h2>We'll handle the <em>transfer.</em></h2>
+    <a href="/book" class="btn-primary">Book your ride <i class="bi bi-arrow-right"></i></a>
+</section>
 
-<footer class="footer">© 2026 Rio Transportation LLC · Park City, Utah · parkcitytrips.com</footer>
+<footer class="foot">
+    © 2026 Rio Transportation LLC · Park City, Utah ·
+    <a href="tel:+14352146939">(435) 214-6939</a>
+</footer>
 
 <script>
-function filterCards(cat){
-    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-    event.target.classList.add('active');
-    document.querySelectorAll('.card').forEach(c=>{
-        if(cat==='all') c.style.display='';
-        else c.style.display=c.dataset.season.includes(cat)?'':'none';
+function filterCards(cat, e){
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    if(e && e.target) e.target.classList.add('active');
+    document.querySelectorAll('.card').forEach(c => {
+        c.style.display = (cat === 'all' || c.dataset.season.includes(cat)) ? '' : 'none';
     });
 }
 </script>

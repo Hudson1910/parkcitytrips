@@ -1,106 +1,150 @@
+{# Park City Trips — /about redesign 2026-05-20 (Airbnb Luxe direction).
+   Same cream + ink + Fraunces/Inter design system as home/book/fleet. #}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-    <meta name="description" content="9,000+ rides completed. Professional drivers, all-inclusive pricing. Private luxury SUV from SLC Airport to Park City in 45 minutes.">
-    <meta property="og:title" content="About Rio Transportation — Park City Luxury SUV Service Since 2019">
-    <meta property="og:description" content="9,000+ rides completed. Professional drivers, all-inclusive pricing. Private luxury SUV from SLC Airport to Park City in 45 minutes.">
+    <meta name="description" content="9,000+ rides since 2016. Family-run private luxury SUV from SLC Airport to Park City — by drivers who live on the mountain.">
+    <meta property="og:title" content="About Rio Transportation — Park City Since 2016">
+    <meta property="og:description" content="9,000+ rides since 2016. Family-run private luxury SUV from SLC Airport to Park City.">
     <meta property="og:url" content="https://parkcitytrips.com/about">
     <meta property="og:type" content="website">
+    <meta property="og:image" content="/static/gallery/rio-10.jpg">
     <link rel="canonical" href="https://parkcitytrips.com/about">
-    <title>About Rio Transportation — Park City Luxury SUV Service Since 2019</title>
-    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>About Rio Transportation — Park City Since 2016</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2J1TXGYYMD"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-2J1TXGYYMD');</script>
     <style>
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-height:100vh;overflow-x:hidden;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+    --cream:#faf9f6; --cream-2:#f3efe8;
+    --ink:#0e1a2e; --ink-2:#1a2a45; --ink-3:#2c3e5a;
+    --neutral-700:#4a4a4a; --neutral-500:#8a8580;
+    --gold:#b8945c;
+    --serif:'Fraunces','Times New Roman',serif;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --shadow-lg:0 24px 64px rgba(14,26,46,.10), 0 4px 12px rgba(14,26,46,.06);
+    --ease-out:cubic-bezier(0.16,1,0.3,1);
+}
+html{scroll-behavior:smooth;overflow-x:hidden;-webkit-text-size-adjust:100%;}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden;touch-action:pan-y;}
 
 /* Nav */
-.a-nav{padding:20px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06);}
-.a-nav a{color:#fff;text-decoration:none;}
-.a-nav .logo{font-family:'Onest',sans-serif;font-weight:800;font-size:16px;letter-spacing:.1em;}
-.a-nav .back{font-size:14px;color:#666;display:flex;align-items:center;gap:6px;}
-.a-nav .back:hover{color:#fff;}
+.nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:16px clamp(20px,4vw,56px);background:rgba(250,249,246,.92);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(14,26,46,.07);}
+.nav .logo{font-family:var(--serif);font-style:italic;font-weight:400;font-size:22px;color:var(--ink);text-decoration:none;letter-spacing:-.01em;}
+.nav .back{font-family:var(--sans);font-size:13.5px;color:var(--ink-3);text-decoration:none;display:flex;align-items:center;gap:8px;transition:color .3s var(--ease-out);}
+.nav .back:hover{color:var(--ink);}
 
-/* Hero */
-.about-hero{position:relative;min-height:50vh;display:flex;align-items:center;justify-content:center;overflow:hidden;}
-.about-hero-bg{position:absolute;inset:0;background:url('https://static.wixstatic.com/media/55a398_44b22dc0a21645a9a92edf4210bb92d9~mv2.png') center/cover;opacity:.2;}
-.about-hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,10,15,.4),rgba(8,10,15,1));}
-.about-hero-text{position:relative;z-index:2;text-align:center;padding:80px 20px 40px;}
-.about-hero-text .label{font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:#c9a84c;margin-bottom:16px;}
-.about-hero-text h1{font-family:'Playfair Display',serif;font-size:clamp(36px,7vw,64px);font-weight:700;font-style:italic;letter-spacing:-.02em;line-height:1.1;margin-bottom:16px;}
-.about-hero-text h1 span{color:#c9a84c;font-style:normal;}
+/* Hero — full-bleed photo */
+.hero{position:relative;min-height:60vh;display:flex;align-items:flex-end;padding:0 clamp(20px,5vw,64px) clamp(48px,7vh,96px);overflow:hidden;background:var(--ink);}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(95deg,rgba(14,26,46,.85),rgba(14,26,46,.4) 60%,rgba(14,26,46,.15)),url('/static/gallery/rio-10.jpg') center/cover no-repeat;}
+.hero-inner{position:relative;z-index:2;max-width:1280px;margin:0 auto;width:100%;color:var(--cream);}
+.eyebrow{font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.25em;text-transform:uppercase;color:rgba(250,249,246,.7);margin-bottom:22px;display:inline-flex;align-items:center;gap:14px;}
+.eyebrow::before{content:'';width:32px;height:1px;background:rgba(250,249,246,.5);}
+.hero h1{font-family:var(--serif);font-optical-sizing:auto;font-weight:300;font-size:clamp(40px,6vw,84px);line-height:1.04;letter-spacing:-.025em;color:var(--cream);max-width:14ch;text-shadow:0 2px 28px rgba(0,0,0,.4);}
+.hero h1 em{font-style:italic;font-weight:400;}
 
-/* Content */
-.about-content{max-width:760px;margin:0 auto;padding:60px 24px 100px;}
-.about-content p{font-family:'Playfair Display',serif;font-size:clamp(17px,2vw,20px);line-height:1.85;color:rgba(255,255,255,.65);margin-bottom:28px;font-weight:400;}
-.about-content p:first-of-type::first-letter{font-size:3.5em;float:left;line-height:.8;margin-right:10px;margin-top:6px;color:#c9a84c;font-weight:700;}
-.about-content .highlight{color:#fff;font-weight:600;}
-.about-divider{width:60px;height:1px;background:#c9a84c;opacity:.3;margin:40px auto;}
+/* Long-form content */
+.content{max-width:760px;margin:0 auto;padding:clamp(72px,10vh,120px) clamp(20px,5vw,40px);}
+.content p{font-family:var(--serif);font-weight:300;font-size:clamp(19px,1.6vw,22px);line-height:1.7;color:var(--ink-3);margin-bottom:28px;letter-spacing:-.003em;}
+.content p:first-of-type::first-letter{font-family:var(--serif);font-style:italic;font-size:4.6em;float:left;line-height:.85;margin:8px 12px 0 -2px;color:var(--gold);font-weight:400;}
+.content .h{color:var(--ink);font-weight:500;}
+.divider{width:48px;height:1px;background:var(--ink);opacity:.4;margin:48px auto;}
 
-/* Stats */
-.about-stats{display:flex;gap:48px;justify-content:center;padding:48px 0;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);margin:40px 0;}
-.about-stat{text-align:center;}
-.about-stat .num{font-family:'Onest',sans-serif;font-size:36px;font-weight:800;color:#fff;}
-.about-stat .lbl{font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-top:6px;}
+/* Stats — 4 columns */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;padding:48px 0;border-top:1px solid rgba(14,26,46,.1);border-bottom:1px solid rgba(14,26,46,.1);margin:48px 0;}
+@media(max-width:680px){.stats{grid-template-columns:repeat(2,1fr);gap:36px 24px;}}
+.stat{text-align:center;}
+.stat .num{font-family:var(--serif);font-weight:300;font-size:clamp(36px,4vw,56px);color:var(--ink);line-height:1;letter-spacing:-.02em;}
+.stat .num em{font-style:italic;font-weight:400;}
+.stat .lbl{font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--neutral-500);margin-top:10px;}
 
 /* CTA */
-.about-cta{text-align:center;padding:40px 0;}
-.about-cta a{display:inline-flex;align-items:center;gap:8px;padding:16px 32px;background:#c9a84c;color:#000;font-family:'Onest',sans-serif;font-size:15px;font-weight:700;border-radius:50px;text-decoration:none;transition:all .2s;}
-.about-cta a:hover{background:#e8c65a;transform:translateY(-2px);}
+.cta-row{text-align:center;padding:24px 0 8px;}
+.btn-primary{display:inline-flex;align-items:center;gap:10px;padding:16px 32px;border-radius:999px;background:var(--ink);color:var(--cream);font-family:var(--sans);font-size:14px;font-weight:500;text-decoration:none;transition:transform .3s var(--ease-out),background .3s var(--ease-out);}
+.btn-primary:hover{background:var(--ink-2);transform:translateY(-2px);}
+.btn-primary i{transition:transform .3s var(--ease-out);}
+.btn-primary:hover i{transform:translateX(3px);}
 
-/* Footer */
-.about-footer{padding:24px 40px;border-top:1px solid rgba(255,255,255,.06);text-align:center;font-size:12px;color:rgba(255,255,255,.2);}
+footer.foot{background:var(--ink);color:rgba(250,249,246,.5);padding:48px 40px 32px;text-align:center;font-family:var(--sans);font-size:12px;}
+footer.foot a{color:rgba(250,249,246,.7);text-decoration:none;transition:color .3s var(--ease-out);}
+footer.foot a:hover{color:var(--cream);}
 
-@media(max-width:640px){.about-stats{flex-direction:column;gap:24px;}.a-nav{padding:16px 20px;}}
+@media(max-width:600px){.content p:first-of-type::first-letter{font-size:3.6em;}}
     </style>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2J1TXGYYMD"></script>
-    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-2J1TXGYYMD");</script>
 </head>
-<body style="overflow-x:hidden;touch-action:pan-y;">
-<nav class="a-nav">
-    <a href="/" class="logo">RIO TRANSPORTATION</a>
-    <a href="/" class="back"><i class="bi bi-arrow-left"></i> Back</a>
+<body>
+
+<nav class="nav">
+    <a href="/" class="logo">Rio<em>.</em>Transportation</a>
+    <a href="/" class="back"><i class="bi bi-arrow-left"></i> Back to site</a>
 </nav>
 
-<div class="about-hero">
-    <div class="about-hero-bg"></div>
-    <div class="about-hero-overlay"></div>
-    <div class="about-hero-text">
-        <div class="label">ABOUT US</div>
-        <h1>The <span>Story</span> Behind<br>Every Ride</h1>
+<header class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-inner">
+        <div class="eyebrow">About · Since 2016</div>
+        <h1>The <em>story</em><br>behind every ride.</h1>
     </div>
-</div>
+</header>
 
-<div class="about-content">
-    <p><span class="highlight">Park City, Utah</span> is a popular destination for those seeking a luxurious vacation experience. One of the best ways to enhance that experience is by using luxury transportation services while in the area.</p>
+<article class="content">
+    <p><span class="h">Park City, Utah</span> is a destination that rewards
+        people who take its mountain roads slowly. We started Rio
+        Transportation in 2016 with a single SUV and a simple promise: every
+        guest gets the same care a regular gets. No shared shuttles, no
+        surge pricing, no shrugged shoulders when a flight is late.</p>
 
-    <p>At <span class="highlight">Rio Transportation</span>, we offer a range of luxury transportation options to help you get around Park City in style and comfort. Our fleet of vehicles includes high-end SUVs and vans that are perfect for individuals, couples, and groups of all sizes.</p>
+    <p>The fleet is now four tiers — Tesla Model Y for the eco-couples,
+        Nissan Pathfinder for the families, GMC Yukon for the most-popular
+        Premier tier, Cadillac Escalade for the VIP transfers — but the
+        operating philosophy hasn't moved. Hudson and a small team of
+        professional drivers cover every single trip personally.</p>
 
-    <div class="about-divider"></div>
+    <div class="divider"></div>
 
-    <p>Whether you're traveling to Park City for business or pleasure, we can provide the transportation you need to make your trip a success. Our <span class="highlight">professional drivers</span> are knowledgeable about the area and can provide personalized service to ensure that you arrive at your destination safely and on time.</p>
+    <p>Our drivers live on the mountain. They know which Stein Eriksen
+        entrance to pull up to, which Deer Valley villa has a hidden ski
+        valet, which switchback on Parley's gets icy first after a storm.
+        That kind of <span class="h">local knowledge</span> is the
+        difference between getting somewhere and arriving somewhere.</p>
 
-    <p>In addition to providing transportation to and from the airport, we also offer a variety of other services — including <span class="highlight">hourly charter</span> for local Park City rides, ski resort shuttles, and special event transportation for weddings and corporate groups.</p>
+    <p>Beyond airport transfers, we also handle hourly local rides
+        (dining, shopping, resort hopping), ski-day chauffeur service,
+        wedding party logistics, and corporate ski-group transportation.
+        If you're moving more than eight people for an event, we
+        coordinate multiple vehicles in sync.</p>
 
-    <div class="about-divider"></div>
+    <div class="divider"></div>
 
-    <p>At Rio Transportation, we pride ourselves on offering the <span class="highlight">highest level of customer service</span>. We are dedicated to making your travel experience in Park City as seamless and enjoyable as possible. Contact us today to learn more about our transportation options and to book your next trip.</p>
+    <p>The goal has always been the same. Make the ride feel like the
+        first 45 minutes of vacation rather than the last 45 minutes of
+        travel. <span class="h">Reserve early</span>, especially during
+        ski season and Sundance — and we'll see you at baggage claim.</p>
 
-    <div class="about-stats">
-        <div class="about-stat"><div class="num">9,000+</div><div class="lbl">Rides</div></div>
-        <div class="about-stat"><div class="num">4.8</div><div class="lbl">Google Rating</div></div>
-        <div class="about-stat"><div class="num">6+</div><div class="lbl">Years</div></div>
-        <div class="about-stat"><div class="num">24/7</div><div class="lbl">Available</div></div>
+    <div class="stats">
+        <div class="stat"><div class="num">9,000<em>+</em></div><div class="lbl">Rides since 2016</div></div>
+        <div class="stat"><div class="num">4.8<em>★</em></div><div class="lbl">Google rating</div></div>
+        <div class="stat"><div class="num">10<em>yrs</em></div><div class="lbl">In Park City</div></div>
+        <div class="stat"><div class="num">24/7</div><div class="lbl">Year-round</div></div>
     </div>
 
-    <div class="about-cta">
-        <a href="/book"><i class="bi bi-calendar-check"></i> Book Your Ride</a>
+    <div class="cta-row">
+        <a href="/book" class="btn-primary">Reserve your transfer <i class="bi bi-arrow-right"></i></a>
     </div>
-</div>
+</article>
 
-<footer class="about-footer">© 2026 Rio Transportation LLC — Park City, Utah</footer>
+<footer class="foot">
+    © 2026 Rio Transportation LLC · Park City, Utah ·
+    <a href="tel:+14352146939">(435) 214-6939</a> ·
+    <a href="mailto:contactus@riotravelpc.com">contactus@riotravelpc.com</a>
+</footer>
 <script defer src="/static/no-zoom.js?v=2"></script>
 </body>
 </html>

@@ -1,66 +1,111 @@
+{# Park City Trips — /blog/<slug> redesign 2026-05-20 (Airbnb Luxe direction). #}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-    <title>{{ post.title }} — Rio Transportation Blog</title>
+    <title>{{ post.title }} — Rio Transportation</title>
     <meta name="description" content="{{ post.subtitle }}">
     <link rel="canonical" href="https://parkcitytrips.com/blog/{{ post.slug }}">
-    <meta property="og:title" content="{{ post.title }} — Rio Transportation Blog">
+    <meta property="og:title" content="{{ post.title }} — Rio Transportation">
     <meta property="og:description" content="{{ post.subtitle }}">
     <meta property="og:url" content="https://parkcitytrips.com/blog/{{ post.slug }}">
     <meta property="og:type" content="article">
-    <meta name="theme-color" content="#0a0e17">
+    <meta property="og:image" content="{{ post.image }}">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2J1TXGYYMD"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-2J1TXGYYMD');</script>
     <style>
-        :root{--bg:#0a0e17;--bg2:#0f1420;--bg3:#151c2e;--gold:#c9a84c;--gold2:#e8c65a;--w:#fff;--t1:#e2e8f0;--t2:#94a3b8;--t3:#64748b;--t4:#475569;--border:rgba(201,168,76,.08);}
-        *{margin:0;padding:0;box-sizing:border-box;}
-        body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);-webkit-font-smoothing:antialiased;}
-        h1,h2,h3{font-family:'Outfit',sans-serif;}
-        nav{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;background:rgba(10,14,23,.95);border-bottom:1px solid var(--border);}
-        .logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
-        .logo img{height:56px;width:auto;}
-        nav a.back{color:var(--t2);text-decoration:none;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px;}
-        nav a.back:hover{color:var(--gold);}
-        /* Hero */
-        .post-hero{position:relative;height:400px;overflow:hidden;background-size:cover;background-position:center;}
-        
-        .post-hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.6) 0%,var(--bg) 100%);}
-        .post-hero-content{position:absolute;bottom:40px;left:0;right:0;padding:0 20px;max-width:800px;margin:0 auto;}
-        .post-hero-cat{display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border-radius:50px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:rgba(201,168,76,.15);color:var(--gold);margin-bottom:12px;}
-        .post-hero-title{font-family:Outfit;font-size:38px;font-weight:900;color:var(--w);letter-spacing:-1.5px;line-height:1.15;margin-bottom:14px;}
-        .post-hero-meta{display:flex;align-items:center;gap:16px;font-size:12px;color:var(--t3);}
-        .post-hero-meta i{color:var(--gold);}
-        /* Content */
-        .post-content{max-width:740px;margin:0 auto;padding:48px 20px 80px;}
-        .post-content p{font-size:16px;line-height:1.8;color:var(--t2);margin-bottom:20px;}
-        .post-content h2{font-size:26px;font-weight:800;color:var(--w);margin:36px 0 16px;letter-spacing:-.5px;}
-        .post-content ul{margin:0 0 20px 20px;}
-        .post-content li{font-size:15px;line-height:1.7;color:var(--t2);margin-bottom:6px;}
-        .post-content strong{color:var(--w);}
-        .post-content em{color:var(--gold);font-style:italic;}
-        .post-content blockquote{border-left:3px solid var(--gold);padding:12px 20px;margin:24px 0;background:rgba(201,168,76,.04);border-radius:0 12px 12px 0;}
-        .post-content blockquote p{color:var(--t1);font-style:italic;margin:0;}
-        /* CTA */
-        .post-cta{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:36px;text-align:center;margin-top:40px;}
-        .post-cta h3{font-size:22px;font-weight:800;color:var(--w);margin-bottom:10px;}
-        .post-cta p{font-size:14px;color:var(--t3);margin-bottom:20px;}
-        .post-cta a{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:12px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0e17;font-size:14px;font-weight:800;text-decoration:none;transition:all .2s;font-family:Inter;}
-        .post-cta a:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,168,76,.3);}
-        @media(max-width:640px){nav{padding:0 16px;}.post-hero{height:300px;}.post-hero-title{font-size:26px;}.post-hero-content{bottom:24px;}}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+    --cream:#faf9f6; --cream-2:#f3efe8;
+    --ink:#0e1a2e; --ink-2:#1a2a45; --ink-3:#2c3e5a;
+    --neutral-700:#4a4a4a; --neutral-500:#8a8580;
+    --gold:#b8945c;
+    --serif:'Fraunces','Times New Roman',serif;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --shadow-md:0 4px 16px rgba(14,26,46,.06),0 1px 3px rgba(14,26,46,.08);
+    --ease-out:cubic-bezier(0.16,1,0.3,1);
+}
+html{scroll-behavior:smooth;overflow-x:hidden;-webkit-text-size-adjust:100%;}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;touch-action:pan-y;}
+
+.nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:16px clamp(20px,4vw,56px);background:rgba(250,249,246,.92);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(14,26,46,.07);}
+.nav .logo{font-family:var(--serif);font-style:italic;font-weight:400;font-size:22px;color:var(--ink);text-decoration:none;letter-spacing:-.01em;}
+.nav .back{font-family:var(--sans);font-size:13.5px;color:var(--ink-3);text-decoration:none;display:flex;align-items:center;gap:8px;transition:color .3s var(--ease-out);}
+.nav .back:hover{color:var(--ink);}
+
+/* Hero — full-bleed photo */
+.post-hero{position:relative;height:clamp(420px,55vh,560px);overflow:hidden;display:flex;align-items:flex-end;}
+.post-hero-img{position:absolute;inset:0;background:url('{{ post.image }}') center/cover no-repeat;z-index:0;transform:scale(1.05);animation:slowPan 30s ease-in-out infinite alternate;}
+@keyframes slowPan{from{transform:scale(1.05) translateY(0);}to{transform:scale(1.12) translateY(-2%);}}
+.post-hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,26,46,.15) 0%,rgba(14,26,46,.2) 50%,rgba(14,26,46,.85) 100%);z-index:1;}
+.post-hero-inner{position:relative;z-index:2;width:100%;max-width:920px;margin:0 auto;padding:0 clamp(20px,5vw,40px) clamp(40px,7vh,80px);color:var(--cream);}
+.post-cat{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;background:rgba(250,249,246,.14);backdrop-filter:blur(6px);font-family:var(--sans);font-size:10.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--cream);margin-bottom:18px;}
+.post-cat i{font-size:12px;}
+.post-hero-title{font-family:var(--serif);font-optical-sizing:auto;font-weight:300;font-size:clamp(32px,5vw,64px);line-height:1.08;letter-spacing:-.025em;color:var(--cream);text-shadow:0 2px 32px rgba(0,0,0,.4);max-width:22ch;}
+.post-hero-title em{font-style:italic;font-weight:400;}
+.post-hero-meta{display:flex;align-items:center;gap:20px;flex-wrap:wrap;font-family:var(--sans);font-size:13px;color:rgba(250,249,246,.75);margin-top:22px;}
+.post-hero-meta i{color:rgba(250,249,246,.5);margin-right:5px;font-size:13px;}
+
+/* Article */
+.post-content{max-width:760px;margin:0 auto;padding:clamp(56px,8vh,96px) clamp(20px,5vw,40px) 64px;}
+.post-content p{font-family:var(--serif);font-weight:300;font-size:clamp(18px,1.4vw,20px);line-height:1.8;color:var(--ink-3);margin-bottom:24px;letter-spacing:-.003em;}
+.post-content p:first-of-type::first-letter{font-family:var(--serif);font-style:italic;font-size:4.4em;float:left;line-height:.85;margin:8px 12px 0 -2px;color:var(--gold);font-weight:400;}
+.post-content h2{font-family:var(--serif);font-weight:300;font-size:clamp(28px,3.4vw,40px);color:var(--ink);margin:48px 0 18px;letter-spacing:-.02em;line-height:1.1;}
+.post-content h2 em{font-style:italic;font-weight:400;}
+.post-content h3{font-family:var(--serif);font-weight:400;font-size:22px;color:var(--ink);margin:32px 0 14px;letter-spacing:-.01em;}
+.post-content ul,.post-content ol{margin:0 0 24px 24px;}
+.post-content li{font-family:var(--sans);font-size:16px;line-height:1.75;color:var(--neutral-700);margin-bottom:8px;}
+.post-content strong{color:var(--ink);font-weight:500;}
+.post-content em{font-style:italic;color:var(--ink-2);}
+.post-content blockquote{
+    border-left:2px solid var(--gold);padding:8px 0 8px 28px;margin:32px 0;
+    font-family:var(--serif);font-style:italic;font-weight:300;
+}
+.post-content blockquote p{font-size:22px;color:var(--ink);margin:0;line-height:1.5;}
+.post-content a{color:var(--gold);text-decoration:none;border-bottom:1px solid currentColor;transition:color .3s var(--ease-out);}
+.post-content a:hover{color:var(--ink);}
+
+/* End-of-article CTA */
+.post-cta{
+    margin-top:64px;padding:48px clamp(28px,4vw,52px);
+    background:var(--ink);color:var(--cream);
+    border-radius:10px;text-align:center;
+    box-shadow:var(--shadow-md);
+}
+.post-cta .eyebrow-dark{font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:rgba(250,249,246,.55);margin-bottom:16px;}
+.post-cta h3{font-family:var(--serif);font-weight:300;font-size:clamp(26px,3.2vw,40px);color:var(--cream);letter-spacing:-.02em;line-height:1.1;}
+.post-cta h3 em{font-style:italic;font-weight:400;}
+.post-cta p{font-family:var(--sans);font-size:14.5px;color:rgba(250,249,246,.7);margin:14px auto 28px;line-height:1.65;max-width:44ch;}
+.post-cta a{display:inline-flex;align-items:center;gap:10px;padding:15px 30px;border-radius:999px;background:var(--cream);color:var(--ink);font-family:var(--sans);font-size:14px;font-weight:500;text-decoration:none;transition:transform .3s var(--ease-out),background .3s var(--ease-out);}
+.post-cta a:hover{background:#fff;transform:translateY(-2px);}
+.post-cta a i{transition:transform .3s var(--ease-out);}
+.post-cta a:hover i{transform:translateX(3px);}
+
+footer.foot{background:var(--ink);color:rgba(250,249,246,.5);padding:48px 40px 32px;text-align:center;font-family:var(--sans);font-size:12px;border-top:1px solid rgba(250,249,246,.06);}
+footer.foot a{color:rgba(250,249,246,.7);text-decoration:none;transition:color .3s var(--ease-out);}
+footer.foot a:hover{color:var(--cream);}
+
+@media(max-width:600px){.post-content p:first-of-type::first-letter{font-size:3.6em;}}
     </style>
 </head>
-<body style="overflow-x:hidden;touch-action:pan-y;">
-<nav>
-    <a href="/" class="logo"><img src="https://static.wixstatic.com/media/55a398_1d427b4af5334f1ca3d0edd76f254f4a~mv2.png" alt="Rio Transportation"></a>
-    <a href="/blog" class="back"><i class="bi bi-arrow-left"></i> All Posts</a>
+<body>
+
+<nav class="nav">
+    <a href="/" class="logo">Rio<em>.</em>Transportation</a>
+    <a href="/blog" class="back"><i class="bi bi-arrow-left"></i> All posts</a>
 </nav>
 
-<div class="post-hero" style="background-image:url('{{ post.image }}');">
+<header class="post-hero">
+    <div class="post-hero-img"></div>
     <div class="post-hero-overlay"></div>
-    <div class="post-hero-content">
-        <div class="post-hero-cat"><i class="bi bi-tag-fill"></i> {{ post.category }}</div>
+    <div class="post-hero-inner">
+        <div class="post-cat"><i class="bi bi-bookmark"></i> {{ post.category }}</div>
         <h1 class="post-hero-title">{{ post.title }}</h1>
         <div class="post-hero-meta">
             <span><i class="bi bi-calendar3"></i> {{ post.date }}</span>
@@ -68,17 +113,23 @@
             <span><i class="bi bi-person"></i> {{ post.author }}</span>
         </div>
     </div>
-</div>
+</header>
 
 <article class="post-content">
     {{ post.content | safe }}
 
-    <div class="post-cta">
-        <h3>Need a Ride in Park City?</h3>
-        <p>Luxury SUV service between Salt Lake City Airport and Park City. Professional drivers, all-inclusive pricing.</p>
-        <a href="/#book"><i class="bi bi-calendar-check"></i> Book Your Ride</a>
-    </div>
+    <aside class="post-cta">
+        <div class="eyebrow-dark">Book your transfer</div>
+        <h3>Need a <em>ride</em><br>in Park City?</h3>
+        <p>Private luxury SUV between Salt Lake City Airport and Park City. Professional drivers, all-inclusive pricing.</p>
+        <a href="/book">Reserve your ride <i class="bi bi-arrow-right"></i></a>
+    </aside>
 </article>
+
+<footer class="foot">
+    © 2026 Rio Transportation LLC · Park City, Utah ·
+    <a href="tel:+14352146939">(435) 214-6939</a>
+</footer>
 <script defer src="/static/no-zoom.js?v=2"></script>
 </body>
 </html>
