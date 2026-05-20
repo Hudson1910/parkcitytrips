@@ -1,7 +1,24 @@
 """Configuration for Park City Trips."""
 import os
 
-SECRET_KEY = os.getenv('SECRET_KEY', 'parkcitytrips-2026-secret')
+# SECRET_KEY: never fall back to a guessable string. If the env var is
+# missing on prod, fail loudly at boot rather than serving sessions with
+# a forge-able cookie. Generate one with: python -c "import secrets;
+# print(secrets.token_urlsafe(64))" — set as Railway env SECRET_KEY.
+SECRET_KEY = os.getenv('SECRET_KEY')
+if not SECRET_KEY:
+    if os.getenv('RAILWAY_ENVIRONMENT'):
+        raise RuntimeError(
+            'SECRET_KEY env var is required on Railway. Generate with: '
+            'python -c "import secrets; print(secrets.token_urlsafe(64))" '
+            'and set as a Railway variable.'
+        )
+    # Local dev fallback — random per-process so cookies don't leak between
+    # devs sharing the codebase but Hudson can still hit localhost.
+    import secrets as _secrets
+    SECRET_KEY = _secrets.token_urlsafe(64)
+    print('[config] SECRET_KEY env var unset — using random per-process key for local dev.')
+
 PORT = int(os.getenv('PORT', 5000))
 
 # Company
@@ -78,8 +95,20 @@ NOTIFY_EMAIL = os.getenv('NOTIFY_EMAIL', 'agendahudsonbarros@gmail.com,contactus
 SMTP_USER = os.getenv('SMTP_USER', '')
 SMTP_PASS = os.getenv('SMTP_PASS', '')
 
-# Admin
-ADMIN_PIN = os.getenv('ADMIN_PIN', '6939')
+# Admin login PIN — set ADMIN_PIN env var on Railway with something
+# stronger than 4 digits (you should pick 6+ chars or move to a real
+# password). Falls back to a random per-boot value on local dev so the
+# old guessable '6939' default can't accidentally leak via the source.
+ADMIN_PIN = os.getenv('ADMIN_PIN')
+if not ADMIN_PIN:
+    if os.getenv('RAILWAY_ENVIRONMENT'):
+        raise RuntimeError(
+            'ADMIN_PIN env var is required on Railway. Pick a strong value '
+            '(8+ chars, mix letters+numbers) and set as a Railway variable.'
+        )
+    import secrets as _secrets_pin
+    ADMIN_PIN = _secrets_pin.token_urlsafe(8)
+    print(f'[config] ADMIN_PIN env unset — using random dev PIN: {ADMIN_PIN}')
 TRAVELFORZA_API = os.getenv('TRAVELFORZA_API', 'https://web-production-1378b.up.railway.app')
 TRANSP_API_KEY = os.getenv('TRANSP_API_KEY', 'rio-transp-2026')
 

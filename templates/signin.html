@@ -31,6 +31,7 @@ body{font-family:'Montserrat',sans-serif;background:#080a0f;color:#fff;min-heigh
     <div class="error" style="display:block;">{{ error }}</div>
     {% endif %}
     <form method="POST" action="/signin">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <div class="field">
             <label>Email</label>
             <input type="email" name="email" placeholder="your@email.com" required>
