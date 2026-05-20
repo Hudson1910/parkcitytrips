@@ -1,3 +1,7 @@
+{# Park City Trips — /fleet redesign 2026-05-20 (Airbnb Luxe direction).
+   Cream + deep navy palette, Fraunces serif + Inter sans, same tokens
+   as home_v2.html and book.html. All copy + structure (4 vehicles +
+   group card + comparison table + FAQ) preserved. #}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,288 +10,591 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-    <meta name="description" content="Luxury fleet: Tesla Model Y Comfort Electric, Nissan Pathfinder, GMC Yukon, Lincoln Navigator. Private airport transfers from $100. Park City, Utah.">
-    <meta property="og:title" content="Our Fleet — GMC Yukon, Lincoln Navigator | Rio Transportation">
-    <meta property="og:description" content="Luxury fleet: Tesla Model Y Comfort Electric, Nissan Pathfinder, GMC Yukon, Lincoln Navigator. Private airport transfers from $100. Park City, Utah.">
+    <meta name="description" content="Luxury fleet: Tesla Model Y Comfort Electric, Nissan Pathfinder, GMC Yukon, Cadillac Escalade. Private airport transfers from $100. Park City, Utah.">
+    <meta property="og:title" content="Our Fleet — GMC Yukon, Cadillac Escalade | Rio Transportation">
+    <meta property="og:description" content="Luxury fleet: Tesla Model Y Comfort Electric, Nissan Pathfinder, GMC Yukon, Cadillac Escalade. Private airport transfers from $100. Park City, Utah.">
     <meta property="og:url" content="https://parkcitytrips.com/fleet">
     <meta property="og:type" content="website">
     <link rel="canonical" href="https://parkcitytrips.com/fleet">
-    <title>Our Fleet — GMC Yukon, Lincoln Navigator | Rio Transportation</title>
+    <title>Our Fleet — GMC Yukon, Cadillac Escalade | Rio Transportation</title>
     <script type="application/ld+json">
     {"@context":"https://schema.org","@type":"ItemList","name":"Rio Transportation Fleet","description":"Luxury SUV fleet for private transfers between Salt Lake City Airport and Park City, Utah.","itemListElement":[
       {"@type":"ListItem","position":1,"item":{"@type":"Product","name":"Comfort Electric","description":"Tesla Model Y — 5 seats, 4 bags. Premium electric SUV for couples and solo travelers.","brand":{"@type":"Brand","name":"Rio Transportation"},"image":"https://parkcitytrips.com/static/images/comfort-electric.webp","aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","reviewCount":"25","bestRating":"5","worstRating":"1"},"offers":{"@type":"Offer","price":"100","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://parkcitytrips.com/book?vehicle=small"}}},
       {"@type":"ListItem","position":2,"item":{"@type":"Product","name":"Midsize SUV","description":"Nissan Pathfinder — 7 seats, family-friendly SUV with ski gear capacity.","brand":{"@type":"Brand","name":"Rio Transportation"},"image":"https://parkcitytrips.com/static/pathfinder.avif","aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","reviewCount":"25","bestRating":"5","worstRating":"1"},"offers":{"@type":"Offer","price":"129","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://parkcitytrips.com/book?vehicle=midsize"}}},
       {"@type":"ListItem","position":3,"item":{"@type":"Product","name":"Premier SUV","description":"GMC Yukon — 7 seats, premium interior, ideal for business travelers and groups.","brand":{"@type":"Brand","name":"Rio Transportation"},"image":"https://parkcitytrips.com/static/images/premier-suv.webp","aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","reviewCount":"25","bestRating":"5","worstRating":"1"},"offers":{"@type":"Offer","price":"189","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://parkcitytrips.com/book?vehicle=premier"}}},
-      {"@type":"ListItem","position":4,"item":{"@type":"Product","name":"Luxury SUV","description":"Lincoln Navigator or Cadillac Escalade — 7 seats, top-tier luxury for VIP transfers.","brand":{"@type":"Brand","name":"Rio Transportation"},"image":"https://parkcitytrips.com/static/images/luxury-suv.webp","aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","reviewCount":"25","bestRating":"5","worstRating":"1"},"offers":{"@type":"Offer","price":"220","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://parkcitytrips.com/book?vehicle=luxury"}}}
+      {"@type":"ListItem","position":4,"item":{"@type":"Product","name":"Luxury SUV","description":"Cadillac Escalade — 7 seats, top-tier luxury for VIP transfers.","brand":{"@type":"Brand","name":"Rio Transportation"},"image":"https://parkcitytrips.com/static/images/luxury-suv.webp","aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","reviewCount":"25","bestRating":"5","worstRating":"1"},"offers":{"@type":"Offer","price":"220","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://parkcitytrips.com/book?vehicle=luxury"}}}
     ],"provider":{"@type":"LocalBusiness","name":"Rio Transportation LLC","telephone":"+14352146939","address":{"@type":"PostalAddress","streetAddress":"1776 Kearns Blvd","addressLocality":"Park City","addressRegion":"UT","postalCode":"84060","addressCountry":"US"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","reviewCount":"25"}}}
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2J1TXGYYMD"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-2J1TXGYYMD');</script>
     <style>
-*{box-sizing:border-box;margin:0;padding:0;}
-:root{--bg:#080a0f;--card:#111318;--border:#1e2130;--accent:#c9a84c;--fg:#fff;--muted:#666;}
-body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);min-height:100vh;overflow-x:hidden;}
-
-/* Nav */
-.f-nav{padding:20px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);}
-.f-nav a{color:var(--fg);text-decoration:none;}
-.f-nav .logo{font-family:'Onest',sans-serif;font-weight:800;font-size:16px;letter-spacing:.1em;}
-.f-nav .back{font-size:14px;color:var(--muted);display:flex;align-items:center;gap:6px;}
-.f-nav .back:hover{color:#fff;}
-
-/* Header */
-.fleet-header{text-align:center;padding:80px 20px 40px;}
-.fleet-header h1{font-family:'Onest',sans-serif;font-size:clamp(32px,6vw,52px);font-weight:900;margin-bottom:8px;}
-.fleet-header p{color:var(--muted);font-size:15px;max-width:500px;margin:0 auto;}
-
-/* Vehicle detail card */
-.v-detail{max-width:1000px;margin:0 auto;padding:0 20px 40px;}
-.v-card{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;padding:60px 0;border-bottom:1px solid var(--border);}
-.v-card:nth-child(even){direction:rtl;}.v-card:nth-child(even)>*{direction:ltr;}
-.v-card-img{border-radius:16px;overflow:hidden;background:#0a0c10;aspect-ratio:4/3;background-size:contain;background-repeat:no-repeat;background-position:center;}
-.v-card-info .v-tag{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
-.v-card-info h2{font-family:'Onest',sans-serif;font-size:28px;font-weight:800;margin-bottom:4px;}
-.v-card-info .v-model{font-size:14px;color:var(--muted);margin-bottom:16px;}
-.v-card-info .v-desc{font-size:14px;color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:20px;}
-.v-specs{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:20px;}
-.v-spec{display:flex;align-items:center;gap:6px;font-size:13px;color:rgba(255,255,255,.5);background:var(--card);padding:8px 14px;border-radius:8px;}
-.v-spec i{color:var(--accent);}
-.v-features{list-style:none;margin-bottom:24px;}
-.v-features li{font-size:13px;color:rgba(255,255,255,.5);padding:4px 0;display:flex;align-items:center;gap:8px;}
-.v-features li i{color:var(--accent);font-size:12px;}
-.v-price{font-family:'Onest',sans-serif;font-size:14px;color:var(--muted);margin-bottom:16px;}
-.v-price strong{font-size:32px;font-weight:800;color:#fff;}
-.v-book{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:var(--accent);color:#000;font-family:'Onest',sans-serif;font-size:14px;font-weight:700;border-radius:50px;text-decoration:none;transition:all .2s;}
-.v-book:hover{background:#e8c65a;transform:translateY(-1px);}
-
-/* Special — large group */
-.special-card{max-width:1000px;margin:40px auto 80px;padding:0 20px;}
-.special-inner{background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;}
-.special-img{overflow:hidden;min-height:300px;background:#0a0c10;background-size:contain;background-repeat:no-repeat;background-position:center;}
-.special-info{padding:48px 40px;display:flex;flex-direction:column;justify-content:center;}
-.special-info .v-tag{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
-.special-info h2{font-family:'Onest',sans-serif;font-size:28px;font-weight:800;margin-bottom:12px;}
-.special-info p{font-size:14px;color:rgba(255,255,255,.5);line-height:1.7;margin-bottom:20px;}
-.special-info .notice{background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.15);border-radius:10px;padding:14px;font-size:13px;color:var(--accent);margin-bottom:20px;}
-.special-info .notice i{margin-right:6px;}
-
-@media(max-width:768px){
-    .v-card,.special-inner{grid-template-columns:1fr;}
-    .v-card:nth-child(even){direction:ltr;}
-    .special-info{padding:28px 24px;}
-    .f-nav{padding:16px 20px;}
+/* ============================================================
+   DESIGN TOKENS — same palette as home_v2.html / book.html
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+    --cream:#faf9f6; --cream-2:#f3efe8; --cream-3:#e8e2d5;
+    --ink:#0e1a2e; --ink-2:#1a2a45; --ink-3:#2c3e5a;
+    --neutral-700:#4a4a4a; --neutral-500:#8a8580; --neutral-300:#c8c2b8;
+    --gold:#b8945c;
+    --serif:'Fraunces','Times New Roman',serif;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --shadow-md:0 4px 16px rgba(14,26,46,.06), 0 1px 3px rgba(14,26,46,.08);
+    --shadow-lg:0 24px 64px rgba(14,26,46,.10), 0 4px 12px rgba(14,26,46,.06);
+    --ease-out:cubic-bezier(0.16, 1, 0.3, 1);
 }
+html{scroll-behavior:smooth;overflow-x:hidden;-webkit-text-size-adjust:100%;}
+body{
+    font-family:var(--sans);background:var(--cream);color:var(--ink);
+    font-size:16px;line-height:1.6;font-weight:400;
+    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+    overflow-x:hidden;touch-action:pan-y;-webkit-overflow-scrolling:touch;
+}
+
+/* Nav — matches home + book */
+.f-nav{
+    position:sticky;top:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px clamp(20px,4vw,56px);
+    background:rgba(250,249,246,.92);
+    backdrop-filter:saturate(180%) blur(20px);
+    -webkit-backdrop-filter:saturate(180%) blur(20px);
+    border-bottom:1px solid rgba(14,26,46,.07);
+}
+.f-nav .logo{
+    font-family:var(--serif);font-style:italic;font-weight:400;font-size:22px;
+    color:var(--ink);text-decoration:none;letter-spacing:-.01em;
+}
+.f-nav .back{
+    font-family:var(--sans);font-size:13.5px;color:var(--ink-3);
+    text-decoration:none;display:flex;align-items:center;gap:8px;
+    transition:color .3s var(--ease-out);
+}
+.f-nav .back:hover{color:var(--ink);}
+
+/* Page header */
+.fleet-header{
+    text-align:center;
+    padding:clamp(56px,9vh,120px) clamp(20px,5vw,40px) clamp(40px,6vh,72px);
+    max-width:760px;margin:0 auto;
+}
+.fleet-eyebrow{
+    font-family:var(--sans);font-size:11px;font-weight:500;
+    letter-spacing:.22em;text-transform:uppercase;
+    color:var(--neutral-500);margin-bottom:18px;
+    display:inline-flex;align-items:center;gap:14px;
+}
+.fleet-eyebrow::before, .fleet-eyebrow::after{content:'';width:24px;height:1px;background:var(--ink);opacity:.4;}
+.fleet-header h1{
+    font-family:var(--serif);font-optical-sizing:auto;
+    font-weight:300;font-size:clamp(40px,6vw,80px);line-height:1.04;
+    letter-spacing:-.025em;color:var(--ink);
+}
+.fleet-header h1 em{font-style:italic;font-weight:400;}
+.fleet-header p{
+    font-family:var(--sans);font-size:16px;color:var(--neutral-700);
+    line-height:1.7;margin-top:18px;max-width:48ch;margin-left:auto;margin-right:auto;
+}
+
+/* Vehicle detail — alternating 60/40 split */
+.v-detail{max-width:1180px;margin:0 auto;padding:0 clamp(20px,5vw,40px) 40px;}
+.v-card{
+    display:grid;grid-template-columns:1fr 1fr;
+    gap:clamp(40px,6vw,80px);align-items:center;
+    padding:clamp(64px,9vh,120px) 0;
+    border-bottom:1px solid rgba(14,26,46,.07);
+}
+.v-card:last-of-type{border-bottom:0;}
+/* Even-indexed cards swap order — image right side instead of left. */
+.v-card:nth-of-type(even) .v-card-img{order:2;}
+@media(max-width:880px){
+    .v-card,.v-card:nth-of-type(even) .v-card-img{
+        grid-template-columns:1fr;order:initial;
+    }
+    .v-card{padding:48px 0;}
+}
+
+.v-card-img{
+    position:relative;
+    background:var(--cream-2);
+    border-radius:8px;overflow:hidden;
+    aspect-ratio:4/3;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:var(--shadow-md);
+}
+.v-card-img img{
+    width:100%;height:100%;object-fit:contain;
+    padding:32px 40px;
+    transition: transform .8s var(--ease-out);
+}
+.v-card-img img.img-zoom-130{transform:scale(1.30);}
+.v-card-img:hover img{transform:scale(1.04);}
+.v-card-img:hover img.img-zoom-130{transform:scale(1.35);}
+
+.v-card-info .v-tag{
+    font-family:var(--sans);font-size:11px;font-weight:500;
+    letter-spacing:.22em;text-transform:uppercase;
+    color:var(--gold);margin-bottom:18px;
+    display:inline-flex;align-items:center;gap:12px;
+}
+.v-card-info .v-tag::before{content:'';width:28px;height:1px;background:var(--gold);opacity:.5;}
+.v-card-info h2{
+    font-family:var(--serif);font-optical-sizing:auto;
+    font-weight:300;font-size:clamp(32px,3.6vw,56px);line-height:1.05;
+    letter-spacing:-.02em;color:var(--ink);
+}
+.v-card-info h2 em{font-style:italic;font-weight:400;}
+.v-card-info .v-model{
+    font-family:var(--sans);font-size:14px;color:var(--neutral-500);
+    margin-top:8px;letter-spacing:.005em;
+}
+.v-card-info .v-desc{
+    font-family:var(--sans);font-size:15.5px;color:var(--neutral-700);
+    line-height:1.75;margin-top:24px;
+}
+.v-specs{
+    display:flex;gap:8px;flex-wrap:wrap;margin-top:24px;
+}
+.v-spec{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--sans);font-size:12px;color:var(--ink);
+    background:var(--cream-2);
+    padding:8px 14px;border-radius:999px;
+    border:1px solid rgba(14,26,46,.06);
+}
+.v-spec i{color:var(--ink-3);font-size:13px;}
+.v-features{
+    list-style:none;margin-top:24px;
+    display:grid;grid-template-columns:1fr 1fr;gap:8px 24px;
+}
+@media(max-width:480px){.v-features{grid-template-columns:1fr;}}
+.v-features li{
+    font-family:var(--sans);font-size:13.5px;color:var(--neutral-700);
+    padding:3px 0;display:flex;align-items:center;gap:10px;
+}
+.v-features li i{color:var(--gold);font-size:13px;}
+.v-foot{
+    display:flex;align-items:flex-end;gap:24px;flex-wrap:wrap;
+    margin-top:32px;padding-top:24px;
+    border-top:1px solid rgba(14,26,46,.07);
+}
+.v-price{
+    font-family:var(--sans);font-size:12px;color:var(--neutral-500);
+    letter-spacing:.04em;text-transform:uppercase;
+}
+.v-price strong{
+    display:block;font-family:var(--serif);font-size:42px;
+    font-weight:300;color:var(--ink);line-height:1;margin-top:6px;
+    letter-spacing:-.02em;
+}
+.v-book{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:14px 28px;border-radius:999px;
+    background:var(--ink);color:var(--cream);
+    font-family:var(--sans);font-size:13.5px;font-weight:500;letter-spacing:.005em;
+    text-decoration:none;
+    transition:background .3s var(--ease-out), transform .3s var(--ease-out);
+    margin-left:auto;
+}
+.v-book:hover{background:var(--ink-2);transform:translateY(-1px);}
+.v-book i{transition:transform .3s var(--ease-out);}
+.v-book:hover i{transform:translateX(3px);}
+
+/* Large Groups special card */
+.special-card{max-width:1180px;margin:80px auto 80px;padding:0 clamp(20px,5vw,40px);}
+.special-inner{
+    background:var(--ink);color:var(--cream);
+    border-radius:10px;overflow:hidden;
+    display:grid;grid-template-columns:1fr 1fr;
+    box-shadow:var(--shadow-lg);
+}
+@media(max-width:880px){.special-inner{grid-template-columns:1fr;}}
+.special-img{
+    min-height:340px;
+    background:url('/static/gallery/rio-5.jpg') center/cover no-repeat;
+    position:relative;
+}
+.special-img::after{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(90deg,transparent 60%,rgba(14,26,46,.5) 100%);
+}
+.special-info{padding:clamp(36px,5vw,60px) clamp(28px,4vw,52px);display:flex;flex-direction:column;justify-content:center;}
+.special-info .v-tag{
+    font-family:var(--sans);font-size:11px;font-weight:500;
+    letter-spacing:.22em;text-transform:uppercase;
+    color:var(--gold);margin-bottom:18px;
+}
+.special-info h2{
+    font-family:var(--serif);font-optical-sizing:auto;
+    font-weight:300;font-size:clamp(28px,3.2vw,44px);line-height:1.05;
+    letter-spacing:-.02em;color:var(--cream);
+}
+.special-info h2 em{font-style:italic;font-weight:400;}
+.special-info p{
+    font-family:var(--sans);font-size:15px;line-height:1.7;
+    color:rgba(250,249,246,.7);margin-top:18px;
+}
+.special-info .notice{
+    background:rgba(184,148,92,.12);border:1px solid rgba(184,148,92,.3);
+    border-radius:8px;padding:14px 18px;font-size:13px;color:rgba(250,249,246,.85);
+    margin-top:24px;font-family:var(--sans);
+}
+.special-info .notice i{margin-right:8px;color:var(--gold);}
+.special-info .v-specs{margin-top:24px;}
+.special-info .v-spec{
+    background:rgba(250,249,246,.06);color:var(--cream);
+    border-color:rgba(250,249,246,.1);
+}
+.special-info .v-spec i{color:rgba(250,249,246,.7);}
+.special-info .v-book{
+    background:var(--cream);color:var(--ink);margin-top:32px;margin-left:0;
+}
+.special-info .v-book:hover{background:#fff;}
+
+/* Comparison table */
+.compare{max-width:1180px;margin:80px auto;padding:0 clamp(20px,5vw,40px);}
+.compare h2{
+    font-family:var(--serif);font-weight:300;font-size:clamp(32px,4vw,52px);
+    text-align:center;color:var(--ink);letter-spacing:-.02em;line-height:1.05;
+    margin-bottom:14px;
+}
+.compare h2 em{font-style:italic;font-weight:400;}
+.compare .compare-sub{
+    text-align:center;font-family:var(--sans);font-size:15px;
+    color:var(--neutral-700);margin-bottom:48px;line-height:1.65;
+    max-width:60ch;margin-left:auto;margin-right:auto;
+}
+.compare-wrap{
+    background:var(--cream);border:1px solid rgba(14,26,46,.08);
+    border-radius:10px;overflow:hidden;overflow-x:auto;
+    box-shadow:var(--shadow-md);
+}
+.compare-wrap table{width:100%;border-collapse:collapse;min-width:680px;}
+.compare-wrap thead tr{background:var(--cream-2);}
+.compare-wrap th{
+    padding:18px 18px;text-align:center;
+    font-family:var(--sans);font-size:11px;font-weight:500;
+    letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);
+}
+.compare-wrap th:first-child{text-align:left;color:var(--neutral-500);}
+.compare-wrap th.heading-name{
+    font-family:var(--serif);font-weight:400;font-size:16px;
+    color:var(--ink);letter-spacing:-.005em;text-transform:none;
+}
+.compare-wrap td{
+    padding:16px 18px;text-align:center;
+    font-family:var(--sans);font-size:14px;color:var(--neutral-700);
+    border-top:1px solid rgba(14,26,46,.06);
+}
+.compare-wrap td:first-child{
+    text-align:left;color:var(--neutral-500);
+    font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+}
+.compare-wrap tr.price-row{background:rgba(184,148,92,.06);}
+.compare-wrap tr.price-row td:first-child{color:var(--ink);font-weight:500;}
+.compare-wrap tr.price-row td{
+    font-family:var(--serif);font-weight:400;font-size:24px;color:var(--ink);
+    letter-spacing:-.02em;
+}
+
+/* FAQ */
+.faq{max-width:880px;margin:80px auto;padding:0 clamp(20px,5vw,40px);}
+.faq h2{
+    font-family:var(--serif);font-weight:300;font-size:clamp(32px,4vw,52px);
+    text-align:center;color:var(--ink);letter-spacing:-.02em;line-height:1.05;
+    margin-bottom:48px;
+}
+.faq h2 em{font-style:italic;font-weight:400;}
+.faq-card{
+    background:var(--cream);border:1px solid rgba(14,26,46,.08);
+    border-radius:10px;padding:26px 30px;margin-bottom:14px;
+    transition: border .3s var(--ease-out);
+}
+.faq-card:hover{border-color:rgba(14,26,46,.18);}
+.faq-card h3{
+    font-family:var(--serif);font-weight:400;font-size:18px;color:var(--ink);
+    margin-bottom:10px;letter-spacing:-.005em;
+}
+.faq-card p{
+    font-family:var(--sans);font-size:14.5px;color:var(--neutral-700);
+    line-height:1.7;margin:0;
+}
+
+/* Footer */
+footer.foot{
+    background:var(--ink);color:rgba(250,249,246,.5);
+    padding:48px 40px 32px;text-align:center;
+    font-family:var(--sans);font-size:12px;letter-spacing:.005em;
+}
+footer.foot a{color:rgba(250,249,246,.7);text-decoration:none;transition:color .3s var(--ease-out);}
+footer.foot a:hover{color:var(--cream);}
     </style>
 </head>
-<body style="overflow-x:hidden;touch-action:pan-y;">
+<body>
+
 <nav class="f-nav">
-    <a href="/" class="logo">RIO TRANSPORTATION</a>
-    <a href="/" class="back"><i class="bi bi-arrow-left"></i> Back</a>
+    <a href="/" class="logo">Rio<em>.</em>Transportation</a>
+    <a href="/" class="back"><i class="bi bi-arrow-left"></i> Back to site</a>
 </nav>
 
-<div class="fleet-header">
-    <h1>Our Fleet</h1>
-    <p>Premium vehicles for every occasion — from solo travelers to large groups</p>
-</div>
+<header class="fleet-header">
+    <div class="fleet-eyebrow">The Fleet</div>
+    <h1>The right ride,<br><em>every time.</em></h1>
+    <p>Four tiers built around the way our guests travel. Each one ships
+    with the same standard: driver, flight tracking, bottled water,
+    complimentary car seats and zero hidden fees.</p>
+</header>
 
 <div class="v-detail">
+
     <!-- Comfort Electric -->
-    <div class="v-card">
-        <div class="v-card-img" style="background-image:url('/static/images/comfort-electric.webp');background-size:contain;background-repeat:no-repeat;background-position:center;"></div>
+    <article class="v-card">
+        <div class="v-card-img">
+            <img src="/static/images/comfort-electric.webp" alt="Tesla Model Y — Comfort Electric" loading="lazy">
+        </div>
         <div class="v-card-info">
-            <div class="v-tag">Eco-Friendly</div>
-            <h2>Comfort Electric</h2>
+            <div class="v-tag">Eco · Couples</div>
+            <h2>Comfort <em>Electric</em></h2>
             <div class="v-model">Tesla Model Y or similar</div>
-            <div class="v-desc">Perfect for couples, solo travelers, or small families. Premium electric SUV with whisper-quiet ride, zero emissions, and instant-response acceleration. Ideal for airport transfers with light luggage.</div>
+            <p class="v-desc">For the couple, the solo traveler, the
+                eco-minded guest. Whisper-quiet ride, zero emissions,
+                instant-response acceleration. The premium choice for
+                airport transfers with light luggage.</p>
             <div class="v-specs">
-                <div class="v-spec"><i class="bi bi-people-fill"></i> 5 seats</div>
-                <div class="v-spec"><i class="bi bi-luggage-fill"></i> 4 bags</div>
-                <div class="v-spec"><i class="bi bi-lightning-charge-fill"></i> Electric</div>
+                <div class="v-spec"><i class="bi bi-people"></i> 5 seats</div>
+                <div class="v-spec"><i class="bi bi-suitcase2"></i> 4 bags</div>
+                <div class="v-spec"><i class="bi bi-lightning-charge"></i> Electric AWD</div>
             </div>
             <ul class="v-features">
-                <li><i class="bi bi-check-circle-fill"></i> Premium leather</li>
-                <li><i class="bi bi-check-circle-fill"></i> Panoramic glass roof</li>
-                <li><i class="bi bi-check-circle-fill"></i> USB-C charging</li>
-                <li><i class="bi bi-check-circle-fill"></i> Bottled water</li>
-                <li><i class="bi bi-check-circle-fill"></i> Flight tracking</li>
-                <li><i class="bi bi-check-circle-fill"></i> Zero emissions</li>
+                <li><i class="bi bi-check2"></i> Premium leather</li>
+                <li><i class="bi bi-check2"></i> Panoramic glass roof</li>
+                <li><i class="bi bi-check2"></i> USB-C charging</li>
+                <li><i class="bi bi-check2"></i> Bottled water</li>
+                <li><i class="bi bi-check2"></i> Flight tracking</li>
+                <li><i class="bi bi-check2"></i> Zero emissions</li>
             </ul>
-            <div class="v-price">From <strong>$100</strong> / trip</div>
-            <a href="/book?vehicle=small" class="v-book">Book Comfort Electric <i class="bi bi-arrow-right"></i></a>
+            <div class="v-foot">
+                <div class="v-price">From <strong>$100</strong></div>
+                <a href="/book?vehicle=small" class="v-book">Book Comfort Electric <i class="bi bi-arrow-right"></i></a>
+            </div>
         </div>
-    </div>
+    </article>
 
     <!-- Midsize SUV -->
-    <div class="v-card">
-        <div class="v-card-img" style="background-image:url('/static/pathfinder.avif');"></div>
+    <article class="v-card">
+        <div class="v-card-img">
+            <img src="/static/pathfinder.avif" alt="Nissan Pathfinder — Midsize SUV" loading="lazy" class="img-zoom-130">
+        </div>
         <div class="v-card-info">
-            <div class="v-tag">Family Size</div>
-            <h2>Midsize SUV</h2>
+            <div class="v-tag">Family · Most flexible</div>
+            <h2>Midsize <em>SUV</em></h2>
             <div class="v-model">Nissan Pathfinder or similar</div>
-            <div class="v-desc">Ideal for families with children. Spacious 3-row seating with plenty of room for car seats, strollers, and luggage. The most popular choice for family ski vacations.</div>
+            <p class="v-desc">Built for the family ski trip. Spacious
+                3-row seating with plenty of room for car seats,
+                strollers and ski gear. The most popular pick for
+                multi-generation visits to Park City.</p>
             <div class="v-specs">
-                <div class="v-spec"><i class="bi bi-people-fill"></i> 7 seats</div>
-                <div class="v-spec"><i class="bi bi-luggage-fill"></i> 6 bags</div>
+                <div class="v-spec"><i class="bi bi-people"></i> 7 seats</div>
+                <div class="v-spec"><i class="bi bi-suitcase2"></i> 6 bags</div>
                 <div class="v-spec"><i class="bi bi-snow2"></i> AWD</div>
             </div>
             <ul class="v-features">
-                <li><i class="bi bi-check-circle-fill"></i> 3-row seating</li>
-                <li><i class="bi bi-check-circle-fill"></i> Free car seats</li>
-                <li><i class="bi bi-check-circle-fill"></i> USB charging</li>
-                <li><i class="bi bi-check-circle-fill"></i> Bottled water</li>
-                <li><i class="bi bi-check-circle-fill"></i> Flight tracking</li>
-                <li><i class="bi bi-check-circle-fill"></i> Ski/board rack available</li>
+                <li><i class="bi bi-check2"></i> 3-row seating</li>
+                <li><i class="bi bi-check2"></i> Free car seats</li>
+                <li><i class="bi bi-check2"></i> USB charging</li>
+                <li><i class="bi bi-check2"></i> Bottled water</li>
+                <li><i class="bi bi-check2"></i> Flight tracking</li>
+                <li><i class="bi bi-check2"></i> Ski / board rack on request</li>
             </ul>
-            <div class="v-price">From <strong>$129</strong> / trip</div>
-            <a href="/book?vehicle=midsize" class="v-book">Book Midsize SUV <i class="bi bi-arrow-right"></i></a>
+            <div class="v-foot">
+                <div class="v-price">From <strong>$129</strong></div>
+                <a href="/book?vehicle=midsize" class="v-book">Book Midsize SUV <i class="bi bi-arrow-right"></i></a>
+            </div>
         </div>
-    </div>
+    </article>
 
     <!-- Premier SUV -->
-    <div class="v-card">
-        <div class="v-card-img" style="background-image:url('/static/images/premier-suv.webp');"></div>
+    <article class="v-card">
+        <div class="v-card-img">
+            <img src="/static/images/premier-suv.webp" alt="GMC Yukon — Premier SUV" loading="lazy">
+        </div>
         <div class="v-card-info">
-            <div class="v-tag">Most Popular</div>
-            <h2>Premier SUV</h2>
+            <div class="v-tag">Most popular · Groups</div>
+            <h2>Premier <em>SUV</em></h2>
             <div class="v-model">GMC Yukon or similar</div>
-            <div class="v-desc">Full-size luxury for larger families and groups. Captain chairs, extended cargo space, and premium amenities. Our most requested vehicle for Park City resort transfers.</div>
+            <p class="v-desc">Full-size luxury for larger families and
+                groups. Captain chairs, extended cargo space, premium
+                amenities throughout. Our most requested vehicle for
+                Park City resort transfers.</p>
             <div class="v-specs">
-                <div class="v-spec"><i class="bi bi-people-fill"></i> 7 seats</div>
-                <div class="v-spec"><i class="bi bi-luggage-fill"></i> 7 bags</div>
+                <div class="v-spec"><i class="bi bi-people"></i> 7 seats</div>
+                <div class="v-spec"><i class="bi bi-suitcase2"></i> 7 bags</div>
                 <div class="v-spec"><i class="bi bi-wifi"></i> WiFi</div>
             </div>
             <ul class="v-features">
-                <li><i class="bi bi-check-circle-fill"></i> Captain chairs</li>
-                <li><i class="bi bi-check-circle-fill"></i> WiFi hotspot</li>
-                <li><i class="bi bi-check-circle-fill"></i> Free car seats</li>
-                <li><i class="bi bi-check-circle-fill"></i> USB charging</li>
-                <li><i class="bi bi-check-circle-fill"></i> Bottled water</li>
-                <li><i class="bi bi-check-circle-fill"></i> Flight tracking</li>
-                <li><i class="bi bi-check-circle-fill"></i> Extra ski/board space</li>
+                <li><i class="bi bi-check2"></i> Captain's chairs</li>
+                <li><i class="bi bi-check2"></i> WiFi hotspot</li>
+                <li><i class="bi bi-check2"></i> Free car seats</li>
+                <li><i class="bi bi-check2"></i> USB charging</li>
+                <li><i class="bi bi-check2"></i> Bottled water</li>
+                <li><i class="bi bi-check2"></i> Flight tracking</li>
+                <li><i class="bi bi-check2"></i> Extra ski / board space</li>
             </ul>
-            <div class="v-price">From <strong>$189</strong> / trip</div>
-            <a href="/book?vehicle=premier" class="v-book">Book Premier SUV <i class="bi bi-arrow-right"></i></a>
+            <div class="v-foot">
+                <div class="v-price">From <strong>$189</strong></div>
+                <a href="/book?vehicle=premier" class="v-book">Book Premier SUV <i class="bi bi-arrow-right"></i></a>
+            </div>
         </div>
-    </div>
+    </article>
 
     <!-- Luxury SUV -->
-    <div class="v-card">
-        <div class="v-card-img" style="background-image:url('/static/images/luxury-suv.webp');"></div>
+    <article class="v-card">
+        <div class="v-card-img">
+            <img src="/static/images/luxury-suv.webp" alt="Cadillac Escalade — Luxury SUV" loading="lazy">
+        </div>
         <div class="v-card-info">
-            <div class="v-tag">Executive / VIP</div>
-            <h2>Luxury SUV</h2>
-            <div class="v-model">Lincoln Navigator or similar</div>
-            <div class="v-desc">The ultimate in luxury transportation. Perfect for executives, VIPs, and special occasions. Premium leather, heated seats, privacy glass, and a whisper-quiet cabin for the most discerning travelers.</div>
+            <div class="v-tag">Executive · VIP</div>
+            <h2>Luxury <em>SUV</em></h2>
+            <div class="v-model">Cadillac Escalade or similar</div>
+            <p class="v-desc">The top of the order. Premium leather,
+                heated &amp; cooled seats, privacy glass, a whisper-quiet
+                cabin for the most discerning guests. Built for executive
+                transfers and special occasions.</p>
             <div class="v-specs">
-                <div class="v-spec"><i class="bi bi-people-fill"></i> 7 seats</div>
-                <div class="v-spec"><i class="bi bi-luggage-fill"></i> 7 bags</div>
+                <div class="v-spec"><i class="bi bi-people"></i> 7 seats</div>
+                <div class="v-spec"><i class="bi bi-suitcase2"></i> 7 bags</div>
                 <div class="v-spec"><i class="bi bi-wifi"></i> WiFi</div>
                 <div class="v-spec"><i class="bi bi-shield-check"></i> Privacy</div>
             </div>
             <ul class="v-features">
-                <li><i class="bi bi-check-circle-fill"></i> Premium leather seats</li>
-                <li><i class="bi bi-check-circle-fill"></i> Heated & cooled seats</li>
-                <li><i class="bi bi-check-circle-fill"></i> Privacy glass</li>
-                <li><i class="bi bi-check-circle-fill"></i> WiFi hotspot</li>
-                <li><i class="bi bi-check-circle-fill"></i> Beverages & snacks</li>
-                <li><i class="bi bi-check-circle-fill"></i> Free car seats</li>
-                <li><i class="bi bi-check-circle-fill"></i> Flight tracking</li>
+                <li><i class="bi bi-check2"></i> Premium leather seats</li>
+                <li><i class="bi bi-check2"></i> Heated &amp; cooled seats</li>
+                <li><i class="bi bi-check2"></i> Privacy glass</li>
+                <li><i class="bi bi-check2"></i> WiFi hotspot</li>
+                <li><i class="bi bi-check2"></i> Beverages &amp; snacks</li>
+                <li><i class="bi bi-check2"></i> Free car seats</li>
+                <li><i class="bi bi-check2"></i> Flight tracking</li>
             </ul>
-            <div class="v-price">From <strong>$220</strong> / trip</div>
-            <a href="/book?vehicle=luxury" class="v-book">Book Luxury SUV <i class="bi bi-arrow-right"></i></a>
+            <div class="v-foot">
+                <div class="v-price">From <strong>$220</strong></div>
+                <a href="/book?vehicle=luxury" class="v-book">Book Luxury SUV <i class="bi bi-arrow-right"></i></a>
+            </div>
         </div>
-    </div>
+    </article>
+
 </div>
 
-<!-- Large Groups / Weddings -->
-<div class="special-card">
+<!-- Large groups & weddings -->
+<section class="special-card">
     <div class="special-inner">
-        <div class="special-img" style="background-image:url('https://static.wixstatic.com/media/55a398_5224bb10e6504989a26897233173179b~mv2.png');"></div>
+        <div class="special-img"></div>
         <div class="special-info">
             <div class="v-tag">Special Events</div>
-            <h2>Large Groups & Weddings</h2>
-            <p>Need transportation for 8+ passengers? We coordinate multi-vehicle service for corporate events, wedding parties, family reunions, and ski groups. Multiple SUVs dispatched simultaneously for seamless group logistics.</p>
-            <div class="notice"><i class="bi bi-calendar-check"></i> Advance booking required — contact us at least 72 hours before your event</div>
+            <h2>Large groups &amp; <em>weddings.</em></h2>
+            <p>Need transportation for 8+ passengers? We coordinate
+            multi-vehicle service for corporate events, wedding parties,
+            family reunions and ski groups — multiple SUVs dispatched
+            in sync for seamless group logistics.</p>
+            <div class="notice"><i class="bi bi-calendar-check"></i> Advance booking required — contact us at least 72 hours before your event.</div>
             <div class="v-specs">
-                <div class="v-spec"><i class="bi bi-people-fill"></i> 8-30+ guests</div>
-                <div class="v-spec"><i class="bi bi-car-front-fill"></i> Multi-vehicle</div>
-                <div class="v-spec"><i class="bi bi-heart-fill"></i> Weddings</div>
+                <div class="v-spec"><i class="bi bi-people"></i> 8 to 30+ guests</div>
+                <div class="v-spec"><i class="bi bi-car-front"></i> Multi-vehicle</div>
+                <div class="v-spec"><i class="bi bi-heart"></i> Weddings</div>
             </div>
-            <a href="/book?vehicle=group" class="v-book">Request Group Quote <i class="bi bi-arrow-right"></i></a>
+            <a href="/book?vehicle=group" class="v-book">Request a group quote <i class="bi bi-arrow-right"></i></a>
         </div>
     </div>
-</div>
+</section>
 
-<!-- Comparison Table -->
-<section style="max-width:1000px;margin:60px auto;padding:0 20px;">
-    <h2 style="font-family:'Onest',sans-serif;font-size:32px;font-weight:800;text-align:center;margin-bottom:8px;">Compare Our Fleet</h2>
-    <p style="color:var(--muted);text-align:center;margin-bottom:32px;font-size:14px;">All vehicles include flight tracking, bottled water, free car seats, and professional driver — no hidden fees.</p>
-    <div style="overflow-x:auto;">
-        <table style="width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;">
+<!-- Comparison table -->
+<section class="compare">
+    <h2>Compare the <em>fleet</em></h2>
+    <p class="compare-sub">Every tier includes flight tracking, bottled water, complimentary car seats and a professional driver. No hidden fees, no surge.</p>
+    <div class="compare-wrap">
+        <table>
             <thead>
-                <tr style="background:rgba(201,168,76,0.06);">
-                    <th style="padding:16px;text-align:left;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);"></th>
-                    <th style="padding:16px;text-align:center;font-family:'Onest',sans-serif;font-size:14px;font-weight:700;color:#fff;">Comfort Electric</th>
-                    <th style="padding:16px;text-align:center;font-family:'Onest',sans-serif;font-size:14px;font-weight:700;color:#fff;">Midsize SUV</th>
-                    <th style="padding:16px;text-align:center;font-family:'Onest',sans-serif;font-size:14px;font-weight:700;color:#fff;">Premier SUV</th>
-                    <th style="padding:16px;text-align:center;font-family:'Onest',sans-serif;font-size:14px;font-weight:700;color:#fff;">Luxury SUV</th>
+                <tr>
+                    <th></th>
+                    <th class="heading-name">Comfort Electric</th>
+                    <th class="heading-name">Midsize SUV</th>
+                    <th class="heading-name">Premier SUV</th>
+                    <th class="heading-name">Luxury SUV</th>
                 </tr>
             </thead>
-            <tbody style="font-size:13px;color:rgba(255,255,255,.75);">
-                <tr style="border-top:1px solid var(--border);"><td style="padding:14px 16px;color:var(--muted);">Vehicle</td><td style="padding:14px 16px;text-align:center;">Tesla Model Y</td><td style="padding:14px 16px;text-align:center;">Nissan Pathfinder</td><td style="padding:14px 16px;text-align:center;">GMC Yukon</td><td style="padding:14px 16px;text-align:center;">Lincoln Navigator</td></tr>
-                <tr style="border-top:1px solid var(--border);"><td style="padding:14px 16px;color:var(--muted);">Passengers</td><td style="padding:14px 16px;text-align:center;">5</td><td style="padding:14px 16px;text-align:center;">7</td><td style="padding:14px 16px;text-align:center;">7</td><td style="padding:14px 16px;text-align:center;">7</td></tr>
-                <tr style="border-top:1px solid var(--border);"><td style="padding:14px 16px;color:var(--muted);">Luggage</td><td style="padding:14px 16px;text-align:center;">4 bags</td><td style="padding:14px 16px;text-align:center;">7 bags</td><td style="padding:14px 16px;text-align:center;">7 bags</td><td style="padding:14px 16px;text-align:center;">7 bags</td></tr>
-                <tr style="border-top:1px solid var(--border);"><td style="padding:14px 16px;color:var(--muted);">Drivetrain</td><td style="padding:14px 16px;text-align:center;">Electric AWD</td><td style="padding:14px 16px;text-align:center;">AWD</td><td style="padding:14px 16px;text-align:center;">4WD</td><td style="padding:14px 16px;text-align:center;">4WD</td></tr>
-                <tr style="border-top:1px solid var(--border);"><td style="padding:14px 16px;color:var(--muted);">Best For</td><td style="padding:14px 16px;text-align:center;">Couples / eco-conscious</td><td style="padding:14px 16px;text-align:center;">Families</td><td style="padding:14px 16px;text-align:center;">Most popular</td><td style="padding:14px 16px;text-align:center;">VIP / executive</td></tr>
-                <tr style="border-top:1px solid var(--border);background:rgba(201,168,76,0.04);"><td style="padding:14px 16px;color:var(--muted);font-weight:700;">SLC → Park City</td><td style="padding:14px 16px;text-align:center;font-family:'Onest',sans-serif;font-size:18px;font-weight:800;color:var(--accent);">$100</td><td style="padding:14px 16px;text-align:center;font-family:'Onest',sans-serif;font-size:18px;font-weight:800;color:var(--accent);">$129</td><td style="padding:14px 16px;text-align:center;font-family:'Onest',sans-serif;font-size:18px;font-weight:800;color:var(--accent);">$189</td><td style="padding:14px 16px;text-align:center;font-family:'Onest',sans-serif;font-size:18px;font-weight:800;color:var(--accent);">$220</td></tr>
+            <tbody>
+                <tr>
+                    <td>Vehicle</td>
+                    <td>Tesla Model Y</td><td>Nissan Pathfinder</td>
+                    <td>GMC Yukon</td><td>Cadillac Escalade</td>
+                </tr>
+                <tr>
+                    <td>Passengers</td>
+                    <td>5</td><td>7</td><td>7</td><td>7</td>
+                </tr>
+                <tr>
+                    <td>Luggage</td>
+                    <td>4 bags</td><td>7 bags</td><td>7 bags</td><td>7 bags</td>
+                </tr>
+                <tr>
+                    <td>Drivetrain</td>
+                    <td>Electric AWD</td><td>AWD</td><td>4WD</td><td>4WD</td>
+                </tr>
+                <tr>
+                    <td>Best for</td>
+                    <td>Couples / eco</td><td>Families</td>
+                    <td>Most popular</td><td>VIP / executive</td>
+                </tr>
+                <tr class="price-row">
+                    <td>SLC → Park City</td>
+                    <td>$100</td><td>$129</td><td>$189</td><td>$220</td>
+                </tr>
             </tbody>
         </table>
     </div>
 </section>
 
-<!-- Fleet FAQ -->
-<section style="max-width:900px;margin:40px auto 60px;padding:0 20px;">
-    <h2 style="font-family:'Onest',sans-serif;font-size:28px;font-weight:800;text-align:center;margin-bottom:24px;">Fleet FAQs</h2>
-    <div>
-        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:12px;">
-            <h3 style="font-size:16px;font-weight:800;color:#fff;margin-bottom:8px;">Are all vehicles AWD or 4WD?</h3>
-            <p style="font-size:14px;color:rgba(255,255,255,.6);line-height:1.7;margin:0;">Yes — all our vehicles have all-wheel-drive (AWD) or four-wheel-drive (4WD), required for safe winter driving through Parley's Canyon and Park City's mountain roads. Tesla Model Y comes standard with electric AWD; the GMC Yukon and Lincoln Navigator have full 4WD with low-range gearing.</p>
-        </div>
-        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:12px;">
-            <h3 style="font-size:16px;font-weight:800;color:#fff;margin-bottom:8px;">Do you have winter tires?</h3>
-            <p style="font-size:14px;color:rgba(255,255,255,.6);line-height:1.7;margin:0;">November through April, our entire fleet runs on dedicated winter tires (snow-rated, M+S certified for Utah Level 2 traction laws). May through October we run all-season tires. We never use summer tires — too dangerous for sudden winter storms in the Wasatch.</p>
-        </div>
-        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:12px;">
-            <h3 style="font-size:16px;font-weight:800;color:#fff;margin-bottom:8px;">Can I request a specific vehicle?</h3>
-            <p style="font-size:14px;color:rgba(255,255,255,.6);line-height:1.7;margin:0;">Yes — at booking, choose the tier (Comfort Electric, Midsize, Premier, Luxury) and we assign a vehicle from that category. If you have a preference within the category (e.g., GMC Yukon over Chevy Suburban for the Premier tier), let us know in the booking notes and we'll honor it when possible.</p>
-        </div>
-        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:12px;">
-            <h3 style="font-size:16px;font-weight:800;color:#fff;margin-bottom:8px;">How old are the vehicles?</h3>
-            <p style="font-size:14px;color:rgba(255,255,255,.6);line-height:1.7;margin:0;">Every vehicle in our fleet is under 3 years old. We rotate the fleet regularly to ensure the best ride experience. Our Tesla Model Ys are 2025-2026 models; the GMC Yukons and Lincoln Navigators are similarly recent.</p>
-        </div>
-        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:12px;">
-            <h3 style="font-size:16px;font-weight:800;color:#fff;margin-bottom:8px;">What's the difference between Premier and Luxury?</h3>
-            <p style="font-size:14px;color:rgba(255,255,255,.6);line-height:1.7;margin:0;">Both seat 7 with similar luggage capacity. Premier (GMC Yukon) is our most popular tier — premium leather, captain's chairs, all the standard amenities. Luxury (Lincoln Navigator or Cadillac Escalade) adds privacy glass, heated/cooled seats, premium audio system, and a more refined ride. Choose Luxury for VIP executive transfers or special occasions; Premier for excellent everyday service.</p>
-        </div>
-        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:12px;">
-            <h3 style="font-size:16px;font-weight:800;color:#fff;margin-bottom:8px;">Can I add car seats for my kids?</h3>
-            <p style="font-size:14px;color:rgba(255,255,255,.6);line-height:1.7;margin:0;">Yes — free of charge. We provide infant (rear-facing), convertible (toddler), and booster (4-10 years) seats. Just let us know the ages and weights when booking and we'll install the right seats before pickup.</p>
-        </div>
+<!-- FAQ -->
+<section class="faq">
+    <h2>Fleet <em>questions</em></h2>
+    <div class="faq-card">
+        <h3>Are all vehicles AWD or 4WD?</h3>
+        <p>Yes — every vehicle has all-wheel-drive (AWD) or four-wheel-drive (4WD), required for safe winter driving through Parley's Canyon and Park City's mountain roads. Tesla Model Y comes standard with electric AWD; the GMC Yukon and Cadillac Escalade have full 4WD with low-range gearing.</p>
+    </div>
+    <div class="faq-card">
+        <h3>Do you have winter tires?</h3>
+        <p>November through April, our entire fleet runs on dedicated winter tires (snow-rated, M+S certified for Utah Level 2 traction laws). May through October we run all-season tires. We never use summer tires — too dangerous for sudden winter storms in the Wasatch.</p>
+    </div>
+    <div class="faq-card">
+        <h3>Can I request a specific vehicle?</h3>
+        <p>Yes — at booking, choose the tier (Comfort Electric, Midsize, Premier, Luxury) and we assign a vehicle from that category. If you have a preference within the category (e.g. GMC Yukon over Chevy Suburban for Premier), note it in the booking and we'll honor it when possible.</p>
+    </div>
+    <div class="faq-card">
+        <h3>How old are the vehicles?</h3>
+        <p>Every vehicle in our fleet is under 3 years old. We rotate the fleet regularly to keep the ride experience consistent. Our Tesla Model Ys are 2025-2026 models; the GMC Yukons and Cadillac Escalades are similarly recent.</p>
+    </div>
+    <div class="faq-card">
+        <h3>Premier vs Luxury — what's the difference?</h3>
+        <p>Both seat 7 with similar luggage capacity. Premier (GMC Yukon) is our most popular tier — premium leather, captain's chairs, standard amenities. Luxury (Cadillac Escalade) adds privacy glass, heated/cooled seats, premium audio and a more refined ride. Choose Luxury for VIP transfers or special occasions; Premier for excellent everyday service.</p>
+    </div>
+    <div class="faq-card">
+        <h3>Can I add car seats for my kids?</h3>
+        <p>Yes — free of charge. We provide infant (rear-facing), convertible (toddler) and booster (4-10 years) seats. Just note the ages and weights when booking and we'll install the right seats before pickup.</p>
     </div>
 </section>
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"Are all vehicles AWD or 4WD?","acceptedAnswer":{"@type":"Answer","text":"Yes — all our vehicles have all-wheel-drive (AWD) or four-wheel-drive (4WD), required for safe winter driving through Parley's Canyon."}},
+{"@type":"Question","name":"Are all vehicles AWD or 4WD?","acceptedAnswer":{"@type":"Answer","text":"Yes — all vehicles have all-wheel-drive (AWD) or four-wheel-drive (4WD), required for safe winter driving through Parley's Canyon."}},
 {"@type":"Question","name":"Do you have winter tires?","acceptedAnswer":{"@type":"Answer","text":"November through April, our entire fleet runs on dedicated winter tires (M+S certified for Utah Level 2 traction laws)."}},
 {"@type":"Question","name":"Can I request a specific vehicle?","acceptedAnswer":{"@type":"Answer","text":"At booking, choose the tier and we assign from that category. If you have a preference within the category, let us know in the booking notes."}}
 ]}
 </script>
 
-<footer style="padding:24px 40px;border-top:1px solid var(--border);text-align:center;font-size:12px;color:var(--muted);">
-    © 2026 Rio Transportation LLC — Park City, Utah
+<footer class="foot">
+    © 2026 Rio Transportation LLC — Park City, Utah ·
+    <a href="tel:+14352146939">(435) 214-6939</a>
 </footer>
 <script defer src="/static/no-zoom.js?v=2"></script>
 </body>
