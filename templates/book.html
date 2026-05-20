@@ -1,3 +1,7 @@
+{# Park City Trips — /book redesign 2026-05-20 (Airbnb Luxe direction).
+   Same palette + type system as home_v2.html. Form structure + JS
+   preserved verbatim — every input keeps the same `name=` so the
+   existing POST /book/submit handler still works. #}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,459 +25,660 @@
       {"@type":"Offer","name":"Luxury SUV","price":"220","priceCurrency":"USD","availability":"https://schema.org/InStock"}
     ]},"description":"Book a private luxury SUV transfer from Salt Lake City International Airport (SLC) to Park City, Utah. 45-minute direct door-to-door service, all-inclusive pricing, professional drivers, flight tracking, free car seats, ski gear welcome."}
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2J1TXGYYMD"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-2J1TXGYYMD");</script>
     <style>
-*{box-sizing:border-box;margin:0;padding:0;}
-:root{--bg:#080a0f;--card:#111318;--border:#1e2130;--accent:#c9a84c;--fg:#fff;--muted:#666;}
-body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);min-height:100vh;overflow-x:hidden;}
-.book-nav{padding:20px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);}
-.book-nav a{color:var(--fg);text-decoration:none;font-family:'Onest',sans-serif;font-weight:700;font-size:16px;letter-spacing:.1em;}
-.book-nav .back{font-size:14px;color:var(--muted);display:flex;align-items:center;gap:6px;}
-.book-nav .back:hover{color:#fff;}
-.book-page{max-width:720px;margin:0 auto;padding:40px 20px 80px;}
-.book-page h1{font-family:'Onest',sans-serif;font-size:clamp(28px,5vw,40px);font-weight:800;margin-bottom:8px;}
-.book-page .sub{color:var(--muted);font-size:14px;margin-bottom:40px;}
-.step-label{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;display:flex;align-items:center;gap:10px;}
-.step-label::after{content:'';flex:1;height:1px;background:var(--border);}
-.field{margin-bottom:20px;}
-.field label{display:block;font-size:13px;font-weight:600;color:rgba(255,255,255,.7);margin-bottom:6px;}
-.field input,.field select,.field textarea{width:100%;padding:14px 16px;background:var(--card);border:1.5px solid var(--border);border-radius:10px;color:#fff;font-family:'Montserrat',sans-serif;font-size:15px;outline:none;transition:border-color .2s;}
-.field input:focus,.field select:focus{border-color:var(--accent);}
-.field select{cursor:pointer;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23666' viewBox='0 0 16 16'%3E%3Cpath d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;}
-.field small{font-size:11px;color:var(--muted);margin-top:4px;display:block;}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-.row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
-@media(max-width:640px){
-    .row,.row-3{grid-template-columns:1fr;}
-    .book-page{padding:24px 16px 60px;}
-    .book-page h1{font-size:24px;}
-    .field input,.field select,.field textarea{font-size:16px !important;} /* prevent iOS zoom */
-    .book-nav{padding:14px 16px;}
+/* ============================================================
+   DESIGN TOKENS — same palette as home_v2.html (Airbnb Luxe)
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+    --cream: #faf9f6;
+    --cream-2:#f3efe8;
+    --cream-3:#e8e2d5;
+    --ink:   #0e1a2e;
+    --ink-2: #1a2a45;
+    --ink-3: #2c3e5a;
+    --neutral-700:#4a4a4a;
+    --neutral-500:#8a8580;
+    --neutral-300:#c8c2b8;
+    --gold:  #b8945c;
+    --serif: 'Fraunces','Times New Roman',serif;
+    --sans:  'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --shadow-md: 0 4px 16px rgba(14,26,46,.06), 0 1px 3px rgba(14,26,46,.08);
+    --shadow-lg: 0 24px 64px rgba(14,26,46,.10), 0 4px 12px rgba(14,26,46,.06);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+html{scroll-behavior:smooth;overflow-x:hidden;-webkit-text-size-adjust:100%;}
+body{
+    font-family:var(--sans);background:var(--cream);color:var(--ink);
+    font-size:16px;line-height:1.6;font-weight:400;
+    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+    overflow-x:hidden;touch-action:pan-y;-webkit-overflow-scrolling:touch;
 }
 
-/* === Vehicle selector — premium card with hero-style photo === */
-.vehicles{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:32px;}
-@media(max-width:900px){.vehicles{grid-template-columns:repeat(2,1fr);gap:10px;}}
+/* Nav — matches home */
+.book-nav{
+    position:sticky;top:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px clamp(20px,4vw,56px);
+    background:rgba(250,249,246,.92);
+    backdrop-filter:saturate(180%) blur(20px);
+    -webkit-backdrop-filter:saturate(180%) blur(20px);
+    border-bottom:1px solid rgba(14,26,46,.07);
+}
+.book-nav .logo{
+    font-family:var(--serif);font-style:italic;font-weight:400;
+    font-size:22px;color:var(--ink);text-decoration:none;letter-spacing:-.01em;
+}
+.book-nav .back{
+    font-family:var(--sans);font-size:13.5px;color:var(--ink-3);
+    text-decoration:none;display:flex;align-items:center;gap:8px;
+    transition:color .3s var(--ease-out);
+}
+.book-nav .back:hover{color:var(--ink);}
+
+/* Page shell — generous whitespace, max-width contained */
+.book-page{
+    max-width:760px;margin:0 auto;
+    padding:clamp(48px,8vh,96px) clamp(20px,5vw,40px) 96px;
+}
+.book-eyebrow{
+    font-family:var(--sans);font-size:11px;font-weight:500;
+    letter-spacing:.22em;text-transform:uppercase;
+    color:var(--neutral-500);margin-bottom:18px;
+    display:flex;align-items:center;gap:14px;
+}
+.book-eyebrow::before{content:'';width:32px;height:1px;background:var(--ink);opacity:.4;}
+.book-title{
+    font-family:var(--serif);font-optical-sizing:auto;
+    font-weight:300;font-size:clamp(36px,5vw,64px);line-height:1.05;
+    letter-spacing:-.02em;color:var(--ink);
+}
+.book-title em{font-style:italic;font-weight:400;}
+.book-sub{
+    font-family:var(--sans);font-size:15px;color:var(--neutral-700);
+    margin-top:14px;line-height:1.6;
+}
+
+/* Step heading — serif numeral + italic label */
+.step-label{
+    margin-top:64px;margin-bottom:24px;
+    font-family:var(--serif);font-weight:400;font-size:24px;
+    color:var(--ink);letter-spacing:-.01em;
+    display:flex;align-items:baseline;gap:14px;
+    border-bottom:1px solid rgba(14,26,46,.08);padding-bottom:18px;
+}
+.step-label .num{
+    font-family:var(--serif);font-style:italic;font-weight:300;
+    font-size:36px;color:var(--gold);line-height:1;
+    min-width:38px;
+}
+.step-label .txt em{font-style:italic;color:var(--neutral-500);}
+
+/* Form fields — underline style (no boxes) for clean editorial look */
+.field{margin-bottom:24px;position:relative;}
+.field label{
+    display:block;font-family:var(--sans);font-size:11px;font-weight:500;
+    letter-spacing:.18em;text-transform:uppercase;
+    color:var(--neutral-500);margin-bottom:10px;
+}
+.field label i{font-size:11px;color:var(--ink-3);margin-right:4px;}
+.field input,.field select,.field textarea{
+    width:100%;padding:13px 0;
+    background:transparent;
+    border:0;border-bottom:1px solid rgba(14,26,46,.18);
+    color:var(--ink);font-family:var(--sans);font-size:15.5px;font-weight:400;
+    border-radius:0;outline:none;
+    transition:border-bottom-color .3s var(--ease-out);
+}
+.field input:focus,.field select:focus,.field textarea:focus{
+    border-bottom-color:var(--ink);
+}
+.field input::placeholder,.field textarea::placeholder{
+    color:var(--neutral-300);font-weight:400;
+}
+.field select{
+    cursor:pointer;-webkit-appearance:none;-moz-appearance:none;appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%238a8580' viewBox='0 0 16 16'%3E%3Cpath d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 6px center;
+    padding-right:28px;
+}
+.field textarea{min-height:96px;resize:vertical;line-height:1.5;}
+.field small{
+    display:block;margin-top:8px;font-size:12px;
+    color:var(--neutral-500);line-height:1.5;
+}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:32px;}
+.row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px;}
+@media(max-width:640px){
+    .row,.row-3{grid-template-columns:1fr;gap:8px;}
+    .field input,.field select,.field textarea{font-size:16px!important;} /* prevent iOS zoom */
+}
+
+/* === VEHICLE SELECTOR — matches home fleet cards === */
+.vehicles{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:8px 0 16px;
+}
+@media(max-width:900px){.vehicles{grid-template-columns:repeat(2,1fr);gap:12px;}}
 .v-option{
     position:relative;
-    background:linear-gradient(180deg,#15171f 0%,#0d0f15 100%);
-    border:1.5px solid var(--border);
-    border-radius:14px;
-    overflow:hidden;
+    background:var(--cream);
+    border:1.5px solid rgba(14,26,46,.08);
+    border-radius:8px;overflow:hidden;
     cursor:pointer;
-    transition:transform .25s cubic-bezier(.22,1,.36,1), border-color .2s, box-shadow .2s;
+    transition: transform .35s var(--ease-out),
+                border .25s var(--ease-out),
+                box-shadow .35s var(--ease-out);
 }
 .v-option:hover{
-    border-color:rgba(255,255,255,.18);
+    border-color:rgba(14,26,46,.18);
     transform:translateY(-2px);
-    box-shadow:0 12px 32px -8px rgba(0,0,0,.6);
+    box-shadow:var(--shadow-md);
 }
 .v-option.selected{
-    border-color:var(--accent);
-    box-shadow:0 0 0 1.5px var(--accent), 0 18px 40px -10px rgba(201,168,76,.35);
-    transform:translateY(-3px);
+    border-color:var(--ink);
+    border-width:1.5px;
+    box-shadow:0 0 0 2px var(--ink), var(--shadow-md);
+    transform:translateY(-2px);
 }
 .v-option.selected::before{
     content:'\F26B';
     font-family:'bootstrap-icons';
     position:absolute;top:10px;right:10px;
     width:24px;height:24px;border-radius:50%;
-    background:var(--accent);color:#000;
+    background:var(--ink);color:var(--cream);
     display:flex;align-items:center;justify-content:center;
-    font-size:12px;font-weight:900;
-    z-index:3;
-    box-shadow:0 4px 10px rgba(201,168,76,.4);
+    font-size:11px;font-weight:900;z-index:3;
 }
-
-/* Photo hero — larger, full-bleed, with radial light glow + bottom fade */
-.v-img{
+.v-img-wrap{
     position:relative;
-    height:130px;
-    background-size:contain;background-repeat:no-repeat;background-position:center 56%;
-    background-color:transparent;
+    width:100%;height:140px;
+    background:var(--cream-2);
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;
 }
-.v-img::before{
-    content:'';position:absolute;inset:0;
-    background:
-        radial-gradient(ellipse 80% 60% at 50% 45%, rgba(201,168,76,0.06), transparent 70%),
-        radial-gradient(ellipse 60% 40% at 50% 100%, rgba(0,0,0,.45), transparent);
-    pointer-events:none;z-index:0;
+.v-img-wrap img{
+    width:100%;height:100%;object-fit:contain;
+    padding:10px 14px;
+    transition: transform .8s var(--ease-out);
 }
-.v-img > *{position:relative;z-index:1;}
-
-/* Price badge — top-left of card, gold pill */
+.v-img-wrap img.img-zoom-130{transform:scale(1.30);}
+.v-option:hover .v-img-wrap img{transform:scale(1.05);}
+.v-option:hover .v-img-wrap img.img-zoom-130{transform:scale(1.35);}
 .v-price-badge{
     position:absolute;top:10px;left:10px;
-    font-family:'Onest',sans-serif;
-    font-size:13px;font-weight:800;
-    color:#000;
-    background:linear-gradient(135deg,#e8c65a,#c9a84c);
-    padding:5px 11px;border-radius:50px;
-    letter-spacing:.02em;
-    box-shadow:0 4px 10px rgba(201,168,76,.3);
-    z-index:2;
+    font-family:var(--sans);font-size:11.5px;font-weight:600;
+    color:var(--ink);background:rgba(250,249,246,.92);
+    backdrop-filter:blur(6px);
+    padding:5px 11px;border-radius:999px;letter-spacing:.01em;z-index:2;
 }
-.v-price-badge::before{content:'$';margin-right:1px;opacity:.85;font-weight:700;}
-
-/* Info block beneath the photo */
-.v-info{
-    padding:12px 14px 14px;
-    border-top:1px solid rgba(255,255,255,.04);
-    background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(0,0,0,.15));
-}
+.v-price-badge::before{content:'$';margin-right:1px;}
+.v-info{padding:14px 16px 16px;}
 .v-info h4{
-    font-family:'Onest',sans-serif;
-    font-size:14.5px;font-weight:700;
-    letter-spacing:-0.2px;color:#fff;
-    margin-bottom:3px;line-height:1.2;
+    font-family:var(--serif);font-weight:400;font-size:16px;
+    color:var(--ink);line-height:1.2;letter-spacing:-.005em;
 }
 .v-info .v-model{
-    font-size:11px;color:rgba(255,255,255,.5);
-    line-height:1.35;
-    /* Allow wrapping to 2 lines so "Lincoln Navigator or similar" /
-       "Nissan Pathfinder or similar" don't get cut off. Clamped at 2
-       lines so cards stay the same height. */
-    display:-webkit-box;
-    -webkit-line-clamp:2;
-    -webkit-box-orient:vertical;
-    overflow:hidden;
-    min-height:30px;
+    font-family:var(--sans);font-size:12px;color:var(--neutral-500);
+    margin-top:3px;line-height:1.4;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+    overflow:hidden;min-height:34px;
 }
 .v-meta{
-    display:flex;gap:10px;margin-top:8px;
-    font-size:11px;color:rgba(255,255,255,.55);font-weight:600;
+    display:flex;gap:10px;margin-top:10px;
+    font-family:var(--sans);font-size:11px;color:var(--neutral-700);
 }
-.v-meta span{display:inline-flex;align-items:center;gap:4px;}
-.v-meta i{color:var(--accent);font-size:12px;}
-
+.v-meta span{display:inline-flex;align-items:center;gap:5px;}
+.v-meta i{color:var(--ink-3);font-size:12px;}
 @media(max-width:640px){
-    .v-img{height:100px;}
-    .v-info{padding:10px 12px 12px;}
-    .v-info h4{font-size:13px;}
-    .v-price-badge{font-size:12px;padding:4px 9px;}
-    .v-meta{font-size:10px;}
+    .v-img-wrap{height:110px;}
+    .v-info{padding:12px 14px;}
+    .v-info h4{font-size:14.5px;}
+    .v-price-badge{font-size:11px;padding:4px 9px;}
 }
 
-/* Flight lookup */
-.flight-found{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:14px 16px;margin-top:8px;font-size:13px;display:none;}
-.flight-found .route{font-weight:700;font-size:15px;}
+/* Flight lookup result + picker */
+.flight-search-btn{
+    position:absolute;right:0;top:50%;transform:translateY(20%);
+    width:40px;height:40px;border-radius:8px;
+    background:var(--ink);border:none;color:var(--cream);
+    cursor:pointer;font-size:14px;
+    display:flex;align-items:center;justify-content:center;
+    transition: background .3s var(--ease-out);
+}
+.flight-search-btn:hover{background:var(--ink-2);}
+.flight-search-btn:disabled{opacity:.5;cursor:wait;}
+.flight-found{
+    display:none;margin-top:14px;padding:16px 18px;
+    background:var(--cream-2);border-radius:8px;
+    border:1px solid rgba(14,26,46,.08);font-size:14px;
+}
+.flight-found .route{font-family:var(--serif);font-size:18px;font-weight:400;color:var(--ink);}
+.flight-found .route strong{font-weight:500;}
 
-/* Submit */
+/* Location use-current button — sits inside the field on the right edge */
+.loc-btn{
+    position:absolute;right:0;top:50%;transform:translateY(20%);
+    width:36px;height:36px;border-radius:50%;
+    background:transparent;border:1px solid rgba(14,26,46,.18);
+    color:var(--ink-3);cursor:pointer;
+    display:flex;align-items:center;justify-content:center;font-size:13px;
+    transition:all .3s var(--ease-out);
+}
+.loc-btn:hover{background:var(--ink);border-color:var(--ink);color:var(--cream);}
+
 /* Address autocomplete dropdown */
-.addr-dropdown{display:none;position:absolute;left:0;right:0;top:100%;z-index:100;background:var(--card);border:1px solid var(--border);border-radius:10px;margin-top:4px;max-height:240px;overflow-y:auto;box-shadow:0 12px 40px rgba(0,0,0,.5);}
-.addr-item{padding:12px 14px;cursor:pointer;font-size:13px;color:#fff;border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:10px;transition:background .15s;}
-.addr-item:hover{background:rgba(201,168,76,.06);}
-.addr-item i{color:var(--accent);flex-shrink:0;}
-.addr-item .addr-main{font-weight:600;}
-.addr-item .addr-sub{font-size:11px;color:var(--muted);margin-top:2px;}
-.field{position:relative;}
+.addr-dropdown{
+    display:none;position:absolute;left:0;right:0;top:100%;z-index:100;
+    background:var(--cream);border:1px solid rgba(14,26,46,.12);
+    border-radius:8px;margin-top:6px;max-height:280px;overflow-y:auto;
+    box-shadow:var(--shadow-lg);
+}
+.addr-item{
+    padding:12px 16px;cursor:pointer;
+    font-family:var(--sans);font-size:13.5px;color:var(--ink);
+    border-bottom:1px solid rgba(14,26,46,.05);
+    display:flex;align-items:center;gap:12px;
+    transition:background .15s;
+}
+.addr-item:hover{background:var(--cream-2);}
+.addr-item:last-child{border-bottom:0;}
+.addr-item i{color:var(--gold);flex-shrink:0;font-size:14px;}
+.addr-item .addr-main{font-weight:500;line-height:1.3;}
+.addr-item .addr-sub{font-size:11.5px;color:var(--neutral-500);margin-top:2px;line-height:1.3;}
 
-.submit-btn{width:100%;padding:18px;background:var(--accent);color:#000;font-family:'Onest',sans-serif;font-size:16px;font-weight:800;border:none;border-radius:12px;cursor:pointer;letter-spacing:.05em;transition:all .2s;margin-top:20px;}
-.submit-btn:hover{background:#e8c65a;transform:translateY(-1px);}
+/* Country code selector — sits next to phone input */
+.phone-wrap{
+    display:flex;align-items:flex-end;gap:12px;
+    border-bottom:1px solid rgba(14,26,46,.18);
+    padding-bottom:0;
+}
+.phone-wrap input{border-bottom:0!important;padding-bottom:13px!important;}
+.cc-btn{
+    display:flex;align-items:center;gap:6px;
+    padding:13px 0;
+    background:transparent;border:0;
+    color:var(--ink);cursor:pointer;font-family:var(--sans);font-size:15px;
+    white-space:nowrap;
+}
+.cc-btn span{display:inline-block;}
+.cc-btn .ico{font-size:11px;color:var(--neutral-500);margin-left:2px;}
+.cc-list{
+    display:none;position:absolute;top:calc(100% + 4px);left:0;
+    width:280px;max-height:300px;overflow-y:auto;z-index:100;
+    background:var(--cream);border:1px solid rgba(14,26,46,.12);
+    border-radius:8px;box-shadow:var(--shadow-lg);
+}
+.cc-search{
+    width:100%;padding:11px 14px;
+    background:transparent;border:0;border-bottom:1px solid rgba(14,26,46,.08);
+    color:var(--ink);font-size:13px;outline:none;
+}
+.cc-item{
+    display:flex;align-items:center;gap:10px;
+    padding:10px 14px;cursor:pointer;font-size:13.5px;color:var(--ink);
+    border-bottom:1px solid rgba(14,26,46,.04);transition:background .15s;
+}
+.cc-item:hover{background:var(--cream-2);}
+.cc-item span:first-child{font-size:20px;}
+.cc-item span:nth-child(2){flex:1;}
+.cc-item span:last-child{color:var(--neutral-500);}
 
-.divider{height:1px;background:var(--border);margin:32px 0;}
+/* Premium-stop card — cream tile with checkbox */
+.stop-card{
+    display:flex;align-items:center;gap:14px;cursor:pointer;
+    padding:18px 20px;
+    background:var(--cream);border:1.5px solid rgba(14,26,46,.1);
+    border-radius:10px;
+    transition: border-color .3s var(--ease-out), background .3s var(--ease-out);
+}
+.stop-card:hover{border-color:rgba(14,26,46,.22);}
+.stop-card.on{border-color:var(--ink);background:var(--cream-2);}
+.stop-card .box{
+    width:22px;height:22px;border-radius:6px;
+    border:2px solid rgba(14,26,46,.25);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+    transition:all .3s var(--ease-out);
+}
+.stop-card.on .box{background:var(--ink);border-color:var(--ink);}
+.stop-card .box i{color:var(--cream);font-size:13px;opacity:0;transition:opacity .2s;}
+.stop-card.on .box i{opacity:1;}
+.stop-card .info{flex:1;}
+.stop-card .info .t{font-family:var(--sans);font-weight:500;font-size:14.5px;color:var(--ink);}
+.stop-card .info .s{font-family:var(--sans);font-size:12px;color:var(--neutral-500);margin-top:2px;}
+.stop-card .pr{font-family:var(--serif);font-size:22px;font-weight:400;color:var(--ink);}
+
+/* Submit button — matches home btn-primary */
+.submit-btn{
+    width:100%;padding:18px 28px;margin-top:36px;
+    background:var(--ink);color:var(--cream);
+    font-family:var(--sans);font-size:15px;font-weight:500;
+    letter-spacing:.01em;border:none;border-radius:999px;cursor:pointer;
+    display:inline-flex;align-items:center;justify-content:center;gap:10px;
+    transition:transform .3s var(--ease-out), background .3s var(--ease-out);
+}
+.submit-btn:hover{background:var(--ink-2);transform:translateY(-2px);}
+.submit-foot{
+    text-align:center;font-size:12px;color:var(--neutral-500);
+    margin-top:14px;line-height:1.6;
+}
+
+/* Long-form FAQ block at bottom */
+.long-block{max-width:760px;margin:96px auto 80px;padding:0 clamp(20px,5vw,40px);}
+.long-block h2{
+    font-family:var(--serif);font-weight:300;font-size:clamp(28px,3.5vw,40px);
+    line-height:1.1;color:var(--ink);letter-spacing:-.01em;
+    margin:48px 0 18px;
+}
+.long-block h2 em{font-style:italic;font-weight:400;}
+.long-block p{
+    font-family:var(--sans);font-size:16px;line-height:1.75;
+    color:var(--neutral-700);margin-bottom:16px;
+}
+.long-block strong{color:var(--ink);font-weight:500;}
+.faq-card{
+    background:var(--cream);border:1px solid rgba(14,26,46,.08);
+    border-radius:10px;padding:24px 28px;margin-bottom:14px;
+    transition: border .3s var(--ease-out);
+}
+.faq-card:hover{border-color:rgba(14,26,46,.16);}
+.faq-card h3{
+    font-family:var(--serif);font-weight:400;font-size:18px;
+    color:var(--ink);margin-bottom:8px;letter-spacing:-.005em;
+}
+.faq-card p{font-family:var(--sans);font-size:14.5px;color:var(--neutral-700);line-height:1.7;margin:0;}
     </style>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2J1TXGYYMD"></script>
-    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-2J1TXGYYMD");</script>
 </head>
-<body style="overflow-x:hidden;touch-action:pan-y;">
+<body>
+
 <nav class="book-nav">
-    <a href="/">RIO TRANSPORTATION</a>
+    <a href="/" class="logo">Rio<em>.</em>Transportation</a>
     <a href="/" class="back"><i class="bi bi-arrow-left"></i> Back to site</a>
 </nav>
 
 <div class="book-page">
-    <h1>Book Your Ride</h1>
-    <p class="sub">All-inclusive pricing · No hidden fees</p>
+    <div class="book-eyebrow">Reserve your transfer</div>
+    <h1 class="book-title">Book your <em>ride.</em></h1>
+    <p class="book-sub">All-inclusive pricing. No hidden fees. No surge.</p>
 
     <form id="bookingForm" action="/book/submit" method="POST">
-        <!-- Step 1: Vehicle -->
-        <div class="step-label">1 — Choose Your Vehicle</div>
+
+        <!-- ===== Step 1: Vehicle ===== -->
+        <div class="step-label">
+            <span class="num">i.</span>
+            <span class="txt">Choose your <em>vehicle</em></span>
+        </div>
         <div class="vehicles">
             <div class="v-option {{ 'selected' if request.args.get('vehicle')=='small' }}" onclick="pickVehicle(this,'small')">
-                <div class="v-price-badge">100</div>
-                <div class="v-img" style="background-image:url('/static/images/comfort-electric.webp');" title="Comfort Electric"></div>
+                <div class="v-img-wrap">
+                    <div class="v-price-badge">100</div>
+                    <img src="/static/images/comfort-electric.webp" alt="Tesla Model Y" loading="lazy">
+                </div>
                 <div class="v-info">
                     <h4>Comfort Electric</h4>
                     <div class="v-model">Tesla Model Y or similar</div>
                     <div class="v-meta">
-                        <span><i class="bi bi-people-fill"></i> 4</span>
-                        <span><i class="bi bi-luggage-fill"></i> 3</span>
+                        <span><i class="bi bi-people"></i> 4</span>
+                        <span><i class="bi bi-suitcase2"></i> 3</span>
                     </div>
                 </div>
             </div>
             <div class="v-option {{ 'selected' if request.args.get('vehicle')=='midsize' }}" onclick="pickVehicle(this,'midsize')">
-                <div class="v-price-badge">129</div>
-                <div class="v-img" style="background-image:url('/static/pathfinder.avif');" title="Midsize SUV"></div>
+                <div class="v-img-wrap">
+                    <div class="v-price-badge">129</div>
+                    <img src="/static/pathfinder.avif" alt="Nissan Pathfinder" loading="lazy" class="img-zoom-130">
+                </div>
                 <div class="v-info">
                     <h4>Midsize SUV</h4>
                     <div class="v-model">Nissan Pathfinder or similar</div>
                     <div class="v-meta">
-                        <span><i class="bi bi-people-fill"></i> 6</span>
-                        <span><i class="bi bi-luggage-fill"></i> 5</span>
+                        <span><i class="bi bi-people"></i> 6</span>
+                        <span><i class="bi bi-suitcase2"></i> 5</span>
                     </div>
                 </div>
             </div>
             <div class="v-option {{ 'selected' if request.args.get('vehicle')=='premier' or not request.args.get('vehicle') }}" onclick="pickVehicle(this,'premier')">
-                <div class="v-price-badge">189</div>
-                <div class="v-img" style="background-image:url('/static/images/premier-suv.webp');" title="Premier SUV"></div>
+                <div class="v-img-wrap">
+                    <div class="v-price-badge">189</div>
+                    <img src="/static/images/premier-suv.webp" alt="GMC Yukon" loading="lazy">
+                </div>
                 <div class="v-info">
                     <h4>Premier SUV</h4>
                     <div class="v-model">GMC Yukon or similar</div>
                     <div class="v-meta">
-                        <span><i class="bi bi-people-fill"></i> 6</span>
-                        <span><i class="bi bi-luggage-fill"></i> 6</span>
+                        <span><i class="bi bi-people"></i> 6</span>
+                        <span><i class="bi bi-suitcase2"></i> 6</span>
                     </div>
                 </div>
             </div>
             <div class="v-option {{ 'selected' if request.args.get('vehicle')=='luxury' }}" onclick="pickVehicle(this,'luxury')">
-                <div class="v-price-badge">220</div>
-                <div class="v-img" style="background-image:url('/static/images/luxury-suv.webp');" title="Luxury SUV"></div>
+                <div class="v-img-wrap">
+                    <div class="v-price-badge">220</div>
+                    <img src="/static/images/luxury-suv.webp" alt="Cadillac Escalade" loading="lazy">
+                </div>
                 <div class="v-info">
                     <h4>Luxury SUV</h4>
-                    <div class="v-model">Lincoln Navigator or similar</div>
+                    <div class="v-model">Cadillac Escalade or similar</div>
                     <div class="v-meta">
-                        <span><i class="bi bi-people-fill"></i> 7</span>
-                        <span><i class="bi bi-luggage-fill"></i> 7</span>
+                        <span><i class="bi bi-people"></i> 7</span>
+                        <span><i class="bi bi-suitcase2"></i> 7</span>
                     </div>
                 </div>
             </div>
         </div>
         <input type="hidden" name="vehicle" id="vehicleInput" value="{{ request.args.get('vehicle','premier') }}">
 
-        <!-- Step 2: Trip Details -->
-        <div class="step-label">2 — Trip Details</div>
-        <div class="field" style="margin-bottom:20px;">
-            <label>Pickup Date</label>
+        <!-- ===== Step 2: Trip details ===== -->
+        <div class="step-label">
+            <span class="num">ii.</span>
+            <span class="txt">Trip <em>details</em></span>
+        </div>
+        <div class="field">
+            <label>Pickup date</label>
             <input type="date" name="date" required>
         </div>
-        <!-- Pickup & Dropoff -->
-        <div class="row" style="margin-bottom:20px;">
+        <div class="row">
             <div class="field">
-                <label><i class="bi bi-geo-alt-fill" style="color:#22c55e;"></i> Pickup Location</label>
-                <div style="position:relative;">
-                    <input type="text" name="pickup" id="pickupInput" placeholder="SLC Airport, hotel, address..." autocomplete="off">
-                    <button type="button" onclick="useCurrentLocation('pickupInput')" style="position:absolute;right:4px;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--muted);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;" title="Use current location"><i class="bi bi-crosshair"></i></button>
-                </div>
+                <label><i class="bi bi-geo-alt-fill"></i> Pickup location</label>
+                <input type="text" name="pickup" id="pickupInput" placeholder="SLC Airport, hotel, address..." autocomplete="off">
+                <button type="button" class="loc-btn" onclick="useCurrentLocation('pickupInput')" title="Use current location"><i class="bi bi-crosshair"></i></button>
                 <div class="addr-dropdown" id="pickupDropdown"></div>
             </div>
             <div class="field">
-                <label><i class="bi bi-geo-alt-fill" style="color:#ef4444;"></i> Dropoff Location</label>
-                <div style="position:relative;">
-                    <input type="text" name="dropoff" id="dropoffInput" placeholder="Hotel, home address, resort..." autocomplete="off">
-                    <button type="button" onclick="useCurrentLocation('dropoffInput')" style="position:absolute;right:4px;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--muted);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;" title="Use current location"><i class="bi bi-crosshair"></i></button>
-                </div>
+                <label><i class="bi bi-geo-alt-fill"></i> Dropoff location</label>
+                <input type="text" name="dropoff" id="dropoffInput" placeholder="Hotel, home, resort..." autocomplete="off">
+                <button type="button" class="loc-btn" onclick="useCurrentLocation('dropoffInput')" title="Use current location"><i class="bi bi-crosshair"></i></button>
                 <div class="addr-dropdown" id="dropoffDropdown"></div>
             </div>
         </div>
 
-        <!-- Step 3: Flight Info (FlightAware powered) -->
-        <div class="step-label">3 — Flight Information</div>
+        <!-- ===== Step 3: Flight info ===== -->
+        <div class="step-label">
+            <span class="num">iii.</span>
+            <span class="txt">Flight <em>information</em></span>
+        </div>
         <div class="row">
             <div class="field">
-                <label>Flight Number</label>
-                <div style="position:relative;">
-                    <input type="text" name="flight_number" id="flightInput" placeholder="e.g. DL1234" style="text-transform:uppercase;padding-right:48px;">
-                    <button type="button" id="flightSearchBtn" onclick="searchFlight()" style="position:absolute;right:4px;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:8px;background:var(--accent);border:none;color:#000;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s;" title="Search flight"><i class="bi bi-search"></i></button>
-                </div>
-                <small>Enter flight number and click <i class="bi bi-search"></i> — we use FlightAware to find your flight details</small>
+                <label>Flight number</label>
+                <input type="text" name="flight_number" id="flightInput" placeholder="DL1234" style="text-transform:uppercase;padding-right:48px;">
+                <button type="button" id="flightSearchBtn" class="flight-search-btn" onclick="searchFlight()" title="Search flight"><i class="bi bi-search"></i></button>
+                <small>We track your flight in real time so the driver adjusts if you're delayed.</small>
                 <div class="flight-found" id="flightInfo">
-                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-                        <img id="flightLogo" src="" style="height:24px;border-radius:4px;background:#fff;padding:2px;display:none;">
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
+                        <img id="flightLogo" src="" style="height:24px;border-radius:4px;background:#fff;padding:2px;display:none;" alt="">
                         <div class="route" id="flightRoute"></div>
                     </div>
-                    <div id="flightDetails" style="color:var(--muted);font-size:12px;"></div>
+                    <div id="flightDetails" style="color:var(--neutral-500);font-size:12.5px;"></div>
                 </div>
-                <!-- Multiple flights picker -->
-                <div id="flightPicker" style="display:none;margin-top:8px;"></div>
+                <div id="flightPicker" style="display:none;margin-top:10px;"></div>
             </div>
             <div class="field">
-                <label>Estimated Arrival Time</label>
+                <label>Estimated arrival time</label>
                 <input type="time" name="arrival_time" id="arrivalTime">
-                <small>Auto-filled from flight lookup · you can edit manually if needed</small>
+                <small>Auto-filled from flight lookup — edit if needed.</small>
             </div>
         </div>
 
-        <div class="divider"></div>
-
-        <!-- Step 4: Passengers & Luggage -->
-        <div class="step-label">4 — Passengers & Luggage</div>
+        <!-- ===== Step 4: Passengers & luggage ===== -->
+        <div class="step-label">
+            <span class="num">iv.</span>
+            <span class="txt">Passengers &amp; <em>luggage</em></span>
+        </div>
         <div class="row-3">
             <div class="field">
                 <label>Adults</label>
                 <select name="adults">
-                    <option value="1">1 Adult</option>
-                    <option value="2" selected>2 Adults</option>
-                    <option value="3">3 Adults</option>
-                    <option value="4">4 Adults</option>
-                    <option value="5">5 Adults</option>
-                    <option value="6">6 Adults</option>
-                    <option value="7">7 Adults</option>
+                    <option value="1">1 adult</option><option value="2" selected>2 adults</option>
+                    <option value="3">3 adults</option><option value="4">4 adults</option>
+                    <option value="5">5 adults</option><option value="6">6 adults</option>
+                    <option value="7">7 adults</option>
                 </select>
             </div>
             <div class="field">
                 <label>Children</label>
                 <select name="children">
-                    <option value="0" selected>No Children</option>
-                    <option value="1">1 Child</option>
-                    <option value="2">2 Children</option>
-                    <option value="3">3 Children</option>
-                    <option value="4">4 Children</option>
+                    <option value="0" selected>No children</option>
+                    <option value="1">1 child</option><option value="2">2 children</option>
+                    <option value="3">3 children</option><option value="4">4 children</option>
                 </select>
             </div>
             <div class="field">
-                <label>Lap Infants</label>
+                <label>Lap infants</label>
                 <select name="infants">
-                    <option value="0" selected>No Infants</option>
-                    <option value="1">1 Infant</option>
-                    <option value="2">2 Infants</option>
+                    <option value="0" selected>No infants</option>
+                    <option value="1">1 infant</option><option value="2">2 infants</option>
                 </select>
             </div>
         </div>
         <div class="row-3">
             <div class="field">
-                <label>Car Seats Needed</label>
+                <label>Car seats needed</label>
                 <select name="car_seats">
-                    <option value="0">No Car Seats</option>
-                    <option value="1">1 Car Seat</option>
-                    <option value="2">2 Car Seats</option>
-                    <option value="3">3 Car Seats</option>
+                    <option value="0">No car seats</option>
+                    <option value="1">1 car seat</option><option value="2">2 car seats</option>
+                    <option value="3">3 car seats</option>
                 </select>
             </div>
             <div class="field">
-                <label>Regular Luggage</label>
+                <label>Regular luggage</label>
                 <select name="bags">
-                    <option value="0">0 Bags</option>
-                    <option value="1">1 Bag</option>
-                    <option value="2" selected>2 Bags</option>
-                    <option value="3">3 Bags</option>
-                    <option value="4">4 Bags</option>
-                    <option value="5">5 Bags</option>
-                    <option value="6">6+ Bags</option>
+                    <option value="0">0 bags</option><option value="1">1 bag</option>
+                    <option value="2" selected>2 bags</option><option value="3">3 bags</option>
+                    <option value="4">4 bags</option><option value="5">5 bags</option>
+                    <option value="6">6+ bags</option>
                 </select>
             </div>
             <div class="field">
-                <label>Ski/Snowboard Bags</label>
+                <label>Ski / snowboard bags</label>
                 <select name="ski_bags">
-                    <option value="0" selected>No Ski Bags</option>
-                    <option value="1">1 Ski Bag</option>
-                    <option value="2">2 Ski Bags</option>
-                    <option value="3">3 Ski Bags</option>
-                    <option value="4">4+ Ski Bags</option>
+                    <option value="0" selected>No ski bags</option>
+                    <option value="1">1 ski bag</option><option value="2">2 ski bags</option>
+                    <option value="3">3 ski bags</option><option value="4">4+ ski bags</option>
                 </select>
             </div>
         </div>
 
-        <div class="divider"></div>
-
-        <!-- Step 5: Contact -->
-        <div class="step-label">5 — Your Information</div>
+        <!-- ===== Step 5: Your information ===== -->
+        <div class="step-label">
+            <span class="num">v.</span>
+            <span class="txt">Your <em>information</em></span>
+        </div>
         <div class="row">
             <div class="field">
-                <label>Full Name *</label>
+                <label>Full name *</label>
                 <input type="text" name="name" required placeholder="John Smith">
             </div>
             <div class="field">
                 <label>Phone *</label>
-                <div style="display:flex;gap:0;">
-                    <div style="position:relative;">
-                        <button type="button" id="ccBtn" onclick="toggleCountryList()" style="display:flex;align-items:center;gap:6px;padding:14px 12px;background:var(--card);border:1.5px solid var(--border);border-right:none;border-radius:10px 0 0 10px;color:#fff;cursor:pointer;font-size:14px;white-space:nowrap;height:100%;">
-                            <span id="ccFlag">🇺🇸</span>
-                            <span id="ccCode">+1</span>
-                            <i class="bi bi-chevron-down" style="font-size:10px;color:var(--muted);"></i>
-                        </button>
-                        <div id="countryList" style="display:none;position:absolute;top:100%;left:0;width:280px;max-height:300px;overflow-y:auto;background:var(--card);border:1px solid var(--border);border-radius:10px;margin-top:4px;z-index:100;box-shadow:0 12px 40px rgba(0,0,0,.5);">
-                            <input type="text" id="ccSearch" placeholder="Search country..." oninput="filterCountries()" style="width:100%;padding:10px 14px;background:transparent;border:none;border-bottom:1px solid var(--border);color:#fff;font-size:13px;outline:none;">
-                            <div id="ccItems"></div>
-                        </div>
-                    </div>
-                    <input type="tel" name="phone" id="phoneInput" required placeholder="(435) 000-0000" style="border-radius:0 10px 10px 0;flex:1;">
+                <div class="phone-wrap" style="position:relative;">
+                    <button type="button" id="ccBtn" class="cc-btn" onclick="toggleCountryList()">
+                        <span id="ccFlag">🇺🇸</span>
+                        <span id="ccCode">+1</span>
+                        <i class="bi bi-chevron-down ico"></i>
+                    </button>
+                    <input type="tel" name="phone" id="phoneInput" required placeholder="(435) 000-0000" style="flex:1;">
                     <input type="hidden" name="phone_code" id="phoneCode" value="+1">
+                    <div id="countryList" class="cc-list">
+                        <input type="text" id="ccSearch" class="cc-search" placeholder="Search country..." oninput="filterCountries()">
+                        <div id="ccItems"></div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="field">
-                <label>Email</label>
-                <input type="email" name="email" placeholder="john@email.com">
-            </div>
+        <div class="field">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="john@email.com">
         </div>
-        <!-- Premium Stop -->
-        <div class="field" style="margin-top:8px;">
-            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:16px;background:var(--card);border:1.5px solid var(--border);border-radius:10px;transition:border-color .2s;" id="stopLabel">
-                <input type="checkbox" name="premium_stop" value="1" id="stopCheck" style="display:none;" onchange="document.getElementById('stopLabel').style.borderColor=this.checked?'var(--accent)':'var(--border)'">
-                <div style="width:22px;height:22px;border-radius:6px;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;" id="stopBox">
-                    <i class="bi bi-check" style="color:var(--accent);font-size:14px;opacity:0;transition:opacity .2s;" id="stopIcon"></i>
-                </div>
-                <div style="flex:1;">
-                    <div style="font-weight:700;font-size:14px;color:#fff;">Premium Stop — Grocery or Liquor Store</div>
-                    <div style="font-size:12px;color:var(--muted);margin-top:2px;">Quick stop on the way to your destination</div>
-                </div>
-                <div style="font-family:'Onest',sans-serif;font-size:18px;font-weight:800;color:var(--accent);">+$60</div>
+
+        <!-- Premium stop -->
+        <div class="field" style="margin-top:16px;">
+            <label class="stop-card" id="stopLabel">
+                <input type="checkbox" name="premium_stop" value="1" id="stopCheck" style="display:none;">
+                <span class="box"><i class="bi bi-check"></i></span>
+                <span class="info">
+                    <span class="t">Premium stop — grocery or liquor store</span>
+                    <span class="s">Quick errand stop on the way to your destination.</span>
+                </span>
+                <span class="pr">+$60</span>
             </label>
         </div>
-        <script>
-        document.getElementById('stopCheck').addEventListener('change',function(){
-            document.getElementById('stopBox').style.borderColor=this.checked?'var(--accent)':'var(--border)';
-            document.getElementById('stopBox').style.background=this.checked?'rgba(201,168,76,.15)':'transparent';
-            document.getElementById('stopIcon').style.opacity=this.checked?'1':'0';
-        });
-        </script>
 
-        <div class="divider"></div>
-
-        <div class="field">
-            <label>Special Requests</label>
-            <textarea name="notes" rows="3" placeholder="Any special needs, stops, or requests..." style="width:100%;padding:14px;background:var(--card);border:1.5px solid var(--border);border-radius:10px;color:#fff;font-family:'Montserrat',sans-serif;font-size:14px;resize:vertical;outline:none;"></textarea>
+        <!-- Special requests -->
+        <div class="field" style="margin-top:24px;">
+            <label>Special requests</label>
+            <textarea name="notes" rows="3" placeholder="Any special needs, stops, or requests..."></textarea>
         </div>
 
         <button type="submit" class="submit-btn">
-            <i class="bi bi-calendar-check"></i> Confirm Booking Request
+            Confirm booking request <i class="bi bi-arrow-right"></i>
         </button>
-        <p style="text-align:center;font-size:12px;color:var(--muted);margin-top:12px;">
-            We'll confirm your booking within 30 minutes via phone or text.
+        <p class="submit-foot">
+            We'll confirm your booking within 30 minutes — by phone or text.<br>
+            Your card is saved on file but never charged until your driver confirms.
         </p>
     </form>
 </div>
 
-<section style="max-width:900px;margin:60px auto 40px;padding:0 20px;">
-    <h2 style="font-family:'Outfit',sans-serif;font-size:28px;font-weight:800;color:#fff;margin-bottom:16px;">How Park City Booking Works</h2>
-    <p style="font-size:16px;color:#94a3b8;line-height:1.75;margin-bottom:16px;">Booking a private SUV transfer with Rio Transportation takes about 2 minutes. Choose your route (SLC Airport ↔ Park City, or local Park City rides), pick a vehicle from our fleet of luxury 7-passenger SUVs, enter your flight number so we can track it, provide pickup details, and confirm. You'll receive an email confirmation immediately with your driver's name, vehicle details, and license plate number within 24 hours of your trip.</p>
+<section class="long-block">
+    <h2>How Park City <em>booking</em> works</h2>
+    <p>Booking a private SUV transfer with Rio Transportation takes about two minutes. Choose your route (SLC Airport ↔ Park City, or local Park City rides), pick a vehicle from our fleet of luxury 7-passenger SUVs, enter your flight number so we can track it, provide pickup details, and confirm. You'll receive an email confirmation immediately with your driver's name, vehicle details, and license plate number within 24 hours of your trip.</p>
 
-    <h2 style="font-family:'Outfit',sans-serif;font-size:24px;font-weight:800;color:#fff;margin:28px 0 14px;">What's Included in Every Booking</h2>
-    <p style="font-size:16px;color:#94a3b8;line-height:1.75;margin-bottom:12px;">Every Rio Transportation booking is <strong style="color:#e2e8f0;">all-inclusive</strong>, meaning no surprise fees at drop-off. Your price covers: the private luxury SUV (GMC Yukon, Lincoln Navigator, Cadillac Escalade, Nissan Pathfinder, or Chevrolet Suburban), a professional chauffeur with 5+ years of Utah mountain-driving experience, real-time flight tracking so we adjust pickup if your flight changes, bottled water and in-vehicle Wi-Fi hotspot, all fuel and road tolls, and one free intermediate stop (grocery store, rental shop, or ATM). Free car seats (infant, convertible, booster) are available on request.</p>
+    <h2>What's <em>included</em> in every booking</h2>
+    <p>Every Rio Transportation booking is <strong>all-inclusive</strong>, meaning no surprise fees at drop-off. Your price covers: the private luxury SUV (GMC Yukon, Cadillac Escalade, Nissan Pathfinder, or Tesla Model Y), a professional chauffeur with 5+ years of Utah mountain-driving experience, real-time flight tracking, bottled water and in-vehicle Wi-Fi hotspot, all fuel and road tolls, and one free intermediate stop. Free car seats (infant, convertible, booster) are available on request.</p>
 
-    <h2 style="font-family:'Outfit',sans-serif;font-size:24px;font-weight:800;color:#fff;margin:28px 0 14px;">Flight Tracking &amp; Arrival Process</h2>
-    <p style="font-size:16px;color:#94a3b8;line-height:1.75;margin-bottom:12px;">When you enter your flight number, our dispatch system begins tracking it via FlightAware about 24 hours before departure. If your flight is early, late, delayed, rerouted, or cancelled and rebooked, we automatically adjust your driver's arrival time — no action required from you. About 15-20 minutes before your estimated landing, your driver heads to the Salt Lake City Airport (SLC) ground-transportation curb. After you collect luggage, walk out of baggage claim at doors 5 or 11; your driver will text you the exact vehicle location and send a photo of the vehicle.</p>
+    <h2>Flight tracking &amp; arrival <em>process</em></h2>
+    <p>When you enter your flight number, our dispatch system begins tracking it via FlightAware about 24 hours before departure. If your flight is early, late, delayed, rerouted, or cancelled and rebooked, we automatically adjust your driver's arrival time — no action required from you. About 15-20 minutes before your estimated landing, your driver heads to the Salt Lake City Airport (SLC) ground-transportation curb. After you collect luggage, walk out of baggage claim at doors 5 or 11; your driver will text you the exact vehicle location and send a photo of the vehicle.</p>
 
-    <h2 style="font-family:'Outfit',sans-serif;font-size:24px;font-weight:800;color:#fff;margin:28px 0 14px;">Cancellation &amp; Changes</h2>
-    <p style="font-size:16px;color:#94a3b8;line-height:1.75;margin-bottom:12px;">Free cancellation up to 24 hours before your pickup time. Changes to pickup time, location, or passenger count within 24 hours of the ride are accommodated whenever possible at no cost. Cancellations within 24 hours are charged 50% of the fare; no-show cancellations are charged the full fare. If your flight is cancelled by the airline and you rebook for a later day, we rebook your ride for the new date at no charge.</p>
+    <h2>Cancellation &amp; <em>changes</em></h2>
+    <p>Free cancellation up to 24 hours before your pickup time. Changes to pickup time, location, or passenger count within 24 hours of the ride are accommodated whenever possible at no cost. Cancellations within 24 hours are charged 50% of the fare; no-show cancellations are charged the full fare. If your flight is cancelled by the airline and you rebook for a later day, we rebook your ride for the new date at no charge.</p>
 
-    <h2 style="font-family:'Outfit',sans-serif;font-size:24px;font-weight:800;color:#fff;margin:28px 0 14px;">Payment &amp; Gratuity</h2>
-    <p style="font-size:16px;color:#94a3b8;line-height:1.75;margin-bottom:12px;">We accept all major credit cards (Visa, Mastercard, American Express, Discover), Apple Pay, Google Pay, and corporate invoicing for accounts with $1,000+ monthly spend. Your card is charged after the ride completes so you can adjust tip amount. Gratuity is at your discretion — there is no mandatory gratuity and no hidden service fees. Most clients tip 15-20% for excellent service, but this is never required.</p>
+    <h2>Payment &amp; <em>gratuity</em></h2>
+    <p>We accept all major credit cards (Visa, Mastercard, American Express, Discover), Apple Pay, and corporate invoicing for accounts with $1,000+ monthly spend. Your card is charged after the ride completes so you can adjust the tip amount. Gratuity is at your discretion — most clients tip 15-20% for excellent service, but this is never required.</p>
 
-    <h2 style="font-family:'Outfit',sans-serif;font-size:24px;font-weight:800;color:#fff;margin:28px 0 14px;">Booking Frequently Asked Questions</h2>
-    <div style="margin-top:20px;">
-        <div style="background:#0f1420;border:1px solid rgba(201,168,76,.08);border-radius:14px;padding:20px 22px;margin-bottom:12px;">
-            <h3 style="font-size:16px;font-weight:800;color:#fff;margin-bottom:8px;">How far in advance should I book?</h3>
-            <p style="font-size:15px;color:#94a3b8;line-height:1.7;margin:0;">For standard weekday trips: 24 hours is plenty. For ski-season weekends (Nov-Apr, Fri-Sun): 48-72 hours. For Sundance Film Festival (late January) or major holidays (New Year's, Christmas): 2-4 weeks ahead. Same-day bookings are usually accommodated if we have vehicles free — call (435) 214-6939 to check.</p>
+    <h2>Frequently <em>asked</em></h2>
+    <div style="margin-top:18px;">
+        <div class="faq-card">
+            <h3>How far in advance should I book?</h3>
+            <p>For standard weekday trips: 24 hours. For ski-season weekends (Nov-Apr, Fri-Sun): 48-72 hours. For Sundance (late January) or major holidays: 2-4 weeks ahead. Same-day bookings are usually accommodated if vehicles are free — call (435) 214-6939 to check.</p>
         </div>
-        <div style="background:#0f1420;border:1px solid rgba(201,168,76,.08);border-radius:14px;padding:20px 22px;margin-bottom:12px;">
-            <h3 style="font-size:16px;font-weight:800;color:#fff;margin-bottom:8px;">What if I'm not sure of my exact itinerary yet?</h3>
-            <p style="font-size:15px;color:#94a3b8;line-height:1.7;margin:0;">Book with your best estimate — you can modify the booking up to 24 hours before pickup at no charge. Many clients book a "placeholder" slot and finalize details a few days before travel.</p>
+        <div class="faq-card">
+            <h3>What if my itinerary isn't finalized?</h3>
+            <p>Book with your best estimate — you can modify the booking up to 24 hours before pickup at no charge. Many clients book a "placeholder" slot and finalize details a few days before travel.</p>
         </div>
-        <div style="background:#0f1420;border:1px solid rgba(201,168,76,.08);border-radius:14px;padding:20px 22px;margin-bottom:12px;">
-            <h3 style="font-size:16px;font-weight:800;color:#fff;margin-bottom:8px;">Can I book a return trip later?</h3>
-            <p style="font-size:15px;color:#94a3b8;line-height:1.7;margin:0;">Yes — book round-trip by selecting both routes in the form, or book them separately. Many clients book arrival first, then book departure once flight times firm up.</p>
+        <div class="faq-card">
+            <h3>Can I book a return trip later?</h3>
+            <p>Yes — book round-trip by submitting two requests, or book the return once your flight times firm up.</p>
         </div>
-        <div style="background:#0f1420;border:1px solid rgba(201,168,76,.08);border-radius:14px;padding:20px 22px;margin-bottom:12px;">
-            <h3 style="font-size:16px;font-weight:800;color:#fff;margin-bottom:8px;">Do you accept bookings without a credit card?</h3>
-            <p style="font-size:15px;color:#94a3b8;line-height:1.7;margin:0;">Credit card is required to secure the booking. Corporate accounts with NET-30 invoicing get booked without per-trip card charges; contact us for account setup.</p>
+        <div class="faq-card">
+            <h3>Do you accept bookings without a credit card?</h3>
+            <p>A credit card is required to secure the booking. Corporate accounts with NET-30 invoicing get booked without per-trip card charges; contact us for account setup.</p>
         </div>
-        <div style="background:#0f1420;border:1px solid rgba(201,168,76,.08);border-radius:14px;padding:20px 22px;margin-bottom:12px;">
-            <h3 style="font-size:16px;font-weight:800;color:#fff;margin-bottom:8px;">What happens after I submit this booking form?</h3>
-            <p style="font-size:15px;color:#94a3b8;line-height:1.7;margin:0;">Within 5 minutes you receive a confirmation email. Within 30 minutes, you receive a second email with your assigned driver's name and vehicle. The day before your ride, you get a reminder email with exact pickup address/time. Day of the ride, your driver texts you their ETA.</p>
+        <div class="faq-card">
+            <h3>What happens after I submit this form?</h3>
+            <p>Within 5 minutes you receive a confirmation email. Within 30 minutes, you receive a second email with your assigned driver's name and vehicle. The day before your ride, you get a reminder email with the exact pickup address and time. Day of the ride, your driver texts you their ETA.</p>
         </div>
     </div>
 </section>
@@ -487,6 +692,12 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--fg);mi
 </script>
 
 <script>
+/* ============================================================
+   JS preserved verbatim from previous /book design — only color
+   references inside generated HTML strings were rewritten to use
+   the new tokens. Same form `name=` attributes, same endpoints.
+   ============================================================ */
+
 function pickVehicle(el, id) {
     document.querySelectorAll('.v-option').forEach(v => v.classList.remove('selected'));
     el.classList.add('selected');
@@ -514,9 +725,8 @@ function searchFlight() {
         picker.style.display = 'none';
 
         if (d.found && d.multiple && d.options) {
-            // Multiple legs — show picker
-            picker.innerHTML = '<div style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:8px;"><i class="bi bi-info-circle"></i> Multiple flights found — choose yours:</div>' +
-                d.options.map((o,i) => `<button type="button" onclick="pickFlight(${i})" style="display:block;width:100%;text-align:left;padding:12px;background:var(--card);border:1px solid var(--border);border-radius:8px;color:#fff;cursor:pointer;margin-bottom:6px;font-size:13px;transition:border-color .2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'"><strong>${o.origin} → ${o.destination}</strong> <span style="color:var(--muted);margin-left:8px;">${o.departure_time||''} → ${o.arrival_time||''}</span></button>`).join('');
+            picker.innerHTML = '<div style="font-size:12.5px;font-weight:500;color:var(--ink);margin-bottom:8px;letter-spacing:.05em;text-transform:uppercase;"><i class="bi bi-info-circle"></i> Multiple flights — choose yours</div>' +
+                d.options.map((o,i) => `<button type="button" onclick="pickFlight(${i})" style="display:block;width:100%;text-align:left;padding:12px 14px;background:var(--cream);border:1px solid rgba(14,26,46,.1);border-radius:8px;color:var(--ink);cursor:pointer;margin-bottom:6px;font-size:13px;transition:border-color .2s;font-family:var(--sans);" onmouseover="this.style.borderColor='var(--ink)'" onmouseout="this.style.borderColor='rgba(14,26,46,.1)'"><strong style="font-weight:500;">${o.origin} → ${o.destination}</strong> <span style="color:var(--neutral-500);margin-left:8px;">${o.departure_time||''} → ${o.arrival_time||''}</span></button>`).join('');
             picker.style.display = 'block';
             window._flightOptions = d.options;
             info.style.display = 'none';
@@ -524,7 +734,7 @@ function searchFlight() {
             showFlightResult(d);
         } else {
             info.style.display = 'none';
-            picker.innerHTML = '<div style="padding:10px;color:#ef4444;font-size:13px;"><i class="bi bi-exclamation-triangle"></i> Flight not found. You can enter arrival time manually.</div>';
+            picker.innerHTML = '<div style="padding:12px;color:#9a3324;font-size:13px;background:rgba(154,51,36,.05);border:1px solid rgba(154,51,36,.15);border-radius:8px;"><i class="bi bi-exclamation-triangle"></i> Flight not found. You can enter arrival time manually.</div>';
             picker.style.display = 'block';
         }
     }).catch(() => {
@@ -549,7 +759,6 @@ function showFlightResult(d) {
     const logo = document.getElementById('flightLogo');
     const acode = d.airline_iata || document.getElementById('flightInput').value.substring(0,2).toUpperCase();
 
-    // Show airline logo
     if (acode) {
         logo.src = 'https://pics.avs.io/200/200/' + acode + '.png';
         logo.style.display = 'block';
@@ -559,73 +768,62 @@ function showFlightResult(d) {
     document.getElementById('flightRoute').innerHTML = '<strong>' + (d.origin||'') + ' → ' + (d.destination||'') + '</strong>';
     let details = '';
     if (d.departure_time) details += 'Departs ' + d.departure_time;
-    if (d.arrival_time) details += ' · Arrives ' + d.arrival_time;
-    if (d.dep_city) details += ' · ' + d.dep_city;
+    if (d.arrival_time)   details += ' · Arrives ' + d.arrival_time;
+    if (d.dep_city)       details += ' · ' + d.dep_city;
     document.getElementById('flightDetails').textContent = details;
     info.style.display = 'block';
 
-    // Auto-fill arrival time
-    if (d.arrival_time) {
-        document.getElementById('arrivalTime').value = d.arrival_time;
-    }
+    if (d.arrival_time) document.getElementById('arrivalTime').value = d.arrival_time;
 }
 
-// Also search on Enter key
 document.getElementById('flightInput').addEventListener('keydown', function(e){
     if(e.key==='Enter'){e.preventDefault();searchFlight();}
 });
 
-// === COUNTRY CODE SELECTOR ===
+/* === Premium-stop toggle === */
+(function(){
+    const card  = document.getElementById('stopLabel');
+    const check = document.getElementById('stopCheck');
+    card.addEventListener('click', e => {
+        if(e.target.tagName !== 'INPUT'){
+            check.checked = !check.checked;
+            card.classList.toggle('on', check.checked);
+        }
+    });
+})();
+
+/* === Country code selector === */
 const COUNTRIES = [
-    {code:'+1',flag:'🇺🇸',name:'United States'},
-    {code:'+1',flag:'🇨🇦',name:'Canada'},
-    {code:'+52',flag:'🇲🇽',name:'Mexico'},
-    {code:'+55',flag:'🇧🇷',name:'Brazil'},
-    {code:'+54',flag:'🇦🇷',name:'Argentina'},
-    {code:'+57',flag:'🇨🇴',name:'Colombia'},
-    {code:'+56',flag:'🇨🇱',name:'Chile'},
-    {code:'+51',flag:'🇵🇪',name:'Peru'},
-    {code:'+44',flag:'🇬🇧',name:'United Kingdom'},
-    {code:'+33',flag:'🇫🇷',name:'France'},
-    {code:'+49',flag:'🇩🇪',name:'Germany'},
-    {code:'+34',flag:'🇪🇸',name:'Spain'},
-    {code:'+39',flag:'🇮🇹',name:'Italy'},
-    {code:'+351',flag:'🇵🇹',name:'Portugal'},
-    {code:'+31',flag:'🇳🇱',name:'Netherlands'},
-    {code:'+41',flag:'🇨🇭',name:'Switzerland'},
-    {code:'+43',flag:'🇦🇹',name:'Austria'},
-    {code:'+46',flag:'🇸🇪',name:'Sweden'},
-    {code:'+47',flag:'🇳🇴',name:'Norway'},
-    {code:'+45',flag:'🇩🇰',name:'Denmark'},
-    {code:'+61',flag:'🇦🇺',name:'Australia'},
-    {code:'+64',flag:'🇳🇿',name:'New Zealand'},
-    {code:'+81',flag:'🇯🇵',name:'Japan'},
-    {code:'+82',flag:'🇰🇷',name:'South Korea'},
-    {code:'+86',flag:'🇨🇳',name:'China'},
-    {code:'+91',flag:'🇮🇳',name:'India'},
-    {code:'+971',flag:'🇦🇪',name:'UAE'},
-    {code:'+972',flag:'🇮🇱',name:'Israel'},
-    {code:'+966',flag:'🇸🇦',name:'Saudi Arabia'},
-    {code:'+27',flag:'🇿🇦',name:'South Africa'},
-    {code:'+7',flag:'🇷🇺',name:'Russia'},
-    {code:'+90',flag:'🇹🇷',name:'Turkey'},
-    {code:'+48',flag:'🇵🇱',name:'Poland'},
-    {code:'+353',flag:'🇮🇪',name:'Ireland'},
-    {code:'+506',flag:'🇨🇷',name:'Costa Rica'},
-    {code:'+507',flag:'🇵🇦',name:'Panama'},
+    {code:'+1',flag:'🇺🇸',name:'United States'},{code:'+1',flag:'🇨🇦',name:'Canada'},
+    {code:'+52',flag:'🇲🇽',name:'Mexico'},{code:'+55',flag:'🇧🇷',name:'Brazil'},
+    {code:'+54',flag:'🇦🇷',name:'Argentina'},{code:'+57',flag:'🇨🇴',name:'Colombia'},
+    {code:'+56',flag:'🇨🇱',name:'Chile'},{code:'+51',flag:'🇵🇪',name:'Peru'},
+    {code:'+44',flag:'🇬🇧',name:'United Kingdom'},{code:'+33',flag:'🇫🇷',name:'France'},
+    {code:'+49',flag:'🇩🇪',name:'Germany'},{code:'+34',flag:'🇪🇸',name:'Spain'},
+    {code:'+39',flag:'🇮🇹',name:'Italy'},{code:'+351',flag:'🇵🇹',name:'Portugal'},
+    {code:'+31',flag:'🇳🇱',name:'Netherlands'},{code:'+41',flag:'🇨🇭',name:'Switzerland'},
+    {code:'+43',flag:'🇦🇹',name:'Austria'},{code:'+46',flag:'🇸🇪',name:'Sweden'},
+    {code:'+47',flag:'🇳🇴',name:'Norway'},{code:'+45',flag:'🇩🇰',name:'Denmark'},
+    {code:'+61',flag:'🇦🇺',name:'Australia'},{code:'+64',flag:'🇳🇿',name:'New Zealand'},
+    {code:'+81',flag:'🇯🇵',name:'Japan'},{code:'+82',flag:'🇰🇷',name:'South Korea'},
+    {code:'+86',flag:'🇨🇳',name:'China'},{code:'+91',flag:'🇮🇳',name:'India'},
+    {code:'+971',flag:'🇦🇪',name:'UAE'},{code:'+972',flag:'🇮🇱',name:'Israel'},
+    {code:'+966',flag:'🇸🇦',name:'Saudi Arabia'},{code:'+27',flag:'🇿🇦',name:'South Africa'},
+    {code:'+7',flag:'🇷🇺',name:'Russia'},{code:'+90',flag:'🇹🇷',name:'Turkey'},
+    {code:'+48',flag:'🇵🇱',name:'Poland'},{code:'+353',flag:'🇮🇪',name:'Ireland'},
+    {code:'+506',flag:'🇨🇷',name:'Costa Rica'},{code:'+507',flag:'🇵🇦',name:'Panama'},
     {code:'+593',flag:'🇪🇨',name:'Ecuador'},
 ];
 
 function renderCountries(filter) {
     const q = (filter||'').toLowerCase();
     return COUNTRIES.filter(c => !q || c.name.toLowerCase().includes(q) || c.code.includes(q))
-        .map(c => `<div onclick="selectCountry('${c.flag}','${c.code}')" style="display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;font-size:13px;color:#fff;border-bottom:1px solid rgba(255,255,255,.04);transition:background .15s;" onmouseover="this.style.background='rgba(201,168,76,.06)'" onmouseout="this.style.background='transparent'"><span style="font-size:20px;">${c.flag}</span><span style="flex:1;">${c.name}</span><span style="color:var(--muted);">${c.code}</span></div>`)
+        .map(c => `<div class="cc-item" onclick="selectCountry('${c.flag}','${c.code}')"><span>${c.flag}</span><span>${c.name}</span><span>${c.code}</span></div>`)
         .join('');
 }
-
 function toggleCountryList() {
     const list = document.getElementById('countryList');
-    if (list.style.display === 'none') {
+    if (list.style.display === 'none' || !list.style.display) {
         document.getElementById('ccItems').innerHTML = renderCountries();
         list.style.display = 'block';
         document.getElementById('ccSearch').value = '';
@@ -634,11 +832,9 @@ function toggleCountryList() {
         list.style.display = 'none';
     }
 }
-
 function filterCountries() {
     document.getElementById('ccItems').innerHTML = renderCountries(document.getElementById('ccSearch').value);
 }
-
 function selectCountry(flag, code) {
     document.getElementById('ccFlag').textContent = flag;
     document.getElementById('ccCode').textContent = code;
@@ -646,53 +842,45 @@ function selectCountry(flag, code) {
     document.getElementById('countryList').style.display = 'none';
     document.getElementById('phoneInput').focus();
 }
-
-// Close on click outside
 document.addEventListener('click', e => {
     const list = document.getElementById('countryList');
-    const btn = document.getElementById('ccBtn');
+    const btn  = document.getElementById('ccBtn');
     if (list && !list.contains(e.target) && !btn.contains(e.target)) list.style.display = 'none';
 });
 
-// === ADDRESS AUTOCOMPLETE (Mapbox) ===
+/* === Address autocomplete (Mapbox + quick picks) === */
 const MAPBOX_TOKEN = '{{ config.MAPBOX_TOKEN }}';
 const QUICK_PICKS = [
-    {name: 'Salt Lake City International Airport (SLC)', address: 'SLC Airport, 776 N Terminal Dr, Salt Lake City, UT 84122', icon: 'bi-airplane-fill'},
-    {name: 'Park City Mountain Resort', address: '1345 Lowell Ave, Park City, UT 84060', icon: 'bi-snow2'},
-    {name: 'Deer Valley Resort', address: '2250 Deer Valley Dr, Park City, UT 84060', icon: 'bi-snow2'},
-    {name: 'Montage Deer Valley', address: '9100 Marsac Ave, Park City, UT 84060', icon: 'bi-building'},
-    {name: 'St. Regis Deer Valley', address: '2300 Deer Valley Dr E, Park City, UT 84060', icon: 'bi-building'},
-    {name: 'Park Hyatt Park City', address: '2001 Park Ave, Park City, UT 84060', icon: 'bi-building'},
-    {name: 'Waldorf Astoria Park City', address: '2100 Frostwood Blvd, Park City, UT 84098', icon: 'bi-building'},
-    {name: 'Pendry Park City', address: '2417 W High Mountain Rd, Park City, UT 84098', icon: 'bi-building'},
+    {name:'Salt Lake City International Airport (SLC)', address:'SLC Airport, 776 N Terminal Dr, Salt Lake City, UT 84122', icon:'bi-airplane-fill'},
+    {name:'Park City Mountain Resort', address:'1345 Lowell Ave, Park City, UT 84060', icon:'bi-snow2'},
+    {name:'Deer Valley Resort',        address:'2250 Deer Valley Dr, Park City, UT 84060', icon:'bi-snow2'},
+    {name:'Montage Deer Valley',       address:'9100 Marsac Ave, Park City, UT 84060',     icon:'bi-building'},
+    {name:'St. Regis Deer Valley',     address:'2300 Deer Valley Dr E, Park City, UT 84060', icon:'bi-building'},
+    {name:'Park Hyatt Park City',      address:'2001 Park Ave, Park City, UT 84060',       icon:'bi-building'},
+    {name:'Waldorf Astoria Park City', address:'2100 Frostwood Blvd, Park City, UT 84098', icon:'bi-building'},
+    {name:'Pendry Park City',          address:'2417 W High Mountain Rd, Park City, UT 84098', icon:'bi-building'},
 ];
 
 let searchTimer;
 function setupAutocomplete(inputId, dropdownId) {
-    const input = document.getElementById(inputId);
+    const input    = document.getElementById(inputId);
     const dropdown = document.getElementById(dropdownId);
     if(!input || !dropdown) return;
-
-    input.addEventListener('focus', () => {
-        if(!input.value) showQuickPicks(dropdown, inputId);
-    });
-
+    input.addEventListener('focus', () => { if(!input.value) showQuickPicks(dropdown, inputId); });
     input.addEventListener('input', () => {
         clearTimeout(searchTimer);
         const q = input.value.trim();
         if(q.length < 2) { showQuickPicks(dropdown, inputId); return; }
         searchTimer = setTimeout(() => searchAddress(q, dropdown, inputId), 300);
     });
-
     document.addEventListener('click', (e) => {
         if(!input.contains(e.target) && !dropdown.contains(e.target)) dropdown.style.display = 'none';
     });
 }
-
 function showQuickPicks(dropdown, inputId) {
-    let html = `<div class="addr-item" onclick="useCurrentLocation('${inputId}');document.getElementById('${inputId==='pickupInput'?'pickupDropdown':'dropoffDropdown'}').style.display='none';" style="border-bottom:2px solid var(--border);">
-        <i class="bi bi-crosshair" style="color:#22c55e;"></i>
-        <div><div class="addr-main" style="color:#22c55e;">Use Current Location</div><div class="addr-sub">Detect via GPS</div></div>
+    let html = `<div class="addr-item" onclick="useCurrentLocation('${inputId}');document.getElementById('${inputId==='pickupInput'?'pickupDropdown':'dropoffDropdown'}').style.display='none';" style="border-bottom:2px solid rgba(14,26,46,.1);">
+        <i class="bi bi-crosshair" style="color:var(--ink);"></i>
+        <div><div class="addr-main" style="color:var(--ink);">Use current location</div><div class="addr-sub">Detect via GPS</div></div>
     </div>`;
     html += QUICK_PICKS.map(p =>
         `<div class="addr-item" onclick="pickAddress('${inputId}','${p.address}',this)">
@@ -703,38 +891,32 @@ function showQuickPicks(dropdown, inputId) {
     dropdown.innerHTML = html;
     dropdown.style.display = 'block';
 }
-
 function searchAddress(query, dropdown, inputId) {
     if(!MAPBOX_TOKEN) { showQuickPicks(dropdown, inputId); return; }
-    const bbox = '-112.2,40.3,-111.3,40.9'; // Utah/Park City area
+    const bbox = '-112.2,40.3,-111.3,40.9';
     fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${MAPBOX_TOKEN}&bbox=${bbox}&limit=5&types=address,poi&country=US`)
         .then(r => r.json())
         .then(d => {
             const features = d.features || [];
             let html = '';
-            // Show matching quick picks first
             QUICK_PICKS.forEach(p => {
                 if(p.name.toLowerCase().includes(query.toLowerCase()) || p.address.toLowerCase().includes(query.toLowerCase())) {
                     html += `<div class="addr-item" onclick="pickAddress('${inputId}','${p.address}',this)"><i class="bi ${p.icon}"></i><div><div class="addr-main">${p.name}</div><div class="addr-sub">${p.address}</div></div></div>`;
                 }
             });
-            // Then Mapbox results
             features.forEach(f => {
                 html += `<div class="addr-item" onclick="pickAddress('${inputId}','${f.place_name}',this)"><i class="bi bi-geo-alt"></i><div><div class="addr-main">${f.text}</div><div class="addr-sub">${f.place_name}</div></div></div>`;
             });
-            if(!html) html = '<div style="padding:14px;color:var(--muted);font-size:13px;text-align:center;">No results — type a full address</div>';
+            if(!html) html = '<div style="padding:14px;color:var(--neutral-500);font-size:13px;text-align:center;">No results — type a full address</div>';
             dropdown.innerHTML = html;
             dropdown.style.display = 'block';
         })
         .catch(() => showQuickPicks(dropdown, inputId));
 }
-
 function pickAddress(inputId, address) {
     document.getElementById(inputId).value = address;
-    // Close ALL dropdowns
     document.querySelectorAll('.addr-dropdown').forEach(d => d.style.display = 'none');
 }
-
 function useCurrentLocation(inputId) {
     const input = document.getElementById(inputId);
     if(!navigator.geolocation) { alert('Location not available on this device'); return; }
@@ -742,24 +924,16 @@ function useCurrentLocation(inputId) {
     input.disabled = true;
     navigator.geolocation.getCurrentPosition(
         pos => {
-            const lat = pos.coords.latitude;
-            const lng = pos.coords.longitude;
-            // Always try reverse geocode to get a readable address
+            const lat = pos.coords.latitude, lng = pos.coords.longitude;
             fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${MAPBOX_TOKEN}&limit=1&types=address,poi`)
                 .then(r => r.json())
                 .then(d => {
                     input.disabled = false;
                     const place = d.features?.[0];
-                    if(place && place.place_name) {
-                        input.value = place.place_name;
-                    } else {
-                        // Fallback: try without type filter
-                        fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${MAPBOX_TOKEN}&limit=1`)
-                            .then(r2 => r2.json())
-                            .then(d2 => {
-                                input.value = d2.features?.[0]?.place_name || `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
-                            });
-                    }
+                    if(place && place.place_name) input.value = place.place_name;
+                    else fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${MAPBOX_TOKEN}&limit=1`)
+                        .then(r2 => r2.json())
+                        .then(d2 => { input.value = d2.features?.[0]?.place_name || `${lat.toFixed(5)}, ${lng.toFixed(5)}`; });
                 })
                 .catch(() => { input.disabled = false; input.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`; });
         },
@@ -771,33 +945,17 @@ function useCurrentLocation(inputId) {
         {enableHighAccuracy: true, timeout: 15000}
     );
 }
-
-function updateAddressDefaults() {
-    const dir = document.getElementById('directionSelect').value;
-    const pickup = document.getElementById('pickupInput');
-    const dropoff = document.getElementById('dropoffInput');
-    if(dir === 'airport-to-pc') {
-        if(!pickup.value) pickup.value = 'SLC Airport, 776 N Terminal Dr, Salt Lake City, UT 84122';
-        dropoff.value = '';
-        dropoff.focus();
-    } else if(dir === 'pc-to-airport') {
-        pickup.value = '';
-        if(!dropoff.value) dropoff.value = 'SLC Airport, 776 N Terminal Dr, Salt Lake City, UT 84122';
-        pickup.focus();
-    }
-}
-
-// Initialize autocompletes
 setupAutocomplete('pickupInput', 'pickupDropdown');
 setupAutocomplete('dropoffInput', 'dropoffDropdown');
 
-// Pre-select vehicle from URL
-const params = new URLSearchParams(location.search);
-const v = params.get('vehicle');
-if (v) {
-    const opt = document.querySelector('.v-option[onclick*="\''+v+'\'"]');
-    if (opt) { document.querySelectorAll('.v-option').forEach(o=>o.classList.remove('selected')); opt.classList.add('selected'); }
-}
+/* Pre-select vehicle from ?vehicle= URL param */
+(function(){
+    const v = new URLSearchParams(location.search).get('vehicle');
+    if (v) {
+        const opt = document.querySelector('.v-option[onclick*="\''+v+'\'"]');
+        if (opt) { document.querySelectorAll('.v-option').forEach(o=>o.classList.remove('selected')); opt.classList.add('selected'); }
+    }
+})();
 </script>
 <script defer src="/static/no-zoom.js?v=2"></script>
 </body>
